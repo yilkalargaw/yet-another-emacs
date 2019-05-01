@@ -59,7 +59,7 @@
 (setq package-list
     '(
       ;;packages
-      use-package exec-path-from-shell telephone-line
+      use-package exec-path-from-shell telephone-line key-chord use-package-chords
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -167,6 +167,7 @@
 (setq default-directory "~/")
 
 #+END_SRC
+
 * exec path form shell
 
 #+BEGIN_SRC emacs-lisp
@@ -260,3 +261,37 @@
 (setq indent-tabs-mode nil)
 
 #+END_SRC
+
+* key-chords
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package key-chord
+  :ensure t)
+
+#+END_SRC
+
+* use-package-chords
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package use-package-chords
+  :ensure t
+  :config (key-chord-mode 1))
+
+#+END_SRC
+
+* trailing white spaces
+
+#+BEGIN_SRC emacs-lisp
+
+;;(setq show-trailing-whitespace t)
+;;(setq-default show-trailing-whitespace t)
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'html-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'css-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;;(add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace nil)))
+(add-hook 'markdown-mode-hook (lambda () (setq show-trailing-whitespace t)))
+
+#+END_SRC
+
