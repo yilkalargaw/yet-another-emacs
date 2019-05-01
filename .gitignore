@@ -1,0 +1,74 @@
+# Compiled
+*.elc
+
+# Packaging
+.cask
+
+# Backup files
+*~
+
+# Undo-tree save-files
+*.~undo-tree
+
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# eshell files
+/eshell/history
+/eshell/lastdir
+
+# elpa packages
+elpa/
+/elpa/
+# Flycheck
+flycheck_*.el
+
+# server auth directory
+/server/
+
+# projectiles files
+.projectile
+projectile*
+
+
+# directory configuration
+.dir-locals.el
+
+#backups
+backups/
+
+#auto-save-list
+auto-save-list
+
+#url
+url/
+
+myinit.html
+myinit.md
+myinit.pdf
+myinit.tex
+myinit.el
+myinit.odt
+myinit.ppt
+myinit.epub
+
+#image_dired
+image-dired/
+
+network-security.data
+
+recentf
+recentf/
+
+.mc-lists.el
+myinit.el
+
+#minted_directory
+_minted*
