@@ -159,3 +159,11 @@
 (load-theme 'spacemacs-dark t)
 
 #+END_SRC
+
+* default directory
+
+#+BEGIN_SRC emacs-lisp
+
+(setq default-directory "~/")
+
+#+END_SRC
