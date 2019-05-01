@@ -172,6 +172,45 @@
 
 #+END_SRC
 
+* backup
+
+#+BEGIN_SRC emacs-lisp
+
+;;backups
+
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups"))
+      backup-by-copying t    ; Don't delink hardlinks
+      version-control t      ; Use version numbers on backups
+      delete-old-versions t  ; Automatically delete excess backups
+      kept-new-versions 20   ; how many of the newest versions to keep
+      kept-old-versions 5    ; and how many of the old
+      auto-save-file-name-transforms `((".*" ,"~/.emacs.d/backups" t))
+      )
+;; (setq auto-save-file-name-transforms
+;;       `((".*" ,"~/.emacs.d/backups" t)))
+
+#+END_SRC
+
+* clipboard
+
+#+BEGIN_SRC emacs-lisp
+
+;;clipboard
+
+(setq select-enable-clipboard t)
+
+#+END_SRC
+
+* yes,no
+
+#+BEGIN_SRC emacs-lisp
+
+;;yes,no
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+#+END_SRC
+
 * exec path form shell
 
 #+BEGIN_SRC emacs-lisp
