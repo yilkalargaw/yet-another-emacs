@@ -60,6 +60,7 @@
     '(
       ;;packages
       use-package exec-path-from-shell telephone-line key-chord use-package-chords
+      beacon 
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -292,6 +293,17 @@
 (add-hook 'css-mode-hook (lambda () (setq show-trailing-whitespace t)))
 ;;(add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace nil)))
 (add-hook 'markdown-mode-hook (lambda () (setq show-trailing-whitespace t)))
+
+#+END_SRC
+
+* beacon
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package beacon
+  :ensure t
+  :defer 3
+  :config (beacon-mode 1))
 
 #+END_SRC
 
