@@ -61,7 +61,8 @@
     '(
       ;;packages
       use-package exec-path-from-shell telephone-line key-chord use-package-chords
-      beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra
+      beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra nlinum
+      undo-tree
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -566,4 +567,57 @@
 
 #+END_SRC
 
+
+* line-number
+
+#+BEGIN_SRC emacs-lisp
+
+;;line-number
+
+(if (version< emacs-version "26.0")
+    (linum-relative-global-mode)
+    (progn  (setq display-line-numbers-type (quote relative))
+            (global-display-line-numbers-mode)))
+
+#+END_SRC
+
+* nlinum-mode
+
+#+BEGIN_SRC emacs-lisp
+
+;;nlinum mode
+
+(use-package nlinum
+  :ensure t
+  :config  (setq nlinum-highlight-current-line t)
+           (setq nlinum-use-right-margin t)
+  :defer t)
+
+(add-hook 'after-init-hook 'global-nlinum-mode t)
+
+#+END_SRC
+
+* line-highlight
+ 
+#+BEGIN_SRC emacs-lisp
+
+;;line-highlight
+
+(global-hl-line-mode)
+
+#+END_SRC
+
+* undo-tree
+
+#+BEGIN_SRC emacs-lisp
+
+;;undo-tree
+
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :defer 4
+ ;:bind ("H-/" . undo-tree-visualize)
+  :config (global-undo-tree-mode))
+
+#+END_SRC
 
