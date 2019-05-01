@@ -16,4 +16,13 @@
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;increase garbage collection threshold for startup only
+(setq gc-cons-threshold 64000000)
+(add-hook 'after-init-hook #'(lambda ()
+                               ;; restore after startup
+                               (setq gc-cons-threshold 800000)))
+
+
+
 (provide 'init)
