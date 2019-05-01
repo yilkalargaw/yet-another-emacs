@@ -23,8 +23,11 @@
                                ;; restore after startup
                                (setq gc-cons-threshold 800000)))
 
-
+;; directories for custom themes and elsip-scripts
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
+;;main setupfile loaded using org-bable
+(org-babel-load-file (expand-file-name "~/.emacs.d/myinit.org"))
 
 (provide 'init)
