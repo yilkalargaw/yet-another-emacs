@@ -1,3 +1,52 @@
 #+TITLE: Init File
 #+AUTHOR: Yilkal Argaw , StackOverflow, Github, Emacs-wiki and The Internet in General
 
+* window(frame) look and feel settings
+
+#+BEGIN_SRC emacs-lisp
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+(if (display-graphic-p)
+    (progn
+      (setq initial-frame-alist
+            '(
+              (tool-bar-lines . 0)
+              (width . 94) ; chars
+              (height . 52) ; lines
+              ))
+
+      (setq default-frame-alist
+            '(
+              (tool-bar-lines . 0)
+              (width . 94)
+              (height . 52)
+              ))
+
+(set-frame-position (selected-frame) 0 15)
+
+))
+
+
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+              (select-frame frame)
+              (if (display-graphic-p)
+                  (progn
+                    (set-frame-size frame 94 52)
+                    (set-frame-position frame 0 15)
+;;                  (set-frame-font "Liberation Mono-9.5" nil t)
+;;                  (set-face-attribute 'default nil :height 93 )
+                    ))))
+
+
+(setq inhibit-startup-message t)
+(show-paren-mode t)
+(global-set-key (kbd "C-c m b") 'menu-bar-mode)
+(column-number-mode 1)
+(toggle-indicate-empty-lines t)
+
+(add-to-list 'default-frame-alist '(font . "Liberation Mono-9.5" ))
+
+#+END_SRC
