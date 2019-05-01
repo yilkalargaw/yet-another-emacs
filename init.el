@@ -20,6 +20,9 @@
                                ;; restore after startup
                                (setq gc-cons-threshold 800000)))
 
+;;Set custom settings to load in own file
+(setq custom-file (make-temp-file "emacs-custom"))
+
 
 ;; directories for custom themes and elsip-scripts
 (add-to-list 'load-path "~/.emacs.d/lisp")

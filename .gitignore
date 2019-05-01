@@ -72,3 +72,6 @@ myinit.el
 
 #minted_directory
 _minted*
+
+#custom's file
+emacs-custom
