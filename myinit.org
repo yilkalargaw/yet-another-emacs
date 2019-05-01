@@ -56,11 +56,12 @@
 
 #+BEGIN_SRC emacs-lisp
 
+;;pacage-list
 (setq package-list
     '(
       ;;packages
       use-package exec-path-from-shell telephone-line key-chord use-package-chords
-      beacon symbol-overlay
+      beacon symbol-overlay hydra
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -89,6 +90,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
+;;themes
 (use-package doom-themes
   :ensure t
   :defer t)
@@ -165,6 +167,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
+;;default directory
 (setq default-directory "~/")
 
 #+END_SRC
@@ -173,6 +176,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
+;;exec-path-from-shell
   (use-package exec-path-from-shell
     :ensure t
     :config
@@ -184,6 +188,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
+;;telephone-lines
 (use-package telephone-line
   :ensure t
   :defer t
@@ -267,6 +272,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
+;;keychords
 (use-package key-chord
   :ensure t)
 
@@ -276,6 +282,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
+;;use-package-chords
 (use-package use-package-chords
   :ensure t
   :config (key-chord-mode 1))
@@ -285,7 +292,7 @@
 * trailing white spaces
 
 #+BEGIN_SRC emacs-lisp
-
+;;settings for trailng whitespaces
 ;;(setq show-trailing-whitespace t)
 ;;(setq-default show-trailing-whitespace t)
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
@@ -300,6 +307,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
+;;beacon
 (use-package beacon
   :ensure t
   :defer 3
@@ -311,6 +319,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
+;; symbol overlay
 (use-package symbol-overlay
   :ensure t
   :defer t
@@ -335,4 +344,27 @@
 
 #+END_SRC
 
+* hydra
+
+#+BEGIN_SRC emacs-lisp
+
+;;hydra
+(use-package hydra
+  :ensure t)
+
+#+END_SRC
+
+** hydra-zoom
+
+#+BEGIN_SRC emacs-lisp
+
+;; hydra-zoom
+(defhydra hydra-zoom (global-map "<f10>")
+  "zoom"
+  ("g" text-scale-increase "in")
+  ("l" text-scale-decrease "out")
+  ("o" (text-scale-adjust 0) "reset")
+)
+
+#+END_SRC
 
