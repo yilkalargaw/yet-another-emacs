@@ -250,3 +250,13 @@
 
 #+END_SRC
 
+* indentation stuff
+
+#+BEGIN_SRC emacs-lisp
+
+;;; to setup tabs
+(setq c-basic-indent 2)
+(setq tab-width 4)
+(setq indent-tabs-mode nil)
+
+#+END_SRC
