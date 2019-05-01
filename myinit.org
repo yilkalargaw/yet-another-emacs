@@ -59,7 +59,7 @@
 (setq package-list
     '(
       ;;packages
-      use-package
+      use-package exec-path-from-shell
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -165,5 +165,15 @@
 #+BEGIN_SRC emacs-lisp
 
 (setq default-directory "~/")
+
+#+END_SRC
+* exec path form shell
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package exec-path-from-shell
+    :ensure t
+    :config
+    (exec-path-from-shell-initialize))
 
 #+END_SRC
