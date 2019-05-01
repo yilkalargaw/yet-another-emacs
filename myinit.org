@@ -4,6 +4,7 @@
 * window(frame) look and feel settings
 
 #+BEGIN_SRC emacs-lisp
+
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -48,5 +49,113 @@
 (toggle-indicate-empty-lines t)
 
 (add-to-list 'default-frame-alist '(font . "Liberation Mono-9.5" ))
+
+#+END_SRC
+
+* initial setup
+
+#+BEGIN_SRC emacs-lisp
+
+(setq package-list
+    '(
+      ;;packages
+      use-package
+
+      ;;themes
+      ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
+      color-theme-sanityinc-solarized soothe-theme seti-theme spacemacs-theme
+      sublime-themes flatland-theme flatui-dark-theme material-theme blackboard-theme
+      solarized-theme cyberpunk-theme doom-themes  zenburn-theme org-beautify-theme
+       ))
+
+;; activate all the packages
+ (package-initialize)
+
+;; fetch the list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+(require 'use-package)
+
+#+END_SRC
+
+* themes
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package doom-themes
+  :ensure t
+  :defer t)
+
+(use-package ample-theme
+  :ensure t
+  :defer t)
+
+(use-package dracula-theme
+  :ensure t
+  :defer t)
+
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t
+  :defer t)
+
+(use-package color-theme-sanityinc-solarized
+  :ensure t
+  :defer t)
+
+(use-package soothe-theme
+  :ensure t
+  :defer t)
+
+(use-package seti-theme
+  :ensure t
+  :defer t)
+
+(use-package spacemacs-theme
+  :ensure t
+  :defer t)
+
+(use-package solarized-theme
+  :ensure t
+  :defer t)
+
+(use-package zenburn-theme
+  :ensure t
+  :defer t)
+
+(use-package cyberpunk-theme
+  :ensure t
+  :defer t)
+
+(use-package sublime-themes
+  :ensure t
+  :defer t)
+
+(use-package flatland-theme
+  :ensure t
+  :defer t)
+
+(use-package flatui-dark-theme
+  :ensure t
+  :defer t)
+
+(use-package blackboard-theme
+  :ensure t
+  :defer t)
+
+(use-package material-theme
+  :ensure t
+  :defer t)
+
+(use-package darktooth-theme
+  :ensure t
+  :defer t)
+
+(load-theme 'spacemacs-dark t)
 
 #+END_SRC
