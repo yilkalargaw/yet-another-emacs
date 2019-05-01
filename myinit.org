@@ -60,7 +60,7 @@
     '(
       ;;packages
       use-package exec-path-from-shell telephone-line key-chord use-package-chords
-      beacon 
+      beacon symbol-overlay
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -306,4 +306,33 @@
   :config (beacon-mode 1))
 
 #+END_SRC
+
+* symbol-overlay
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package symbol-overlay
+  :ensure t
+  :defer t
+  :hook (prog-mode . symbol-overlay-mode)
+        (html-mode . symbol-overlay-mode)
+        (web-mode . symbol-overlay-mode)
+        (css-mode . symbol-overlay-mode)
+        (yaml-mode . symbol-overlay-mode)
+        (toml-mode . symbol-overlay-mode)
+        (json-mode . symbol-overlay-mode)
+  :config
+        (progn (defface shackra-orange '((t (:foreground "white" :background "#98fbb8"))) "")
+               (add-to-list 'symbol-overlay-faces '(symbol-overlay-default-face . (shakra-orange))))
+    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
+    ;; (define-key symbol-overlay-mode-map (kbd "M-n") 'symbol-overlay-jump-next)
+    ;; (define-key symbol-overlay-mode-map (kbd "M-p") 'symbol-overlay-jump-prev)
+)
+
+;; (defface shackra-orange '((t (:foreground "white" :background "#98fbb8"))) "")
+
+;; (add-to-list 'symbol-overlay-faces '(symbol-overlay-default-face . (shakra-orange)))
+
+#+END_SRC
+
 
