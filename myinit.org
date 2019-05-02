@@ -71,7 +71,7 @@
       geiser slime slime-company emmet-mode web-mode company-web js2-mode
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
-      auctex company-auctex nov restclient realgud projectile
+      auctex company-auctex nov restclient realgud projectile ecb
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1731,6 +1731,26 @@ Git gutter:
 
 ;; (add-hook 'prog-mode-hook 'projectile-mode)
 ;; (add-hook 'projectile-mode-hook 'counsel-projectile-mode)
+
+#+END_SRC
+
+* ecb
+
+#+BEGIN_SRC emacs-lisp
+
+;;ecb
+
+(use-package ecb
+  :ensure t
+  :defer t
+  :init (setq ecb-tip-of-the-day nil)
+  :bind (( "C-c e b" . ecb-minor-mode)
+         :map ecb-mode-map
+         ("H-1" . 'ecb-goto-window-edit1)
+         ("H-2" . 'ecb-goto-window-directories)
+         ("H-3" . 'ecb-goto-window-sources)
+         ("H-4" . 'ecb-goto-window-methods)
+         ("H-5" . 'ecb-goto-window-history)))
 
 #+END_SRC
 
