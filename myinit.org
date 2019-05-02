@@ -1598,3 +1598,28 @@ Git gutter:
 
 #+END_SRC
 
+* latex/auctex
+
+#+BEGIN_SRC emacs-lisp
+
+;;latex/auctex
+
+  (use-package auctex
+    :ensure t
+    :defer t)
+
+  (use-package  company-auctex
+  :ensure t
+  :config  (company-auctex-init)
+  :defer 5)
+
+  (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+  (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+  (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+
+(add-hook 'TeX-mode-hook
+          (lambda ()
+            (setq TeX-command-extra-options "-shell-escape")))
+
+#+END_SRC
+
