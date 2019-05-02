@@ -68,7 +68,7 @@
       rainbow-delimiters all-the-icons neotree company-c-headers irony company-irony
       flycheck-irony irony-eldoc flycheck-rust racer rust-mode cargo
       go-mode company-go go-dlv inf-ruby robe company-jedi lua-mode company-lua
-      geiser slime slime-company
+      geiser slime slime-company emmet-mode web-mode company-web
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1426,6 +1426,47 @@ Git gutter:
   :bind (:map slime-mode-map
               ("C-t C-e" . slime-eval-last-expression))
   :defer t)
+
+#+END_SRC
+
+* web
+
+#+BEGIN_SRC emacs-lisp
+
+;;web-mode
+
+(use-package emmet-mode
+  :ensure t
+  :hook (sgml-mode css-mode web-mode))
+
+
+ (use-package web-mode
+   :ensure t
+   :defer t
+   :mode (;;"\\.html\\'"
+          ;;"\\.css?\\'"
+          "\\.phtml\\'"
+          "\\.erb\\'"
+          ;;"\\.html?\\'"
+          )
+   :config
+   (setq web-mode-markup-indent-offset 2)
+ ;  (setq web-mode-engines-alist
+ ;        '(("django" . "focus/.*\\.html\\'")
+ ;          ("ctemplate" . "realtimecrm/.*\\.html\\'")))
+   (setq web-mode-enable-auto-pairing nil)
+;;   (add-hook 'web-mode-hook (lambda () (require 'emmet-mode)
+ )
+
+
+ (use-package company-web
+   :config
+   (add-hook 'web-mode-hook
+             (lambda ()
+               (add-to-list 'company-backends 'company-web-html)))
+   (add-hook 'html-mode-hook
+             (lambda ()
+               (add-to-list 'company-backends 'company-web-html))))
 
 #+END_SRC
 
