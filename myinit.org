@@ -67,7 +67,7 @@
       smart-hungry-delete ws-butler company multiple-cursors smartparens
       rainbow-delimiters all-the-icons neotree company-c-headers irony company-irony
       flycheck-irony irony-eldoc flycheck-rust racer rust-mode cargo
-      go-mode company-go go-dlv inf-ruby robe
+      go-mode company-go go-dlv inf-ruby robe company-jedi
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1352,6 +1352,22 @@ Git gutter:
 
 ;; (eval-after-load 'company
 ;;   '(push 'company-robe company-backends))
+
+#+END_SRC
+
+* python
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package company-jedi
+  :defer t
+  :ensure t
+  )
+
+(defun my/python-mode-hook ()
+  (add-to-list 'company-backends 'company-jedi))
+
+(add-hook 'python-mode-hook 'my/python-mode-hook)
 
 #+END_SRC
 
