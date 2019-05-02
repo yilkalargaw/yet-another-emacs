@@ -66,7 +66,7 @@
       yasnippet-snippets flycheck flyspell expand-region avy ace-window ag
       smart-hungry-delete ws-butler company multiple-cursors smartparens
       rainbow-delimiters all-the-icons neotree company-c-headers irony company-irony
-      flycheck-irony irony-eldoc
+      flycheck-irony irony-eldoc flycheck-rust racer rust-mode cargo
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1267,6 +1267,44 @@ Git gutter:
   :ensure t
   :defer t)
 ;;(add-hook 'irony-mode-hook #'irony-eldoc)
+
+#+END_SRC
+
+* rust
+
+#+BEGIN_SRC emacs-lisp
+
+;; rust
+
+(use-package flycheck-rust
+  :ensure t
+  :defer 3.5
+  :config
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  (add-hook 'rust-mode-hook 'flycheck-mode))
+
+
+(use-package racer
+  :ensure t
+  :defer t
+  :init
+  (setq company-tooltip-align-annotations t)
+  (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
+
+(use-package rust-mode
+  :ensure t
+  :defer t
+  :hook (rust-mode . racer-mode)
+        (racer-mode . eldoc-mode)
+  :config
+        (setq rust-format-on-save t))
+
+(use-package cargo
+  :ensure t
+  :defer t
+  :hook (rust-mode . cargo-minor-mode)
+  :config
+  (setq compilation-scroll-output t))
 
 #+END_SRC
 
