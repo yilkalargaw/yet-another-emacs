@@ -75,3 +75,6 @@ _minted*
 
 #custom's file
 emacs-custom
+
+#transient
+transient/
