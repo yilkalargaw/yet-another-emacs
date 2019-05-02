@@ -99,6 +99,16 @@
 
 #+END_SRC
 
+* gnutls
+
+#+BEGIN_SRC emacs-lisp
+
+;;gnutls
+
+(setq gnutls-min-prime-bits 4096)
+
+#+END_SRC
+
 * themes
 
 #+BEGIN_SRC emacs-lisp
