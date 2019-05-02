@@ -330,6 +330,23 @@
 
 #+END_SRC
 
+* input method
+
+#+BEGIN_SRC emacs-lisp
+
+;;input-method
+
+(defun myinput-settings ()
+  "Settings based on input method."
+  (cond ((string= current-input-method "ethiopic")
+         (progn (setq ethio-primary-language 'amharic)
+                (ethio-select-a-translation)))
+        (t nil)))
+
+(add-hook 'input-method-activate-hook #'myinput-settings)
+
+#+END_SRC
+
 * key-chords
 
 #+BEGIN_SRC emacs-lisp
