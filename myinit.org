@@ -67,7 +67,7 @@
       smart-hungry-delete ws-butler company multiple-cursors smartparens
       rainbow-delimiters all-the-icons neotree company-c-headers irony company-irony
       flycheck-irony irony-eldoc flycheck-rust racer rust-mode cargo
-      go-mode company-go go-dlv
+      go-mode company-go go-dlv inf-ruby robe
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1328,6 +1328,30 @@ Git gutter:
 (use-package go-dlv
   :ensure t
   :defer t)
+
+#+END_SRC
+
+* ruby
+
+#+BEGIN_SRC emacs-lisp
+
+;;ruby
+
+(use-package inf-ruby
+  :ensure t
+  :defer t)
+
+(use-package robe
+  :ensure t
+  :defer t
+  :bind ("C-c r s" . robe-start)
+  :hook (ruby-mode . robe-mode)
+  :config (push 'company-robe company-backends))
+
+;  (add-hook 'ruby-mode-hook 'robe-mode))
+
+;; (eval-after-load 'company
+;;   '(push 'company-robe company-backends))
 
 #+END_SRC
 
