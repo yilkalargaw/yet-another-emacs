@@ -62,7 +62,7 @@
       ;;packages
       use-package exec-path-from-shell telephone-line key-chord use-package-chords
       beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra nlinum
-      undo-tree which-key magit git-gutter git-timemachine forge
+      undo-tree which-key magit git-gutter git-timemachine forge monky
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -713,6 +713,18 @@ Git gutter:
 ;;   :after magit
 ;;   :ensure t
 ;;   :config (magithub-feature-autoinject t))
+
+#+END_SRC
+
+* monky
+
+#+BEGIN_SRC emacs-lisp
+
+;;monky
+
+(use-package monky
+  :ensure t
+  :defer t)
 
 #+END_SRC
 
