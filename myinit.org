@@ -63,7 +63,7 @@
       use-package exec-path-from-shell telephone-line key-chord use-package-chords
       beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra nlinum
       undo-tree which-key magit git-gutter git-timemachine forge monky yasnippet
-      yasnippet-snippets
+      yasnippet-snippets flycheck flyspell
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -747,4 +747,39 @@ Git gutter:
 ;;(add-hook 'prog-mode-hook 'yas-minor-mode)
 
 #+END_SRC
+
+* flycheck
+
+#+BEGIN_SRC emacs-lisp
+
+;;flycheck
+
+(use-package flycheck
+:ensure t
+:defer t
+:hook (prog-mode-hook . flyspell-prog-mode)
+:config (progn
+        (setq flycheck-standard-error-navigation nil)
+        (global-flycheck-mode t)))
+
+;(add-hook 'prog-mode-hook 'flycheck-mode)
+
+#+END_SRC
+
+* flyspell
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package flyspell
+  :ensure t
+  :defer t
+  :hook ((prog-mode-hook . flyspell-prog-mode)
+	 (text-mode-hook . flyspell-mode))
+  :config
+  ;; Sets flyspell correction to use two-finger mouse click
+  (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+  )
+
+#+END_SRC
+
 
