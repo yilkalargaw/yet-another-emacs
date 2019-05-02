@@ -71,7 +71,7 @@
       geiser slime slime-company emmet-mode web-mode company-web js2-mode
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
-      auctex company-auctex nov
+      auctex company-auctex nov restclient
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1640,6 +1640,18 @@ Git gutter:
   :ensure t
   :defer t
   :mode ("\\.epub\\'" . nov-mode))
+
+#+END_SRC
+
+* restclient
+
+#+BEGIN_SRC emacs-lisp
+
+;;restclient
+
+(use-package restclient
+  :ensure t
+  :defer t)
 
 #+END_SRC
 
