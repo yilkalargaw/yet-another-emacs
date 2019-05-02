@@ -64,7 +64,7 @@
       beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra nlinum
       undo-tree which-key magit git-gutter git-timemachine forge monky yasnippet
       yasnippet-snippets flycheck flyspell expand-region avy ace-window ag
-      smart-hungry-delete ws-butler company
+      smart-hungry-delete ws-butler company multiple-cursors
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -883,6 +883,51 @@ Git gutter:
 
 #+END_SRC
 
+* multiple-cursors
+
+#+BEGIN_SRC emacs-lisp
+
+;;multiple-cursors
+
+(use-package multiple-cursors
+  :ensure t
+  :defer t
+  :config (define-key mc/keymap (kbd "<return>") nil)
+  :bind ;;("H-\\" . mc/mark-all-like-this)
+        ("C-S-<mouse-1>" . mc/add-cursor-on-click))
+
+#+END_SRC
+
+** Hydra-multiple-cursors
+
+#+BEGIN_SRC emacs-lisp
+
+(defhydra hydra-multiple-cursors (:hint nil)
+  "
+     ^Up^            ^Down^        ^Other^
+----------------------------------------------
+[_p_]   Next    [_n_]   Next    [_l_] Edit lines
+[_P_]   Skip    [_N_]   Skip    [_a_] Mark all
+[_M-p_] Unmark  [_M-n_] Unmark  [_r_] Mark by regexp
+^ ^             ^ ^             [_q_] Quit
+"
+  ("l" mc/edit-lines :exit t)
+  ("a" mc/mark-all-like-this :exit t)
+  ("n" mc/mark-next-like-this)
+  ("N" mc/skip-to-next-like-this)
+  ("M-n" mc/unmark-next-like-this)
+  ("p" mc/mark-previous-like-this)
+  ("P" mc/skip-to-previous-like-this)
+  ("M-p" mc/unmark-previous-like-this)
+  ("r" mc/mark-all-in-region-regexp :exit t)
+  ("q" nil))
+
+(global-set-key (kbd "C-c m c") 'hydra-multiple-cursors/body) ;;example-binding
+(global-set-key (kbd "C-;") 'hydra-multiple-cursors/body) ;;example-binding
+(key-chord-define-global "qk"   'hydra-multiple-cursors/body)
+
+#+END_SRC
+
 * company
 
 #+BEGIN_SRC emacs-lisp
@@ -902,5 +947,4 @@ Git gutter:
 (add-hook 'after-init-hook 'global-company-mode)
 
 #+END_SRC
-
 
