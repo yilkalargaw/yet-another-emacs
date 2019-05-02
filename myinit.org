@@ -65,7 +65,8 @@
       undo-tree which-key magit git-gutter git-timemachine forge monky yasnippet
       yasnippet-snippets flycheck flyspell expand-region avy ace-window ag
       smart-hungry-delete ws-butler company multiple-cursors smartparens
-      rainbow-delimiters all-the-icons neotree
+      rainbow-delimiters all-the-icons neotree company-c-headers irony company-irony
+      flycheck-irony irony-eldoc
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1221,6 +1222,51 @@ Git gutter:
 (add-hook 'neotree-mode-hook 'my-neotree-hook)
 (defun my-neotree-hook ()
   (nlinum-mode 0))
+
+#+END_SRC
+
+* C/C++
+
+#+BEGIN_SRC emacs-lisp
+
+;;C/C++
+
+(use-package company-c-headers
+  :ensure t)
+
+
+(use-package irony
+  :ensure t
+  :defer t
+  :init ;(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
+  :hook (c++-mode . (lambda () irony-mode 1))
+        (c-mode . (lambda () (irony-mode 1)))
+        (objc-mode . (lambda () ('irony-mode 1)))
+  :config (add-to-list 'company-backends 'company-irony)
+          (add-to-list 'company-backends 'company-c-headers)
+          (flycheck-irony-setup)
+          (irony-eldoc)
+         ;; (add-hook 'irony-mode-hook #'irony-eldoc)
+)
+
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+(use-package company-irony
+  :ensure t
+  :defer t)
+
+
+(use-package flycheck-irony
+  :ensure t
+  :defer t)
+
+;; (eval-after-load 'flycheck
+;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+(use-package irony-eldoc
+  :ensure t
+  :defer t)
+;;(add-hook 'irony-mode-hook #'irony-eldoc)
 
 #+END_SRC
 
