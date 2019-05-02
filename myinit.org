@@ -64,6 +64,7 @@
       beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra nlinum
       undo-tree which-key magit git-gutter git-timemachine forge monky yasnippet
       yasnippet-snippets flycheck flyspell expand-region avy ace-window ag
+      smart-hungry-delete
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -855,6 +856,20 @@ Git gutter:
 (use-package ag
   :ensure t
   :defer t)
+
+#+END_SRC
+
+* smart-hungry delete
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package smart-hungry-delete
+  :bind (:map prog-mode-map
+              ("<backspace>" . smart-hungry-delete-backward-char)
+              ("C-d" . smart-hungry-delete-forward-char))
+  :defer t
+;;  :config (smart-hungry-delete-add-default-hooks)
+)
 
 #+END_SRC
 
