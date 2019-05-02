@@ -1089,3 +1089,79 @@ Git gutter:
 (add-hook 'after-init-hook 'global-company-mode)
 
 #+END_SRC
+* eshell
+
+#+BEGIN_SRC emacs-lisp
+
+;;eshell
+
+(add-hook 'eshell-mode-hook '(lambda ()
+                               (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)))
+(add-hook 'eshell-mode-hook '(lambda ()
+                               (define-key eshell-mode-map (kbd "<backtab>") 'completion-at-point)))
+
+
+(defun eshell-clear-buffer ()
+  "Clear terminal"
+  (interactive)
+  (let ((inhibit-read-only t))
+    (erase-buffer)
+    (eshell-send-input)))
+(add-hook 'eshell-mode-hook
+          '(lambda()
+             (local-set-key (kbd "H-l") 'eshell-clear-buffer)))
+
+
+(add-hook 'eshell-mode-hook
+          (defun my-eshell-mode-setup ()
+            (remove-hook 'eshell-output-filter-functions
+                         'eshell-postoutput-scroll-to-bottom)))
+
+(add-hook 'eshell-mode-hook '(lambda ()
+                               (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
+                                 "ncftp" "pine" "tin" "trn" "elm" "vim"
+                                 "htop")
+                                 )
+                               ;;(add-to-list 'eshell-visual-commands "vim")
+))
+
+
+#+END_SRC
+
+* shell-mode
+
+#+BEGIN_SRC emacs-lisp
+
+;;shell-mode
+
+(add-hook 'shell-mode-hook '(lambda ()
+                               (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
+(add-hook 'shell-mode-hook '(lambda ()
+                               (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)))
+
+#+END_SRC
+
+* term-mode
+
+#+BEGIN_SRC emacs-lisp
+
+;;(defun my-display-line-number (lambda () (display-line-numbers-mode -1)))
+
+(add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'term-mode-hook (lambda () (nlinum-mode -1)))
+(add-hook 'term-mode-hook (lambda () (setq show-trailing-whitespace nil)))
+
+#+END_SRC
+
+* comint-mode
+
+#+BEGIN_SRC emacs-lisp
+
+;;conmint-mode
+
+(setq comint-scroll-show-maximum-output nil)
+(setq comint-scroll-to-bottom-on-input nil)
+(setq comint-scroll-to-bottom-on-output nil)
+
+#+END_SRC
+
