@@ -63,7 +63,7 @@
       use-package exec-path-from-shell telephone-line key-chord use-package-chords
       beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra nlinum
       undo-tree which-key magit git-gutter git-timemachine forge monky yasnippet
-      yasnippet-snippets flycheck flyspell
+      yasnippet-snippets flycheck flyspell expand-region avy ace-window ag
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -782,4 +782,79 @@ Git gutter:
 
 #+END_SRC
 
+
+* expand-region
+
+#+BEGIN_SRC emacs-lisp
+
+;;expand-region
+
+(use-package expand-region
+  :ensure t
+  :defer 3
+  :bind (("C-=". er/expand-region)))
+
+#+END_SRC
+
+* avy
+
+#+BEGIN_SRC emacs-lisp
+
+;;avy
+
+(use-package avy
+  :ensure t
+  :defer t
+  :bind (("C-c v c" . avy-goto-char)
+  ("C-c v 2" . avy-goto-char-2)
+  ("C-c v w" . avy-goto-word-1)
+  ("C-c v l" . avy-goto-line)
+  :map isearch-mode-map
+       ("C-'" . avy-isearch))
+ )
+
+(defhydra hydra-avy ( :hint nil)
+  "
+     ^Char^            ^other^
+-------------------------------------
+[_c_]   char         [_w_]   word
+[_C_]   char-2       [_s_]   subword
+[_t_]   char-timer   [_l_]   line
+"
+    ("c" avy-goto-char :exit t)
+    ("C" avy-goto-char-2 :exit t)
+    ("t" avy-goto-char-timer :exit t)
+    ("w" avy-goto-word-1 :exit t)
+    ("s" avy-goto-subword-1 :exit t)
+    ("l" avy-goto-line :exit t))
+(global-set-key (kbd "C-'") 'hydra-avy/body) ;;example-binding
+(global-set-key (kbd "H-'") 'hydra-avy/body) ;;example-binding
+(key-chord-define-global "vj"  'hydra-avy/body)
+
+#+END_SRC
+
+* ace-window
+
+#+BEGIN_SRC emacs-lisp
+
+;;ace-window
+
+(use-package ace-window
+  :ensure t
+  :bind ("H-<f12>" . ace-window)
+        ("C-c <f12>" . ace-window))
+
+#+END_SRC
+
+* ag
+
+#+BEGIN_SRC emacs-lisp
+
+;;ag
+
+(use-package ag
+  :ensure t
+  :defer t)
+
+#+END_SRC
 
