@@ -69,7 +69,7 @@
       flycheck-irony irony-eldoc flycheck-rust racer rust-mode cargo
       go-mode company-go go-dlv inf-ruby robe company-jedi lua-mode company-lua
       geiser slime slime-company emmet-mode web-mode company-web js2-mode
-      company-tern skewer-mode tuareg
+      company-tern skewer-mode tuareg crystal-mode
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1535,4 +1535,14 @@ Git gutter:
   :mode ("\\.ml[ily]?$" . tuareg-mode))
 
 #+END_SRC
+
+* crystal
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package crystal-mode
+  :mode ("\\.cr$" . crystal-mode))
+
+#+END_SRC
+
 
