@@ -311,6 +311,25 @@
 
 #+END_SRC
 
+* smooth-scrolling
+
+#+BEGIN_SRC emacs-lisp
+
+;;smooth-scrolling
+
+;; (use-package smooth-scrolling
+;;   :ensure t
+;;   :config (setq smooth-scroll-margin 2)
+;;   )
+;; scroll one line at a time (less "jumpy" than defaults)
+
+(setq mouse-wheel-scroll-amount '(10 ((shift) . 10))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
+
+#+END_SRC
+
 * key-chords
 
 #+BEGIN_SRC emacs-lisp
