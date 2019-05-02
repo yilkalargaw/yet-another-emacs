@@ -69,7 +69,8 @@
       flycheck-irony irony-eldoc flycheck-rust racer rust-mode cargo
       go-mode company-go go-dlv inf-ruby robe company-jedi lua-mode company-lua
       geiser slime slime-company emmet-mode web-mode company-web js2-mode
-      company-tern skewer-mode tuareg crystal-mode
+      company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
+      json-mode
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1542,6 +1543,36 @@ Git gutter:
 
 (use-package crystal-mode
   :mode ("\\.cr$" . crystal-mode))
+
+#+END_SRC
+
+* csv
+
+#+BEGIN_SRC emacs-lisp
+
+;;csv
+
+(use-package csv-mode
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+* yaml,toml and json
+
+#+BEGIN_SRC emacs-lisp
+
+;;yaml,toml and json
+
+(use-package yaml-mode
+  :ensure t
+  :defer t)
+(use-package toml-mode
+  :ensure t
+  :defer t)
+(use-package json-mode
+  :ensure t
+  :defer t)
 
 #+END_SRC
 
