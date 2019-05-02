@@ -67,6 +67,7 @@
       smart-hungry-delete ws-butler company multiple-cursors smartparens
       rainbow-delimiters all-the-icons neotree company-c-headers irony company-irony
       flycheck-irony irony-eldoc flycheck-rust racer rust-mode cargo
+      go-mode company-go go-dlv
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1305,6 +1306,28 @@ Git gutter:
   :hook (rust-mode . cargo-minor-mode)
   :config
   (setq compilation-scroll-output t))
+
+#+END_SRC
+
+* go
+
+#+BEGIN_SRC emacs-lisp
+
+;;go
+
+(use-package go-mode
+  :ensure t
+  :defer t)
+
+(use-package company-go
+  :ensure t
+  :hook (go-mode . (lambda ()
+                     (set (make-local-variable 'company-backends) '(company-go))
+                     (company-mode))))
+
+(use-package go-dlv
+  :ensure t
+  :defer t)
 
 #+END_SRC
 
