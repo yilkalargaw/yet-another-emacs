@@ -62,7 +62,7 @@
       ;;packages
       use-package exec-path-from-shell telephone-line key-chord use-package-chords
       beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra nlinum
-      undo-tree
+      undo-tree which-key magit git-gutter git-timemachine forge
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -567,7 +567,6 @@
 
 #+END_SRC
 
-
 * line-number
 
 #+BEGIN_SRC emacs-lisp
@@ -618,6 +617,102 @@
   :defer 4
  ;:bind ("H-/" . undo-tree-visualize)
   :config (global-undo-tree-mode))
+
+#+END_SRC
+
+* which-key
+
+#+BEGIN_SRC emacs-lisp
+
+;;which mode
+
+(use-package which-key
+  :ensure t
+  :defer 2
+  :config (which-key-mode))
+
+#+END_SRC
+
+* git
+
+** git-gutter
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package git-gutter
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+** git-timemachine
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package git-timemachine
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+*** hydra
+
+#+BEGIN_SRC emacs-lisp
+
+(defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
+                            :hint nil)
+  "
+Git gutter:
+  _j_: next hunk        _s_tage hunk     _q_uit
+  _k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
+  ^ ^                   _p_opup hunk
+  _h_: first hunk
+  _l_: last hunk        set start _R_evision
+"
+  ("j" git-gutter:next-hunk)
+  ("k" git-gutter:previous-hunk)
+  ("h" (progn (goto-char (point-min))
+              (git-gutter:next-hunk 1)))
+  ("l" (progn (goto-char (point-min))
+              (git-gutter:previous-hunk 1)))
+  ("s" git-gutter:stage-hunk)
+  ("r" git-gutter:revert-hunk)
+  ("p" git-gutter:popup-hunk)
+  ("R" git-gutter:set-start-revision)
+  ("q" nil :color blue)
+  ("Q" (progn (git-gutter-mode -1)
+              ;; git-gutter-fringe doesn't seem to
+              ;; clear the markup right away
+              (sit-for 0.1)
+              (git-gutter:clear))
+       :color blue))
+
+#+END_SRC
+
+** magit & forge
+
+#+BEGIN_SRC emacs-lisp
+
+;;magit
+
+(use-package magit
+  :ensure t
+  :config (setq auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
+  :defer t)
+
+(global-set-key (kbd "C-C g m") 'magit-status)
+(global-set-key (kbd "H-g") 'magit-status)
+
+
+(use-package forge
+  :ensure t
+  :defer t
+  :after magit)
+
+;; (use-package magithub
+;;   :after magit
+;;   :ensure t
+;;   :config (magithub-feature-autoinject t))
 
 #+END_SRC
 
