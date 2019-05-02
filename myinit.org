@@ -2007,8 +2007,6 @@ Git gutter:
 
 #+END_SRC
 
-
-
 * org-beautify
 
 #+BEGIN_SRC emacs-lisp
@@ -2023,3 +2021,4 @@ Git gutter:
  )
 
 #+END_SRC
+
