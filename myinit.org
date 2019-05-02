@@ -64,7 +64,7 @@
       beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra nlinum
       undo-tree which-key magit git-gutter git-timemachine forge monky yasnippet
       yasnippet-snippets flycheck flyspell expand-region avy ace-window ag
-      smart-hungry-delete
+      smart-hungry-delete ws-butler company
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -783,7 +783,6 @@ Git gutter:
 
 #+END_SRC
 
-
 * expand-region
 
 #+BEGIN_SRC emacs-lisp
@@ -872,4 +871,36 @@ Git gutter:
 )
 
 #+END_SRC
+
+* ws-butler
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package ws-butler
+  :ensure t
+  :defer t
+  :hook (prog-mode . ws-butler-mode))
+
+#+END_SRC
+
+* company
+
+#+BEGIN_SRC emacs-lisp
+
+;;company
+
+(use-package company
+  :ensure t
+  :defer t
+  :config (require 'company)
+  (global-set-key (kbd "<backtab>") 'company-complete-common)
+  (global-set-key (kbd "H-<SPC>") 'company-complete-common)
+  (global-set-key (kbd "C-`") 'company-yasnippet)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous))
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+#+END_SRC
+
 
