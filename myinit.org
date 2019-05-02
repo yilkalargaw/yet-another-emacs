@@ -71,7 +71,7 @@
       geiser slime slime-company emmet-mode web-mode company-web js2-mode
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
-      auctex company-auctex nov restclient
+      auctex company-auctex nov restclient realgud projectile
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1652,6 +1652,85 @@ Git gutter:
 (use-package restclient
   :ensure t
   :defer t)
+
+#+END_SRC
+
+* realgud
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package realgud
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+* projectile
+
+#+BEGIN_SRC emacs-lisp
+
+;; projectile
+
+(use-package projectile
+  :ensure t
+  :bind (("H-p p"  . 'hydra-projectile/body) ;;example-binding
+	 ("H-p w"  . 'hydra-projectile-other-window/body) ;;example-binding
+	 )
+  :defer 3
+  :hook (prog-mode-hook . projectile-mode)
+  :config
+  (projectile-global-mode)
+  (setq projectile-completion-system 'ivy)
+  (defhydra hydra-projectile-other-window (:color teal)
+    "projectile-other-window"
+    ("f"  projectile-find-file-other-window        "file")
+    ("g"  projectile-find-file-dwim-other-window   "file dwim")
+    ("d"  projectile-find-dir-other-window         "dir")
+    ("b"  projectile-switch-to-buffer-other-window "buffer")
+    ("q"  nil                                      "cancel" :color blue))
+
+  (defhydra hydra-projectile (:color teal
+				     :hint nil)
+    "
+     PROJECTILE: %(projectile-project-root)
+
+     Find File            Search/Tags          Buffers                Cache
+------------------------------------------------------------------------------------------
+  _F_: file            _a_: ag                _i_: Ibuffer           _c_: cache clear
+ _ff_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
+ _fd_: file curr dir   _o_: multi-occur     _s-k_: Kill all buffers  _X_: cleanup non-existing
+  _r_: recent file                                               ^^^^_z_: cache current
+  _d_: dir
+
+"
+    ("a"   projectile-ag)
+    ("b"   projectile-switch-to-buffer)
+    ("c"   projectile-invalidate-cache)
+    ("d"   projectile-find-dir)
+    ("F"   projectile-find-file)
+    ("ff"  projectile-find-file-dwim)
+    ("fd"  projectile-find-file-in-directory)
+    ("g"   ggtags-update-tags)
+    ("s-g" ggtags-update-tags)
+    ("i"   projectile-ibuffer)
+    ("K"   projectile-kill-buffers)
+    ("s-k" projectile-kill-buffers)
+    ("m"   projectile-multi-occur)
+    ("o"   projectile-multi-occur)
+    ("s-p" projectile-switch-project "switch project")
+    ("p"   projectile-switch-project)
+    ("s"   projectile-switch-project)
+    ("r"   projectile-recentf)
+    ("x"   projectile-remove-known-project)
+    ("X"   projectile-cleanup-known-projects)
+    ("z"   projectile-cache-current-file)
+    ("`"   hydra-projectile-other-window/body "other window")
+    ("q"   nil "cancel" :color blue))
+
+  )
+
+;; (add-hook 'prog-mode-hook 'projectile-mode)
+;; (add-hook 'projectile-mode-hook 'counsel-projectile-mode)
 
 #+END_SRC
 
