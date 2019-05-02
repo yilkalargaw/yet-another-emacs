@@ -65,7 +65,7 @@
       undo-tree which-key magit git-gutter git-timemachine forge monky yasnippet
       yasnippet-snippets flycheck flyspell expand-region avy ace-window ag
       smart-hungry-delete ws-butler company multiple-cursors smartparens
-      rainbow-delimiters
+      rainbow-delimiters all-the-icons neotree
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1162,6 +1162,48 @@ Git gutter:
 (setq comint-scroll-show-maximum-output nil)
 (setq comint-scroll-to-bottom-on-input nil)
 (setq comint-scroll-to-bottom-on-output nil)
+
+#+END_SRC
+
+* all-the-icons
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package all-the-icons-dired
+  :ensure t
+  :defer t
+  :hook (dired-mode . all-the-icons-dired-mode)
+)
+
+(use-package all-the-icons-ivy
+  :ensure t
+  :hook (ivy-mode)
+  :init
+  (all-the-icons-ivy-setup))
+
+
+#+END_SRC
+
+* neotree
+
+#+BEGIN_SRC emacs-lisp
+
+;;neotree
+(require 'all-the-icons)
+
+(use-package neotree
+  :ensure t
+  :defer t
+  :bind ("H-." . 'neotree-toggle)
+        ("C-c n t" . 'neotree-toggle)
+  :init (require 'all-the-icons)
+         (setq neo-theme (or 'icons 'arrows))
+                                        ;          (setq neo-theme 'icons)
+         (setq neo-window-fixed-size nil))
+
+(add-hook 'neotree-mode-hook 'my-neotree-hook)
+(defun my-neotree-hook ()
+  (nlinum-mode 0))
 
 #+END_SRC
 
