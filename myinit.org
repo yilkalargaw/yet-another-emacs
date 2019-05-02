@@ -62,7 +62,8 @@
       ;;packages
       use-package exec-path-from-shell telephone-line key-chord use-package-chords
       beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra nlinum
-      undo-tree which-key magit git-gutter git-timemachine forge monky
+      undo-tree which-key magit git-gutter git-timemachine forge monky yasnippet
+      yasnippet-snippets
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -725,6 +726,25 @@ Git gutter:
 (use-package monky
   :ensure t
   :defer t)
+
+#+END_SRC
+
+* yasnippet
+
+#+BEGIN_SRC emacs-lisp
+
+;;yasnippet
+
+(use-package yasnippet
+  :ensure t
+  :defer 2
+  :diminish yas-minor-mode
+  :init (use-package yasnippet-snippets
+          :ensure t
+          :defer t)
+  :config (yas-global-mode 1))
+
+;;(add-hook 'prog-mode-hook 'yas-minor-mode)
 
 #+END_SRC
 
