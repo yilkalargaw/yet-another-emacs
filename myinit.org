@@ -70,7 +70,7 @@
       go-mode company-go go-dlv inf-ruby robe company-jedi lua-mode company-lua
       geiser slime slime-company emmet-mode web-mode company-web js2-mode
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
-      json-mode
+      json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1576,4 +1576,25 @@ Git gutter:
 
 #+END_SRC
 
+* markdown
+
+#+BEGIN_SRC emacs-lisp
+
+;;markdown
+
+(use-package markdown-mode
+  :ensure t
+  :defer t
+  :config
+  (use-package markdown-mode+
+    :ensure t)
+  (use-package markdown-preview-mode
+    :ensure t)
+  (use-package markdown-toc
+    :ensure t))
+(autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+(setq markdown-command "pandoc -c ~/.emacs.d/github-pandoc.css --from gfm -t html5 --mathjax --highlight-style pygments --standalone")
+
+#+END_SRC
 
