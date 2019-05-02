@@ -71,7 +71,10 @@
       geiser slime slime-company emmet-mode web-mode company-web js2-mode
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
-      auctex company-auctex nov restclient realgud projectile ecb
+      auctex company-auctex nov restclient realgud projectile ecb 
+      
+      ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
+      ox-epub org-beautify-theme
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1754,3 +1757,269 @@ Git gutter:
 
 #+END_SRC
 
+* org
+
+#+BEGIN_SRC emacs-lisp
+
+(global-set-key (kbd "H-o l") 'org-store-link)
+(global-set-key (kbd "H-o a") 'org-agenda)
+(global-set-key (kbd "H-o c") 'org-capture)
+(global-set-key (kbd "H-o b") 'org-switchb)
+
+(global-set-key (kbd "C-c 0 l") 'org-store-link)
+(global-set-key (kbd "C-c 0 a") 'org-agenda)
+(global-set-key (kbd "C-c 0 c") 'org-capture)
+(global-set-key (kbd "C-c 0 b") 'org-switchb)
+
+#+END_SRC
+
+** org-fontify
+
+#+BEGIN_SRC emacs-lisp
+
+;;org fontify
+
+(setq org-src-fontify-natively t
+    org-src-tab-acts-natively t
+    org-confirm-babel-evaluate nil
+    org-edit-src-content-indentation 0)
+
+#+END_SRC
+
+** ox-md
+
+#+BEGIN_SRC emacs-lisp
+
+;;org-md
+
+(add-hook 'org-mode-hook (lambda () (require 'ox-md nil t)))
+
+#+END_SRC
+
+** ox-beamer
+
+#+BEGIN_SRC emacs-lisp
+
+;;org-beamer
+
+;; (eval-after-load "org"
+;;  '(require 'ox-beamer nil t))
+(add-hook 'org-mode-hook (lambda () (require 'ox-beamer nil t)))
+
+#+END_SRC
+
+** ox-odt
+
+#+BEGIN_SRC emacs-lisp
+
+;;org-odt
+
+ ;; (eval-after-load "org"
+ ;;  '(require 'ox-odt nil t))
+(add-hook 'org-mode-hook (lambda () (require 'ox-md nil t)))
+
+#+END_SRC
+
+** org-babel
+
+#+BEGIN_SRC emacs-lisp
+
+;;org-babel
+(defun my-org-bable-setup ()
+  (if (version< emacs-version "26.0")
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((sh . true) (python . true) (ruby . true)
+         (emacs-lisp .true) (perl . true)))
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((shell . true) (python . true) (ruby . true)
+       (emacs-lisp .true) (perl . true)))))
+
+(add-hook 'org-mode-hook 'my-org-bable-setup)
+
+#+END_SRC
+
+** ox-gfm
+
+#+BEGIN_SRC emacs-lisp
+
+;;org-gfm
+
+(use-package ox-gfm :ensure t :defer t)
+;; (eval-after-load "org"
+;;   '(require 'ox-gfm nil t))
+(add-hook 'org-mode-hook (lambda () (require 'ox-md nil t)))
+
+#+END_SRC
+
+** org-latex with pygment minted
+
+#+BEGIN_SRC emacs-lisp
+
+;;org-latex
+
+;pygment minted
+;(require 'org-latex)
+(require 'ox-latex)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-listings 'minted)
+
+(setq org-latex-default-packages-alist (cons '("mathletters" "ucs" nil) org-latex-default-packages-alist))
+(setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
+
+;; (setq org-latex-pdf-process
+;;       '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+;;         "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+;;         "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+;; (add-to-list 'load-path "~/.emacs.d/lisp/org-utf-to-xetex")
+;; (require 'org-utf-to-xetex)
+;; (add-hook 'org-mode-hook #'org-utf-to-xetex-prettify)
+
+(setq org-latex-compiler "xelatex")
+    (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
+    (setq-default TeX-engine 'xetex)
+    (setq-default TeX-PDF-mode t)
+    (add-to-list 'org-latex-packages-alist '("" "fontspec"))
+
+
+#+END_SRC
+
+** htmlize
+
+#+BEGIN_SRC emacs-lisp
+
+;;htmlize
+
+;;(use-package org :ensure t)
+(use-package htmlize :ensure t :defer t
+  :config
+  (setq org-html-html5-fancy t
+        org-html-doctype "html5")
+
+  (setq org-html-html5-fancy t
+        org-html-doctype "html5"))
+;;; Loading custom backend
+;(add-to-list 'load-path "lisp/")
+;(load-file "~/.emacs.d/lisp/pelican-html.el")
+;(use-package pelican-html :ensure t :defer t :hook(org-mode))
+
+#+END_SRC
+
+** xelatex
+
+#+BEGIN_SRC emacs-lisp
+
+;;xelatex
+
+;; (setq org-latex-to-pdf-process 
+;;   '("xelatex -interaction nonstopmode %f"
+;;      "xelatex -interaction nonstopmode %f")) ;; for multiple passes
+
+#+END_SRC
+
+** org-bullets
+
+#+BEGIN_SRC emacs-lisp
+
+;;org-bullets
+
+(use-package org-bullets 
+  :ensure t
+  :defer t
+  :hook (org-mode . (lambda () (org-bullets-mode 1))))
+
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
+
+#+END_SRC
+
+** org-tree-slide
+
+#+BEGIN_SRC emacs-lisp
+
+;;org-tree-slide
+
+(use-package org-tree-slide
+  :ensure t
+  :defer t)
+(define-key org-mode-map (kbd "<f8>") 'org-tree-slide-mode)
+(define-key org-mode-map (kbd "S-<f8>") 'org-tree-slide-skip-done-toggle)
+
+(with-eval-after-load "org-tree-slide"
+  (define-key org-tree-slide-mode-map (kbd "<f9>") 'org-tree-slide-move-previous-tree)
+  (define-key org-tree-slide-mode-map (kbd "<f10>") 'org-tree-slide-move-next-tree))
+
+#+END_SRC
+
+** epresent
+
+#+BEGIN_SRC emacs-lisp
+
+;;epresent
+
+(use-package epresent
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+** ox-pandoc
+#+BEGIN_SRC emacs-lisp
+
+;;ox-pandoc
+(use-package ox-pandoc
+  :ensure t
+  :defer t
+  :hook (org-mode . (lambda () (require 'ox-pandoc))))
+
+#+END_SRC
+
+** ob-twbs
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package ox-twbs
+    :ensure t
+    :defer t
+    :hook (org-mode . (lambda () (require 'ox-twbs))))
+
+#+END_SRC
+
+** ob-epub
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package ox-epub
+    :ensure t
+    :defer t
+    :hook (org-mode . (lambda () (require 'ox-epub))))
+
+#+END_SRC
+
+** ob-lua
+
+#+BEGIN_SRC emacs-lisp
+
+ ;; (eval-after-load "org"
+ ;;  '(require 'ob-lua nil t))
+(add-hook 'org-mode-hook (lambda () (require 'ob-lua nil t)))
+
+#+END_SRC
+
+
+
+* org-beautify
+
+#+BEGIN_SRC emacs-lisp
+
+;;org-beautify-theme
+
+(use-package org-beautify-theme
+  :ensure t
+   :defer t
+;; ;;  :init
+;;   :hook (org-bullets-mode . (load-theme 'org-beautify))
+ )
+
+#+END_SRC
