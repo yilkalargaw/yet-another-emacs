@@ -71,7 +71,7 @@
       geiser slime slime-company emmet-mode web-mode company-web js2-mode
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
-      auctex company-auctex nov restclient realgud projectile ecb
+      auctex company-auctex nov restclient realgud projectile ecb god-mode
 
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
       ox-epub org-beautify-theme
@@ -2019,6 +2019,52 @@ Git gutter:
 ;; ;;  :init
 ;;   :hook (org-bullets-mode . (load-theme 'org-beautify))
  )
+
+#+END_SRC
+
+* god mode
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package god-mode
+  :ensure t
+  :defer t
+  :config
+     (define-key god-local-mode-map (kbd ".") 'repeat)
+     (define-key god-local-mode-map (kbd "i") 'god-local-mode)
+
+     (global-set-key (kbd "C-x C-1") 'delete-other-windows)
+     (global-set-key (kbd "C-x C-2") 'split-window-below)
+     (global-set-key (kbd "C-x C-3") 'split-window-right)
+     (global-set-key (kbd "C-x C-0") 'delete-window)
+
+     (require 'god-mode-isearch)
+     (define-key isearch-mode-map (kbd "<escape>") 'god-mode-isearch-activate)
+     (define-key god-mode-isearch-map (kbd "<escape>") 'god-mode-isearch-disable)
+     ;; org-mode
+     (define-key god-local-mode-map [remap self-insert-command] 'my-god-mode-self-insert)
+
+     (defun my-god-mode-self-insert ()
+       (interactive)
+       (if (and (bolp)
+                (eq major-mode 'org-mode))
+           (call-interactively 'org-self-insert-command)
+         (call-interactively 'god-mode-self-insert)))
+     (which-key-enable-god-mode-support)
+
+     )
+
+(defun my-update-cursor ()
+  (setq cursor-type (if (or god-local-mode buffer-read-only)
+                        'box
+                      'bar)))
+
+(add-hook 'god-mode-enabled-hook 'my-update-cursor)
+(add-hook 'god-mode-disabled-hook 'my-update-cursor)
+
+(global-set-key (kbd "<f12>") 'god-local-mode)
+
+;; (global-set-key (kbd "<escape>") 'god-mode-all)
 
 #+END_SRC
 
