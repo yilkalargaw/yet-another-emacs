@@ -1624,3 +1624,11 @@ Git gutter:
 
 #+END_SRC
 
+* eww
+
+#+BEGIN_SRC emacs-lisp
+
+(setq shr-inhibit-images 1)
+
+#+END_SRC
+
