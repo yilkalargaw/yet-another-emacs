@@ -68,7 +68,7 @@
       rainbow-delimiters all-the-icons neotree company-c-headers irony company-irony
       flycheck-irony irony-eldoc flycheck-rust racer rust-mode cargo
       go-mode company-go go-dlv inf-ruby robe company-jedi lua-mode company-lua
-      geiser
+      geiser slime slime-company
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1395,6 +1395,8 @@ Git gutter:
 
 #+BEGIN_SRC emacs-lisp
 
+;;scheme
+
 (use-package geiser
   :ensure t
   :defer t
@@ -1404,6 +1406,26 @@ Git gutter:
   :init
     (setq geiser-default-implementation 'guile)
     (setq geiser-guile-binary "/usr/bin/guile2.2"))
+
+#+END_SRC
+
+* common-lisp
+
+#+BEGIN_SRC emacs-lisp
+
+;; common-lisp
+
+(use-package slime-company
+  :ensure t
+  :defer t)
+
+(use-package slime
+  :ensure t
+  :init (setq inferior-lisp-program "~/langs/sbcl/bin/sbcl")
+        (setq slime-contribs '(slime-fancy slime-company))
+  :bind (:map slime-mode-map
+              ("C-t C-e" . slime-eval-last-expression))
+  :defer t)
 
 #+END_SRC
 
