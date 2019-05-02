@@ -71,7 +71,7 @@
       geiser slime slime-company emmet-mode web-mode company-web js2-mode
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
-      auctex company-auctex
+      auctex company-auctex nov
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
@@ -1629,6 +1629,17 @@ Git gutter:
 #+BEGIN_SRC emacs-lisp
 
 (setq shr-inhibit-images 1)
+
+#+END_SRC
+
+* nov.el
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package nov
+  :ensure t
+  :defer t
+  :mode ("\\.epub\\'" . nov-mode))
 
 #+END_SRC
 
