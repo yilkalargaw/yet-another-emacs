@@ -81,3 +81,9 @@ transient/
 
 #eshell
 eshell/
+
+#auto-save-list
+auto-save-list/
+
+#backups
+backups/
