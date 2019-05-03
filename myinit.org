@@ -72,6 +72,7 @@
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
       auctex company-auctex nov restclient realgud projectile ecb god-mode
+      php-mode company-php
 
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
       ox-epub org-beautify-theme
@@ -1558,6 +1559,41 @@ Git gutter:
 
 (use-package crystal-mode
   :mode ("\\.cr$" . crystal-mode))
+
+#+END_SRC
+
+* php
+
+#+BEGIN_SRC emacs-lisp
+
+;;php
+
+(use-package php-mode
+  :ensure t
+  :mode "\\.php\\'"
+  ;;:config (require 'php-extras)
+)
+
+(use-package company-php
+  :ensure t
+  :defer t)
+
+;; (use-package php-extras
+;;   :ensure t
+;;   :defer t)
+
+;; (eval-after-load 'php-mode
+;;   (require 'php-extras))
+
+(add-hook 'php-mode-hook
+          '(lambda ()
+             (require 'company-php)
+             (company-mode t)
+;;             (ac-php-core-eldoc-setup) ;; enable eldoc
+             (make-local-variable 'company-backends)
+             (add-to-list 'company-backends 'company-ac-php-backend)))
+;(eval-after-load 'php-mode
+;  (require 'php-extras))
 
 #+END_SRC
 
