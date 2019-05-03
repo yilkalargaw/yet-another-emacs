@@ -78,3 +78,6 @@ emacs-custom
 
 #transient
 transient/
+
+#eshell
+eshell/
