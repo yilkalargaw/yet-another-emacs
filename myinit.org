@@ -255,28 +255,7 @@
 ;;telephone-lines
 (use-package telephone-line
   :ensure t
-  :defer t
-
-  :config (progn (telephone-line-defsegment* telephone-line-god-mode-segment ()
-                   (let ((tag (if god-local-mode
-                                  "GOD" "EMACS")))
-                     (if telephone-line-evil-use-short-tag
-                         (seq-take tag 1)
-                       tag)))
-
-            (setq telephone-line-lhs
-                     '((accent . (telephone-line-vc-segment
-                                  telephone-line-erc-modified-channels-segment
-                                  telephone-line-process-segment
-                                  telephone-line-god-mode-segment))
-                       (evil    . (telephone-line-buffer-segment
-                                 ; telephone-line-minor-mode-segment
-                                  ))))
-               ;; (setq telephone-line-rhs
-               ;;            '((nil    . (telephone-line-misc-info-segment))
-               ;;              (accent . (telephone-line-major-mode-segment))
-               ;;               ))
-))
+  :defer t)
 
 
 (add-hook 'after-make-frame-functions
@@ -689,7 +668,9 @@
 (use-package which-key
   :ensure t
   :defer 2
-  :config (which-key-mode))
+  :config (which-key-mode)
+       (which-key-enable-god-mode-support)
+)
 
 #+END_SRC
 
@@ -2097,8 +2078,6 @@ Git gutter:
                 (eq major-mode 'org-mode))
            (call-interactively 'org-self-insert-command)
          (call-interactively 'god-mode-self-insert)))
-     (which-key-enable-god-mode-support)
-
      )
 
 (defun my-update-cursor ()
@@ -2109,9 +2088,9 @@ Git gutter:
 (add-hook 'god-mode-enabled-hook 'my-update-cursor)
 (add-hook 'god-mode-disabled-hook 'my-update-cursor)
 
-(global-set-key (kbd "<f12>") 'god-local-mode)
+;;(global-set-key (kbd "<f12>") 'god-local-mode)
 
-;; (global-set-key (kbd "<escape>") 'god-mode-all)
+(global-set-key (kbd "<f12>") 'god-mode-all)
 
 #+END_SRC
 
