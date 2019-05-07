@@ -72,7 +72,7 @@
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
       auctex company-auctex nov restclient realgud projectile ecb god-mode
-      php-mode company-php ace-link
+      php-mode company-php ace-link try
 
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
       ox-epub org-beautify-theme
@@ -2130,3 +2130,12 @@ Git gutter:
 
 #+END_SRC
 
+* try
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package try
+  :defer t
+  :ensure t)
+
+#+END_SRC
