@@ -72,7 +72,7 @@
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
       auctex company-auctex nov restclient realgud projectile ecb god-mode
-      php-mode company-php
+      php-mode company-php ace-link
 
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
       ox-epub org-beautify-theme
@@ -890,9 +890,21 @@ Git gutter:
     ("w" avy-goto-word-1 :exit t)
     ("s" avy-goto-subword-1 :exit t)
     ("l" avy-goto-line :exit t))
-(global-set-key (kbd "C-'") 'hydra-avy/body) ;;example-binding
+;; (global-set-key (kbd "C-'") 'hydra-avy/body) ;;example-binding
 (global-set-key (kbd "H-'") 'hydra-avy/body) ;;example-binding
 (key-chord-define-global "vj"  'hydra-avy/body)
+
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package ace-link
+  :demand t
+  :after (:any elbank helpful info eww)
+  :config
+  (progn
+(ace-link-setup-default)))
 
 #+END_SRC
 
@@ -986,7 +998,7 @@ Git gutter:
   ("q" nil))
 
 (global-set-key (kbd "C-c m c") 'hydra-multiple-cursors/body) ;;example-binding
-(global-set-key (kbd "C-;") 'hydra-multiple-cursors/body) ;;example-binding
+;; (global-set-key (kbd "C-;") 'hydra-multiple-cursors/body) ;;example-binding
 (key-chord-define-global "qk"   'hydra-multiple-cursors/body)
 
 #+END_SRC
