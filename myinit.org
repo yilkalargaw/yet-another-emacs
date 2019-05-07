@@ -82,6 +82,7 @@
       color-theme-sanityinc-solarized soothe-theme seti-theme spacemacs-theme
       sublime-themes flatland-theme flatui-dark-theme material-theme blackboard-theme
       solarized-theme cyberpunk-theme doom-themes  zenburn-theme org-beautify-theme
+      danneskjold-theme
        ))
 
 ;; activate all the packages
@@ -180,6 +181,10 @@
   :defer t)
 
 (use-package darktooth-theme
+  :ensure t
+  :defer t)
+
+(use-package danneskjold-theme
   :ensure t
   :defer t)
 
