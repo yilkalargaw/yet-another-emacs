@@ -87,3 +87,5 @@ auto-save-list/
 
 #backups
 backups/
+/.python-environments/
+irony/
