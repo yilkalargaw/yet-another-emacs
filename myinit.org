@@ -188,7 +188,7 @@
   :ensure t
   :defer t)
 
-(load-theme 'spacemacs-dark t)
+(load-theme 'solarized-dark t)
 
 #+END_SRC
 
@@ -2137,5 +2137,16 @@ Git gutter:
 (use-package try
   :defer t
   :ensure t)
+
+#+END_SRC
+
+* custom_faces
+
+#+BEGIN_SRC emacs-lisp
+
+
+(custom-set-faces
+ '(symbol-overlay-default-face ((t (:background "#3f444a" :foreground "#9ca0a4"))))
+ '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0)))))
 
 #+END_SRC
