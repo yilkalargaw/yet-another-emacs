@@ -72,8 +72,8 @@
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
       auctex company-auctex nov restclient realgud projectile ecb god-mode
-      php-mode company-php ace-link try
-
+      php-mode company-php ace-link try dired-narrow dired-subtree
+      
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
       ox-epub org-beautify-theme
 
@@ -188,7 +188,29 @@
   :ensure t
   :defer t)
 
-(load-theme 'solarized-dark t)
+
+(defun disable-all-themes ()
+  "disable all active themes."
+  (dolist (i custom-enabled-themes)
+    (disable-theme i)))
+
+(defadvice load-theme (before disable-themes-first activate)
+  (disable-all-themes))
+
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+              (select-frame frame)
+              (if (display-graphic-p)
+		  (load-theme 'solarized-dark t) 
+		(load-theme 'danneskjold t))))
+
+(add-hook 'after-init-hook
+	  (if (display-graphic-p) 
+	      (load-theme 'solarized-dark t) 
+	    (load-theme 'danneskjold t)))
+
+;; (add-hook 'after-init-hook 
+;; 	  (load-theme 'spacemacs-dark t))
 
 #+END_SRC
 
@@ -1135,7 +1157,7 @@ Git gutter:
   :ensure t
   :defer t
   :config (require 'company)
-  (global-set-key (kbd "<backtab>") 'company-complete-common)
+;;  (global-set-key (kbd "<backtab>") 'company-complete-common)
   (global-set-key (kbd "H-<SPC>") 'company-complete-common)
   (global-set-key (kbd "C-`") 'company-yasnippet)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
@@ -2130,6 +2152,66 @@ Git gutter:
 
 #+END_SRC
 
+* dired
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package dired
+;;  :ensure t
+  :defer t
+  :config
+     (require 'dired-x)
+     (require 'dired-narrow)
+     (require 'dired-subtree)
+     (put 'dired-find-alternate-file 'disabled nil)
+     (define-key dired-mode-map (kbd "C-<return>") 'dired-find-file)
+     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+     (define-key dired-mode-map (kbd "M-<return>") 'dired-find-file-other-window)
+     ;; allow dired to delete or copy dir
+     (setq dired-recursive-copies (quote always)) ; “always” means no asking
+     (setq dired-recursive-deletes (quote top)) ; “top” means ask once
+     (setq dired-dwim-target t)
+
+     (defun dired-dotfiles-toggle ()
+       "Show/hide dot-files"
+       (interactive)
+       (when (equal major-mode 'dired-mode)
+	 (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
+	     (progn
+	       (set (make-local-variable 'dired-dotfiles-show-p) nil)
+	       (message "h")
+	       (dired-mark-files-regexp "^\\\.")
+	       (dired-do-kill-lines))
+	   (progn (revert-buffer) ; otherwise just revert to re-show
+		  (set (make-local-variable 'dired-dotfiles-show-p) t)))))
+
+     (define-key dired-mode-map (kbd "H-l")
+       (lambda () (interactive) (dired-dotfiles-toggle)))
+     
+     (define-key dired-mode-map (kbd "^")
+       (lambda () (interactive) (find-alternate-file "..")))
+)
+
+
+(use-package dired-narrow
+  :ensure t
+  :defer t
+  :config
+  (bind-key "C-c C-n" #'dired-narrow)
+  (bind-key "C-c C-f" #'dired-narrow-fuzzy)
+  (bind-key "C-x C-N" #'dired-narrow-regexp)
+)
+
+(use-package dired-subtree :ensure t
+  :defer t
+  :ensure t
+  :config
+  (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
+  (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map)
+)
+
+#+END_SRC
+
 * try
 
 #+BEGIN_SRC emacs-lisp
@@ -2150,3 +2232,4 @@ Git gutter:
  '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0)))))
 
 #+END_SRC
+
