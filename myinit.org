@@ -190,28 +190,28 @@
   :defer t)
 
 
-(defun disable-all-themes ()
-  "disable all active themes."
-  (dolist (i custom-enabled-themes)
-    (disable-theme i)))
+;; (defun disable-all-themes ()
+;;   "disable all active themes."
+;;   (dolist (i custom-enabled-themes)
+;;     (disable-theme i)))
 
-(defadvice load-theme (before disable-themes-first activate)
-  (disable-all-themes))
+;; (defadvice load-theme (before disable-themes-first activate)
+;;   (disable-all-themes))
 
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-              (select-frame frame)
-              (if (display-graphic-p)
-		  (load-theme 'solarized-dark t) 
-		(load-theme 'danneskjold t))))
+;; (add-hook 'after-make-frame-functions
+;;           (lambda (frame)
+;;               (select-frame frame)
+;;               (if (display-graphic-p)
+;; 		  (load-theme 'solarized-dark t) 
+;; 		(load-theme 'danneskjold t))))
 
-(add-hook 'after-init-hook
-	  (if (display-graphic-p) 
-	      (load-theme 'solarized-dark t) 
-	    (load-theme 'danneskjold t)))
+;; (add-hook 'after-init-hook
+;; 	  (if (display-graphic-p) 
+;; 	      (load-theme 'solarized-dark t) 
+;; 	    (load-theme 'danneskjold t)))
 
-;; (add-hook 'after-init-hook 
-;; 	  (load-theme 'spacemacs-dark t))
+(add-hook 'after-init-hook 
+	  (load-theme 'spacemacs-dark t))
 
 #+END_SRC
 
