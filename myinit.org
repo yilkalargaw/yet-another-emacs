@@ -72,7 +72,8 @@
       company-tern skewer-mode tuareg crystal-mode csv-mode yaml-mode toml-mode
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
       auctex company-auctex nov restclient realgud projectile ecb god-mode
-      php-mode company-php ace-link try dired-narrow dired-subtree
+      php-mode company-php ace-link try dired-narrow dired-subtree lsp-mode company-lsp
+      lsp-ui
       
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
       ox-epub org-beautify-theme
@@ -369,8 +370,8 @@
 ;;   )
 ;; scroll one line at a time (less "jumpy" than defaults)
 
-(setq mouse-wheel-scroll-amount '(10 ((shift) . 10))) ;; one line at a time
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed t) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
@@ -687,7 +688,7 @@
 
 ;;line-highlight
 
-(global-hl-line-mode)
+(add-hook 'after-init-hook 'global-hl-line-mode t)
 
 #+END_SRC
 
@@ -825,10 +826,10 @@ Git gutter:
   :ensure t
   :defer 2
   :diminish yas-minor-mode
-  :init (use-package yasnippet-snippets
+  :config (use-package yasnippet-snippets
           :ensure t
           :defer t)
-  :config (yas-global-mode 1))
+  (yas-global-mode 1))
 
 ;;(add-hook 'prog-mode-hook 'yas-minor-mode)
 
@@ -876,7 +877,7 @@ Git gutter:
 
 (use-package expand-region
   :ensure t
-  :defer 3
+  :defer t
   :bind (("C-=". er/expand-region)))
 
 #+END_SRC
@@ -1285,6 +1286,89 @@ Git gutter:
 
 #+END_SRC
 
+* lsp-mode
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package lsp-mode
+  :ensure t
+  :defer t
+  :hook (ruby-mode)
+  :config
+
+  ;; change nil to 't to enable logging of packets between emacs and the LS
+  ;; this was invaluable for debugging communication with the MS Python Language Server
+  ;; and comparing this with what vs.code is doing
+  (setq lsp-print-io nil)
+
+  ;; lsp-ui gives us the blue documentation boxes and the sidebar info
+  (use-package lsp-ui
+    :ensure t
+    :config
+    (setq lsp-ui-sideline-ignore-duplicate t)
+    (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+
+  ;; install LSP company backend for LSP-driven completion
+  (use-package company-lsp
+    :ensure t
+    :config
+    (push 'company-lsp company-backends))
+
+  (require 'lsp-clients)
+  ;; (add-hook 'typescript-mode-hook 'lsp)
+  ;; (add-hook 'js2-mode-hook 'lsp)
+  ;; (add-hook 'php-mode 'lsp)
+  ;; (add-hook 'css-mode 'lsp)
+  ;; (add-hook 'ruby-mode 'lsp)
+  ;; (add-hook 'web-mode 'lsp)
+  (setq lsp-prefer-flymake nil)
+  (setq lsp-enable-file-watchers nil)
+  )
+
+;;(use-package company-lsp :ensure t :defer t :hook (lsp-mode))
+
+;; (setq lsp-language-id-configuration '(;; (java-mode . "java")
+;; 				      ;; (python-mode . "python")
+;; 				      ;; (gfm-view-mode . "markdown")
+;; 				      ;; (rust-mode . "rust")
+;; 				      (ruby-mode . "ruby")
+;; 				      ;; (css-mode . "css")
+;; 				      ;; (xml-mode . "xml")
+;; 				      ;; (c-mode . "c")
+;; 				      ;; (c++-mode . "cpp")
+;; 				      ;; (objc-mode . "objective-c")
+;; 				      ;; (web-mode . "html")
+;; 				      ;; (html-mode . "html")
+;; 				      ;; (sgml-mode . "html")
+;; 				      ;; (mhtml-mode . "html")
+;; 				      ;; (go-mode . "go")
+;; 				      ;; (haskell-mode . "haskell")
+;; 				      ;; (php-mode . "php")
+;; 				      ;; (json-mode . "json")
+;; 				      ;; (js2-mode . "javascript")
+;; 				      ;;(typescript-mode . "typescript")
+
+;; 				      ))
+
+;; LSP debugging
+
+;;(setq lsp-print-io t)
+
+;;(setq lsp-trace t)
+
+;;(setq lsp-print-performance t)
+
+(use-package dap-mode
+  :ensure t ;;:after lsp-mode
+  :defer t
+  :hook (lsp-mode . dap-mode)
+  :config
+    ;;(dap-mode t)
+    (dap-ui-mode t)
+    (require 'dap-ruby))
+
+#+END_SRC
+
 * C/C++
 
 #+BEGIN_SRC emacs-lisp
@@ -1292,6 +1376,8 @@ Git gutter:
 ;;C/C++
 
 (use-package company-c-headers
+  :after company
+  :defer t
   :ensure t)
 
 
@@ -1338,10 +1424,10 @@ Git gutter:
 
 (use-package flycheck-rust
   :ensure t
-  :defer 3.5
+  :after rust-mode
   :config
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  (add-hook 'rust-mode-hook 'flycheck-mode))
+;;  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  (add-hook 'rust-mode-hook 'flycheck-mode)) ;;quite unecessary but I will try it's effects
 
 
 (use-package racer
@@ -1357,6 +1443,7 @@ Git gutter:
   :hook (rust-mode . racer-mode)
         (racer-mode . eldoc-mode)
   :config
+        (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
         (setq rust-format-on-save t))
 
 (use-package cargo
@@ -1478,8 +1565,8 @@ Git gutter:
 
 (use-package slime
   :ensure t
-  :init (setq inferior-lisp-program "~/langs/sbcl/bin/sbcl")
-        (setq slime-contribs '(slime-fancy slime-company))
+  :config (setq inferior-lisp-program "~/.nix-profile/bin/sbcl")
+          (setq slime-contribs '(slime-fancy slime-company))
   :bind (:map slime-mode-map
               ("C-t C-e" . slime-eval-last-expression))
   :defer t)
@@ -1517,13 +1604,11 @@ Git gutter:
 
 
  (use-package company-web
-   :config
-   (add-hook 'web-mode-hook
-             (lambda ()
-               (add-to-list 'company-backends 'company-web-html)))
-   (add-hook 'html-mode-hook
-             (lambda ()
-               (add-to-list 'company-backends 'company-web-html))))
+   :defer t
+   :hook (('web-mode . (lambda () (add-to-list 'company-backends 'company-web-html)))
+	  ('mhtml-mode . (lambda () (add-to-list 'company-backends 'company-web-html)))
+	  ('html-mode . (lambda () (add-to-list 'company-backends 'company-web-html))))
+ )
 
 #+END_SRC
 
@@ -1700,12 +1785,13 @@ Git gutter:
 
   (use-package  company-auctex
   :ensure t
-  :config  (company-auctex-init)
-  :defer 5)
+  :defer t
+  :config  (company-auctex-init))
 
   (add-hook 'LaTeX-mode-hook 'visual-line-mode)
   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+  (add-hook 'LaTeX-mode-hook 'company-auctex-init)
 
 (add-hook 'TeX-mode-hook
           (lambda ()
