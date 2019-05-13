@@ -73,7 +73,7 @@
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
       auctex company-auctex nov restclient realgud projectile ecb god-mode
       php-mode company-php ace-link try dired-narrow dired-subtree lsp-mode company-lsp
-      lsp-ui
+      lsp-ui dap-mode emojify
       
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
       ox-epub org-beautify-theme
