@@ -2308,6 +2308,20 @@ Git gutter:
 
 #+END_SRC
 
+* emojify
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package emojify
+  :ensure t
+  :defer 2
+  :config (progn
+	    (global-emojify-mode t)
+            ;; (add-hook 'after-init-hook #'global-emojify-mode)
+            (prettify-symbols-mode t)))
+
+#+END_SRC
+
 * custom_faces
 
 #+BEGIN_SRC emacs-lisp
