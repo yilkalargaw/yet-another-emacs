@@ -83,7 +83,7 @@
       color-theme-sanityinc-solarized soothe-theme seti-theme spacemacs-theme
       sublime-themes flatland-theme flatui-dark-theme material-theme blackboard-theme
       solarized-theme cyberpunk-theme doom-themes  zenburn-theme org-beautify-theme
-      danneskjold-theme
+      danneskjold-theme base16-theme
        ))
 
 ;; activate all the packages
@@ -189,6 +189,9 @@
   :ensure t
   :defer t)
 
+(use-package base16-theme
+  :ensure t
+  :defer t)
 
 ;; (defun disable-all-themes ()
 ;;   "disable all active themes."
