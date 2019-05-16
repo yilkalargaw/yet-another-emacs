@@ -2317,11 +2317,9 @@ Git gutter:
 
 (use-package emojify
   :ensure t
-  :defer 2
-  :config (progn
-	    (global-emojify-mode t)
-            ;; (add-hook 'after-init-hook #'global-emojify-mode)
-            (prettify-symbols-mode t)))
+  :hook (emojify-mode . prettify-symbols-mode)
+  :bind ("H-p p" . emojify-mode)
+ )
 
 #+END_SRC
 
