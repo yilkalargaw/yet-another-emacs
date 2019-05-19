@@ -2355,6 +2355,24 @@ Git gutter:
 
 #+END_SRC
 
+* writeroom-mode
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package writeroom-mode
+  :ensure t
+  :defer t
+  :hook ((writeroom-mode . (lambda () (display-line-numbers-mode -1)))
+	 (writeroom-mode . (lambda () (nlinum-mode -1)))
+	 (org-tree-slide-mode . writeroom-mode)
+	 )
+  :bind ("H-<f11>" . writeroom-mode)
+	 
+  :config
+)
+
+#+END_SRC
+
 * custom_faces
 
 #+BEGIN_SRC emacs-lisp
