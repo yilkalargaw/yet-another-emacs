@@ -2367,8 +2367,6 @@ Git gutter:
 	 (org-tree-slide-mode . writeroom-mode)
 	 )
   :bind ("H-<f11>" . writeroom-mode)
-	 
-  :config
 )
 
 #+END_SRC
