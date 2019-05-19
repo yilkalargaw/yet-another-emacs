@@ -361,7 +361,39 @@
 
 #+END_SRC
 
-* smooth-scrolling
+* line-spacing
+
+#+BEGIN_SRC emacs-lisp
+
+(setq-default line-spacing 0.20)
+(add-hook 'minibuffer-setup-hook (lambda () (setq line-spacing nil)))
+
+#+END_SRC
+
+* scrolling
+
+** horizontal scrolling
+
+#+BEGIN_SRC emacs-lisp
+
+(add-hook 'prog-mode-hook (lambda ()(setq truncate-lines t)))
+(add-hook 'html-mode-hook (lambda ()(setq truncate-lines t)))
+(add-hook 'web-mode-hook (lambda ()(setq truncate-lines t)))
+(add-hook 'dired-mode-hook (lambda ()(setq truncate-lines t)))
+(add-hook 'org-mode (lambda ()(setq truncate-lines nil)))
+
+
+(global-set-key (kbd "<mouse-7>") '(lambda ()
+                                     (interactive)
+                                     (scroll-left 4)))
+
+(global-set-key (kbd "<mouse-6>") '(lambda ()
+                                     (interactive)
+                                     (scroll-right 4)))
+
+#+END_SRC
+
+** smooth-scrolling
 
 #+BEGIN_SRC emacs-lisp
 
