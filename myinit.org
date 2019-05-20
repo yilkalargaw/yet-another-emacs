@@ -2076,28 +2076,29 @@ Git gutter:
 ;;org-latex
 
 ;pygment minted
-;(require 'org-latex)
-(require 'ox-latex)
-(add-to-list 'org-latex-packages-alist '("" "minted"))
-(setq org-latex-listings 'minted)
+					;(require 'org-latex)
+(add-hook 'org-mode-hook (lambda () 
+			   (require 'ox-latex)
+			   (add-to-list 'org-latex-packages-alist '("" "minted"))
+			   (setq org-latex-listings 'minted)
 
-(setq org-latex-default-packages-alist (cons '("mathletters" "ucs" nil) org-latex-default-packages-alist))
-(setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
+			   (setq org-latex-default-packages-alist (cons '("mathletters" "ucs" nil) org-latex-default-packages-alist))
+			   (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
 
-;; (setq org-latex-pdf-process
-;;       '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-;;         "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-;;         "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+			   ;; (setq org-latex-pdf-process
+			   ;;       '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+			   ;;         "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+			   ;;         "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
-;; (add-to-list 'load-path "~/.emacs.d/lisp/org-utf-to-xetex")
-;; (require 'org-utf-to-xetex)
-;; (add-hook 'org-mode-hook #'org-utf-to-xetex-prettify)
+			   ;; (add-to-list 'load-path "~/.emacs.d/lisp/org-utf-to-xetex")
+			   ;; (require 'org-utf-to-xetex)
+			   ;; (add-hook 'org-mode-hook #'org-utf-to-xetex-prettify)
 
-(setq org-latex-compiler "xelatex")
-    (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
-    (setq-default TeX-engine 'xetex)
-    (setq-default TeX-PDF-mode t)
-    (add-to-list 'org-latex-packages-alist '("" "fontspec"))
+			   (setq org-latex-compiler "xelatex")
+			   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
+			   (setq-default TeX-engine 'xetex)
+			   (setq-default TeX-PDF-mode t)
+			   (add-to-list 'org-latex-packages-alist '("" "fontspec"))))
 
 
 #+END_SRC
