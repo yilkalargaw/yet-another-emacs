@@ -65,9 +65,9 @@
     '(
       ;;packages
       use-package exec-path-from-shell telephone-line key-chord use-package-chords
-      beacon symbol-overlay hydra ibuffer ivy counsel swiper ivy-hydra nlinum
+      beacon symbol-overlay hydra ivy counsel swiper ivy-hydra nlinum
       undo-tree which-key magit git-gutter git-timemachine forge monky yasnippet
-      yasnippet-snippets flycheck flyspell expand-region avy ace-window ag
+      yasnippet-snippets flycheck expand-region avy ace-window ag
       smart-hungry-delete ws-butler company multiple-cursors smartparens
       rainbow-delimiters all-the-icons neotree company-c-headers irony company-irony
       flycheck-irony irony-eldoc flycheck-rust racer rust-mode cargo
