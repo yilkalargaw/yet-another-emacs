@@ -520,7 +520,12 @@
 
 ;;hydra
 (use-package hydra
-  :ensure t)
+  :defer t
+  :hook (after-init . (lambda () (require 'hydra)))
+  :after init
+  :ensure t
+  :config
+  (load-file "./hydras.el"))
 
 #+END_SRC
 
@@ -544,101 +549,14 @@
 
 ;; ibuffer
 (use-package ibuffer
-  :ensure t
+;;  :ensure t
   :bind (("C-x C-b" . ibuffer)
          :map ibuffer-mode-map
-         ("C-." . hydra-ibuffer-main/body))
+         ;; ("C-." . hydra-ibuffer-main/body)
+	 )
   :hook (ibuffer-mode . hydra-ibuffer-main/body)
-  :init
-  (defhydra hydra-ibuffer-main (:color pink :hint nil)
-  "
- ^Navigation^ | ^Mark^        | ^Actions^        | ^View^
--^----------^-+-^----^--------+-^-------^--------+-^----^-------
-  _k_:    ʌ   | _m_: mark     | _D_: delete      | _g_: refresh
- _RET_: visit | _u_: unmark   | _S_: save        | _s_: sort
-  _j_:    v   | _*_: specific | _a_: all actions | _/_: filter
--^----------^-+-^----^--------+-^-------^--------+-^----^-------
-"
-  ("j" ibuffer-forward-line)
-  ("RET" ibuffer-visit-buffer :color blue)
-  ("k" ibuffer-backward-line)
 
-  ("m" ibuffer-mark-forward)
-  ("u" ibuffer-unmark-forward)
-  ("*" hydra-ibuffer-mark/body :color blue)
-
-  ("D" ibuffer-do-delete)
-  ("S" ibuffer-do-save)
-  ("a" hydra-ibuffer-action/body :color blue)
-
-  ("g" ibuffer-update)
-  ("s" hydra-ibuffer-sort/body :color blue)
-  ("/" hydra-ibuffer-filter/body :color blue)
-
-  ("o" ibuffer-visit-buffer-other-window "other window" :color blue)
-  ("q" quit-window "quit ibuffer" :color blue)
-  ("." nil "toggle hydra" :color blue))
-
-(defhydra hydra-ibuffer-mark (:color teal :columns 5
-                              :after-exit (hydra-ibuffer-main/body))
-  "Mark"
-  ("*" ibuffer-unmark-all "unmark all")
-  ("M" ibuffer-mark-by-mode "mode")
-  ("m" ibuffer-mark-modified-buffers "modified")
-  ("u" ibuffer-mark-unsaved-buffers "unsaved")
-  ("s" ibuffer-mark-special-buffers "special")
-  ("r" ibuffer-mark-read-only-buffers "read-only")
-  ("/" ibuffer-mark-dired-buffers "dired")
-  ("e" ibuffer-mark-dissociated-buffers "dissociated")
-  ("h" ibuffer-mark-help-buffers "help")
-  ("z" ibuffer-mark-compressed-file-buffers "compressed")
-  ("b" hydra-ibuffer-main/body "back" :color blue))
-
-(defhydra hydra-ibuffer-action (:color teal :columns 4
-                                :after-exit
-                                (if (eq major-mode 'ibuffer-mode)
-                                    (hydra-ibuffer-main/body)))
-  "Action"
-  ("A" ibuffer-do-view "view")
-  ("E" ibuffer-do-eval "eval")
-  ("F" ibuffer-do-shell-command-file "shell-command-file")
-  ("I" ibuffer-do-query-replace-regexp "query-replace-regexp")
-  ("H" ibuffer-do-view-other-frame "view-other-frame")
-  ("N" ibuffer-do-shell-command-pipe-replace "shell-cmd-pipe-replace")
-  ("M" ibuffer-do-toggle-modified "toggle-modified")
-  ("O" ibuffer-do-occur "occur")
-  ("P" ibuffer-do-print "print")
-  ("Q" ibuffer-do-query-replace "query-replace")
-  ("R" ibuffer-do-rename-uniquely "rename-uniquely")
-  ("T" ibuffer-do-toggle-read-only "toggle-read-only")
-  ("U" ibuffer-do-replace-regexp "replace-regexp")
-  ("V" ibuffer-do-revert "revert")
-  ("W" ibuffer-do-view-and-eval "view-and-eval")
-  ("X" ibuffer-do-shell-command-pipe "shell-command-pipe")
-  ("b" nil "back"))
-
-(defhydra hydra-ibuffer-sort (:color amaranth :columns 3)
-  "Sort"
-  ("i" ibuffer-invert-sorting "invert")
-  ("a" ibuffer-do-sort-by-alphabetic "alphabetic")
-  ("v" ibuffer-do-sort-by-recency "recently used")
-  ("s" ibuffer-do-sort-by-size "size")
-  ("f" ibuffer-do-sort-by-filename/process "filename")
-  ("m" ibuffer-do-sort-by-major-mode "mode")
-  ("b" hydra-ibuffer-main/body "back" :color blue))
-
-(defhydra hydra-ibuffer-filter (:color amaranth :columns 4)
-  "Filter"
-  ("m" ibuffer-filter-by-used-mode "mode")
-  ("M" ibuffer-filter-by-derived-mode "derived mode")
-  ("n" ibuffer-filter-by-name "name")
-  ("c" ibuffer-filter-by-content "content")
-  ("e" ibuffer-filter-by-predicate "predicate")
-  ("f" ibuffer-filter-by-filename "filename")
-  (">" ibuffer-filter-by-size-gt "size")
-  ("<" ibuffer-filter-by-size-lt "size")
-  ("/" ibuffer-filter-disable "disable")
-  ("b" hydra-ibuffer-main/body "back" :color blue)))
+)
 
 #+END_SRC
 
@@ -650,6 +568,7 @@
 
 (use-package ivy :demand
   :ensure t
+  :after (init)
   :init (ivy-mode 1)
         (use-package flx
           :ensure t)
@@ -902,7 +821,7 @@ Git gutter:
 #+BEGIN_SRC emacs-lisp
 
 (use-package flyspell
-  :ensure t
+;;  :ensure t
   :defer t
   :hook ((prog-mode-hook . flyspell-prog-mode)
 	 (text-mode-hook . flyspell-mode))
@@ -1078,106 +997,17 @@ Git gutter:
 
 (use-package smartparens-config
     :ensure smartparens
+    :defer t
     :config
     (progn
       (show-smartparens-global-mode t)
-      (global-set-key
-       (kbd "H-(")
-       (defhydra hydra-learn-sp (:hint nil)
-         "
-  _B_ backward-sexp            -----
-  _F_ forward-sexp               _s_ splice-sexp
-  _L_ backward-down-sexp         _df_ splice-sexp-killing-forward
-  _H_ backward-up-sexp           _db_ splice-sexp-killing-backward
-^^------                         _da_ splice-sexp-killing-around
-  _k_ down-sexp                -----
-  _j_ up-sexp                    _C-s_ select-next-thing-exchange
--^^-----                         _C-p_ select-previous-thing
-  _n_ next-sexp                  _C-n_ select-next-thing
-  _p_ previous-sexp            -----
-  _a_ beginning-of-sexp          _C-f_ forward-symbol
-  _z_ end-of-sexp                _C-b_ backward-symbol
---^^-                          -----
-  _t_ transpose-sexp             _c_ convolute-sexp
--^^--                            _g_ absorb-sexp
-  _x_ delete-char                _q_ emit-sexp
-  _dw_ kill-word               -----
-  _dd_ kill-sexp                 _,b_ extract-before-sexp
--^^--                            _,a_ extract-after-sexp
-  _S_ unwrap-sexp              -----
--^^--                            _AP_ add-to-previous-sexp
-  _C-h_ forward-slurp-sexp       _AN_ add-to-next-sexp
-  _C-l_ forward-barf-sexp      -----
-  _C-S-h_ backward-slurp-sexp    _ join-sexp
-  _C-S-l_ backward-barf-sexp     _|_ split-sexp
-"
-         ;; TODO: Use () and [] - + * | <space>
-  ("B" sp-backward-sexp );; similiar to VIM b
-  ("F" sp-forward-sexp );; similar to VIM f
-  ;;
-  ("L" sp-backward-down-sexp )
-  ("H" sp-backward-up-sexp )
-  ;;
-  ("k" sp-down-sexp ) ; root - towards the root
-  ("j" sp-up-sexp )
-  ;;
-  ("n" sp-next-sexp )
-  ("p" sp-previous-sexp )
-  ;; a..z
-  ("a" sp-beginning-of-sexp )
-  ("z" sp-end-of-sexp )
-  ;;
-  ("t" sp-transpose-sexp )
-  ;;
-  ("x" sp-delete-char )
-  ("dw" sp-kill-word )
-  ;;("ds" sp-kill-symbol ) ;; Prefer kill-sexp
-  ("dd" sp-kill-sexp )
-  ;;("yy" sp-copy-sexp ) ;; Don't like it. Pref visual selection
-  ;;
-  ("S" sp-unwrap-sexp ) ;; Strip!
-  ;;("wh" sp-backward-unwrap-sexp ) ;; Too similar to above
-  ;;
-  ("C-h" sp-forward-slurp-sexp )
-  ("C-l" sp-forward-barf-sexp )
-  ("C-S-h" sp-backward-slurp-sexp )
-  ("C-S-l" sp-backward-barf-sexp )
-  ;;
-  ;;("C-[" (bind (sp-wrap-with-pair "[")) ) ;;FIXME
-  ;;("C-(" (bind (sp-wrap-with-pair "(")) )
-  ;;
-  ("s" sp-splice-sexp )
-  ("df" sp-splice-sexp-killing-forward )
-  ("db" sp-splice-sexp-killing-backward )
-  ("da" sp-splice-sexp-killing-around )
-  ;;
-  ("C-s" sp-select-next-thing-exchange )
-  ("C-p" sp-select-previous-thing )
-  ("C-n" sp-select-next-thing )
-  ;;
-  ("C-f" sp-forward-symbol )
-  ("C-b" sp-backward-symbol )
-  ;;
-  ;;("C-t" sp-prefix-tag-object)
-  ;;("H-p" sp-prefix-pair-object)
-  ("c" sp-convolute-sexp )
-  ("g" sp-absorb-sexp )
-  ("q" sp-emit-sexp )
-  ;;
-  (",b" sp-extract-before-sexp )
-  (",a" sp-extract-after-sexp )
-  ;;
-  ("AP" sp-add-to-previous-sexp );; Difference to slurp?
-  ("AN" sp-add-to-next-sexp )
-  ;;
-  ("_" sp-join-sexp ) ;;Good
-  ("|" sp-split-sexp )))))
+))
 
 
 
 (add-hook 'prog-mode-hook #'smartparens-mode)
 (add-hook 'markdown-mode-hook #'smartparens-mode)
-(sp-local-pair 'web-mode  "<%" "%>" :wrap "C-%")
+(add-hook 'smartparens-mode-hook (lambda () (sp-local-pair 'web-mode  "<%" "%>" :wrap "C-%")))
 
 #+END_SRC
 
@@ -1300,7 +1130,7 @@ Git gutter:
 
 (use-package all-the-icons-ivy
   :ensure t
-  :hook (ivy-mode)
+  :defer 1
   :init
   (all-the-icons-ivy-setup))
 
@@ -1511,6 +1341,7 @@ Git gutter:
 
 (use-package company-go
   :ensure t
+  :defer t
   :hook (go-mode . (lambda ()
                      (set (make-local-variable 'company-backends) '(company-go))
                      (company-mode))))
@@ -1900,53 +1731,7 @@ Git gutter:
   :config
   (projectile-global-mode)
   (setq projectile-completion-system 'ivy)
-  (defhydra hydra-projectile-other-window (:color teal)
-    "projectile-other-window"
-    ("f"  projectile-find-file-other-window        "file")
-    ("g"  projectile-find-file-dwim-other-window   "file dwim")
-    ("d"  projectile-find-dir-other-window         "dir")
-    ("b"  projectile-switch-to-buffer-other-window "buffer")
-    ("q"  nil                                      "cancel" :color blue))
-
-  (defhydra hydra-projectile (:color teal
-				     :hint nil)
-    "
-     PROJECTILE: %(projectile-project-root)
-
-     Find File            Search/Tags          Buffers                Cache
-------------------------------------------------------------------------------------------
-  _F_: file            _a_: ag                _i_: Ibuffer           _c_: cache clear
- _ff_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
- _fd_: file curr dir   _o_: multi-occur     _s-k_: Kill all buffers  _X_: cleanup non-existing
-  _r_: recent file                                               ^^^^_z_: cache current
-  _d_: dir
-
-"
-    ("a"   projectile-ag)
-    ("b"   projectile-switch-to-buffer)
-    ("c"   projectile-invalidate-cache)
-    ("d"   projectile-find-dir)
-    ("F"   projectile-find-file)
-    ("ff"  projectile-find-file-dwim)
-    ("fd"  projectile-find-file-in-directory)
-    ("g"   ggtags-update-tags)
-    ("s-g" ggtags-update-tags)
-    ("i"   projectile-ibuffer)
-    ("K"   projectile-kill-buffers)
-    ("s-k" projectile-kill-buffers)
-    ("m"   projectile-multi-occur)
-    ("o"   projectile-multi-occur)
-    ("s-p" projectile-switch-project "switch project")
-    ("p"   projectile-switch-project)
-    ("s"   projectile-switch-project)
-    ("r"   projectile-recentf)
-    ("x"   projectile-remove-known-project)
-    ("X"   projectile-cleanup-known-projects)
-    ("z"   projectile-cache-current-file)
-    ("`"   hydra-projectile-other-window/body "other window")
-    ("q"   nil "cancel" :color blue))
-
-  )
+)
 
 ;; (add-hook 'prog-mode-hook 'projectile-mode)
 ;; (add-hook 'projectile-mode-hook 'counsel-projectile-mode)
@@ -2443,9 +2228,7 @@ really bad under some circumstances."
 			       ;; '(mode-line ((t (:background "#002b36"  :foreground "white" :box "dark cyan"))))
 			       ;; '(mode-line-inactive ((t (:background "#002b36" :foreground "white" :box nil))))
 
-(custom-set-faces
- '(symbol-overlay-default-face ((t (:background "#3f444a" :foreground "#9ca0a4"))))
- '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+))
 
 #+END_SRC
 
