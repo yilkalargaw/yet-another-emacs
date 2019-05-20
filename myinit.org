@@ -91,7 +91,8 @@
        ))
 
 ;; activate all the packages
- (package-initialize)
+(if (version< emacs-version "27.0")
+    (package-initialize))
 
 ;; fetch the list of packages available
 (unless package-archive-contents
