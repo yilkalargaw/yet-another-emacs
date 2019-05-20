@@ -302,6 +302,7 @@
                          (seq-take tag 1)
                        tag)))
 
+ 
         (setq telephone-line-lhs
               '((evil   . (telephone-line-god-mode-segment))
 
@@ -529,20 +530,6 @@
 
 #+END_SRC
 
-** hydra-zoom
-
-#+BEGIN_SRC emacs-lisp
-
-;; hydra-zoom
-(defhydra hydra-zoom (global-map "<f10>")
-  "zoom"
-  ("g" text-scale-increase "in")
-  ("l" text-scale-decrease "out")
-  ("o" (text-scale-adjust 0) "reset")
-)
-
-#+END_SRC
-
 * ibuffer
 
 #+BEGIN_SRC emacs-lisp
@@ -706,40 +693,6 @@
 
 #+END_SRC
 
-*** hydra
-
-#+BEGIN_SRC emacs-lisp
-
-(defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
-                            :hint nil)
-  "
-Git gutter:
-  _j_: next hunk        _s_tage hunk     _q_uit
-  _k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
-  ^ ^                   _p_opup hunk
-  _h_: first hunk
-  _l_: last hunk        set start _R_evision
-"
-  ("j" git-gutter:next-hunk)
-  ("k" git-gutter:previous-hunk)
-  ("h" (progn (goto-char (point-min))
-              (git-gutter:next-hunk 1)))
-  ("l" (progn (goto-char (point-min))
-              (git-gutter:previous-hunk 1)))
-  ("s" git-gutter:stage-hunk)
-  ("r" git-gutter:revert-hunk)
-  ("p" git-gutter:popup-hunk)
-  ("R" git-gutter:set-start-revision)
-  ("q" nil :color blue)
-  ("Q" (progn (git-gutter-mode -1)
-              ;; git-gutter-fringe doesn't seem to
-              ;; clear the markup right away
-              (sit-for 0.1)
-              (git-gutter:clear))
-       :color blue))
-
-#+END_SRC
-
 ** magit & forge
 
 #+BEGIN_SRC emacs-lisp
@@ -862,24 +815,6 @@ Git gutter:
        ("C-'" . avy-isearch))
  )
 
-(defhydra hydra-avy ( :hint nil)
-  "
-     ^Char^            ^other^
--------------------------------------
-[_c_]   char         [_w_]   word
-[_C_]   char-2       [_s_]   subword
-[_t_]   char-timer   [_l_]   line
-"
-    ("c" avy-goto-char :exit t)
-    ("C" avy-goto-char-2 :exit t)
-    ("t" avy-goto-char-timer :exit t)
-    ("w" avy-goto-word-1 :exit t)
-    ("s" avy-goto-subword-1 :exit t)
-    ("l" avy-goto-line :exit t))
-;; (global-set-key (kbd "C-'") 'hydra-avy/body) ;;example-binding
-(global-set-key (kbd "H-'") 'hydra-avy/body) ;;example-binding
-(key-chord-define-global "vj"  'hydra-avy/body)
-
 #+END_SRC
 
 
@@ -956,36 +891,6 @@ Git gutter:
   :config (define-key mc/keymap (kbd "<return>") nil)
   :bind ;;("H-\\" . mc/mark-all-like-this)
         ("C-S-<mouse-1>" . mc/add-cursor-on-click))
-
-#+END_SRC
-
-** Hydra-multiple-cursors
-
-#+BEGIN_SRC emacs-lisp
-
-(defhydra hydra-multiple-cursors (:hint nil)
-  "
-     ^Up^            ^Down^        ^Other^
-----------------------------------------------
-[_p_]   Next    [_n_]   Next    [_l_] Edit lines
-[_P_]   Skip    [_N_]   Skip    [_a_] Mark all
-[_M-p_] Unmark  [_M-n_] Unmark  [_r_] Mark by regexp
-^ ^             ^ ^             [_q_] Quit
-"
-  ("l" mc/edit-lines :exit t)
-  ("a" mc/mark-all-like-this :exit t)
-  ("n" mc/mark-next-like-this)
-  ("N" mc/skip-to-next-like-this)
-  ("M-n" mc/unmark-next-like-this)
-  ("p" mc/mark-previous-like-this)
-  ("P" mc/skip-to-previous-like-this)
-  ("M-p" mc/unmark-previous-like-this)
-  ("r" mc/mark-all-in-region-regexp :exit t)
-  ("q" nil))
-
-(global-set-key (kbd "C-c m c") 'hydra-multiple-cursors/body) ;;example-binding
-;; (global-set-key (kbd "C-;") 'hydra-multiple-cursors/body) ;;example-binding
-(key-chord-define-global "qk"   'hydra-multiple-cursors/body)
 
 #+END_SRC
 
@@ -1723,9 +1628,6 @@ Git gutter:
 
 (use-package projectile
   :ensure t
-  :bind (("H-p p"  . 'hydra-projectile/body) ;;example-binding
-	 ("H-p w"  . 'hydra-projectile-other-window/body) ;;example-binding
-	 )
   :defer 3
   :hook (prog-mode-hook . projectile-mode)
   :config
@@ -2022,6 +1924,8 @@ Git gutter:
 ;;   :hook (org-bullets-mode . (load-theme 'org-beautify))
  )
 
+;; (add-hook 'org-mode-hook (lambda () (load-theme 'modified-org-beautify t)))
+
 #+END_SRC
 
 * god mode
@@ -2031,7 +1935,11 @@ Git gutter:
 (use-package god-mode
   :ensure t
 ;;  :defer t
+  :init 
+     (global-set-key (kbd "C-h") 'previous-line)
   :config
+;;     (define-key god-local-mode-map (kbd "h") 'previous-line)
+;;     (define-key god-mode-map (kbd "h"
      (define-key god-local-mode-map (kbd ".") 'repeat)
      (define-key god-local-mode-map (kbd "i") 'god-local-mode)
 
