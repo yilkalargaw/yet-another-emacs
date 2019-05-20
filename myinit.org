@@ -219,7 +219,11 @@
 ;; 	    (load-theme 'danneskjold t)))
 
 (add-hook 'after-init-hook 
-	  (load-theme 'spacemacs-dark t))
+	  (progn
+	    (setq base16-theme-256-color-source 'terminal)
+	    (setq base16-distinct-fringe-background nil)
+;;	    (setq base16-highlight-mode-line 'box)
+	    (load-theme 'base16-solarized-dark t)))
 
 #+END_SRC
 
