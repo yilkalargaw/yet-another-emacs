@@ -521,12 +521,12 @@
 
 ;;hydra
 (use-package hydra
-  :defer t
-  :hook (after-init . (lambda () (require 'hydra)))
+  :defer 0.5
+  ;; :hook (after-init . (lambda () (require 'hydra)))
   :after init
   :ensure t
   :config
-  (load-file "./hydras.el"))
+  (load-file "~/.emacs.d/hydras.el"))
 
 #+END_SRC
 
