@@ -650,9 +650,9 @@
 
 (use-package undo-tree
   :diminish undo-tree-mode
-  :defer 4
- ;:bind ("H-/" . undo-tree-visualize)
-  :config (global-undo-tree-mode))
+  :hook (after-init . global-undo-tree-mode)
+  :config (setq undo-tree-visualizer-timestamps t)
+          (setq undo-tree-visualizer-diff t))
 
 #+END_SRC
 
