@@ -739,7 +739,8 @@
 
 (use-package yasnippet
   :ensure t
-  :defer 2
+  :defer 1.5
+  ;; :hook (after-init . (lambda () yas-global-mode 1))
   :diminish yas-minor-mode
   :config (use-package yasnippet-snippets
           :ensure t
