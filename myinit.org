@@ -1035,8 +1035,9 @@
 
 (use-package all-the-icons-ivy
   :ensure t
-  :defer 1
-  :init
+;;  :defer 1
+  :after ivy
+  :config
   (all-the-icons-ivy-setup))
 
 
