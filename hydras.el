@@ -159,6 +159,26 @@ Git gutter:
   ("r" mc/mark-all-in-region-regexp :exit t)
   ("q" nil))
 
+(defhydra hydra-transpose (:color red)
+  "Transpose"
+  ("c" transpose-chars "characters")
+  ("w" transpose-words "words")
+  ("o" org-transpose-words "Org mode words")
+  ("l" transpose-lines "lines")
+  ("s" transpose-sentences "sentences")
+  ("e" org-transpose-elements "Org mode elements")
+  ("p" transpose-paragraphs "paragraphs")
+  ("t" org-table-transpose-table-at-point "Org mode table")
+  ("q" nil "cancel" :color blue))
+
+(defhydra hydra-launcher (:columns 2)
+  "Launch"
+  ("m" woman "man")
+  ("d" (eww-browse-url "https://www.duckduckgo.com/") "duckduckgo")
+  ("s" shell "shell")
+  ("e" eshell "eshell")
+  ("q" nil "cancel"))
+
 (defhydra hydra-learn-sp (:hint nil)
          "
   _B_ backward-sexp            -----
@@ -323,6 +343,20 @@ Git gutter:
   ("u" (progn (winner-undo) (setq this-command 'winner-undo)) "undo")
   ("f" nil))
 
+(defhydra hydra-move
+   (:body-pre (next-line))
+   "move"
+   ("n" next-line)
+   ("p" previous-line)
+   ("f" forward-char)
+   ("b" backward-char)
+   ("a" beginning-of-line)
+   ("e" move-end-of-line)
+   ("v" scroll-up-command)
+   ;; Converting M-v to V here by analogy.
+   ("V" scroll-down-command)
+   ("l" recenter-top-bottom))
+
 (defhydra hydra-transpose (:color red)
   "Transpose"
   ("c" transpose-chars "characters")
@@ -421,3 +455,18 @@ T - tag prefix
   ("M-s" lsp-describe-session)
   ("M-r" lsp-restart-workspace)
   ("S" lsp-shutdown-workspace))
+
+(define-prefix-command 'hydra-map)
+(global-set-key (kbd "<print>") 'hydra-map)
+(global-set-key (kbd "ፍ") 'hydra-map)
+(define-key global-map (kbd "<print> z") 'hydra-zoom/body)
+(define-key global-map (kbd "<print> m") 'hydra-multiple-cursors/body)
+(define-key global-map (kbd "<print> a") 'hydra-zoom/avy)
+(define-key global-map (kbd "<print> n") 'hydra-move/body)
+(define-key global-map (kbd "<print> w") 'hydra-window/body)
+(define-key global-map (kbd "<print> s") 'hydra-learn-sp/body)
+(define-key global-map (kbd "<print> t") 'hydra-transpose/body)
+(define-key global-map (kbd "<print> l") 'hydra-launcher/body)
+(define-key global-map (kbd "<print> x")  (lambda ()
+				      (interactive)
+				      (counsel-M-x "^hydra")))
