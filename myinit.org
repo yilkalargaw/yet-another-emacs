@@ -664,9 +664,8 @@
 
 (use-package which-key
   :ensure t
-  :defer 2
-  :config (which-key-mode)
-       (which-key-enable-god-mode-support)
+  :hook (after-init . which-key-mode)
+  :config (which-key-enable-god-mode-support)
 )
 
 #+END_SRC
