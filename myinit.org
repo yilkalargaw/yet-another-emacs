@@ -295,23 +295,22 @@
 ;;telephone-lines
 (use-package telephone-line
   :ensure t
-  :init (telephone-line-defsegment* telephone-line-god-mode-segment ()
-                   (let ((tag (if god-local-mode
-                                  "GOD" "EMACS")))
-                     (if telephone-line-evil-use-short-tag
-                         (seq-take tag 1)
-                       tag)))
+  :init
+  (telephone-line-defsegment* telephone-line-god-mode-segment ()
+    (let ((tag (if god-local-mode
+		   "GOD" "EMACS")))
+      (if telephone-line-evil-use-short-tag
+	  (seq-take tag 1)
+	tag)))
 
- 
-        (setq telephone-line-lhs
-              '((evil   . (telephone-line-god-mode-segment))
+  (setq telephone-line-lhs
+	'((evil   . (telephone-line-god-mode-segment))
 
-		(accent . (telephone-line-vc-segment
-			   telephone-line-erc-modified-channels-segment
-			   telephone-line-process-segment))
-		(nil    . (telephone-line-projectile-segment
-			   telephone-line-buffer-segment))))
-
+	  (accent . (telephone-line-vc-segment
+		     telephone-line-erc-modified-channels-segment
+		     telephone-line-process-segment))
+	  (nil    . (telephone-line-projectile-segment
+		     telephone-line-buffer-segment))))
   :defer t)
 
 
@@ -326,16 +325,36 @@
                         telephone-line-secondary-left-separator 'telephone-line-abs-hollow-left)
                   (setq telephone-line-subseparator '())
 		  (setq telephone-line-evil-use-short-tag t)
-                  (telephone-line-mode 1))
-                (progn
-                  (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
-                        telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
-                        telephone-line-primary-right-separator 'telephone-line-cubed-left
-                        telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-left)
-                  (setq telephone-line-subseparator-faces '())
-                  (setq telephone-line-height 25)
-		  (setq telephone-line-evil-use-short-tag t)
-                  (telephone-line-mode 1)))))
+                  (telephone-line-mode 1)
+		  (set-face-attribute 'mode-line nil
+				      :foreground (face-foreground 'default)
+				      :background (face-background 'default)
+				      :box '(:line-width 1 :color (face-foreground 'default))
+				      :underline nil
+				      :overline nil)
+		  (set-face-attribute 'mode-line-inactive nil
+				      :foreground (face-foreground 'default)
+				      :background (face-background 'default) :box nil))
+
+	      (progn
+		(setq telephone-line-primary-left-separator 'telephone-line-cubed-left
+		      telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
+		      telephone-line-primary-right-separator 'telephone-line-cubed-left
+		      telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-left)
+		(setq telephone-line-subseparator-faces '())
+		(setq telephone-line-height 25)
+		(setq telephone-line-evil-use-short-tag t)
+		(telephone-line-mode 1)
+		(set-face-attribute 'mode-line nil
+				    :foreground (face-foreground 'default)
+				    :background (face-background 'default)
+				    :box '(:line-width 1 :color (face-foreground 'default))
+				    :underline nil
+				    :overline nil)
+		(set-face-attribute 'mode-line-inactive nil
+				    :foreground (face-foreground 'default)
+				    :background (face-background 'default) :box nil)
+))))
 
 
 (if (not (display-graphic-p))
@@ -346,7 +365,17 @@
             telephone-line-secondary-left-separator 'telephone-line-abs-hollow-left)
       (setq telephone-line-subseparator '())
       (setq telephone-line-evil-use-short-tag t)
-      (telephone-line-mode 1))
+      (telephone-line-mode 1)
+      	(set-face-attribute 'mode-line nil
+			    :foreground (face-foreground 'default)
+			    :background (face-background 'default)
+			    :box '(:line-width 1 :color (face-foreground 'default))
+			    :underline nil
+			    :overline nil)
+	(set-face-attribute 'mode-line-inactive nil
+			    :foreground (face-foreground 'default)
+			    :background (face-background 'default) :box nil)
+)
 
   (progn
     (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
@@ -356,7 +385,17 @@
     (setq telephone-line-subseparator-faces '())
     (setq telephone-line-height 25)
     (setq telephone-line-evil-use-short-tag t)
-    (telephone-line-mode 1)))
+    (telephone-line-mode 1)
+    (set-face-attribute 'mode-line nil
+			:foreground (face-foreground 'default)
+			:background (face-background 'default)
+			:box '(:line-width 1 :color (face-foreground 'default))
+			:underline nil
+			:overline nil)
+    (set-face-attribute 'mode-line-inactive nil
+			:foreground (face-foreground 'default)
+			:background (face-background 'default) :box nil)
+    ))
 
 #+END_SRC
 
