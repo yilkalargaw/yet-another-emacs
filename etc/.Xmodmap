@@ -1,0 +1,83 @@
+! -*- coding: utf-8 -*-
+
+! swap Ctrl and Alt keys
+
+! here's the default setting on special keys
+!  xmodmap -pke | grep -P '(Control|Super|Alt|Menu)'
+
+! keycode  37 = Control_L NoSymbol Control_L
+! keycode  64 = Alt_L Meta_L Alt_L Meta_L
+! keycode 105 = Control_R NoSymbol Control_R
+! keycode 108 = Alt_R Meta_R Alt_R Meta_R
+! keycode 133 = Super_L NoSymbol Super_L
+! keycode 134 = Super_R NoSymbol Super_R
+! keycode 135 = Menu NoSymbol Menu
+! keycode 147 = XF86MenuKB NoSymbol XF86MenuKB
+! keycode 204 = NoSymbol Alt_L NoSymbol Alt_L
+! keycode 206 = NoSymbol Super_L NoSymbol Super_L
+
+clear control
+clear mod1
+clear lock
+clear mod4
+clear mod5
+
+!!-------------------------------------------------------
+
+keycode  10 = 1 exclam exclam U1369
+keycode  11 = 2 at at U136A
+keycode  12 = 3 numbersign numbersign U136B
+keycode  13 = 4 dollar dollar U136C
+keycode  14 = 5 percent percent U136D
+keycode  15 = 6 asciicircum asciicircum U136E
+keycode  16 = 7 ampersand ampersand U136F
+keycode  17 = 8 asterisk asterisk U1370
+keycode  18 = 9 parenleft parenleft U1371
+keycode  19 = 0 parenright parenright U1372
+keycode  23 = Tab ISO_Left_Tab
+keycode  24 = q Q U1245
+keycode  25 = w W U12CD
+keycode  26 = e E U12A5
+keycode  27 = r R U122D
+keycode  28 = t T U1275
+keycode  29 = y Y U12ED
+keycode  30 = u U U12A1
+keycode  31 = i I U12A2
+keycode  32 = o O U12A6
+keycode  33 = p P U1355
+keycode  38 = a A U12A0
+keycode  39 = s S U1235
+keycode  40 = d D U12F5
+keycode  41 = f F U134D
+keycode  42 = g G U130D
+keycode  43 = h H U1205
+keycode  44 = j J U1305
+keycode  45 = k K U12AD
+keycode  46 = l L U120D
+keycode  47 = Mode_switch Mode_switch Mode_switch
+keycode  48 = apostrophe quotedbl
+keycode  49 = grave asciitilde 0 asciitilde
+keycode  52 = z Z U12DD
+keycode  53 = x X U123D
+keycode  54 = c C U127D
+keycode  55 = v V U126D
+keycode  56 = b B U1265
+keycode  57 = n N U1295
+keycode  58 = m M U121D
+keycode  59 = comma less
+keycode  60 = period greater
+keycode  247 = Return Return Return
+keycode  248 = semicolon colon
+
+!!-------------------------------------------------------
+
+keycode 37 = Alt_L Meta_L Alt_L Meta_L
+keycode 105 = Alt_R Meta_R Alt_R Meta_R
+keycode 64 = Control_L NoSymbol Control_L
+keycode 108 = Control_R NoSymbol Control_R
+keycode 66 = Hyper_L Caps_Lock Tab
+keycode 36 = Hyper_R Return
+add control = Control_L Control_R
+add mod1 = Alt_L Meta_L
+add Mod4 = Super_L Super_R
+add Mod5 = Hyper_L Caps_Lock Hyper_R
