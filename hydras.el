@@ -369,6 +369,30 @@ Git gutter:
   ("t" org-table-transpose-table-at-point "Org mode table")
   ("q" nil "cancel" :color blue))
 
+(defun increase-transparency ()
+  (interactive)
+  (let* ((opacity (or (frame-parameter nil 'alpha) 100))
+	 (new-opacity (- (car opacity) 5)))
+    (set-frame-parameter
+     nil 'alpha
+     (cons (if (< new-opacity 0) 0 new-opacity) 50))))
+
+
+
+(defun decrease-transparency ()
+  (interactive)
+  (let* ((opacity (or (frame-parameter nil 'alpha) 100))
+	(new-opacity (+ (car opacity) 5)))
+    (set-frame-parameter
+     nil 'alpha
+     (cons (if (> new-opacity 100) 100 new-opacity) 50))))
+
+(defhydra hydra-transparency (:hint nil)
+  ("g" increase-transparency "increase")
+  ("l" decrease-transparency "decrease")
+  ("o" toggle-transparency "toggle"))
+
+
 (defhydra hydra-dired (:hint nil :color pink)
   "
 _+_ mkdir          _v_iew           _m_ark             _(_ details        _i_nsert-subdir    wdired
@@ -457,7 +481,6 @@ T - tag prefix
   ("S" lsp-shutdown-workspace))
 
 (define-prefix-command 'hydra-map)
-(global-set-key (kbd "<print>") 'hydra-map)
 (global-set-key (kbd "ፍ") 'hydra-map)
 (define-key global-map (kbd "<print> z") 'hydra-zoom/body)
 (define-key global-map (kbd "<print> m") 'hydra-multiple-cursors/body)
@@ -467,6 +490,7 @@ T - tag prefix
 (define-key global-map (kbd "<print> s") 'hydra-learn-sp/body)
 (define-key global-map (kbd "<print> t") 'hydra-transpose/body)
 (define-key global-map (kbd "<print> l") 'hydra-launcher/body)
+(define-key global-map (kbd "<print> <f4>") 'hydra-transparency/body)
 (define-key global-map (kbd "<print> x")  (lambda ()
 				      (interactive)
 				      (counsel-M-x "^hydra")))

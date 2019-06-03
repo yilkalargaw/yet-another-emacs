@@ -77,7 +77,7 @@
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
       auctex company-auctex nov restclient realgud projectile ecb god-mode
       php-mode company-php ace-link try dired-narrow dired-subtree lsp-mode company-lsp
-      lsp-ui dap-mode emojify writeroom-mode
+      lsp-ui dap-mode emojify writeroom-mode spray org-pdfview
       
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
       ox-epub org-beautify-theme
@@ -1951,6 +1951,26 @@
 
 #+END_SRC
 
+** org-pdfview
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package org-pdfview
+  :defer t
+  :hook (org-mode . (lambda () (require 'org-pdfview)))
+  :config (add-to-list 'org-file-apps 
+             '("\\.pdf\\'" . (lambda (file link)
+                                     (org-pdfview-open link))))
+
+  :ensure t)
+;; (eval-after-load 'org '(require 'org-pdfview))
+
+;; (add-to-list 'org-file-apps 
+;;              '("\\.pdf\\'" . (lambda (file link)
+;;                                      (org-pdfview-open link))))
+
+#+END_SRC
+
 * org-beautify
 
 #+BEGIN_SRC emacs-lisp
@@ -2115,6 +2135,16 @@
 
 #+END_SRC
 
+* spray
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package spray
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
 * whitespace
 
 #+BEGIN_SRC emacs-lisp
@@ -2175,14 +2205,14 @@ really bad under some circumstances."
 
   (custom-set-faces 
 			       ;; `(org-agenda-structure ((t (:inherit default ,@sans-font :height 2.0 :underline nil))))
-			       `(org-level-8 ((t ,headline)))
-			       `(org-level-7 ((t ,headline)))
-			       `(org-level-6 ((t ,headline)))
-			       `(org-level-5 ((t ,headline)))
-			       `(org-level-4 ((t ,headline)))
-			       `(org-level-3 ((t (,@headline  :box ))))
-			       `(org-level-2 ((t (,@headline  :height 1.15 ))))
-			       `(org-level-1 ((t (,@headline  :height 1.35  ))))
+			       `(org-level-8 ((t (:inherit 'outline-8  :height 1.05))))
+			       `(org-level-7 ((t (:inherit 'outline-7  :height 1.05))))
+			       `(org-level-6 ((t (:inherit 'outline-6  :height 1.05))))
+			       `(org-level-5 ((t (:inherit 'outline-5  :height 1.05))))
+			       `(org-level-4 ((t (:inherit 'outline-4  :height 1.05))))
+			       `(org-level-3 ((t (:inherit 'outline-3  :height 1.10 ))))
+			       `(org-level-2 ((t (:inherit 'outline-2  :height 1.15 ))))
+			       `(org-level-1 ((t (:inherit 'outline-1  :height 1.20 :weight bold  ))))
 			       `(org-document-title ((t (:inherit org-level-1 :height 1.5 :underline nil :box ))))
 
 			       `(org-block ((t (:foreground ,base-font-color :background ,background-color :box nil))))
@@ -2191,8 +2221,8 @@ really bad under some circumstances."
 			       ;; `(org-block ((,class nil)))
 			       ;; `(org-block-begin-line ((t (:underline t))))
 			       ;; `(org-block-end-line ((t (:overline t))))
-			       `(org-block-begin-line ((t (:foreground ,(face-foreground 'shadow) :underline t :italic t))))
-			       `(org-block-end-line ((t (:foreground ,(face-foreground 'shadow) :overline t :italic t))))
+			       `(org-block-begin-line ((t (:foreground ,(face-foreground 'shadow) :underline t :overline t :italic t))))
+			       `(org-block-end-line ((t (:foreground ,(face-foreground 'shadow) :overline t :underline t :italic t))))
 
 
 			       `(org-checkbox ((t (:foreground "#000000", :background "#93a1a1" :box (:line-width -3 :color "#93a1a1" :style "released-button")))))
@@ -2204,12 +2234,15 @@ really bad under some circumstances."
 			       `(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0))))
 			       ;; `(mode-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :box ,(face-foreground 'link)))))
 			       ;; `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :box nil))))
-			       `(font-lock-constant-face ((t (:weight bold))))
-			       `(font-lock-comment-face ((t (:italic t))))
 			       ;; '(mode-line ((t (:background "#002b36"  :foreground "white" :box "dark cyan"))))
 			       ;; '(mode-line-inactive ((t (:background "#002b36" :foreground "white" :box nil))))
+			       `(font-lock-comment-face ((t (:slant italic))))
+			       ;;`(font-lock-constant-face ((t (:weight bold))))
+			       `(font-lock-constant-face ((t (:weight normal :slant italic))))
+			       `(font-lock-function-name-face ((t (:weight normal))))
+			       ;;`(font-lock-keyword-face ((t (:weight bold :slant italic))))
+			       `(font-lock-type-face ((t (:slant italic)))) ;; :weight bold))))
 
 ))
 
 #+END_SRC
-

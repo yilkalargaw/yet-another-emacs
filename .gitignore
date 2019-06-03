@@ -94,3 +94,4 @@ irony/
 /.extension/
 emojis/
 /nov-places
+/forge-database.sqlite
