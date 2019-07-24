@@ -2274,7 +2274,7 @@ really bad under some circumstances."
        (base-font-color (face-foreground 'default  nil 'default))
        (background-color (face-background 'default nil 'default))
        (headline `(:inherit default :foreground ,base-font-color))
-       (primary-color (face-foreground 'mode-line nil))
+       ;; (primary-color (face-foreground 'mode-line nil))
        (secondary-color (face-background 'secondary-selection nil 'region))
        ;; (padding (if modified-org-beautify-theme-use-box-hack
        ;;              `(:line-width 5 :color ,background-color)
@@ -2298,17 +2298,21 @@ really bad under some circumstances."
 			       `(org-block ((t (:foreground ,base-font-color :background ,background-color :box nil))))
 			       ;; `(org-block-begin-line ((t ,org-highlights)))
 			       ;; `(org-block-end-line ((t ,org-highlights)))
-			       ;; `(org-block ((,class nil)))
+			       ;; `(org-block ((t (:background ,(face-background 'highlight)))))
 			       ;; `(org-block-begin-line ((t (:underline t))))
 			       ;; `(org-block-end-line ((t (:overline t))))
-			       `(org-block-begin-line ((t (:foreground ,(face-foreground 'shadow) :underline t :overline t :italic t))))
-			       `(org-block-end-line ((t (:foreground ,(face-foreground 'shadow) :overline t :underline t :italic t))))
+			       `(org-block-begin-line ((t (;; :background ,(face-background 'highlight) 
+								       :foreground ,(face-foreground 'shadow))))) ;; :underline t :overline t :italic t))))
+			       `(org-block-end-line ((t (;; :background ,(face-background 'highlight) 
+								     :foreground ,(face-foreground 'shadow) )))) ;; :overline t :underline t :italic t))))
 
 
 			       `(org-checkbox ((t (:foreground "#000000", :background "#93a1a1" :box (:line-width -3 :color "#93a1a1" :style "released-button")))))
 
 			       `(org-headline-done ((t (:strike-through t))))
-			       `(org-done ((t (:strike-through t))))
+			       `(org-done ((t (:strike-through t :underline t :overline t))))
+			       `(org-todo ((t (:foreground ,(face-foreground 'default) :background ,(face-background 'default) 
+					    :underline t :overline t))))
 
 			       `(symbol-overlay-default-face ((t (:background "#3f444a" :foreground "#9ca0a4"))))
 			       `(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0))))
@@ -2316,12 +2320,13 @@ really bad under some circumstances."
 			       ;; `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :box nil))))
 			       ;; '(mode-line ((t (:background "#002b36"  :foreground "white" :box "dark cyan"))))
 			       ;; '(mode-line-inactive ((t (:background "#002b36" :foreground "white" :box nil))))
-			       `(font-lock-comment-face ((t (:slant italic))))
+			       `(font-lock-comment-face ((t (:background ,(face-background 'default) :slant italic))))
 			       ;;`(font-lock-constant-face ((t (:weight bold))))
 			       `(font-lock-constant-face ((t (:weight normal :slant italic))))
 			       `(font-lock-function-name-face ((t (:weight normal))))
 			       ;;`(font-lock-keyword-face ((t (:weight bold :slant italic))))
 			       `(font-lock-type-face ((t (:slant italic)))) ;; :weight bold))))
+			       `(hl-line ((t (:background ,(face-background 'default) :box (:line-width 1 :color ,(face-background font-lock-comment-face))))))
 
 ))
 
