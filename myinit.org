@@ -2228,6 +2228,32 @@
 (pdf-loader-install)
 (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'pdf-view-mode-hook (lambda () (nlinum-mode -1)))
+(add-hook 'pdf-view-mode-hook (lambda () (setq pdf-view-midnight-colors `(,(face-foreground 'default) . ,(face-background 'default)))))
+(add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode t)
+
+#+END_SRC
+
+* outline and outshine
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package outshine
+  :ensure t
+  :defer t
+  :hook ((outline-minor-mode . outshine-mode)
+	 (prog-mode . outline-minor-mode)))
+
+#+END_SRC
+
+* origami
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package origami
+  :ensure t
+  :defer t
+  :hook (prog-mode . origami-mode)
+)
 
 #+END_SRC
 
