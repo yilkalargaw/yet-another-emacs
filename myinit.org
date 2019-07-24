@@ -334,7 +334,9 @@
 				      :overline nil)
 		  (set-face-attribute 'mode-line-inactive nil
 				      :foreground (face-foreground 'default)
-				      :background (face-background 'default) :box nil))
+				      :background (face-background 'default) :box nil)
+		  (set-face-attribute 'mode-line-buffer-id nil
+				      :background (face-background 'default)))
 
 	      (progn
 		(setq telephone-line-primary-left-separator 'telephone-line-cubed-left
@@ -354,6 +356,9 @@
 		(set-face-attribute 'mode-line-inactive nil
 				    :foreground (face-foreground 'default)
 				    :background (face-background 'default) :box nil)
+		(set-face-attribute 'mode-line-buffer-id nil
+				    :background (face-background 'default))
+
 ))))
 
 
