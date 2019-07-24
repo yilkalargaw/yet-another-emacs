@@ -810,11 +810,13 @@
 (use-package flycheck
 :ensure t
 :defer t
-:hook (prog-mode-hook . flyspell-prog-mode)
+:hook (prog-mode . flycheck-mode)
 :config (progn
-        (setq flycheck-standard-error-navigation nil)
+	  (setq flycheck-standard-error-navigation nil)
         (global-flycheck-mode t)))
 
+;; (add-hook 'prog-mode-hook
+;;           (lambda () (flyspell-prog-mode)))
 ;(add-hook 'prog-mode-hook 'flycheck-mode)
 
 #+END_SRC
@@ -826,9 +828,17 @@
 (use-package flyspell
 ;;  :ensure t
   :defer t
-  :hook ((prog-mode-hook . flyspell-prog-mode)
-	 (text-mode-hook . flyspell-mode))
+  :hook ((prog-mode . flyspell-prog-mode)
+	 (text-mode . flyspell-mode))
   :config
+  (cond
+           ((executable-find "hunspell")
+            (setq ispell-program-name "hunspell")
+            (setq ispell-extra-args '("-d en_US")))
+           ((executable-find "aspell")
+            (setq ispell-program-name "aspell")
+            (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))))
+
   ;; Sets flyspell correction to use two-finger mouse click
   (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
   )
