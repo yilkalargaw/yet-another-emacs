@@ -584,12 +584,16 @@
 
 ;;hydra
 (use-package hydra
-  :defer 0.5
+  :defer 0.4
   ;; :hook (after-init . (lambda () (require 'hydra)))
-  :after init
   :ensure t
+  :defines (ibuffer-mode-map dired-mode-map projectile-mode-map smartparens-mode-map)
   :config
-  (load-file "~/.emacs.d/hydras.el"))
+  (load-file "~/.emacs.d/hydras.el")
+  (add-hook 'origami-mode-hook (lambda () (define-key prog-mode-map (kbd "φ o") 'hydra-folding/body)))
+  (add-hook 'ibuffer-mode-hook (lambda () (define-key ibuffer-mode-map (kbd "φ .") 'hydra-ibuffer-main/body)))
+  (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "φ .") 'hydra-dired/body)))
+  (add-hook 'projectile-mode-hook (lambda () (define-key projectile-mode-map (kbd "φ p") 'hydra-projectile/body))))
 
 #+END_SRC
 

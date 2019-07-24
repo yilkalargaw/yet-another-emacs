@@ -369,6 +369,18 @@ Git gutter:
   ("t" org-table-transpose-table-at-point "Org mode table")
   ("q" nil "cancel" :color blue))
 
+(defun toggle-transparency ()
+  (interactive)
+  (let ((alpha (frame-parameter nil 'alpha)))
+    (set-frame-parameter
+     nil 'alpha
+     (if (eql (cond ((numberp alpha) alpha)
+		    ((numberp (cdr alpha)) (cdr alpha))
+		    ;; Also handle undocumented (<active> <inactive>) form.
+		    ((numberp (cadr alpha)) (cadr alpha)))
+	      100)
+	 '(85 . 50) '(100 . 100)))))
+
 (defun increase-transparency ()
   (interactive)
   (let* ((opacity (or (frame-parameter nil 'alpha) 100))
@@ -444,11 +456,19 @@ T - tag prefix
   ("q" nil)
   ("." nil :color blue))
 
- (defhydra hydra-folding (:color red)
+(defhydra hydra-folding (:color red)
    "
-  _o_pen node    _n_ext fold       toggle _f_orward
-  _c_lose node   _p_revious fold   toggle _a_ll
+ Move ^^^^|  open/close^^ |  move by fold ^^^| toggle          ^^^^^^^^
+-----^^^^-+------------^^-+---------------^^^+-----------------------^^
+  ^_k_^   | _o_pen node   | _n_ext fold     ^|  _f_orward toggle node
+_h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
+  ^_j_^   |             ^^|               ^^^|
+
   "
+   ("j" next-line)
+   ("k" previous-line)
+   ("l" forward-char)
+   ("h" backward-char)
    ("o" origami-open-node)
    ("c" origami-close-node)
    ("n" origami-next-fold)
@@ -481,16 +501,19 @@ T - tag prefix
   ("S" lsp-shutdown-workspace))
 
 (define-prefix-command 'hydra-map)
-(global-set-key (kbd "ፍ") 'hydra-map)
-(define-key global-map (kbd "<print> z") 'hydra-zoom/body)
-(define-key global-map (kbd "<print> m") 'hydra-multiple-cursors/body)
-(define-key global-map (kbd "<print> a") 'hydra-zoom/avy)
-(define-key global-map (kbd "<print> n") 'hydra-move/body)
-(define-key global-map (kbd "<print> w") 'hydra-window/body)
-(define-key global-map (kbd "<print> s") 'hydra-learn-sp/body)
-(define-key global-map (kbd "<print> t") 'hydra-transpose/body)
-(define-key global-map (kbd "<print> l") 'hydra-launcher/body)
-(define-key global-map (kbd "<print> <f4>") 'hydra-transparency/body)
-(define-key global-map (kbd "<print> x")  (lambda ()
+(global-set-key (kbd "φ") 'hydra-map)
+(define-key global-map (kbd "φ z") 'hydra-zoom/body)
+(define-key global-map (kbd "φ m") 'hydra-multiple-cursors/body)
+(define-key global-map (kbd "φ a") 'hydra-avy/body)
+(define-key global-map (kbd "φ n") 'hydra-move/body)
+(define-key global-map (kbd "φ w") 'hydra-window/body)
+(define-key global-map (kbd "φ s") 'hydra-learn-sp/body)
+(define-key global-map (kbd "φ t") 'hydra-transpose/body)
+(define-key global-map (kbd "φ l") 'hydra-launcher/body)
+(define-key global-map (kbd "φ <f4>") 'hydra-transparency/body)
+(define-key global-map (kbd "φ SPC") (lambda ()
+					   (interactive)
+					   (insert-char (string-to-char "φ"))))
+(define-key global-map (kbd "φ x")  (lambda ()
 				      (interactive)
 				      (counsel-M-x "^hydra")))
