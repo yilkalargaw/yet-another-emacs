@@ -914,6 +914,16 @@
 
 #+END_SRC
 
+* rg
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package rg
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
 * smart-hungry delete
 
 #+BEGIN_SRC emacs-lisp
