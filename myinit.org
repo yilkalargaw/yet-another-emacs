@@ -1735,6 +1735,7 @@
   :ensure t
   :defer t
   :init (setq ecb-tip-of-the-day nil)
+        (custom-set-variables `(ecb-options-version "2.50"))
   :bind (( "C-c e b" . ecb-minor-mode)
          :map ecb-mode-map
          ("H-1" . 'ecb-goto-window-edit1)
