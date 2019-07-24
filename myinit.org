@@ -588,7 +588,7 @@
 (use-package ibuffer
 ;;  :ensure t
   :bind (("C-x C-b" . ibuffer)
-         :map ibuffer-mode-map
+         ;; :map ibuffer-mode-map
          ;; ("C-." . hydra-ibuffer-main/body)
 	 )
   :hook (ibuffer-mode . hydra-ibuffer-main/body)
