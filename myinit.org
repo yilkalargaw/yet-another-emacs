@@ -2017,6 +2017,14 @@
 
 #+END_SRC
 
+** interleave
+
+#+BEGIN_SRC emacs-lisp
+(use-package interleave
+  :ensure t
+  :defer t)
+#+END_SRC
+
 * org-beautify
 
 #+BEGIN_SRC emacs-lisp
