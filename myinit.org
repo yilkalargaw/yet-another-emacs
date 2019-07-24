@@ -1677,6 +1677,10 @@
   :defer t
   :mode ("\\.epub\\'" . nov-mode))
 
+(add-hook 'nov-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'nov-mode-hook (lambda () (nlinum-mode -1)))
+
+
 #+END_SRC
 
 * restclient
