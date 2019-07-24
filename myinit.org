@@ -1095,6 +1095,9 @@
 (setq comint-scroll-show-maximum-output nil)
 (setq comint-scroll-to-bottom-on-input nil)
 (setq comint-scroll-to-bottom-on-output nil)
+(add-hook 'comint-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'comint-mode-hook (lambda () (nlinum-mode -1)))
+(add-hook 'comint-mode-hook (lambda () (setq show-trailing-whitespace nil)))
 
 #+END_SRC
 
