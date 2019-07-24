@@ -1408,7 +1408,9 @@
   :hook (scheme-mode)
   :init
     (setq geiser-default-implementation 'guile)
-    (setq geiser-guile-binary "/usr/bin/guile2.2"))
+    (setq geiser-guile-binary "/usr/bin/guile2.2")
+    (setq geiser-chicken-binary "~/.nix-profile/bin/csi")
+    (setq geiser-chibi-binary "~/.nix-profile/bin/chibi-scheme"))
 
 #+END_SRC
 
