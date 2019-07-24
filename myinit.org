@@ -187,6 +187,10 @@
   :ensure t
   :defer t)
 
+(use-package moe-theme
+  :ensure t
+  :defer t)
+
 (use-package darktooth-theme
   :ensure t
   :defer t)
@@ -197,7 +201,13 @@
 
 (use-package base16-theme
   :ensure t
+  :defer t
+)
+
+(use-package abyss-theme
+  :ensure t
   :defer t)
+
 
 ;; (defun disable-all-themes ()
 ;;   "disable all active themes."
@@ -211,12 +221,12 @@
 ;;           (lambda (frame)
 ;;               (select-frame frame)
 ;;               (if (display-graphic-p)
-;; 		  (load-theme 'solarized-dark t) 
+;; 		  (load-theme 'sanityinc-solarized-dark t) 
 ;; 		(load-theme 'danneskjold t))))
 
 ;; (add-hook 'after-init-hook
 ;; 	  (if (display-graphic-p) 
-;; 	      (load-theme 'solarized-dark t) 
+;; 	      (load-theme 'sanityinc-solarized-dark t) 
 ;; 	    (load-theme 'danneskjold t)))
 
 (add-hook 'after-init-hook 
@@ -224,7 +234,9 @@
 	    (setq base16-theme-256-color-source 'terminal)
 	    (setq base16-distinct-fringe-background nil)
 ;;	    (setq base16-highlight-mode-line 'box)
-	    (load-theme 'base16-solarized-dark t)))
+	    (load-theme 'base16-brewer t)))
+
+;; (load-theme 'manoj-dark t)
 
 #+END_SRC
 
