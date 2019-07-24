@@ -1121,12 +1121,10 @@
 * all-the-icons
 
 #+BEGIN_SRC emacs-lisp
-
 (use-package all-the-icons-dired
   :ensure t
   :defer t
-  :hook (dired-mode . all-the-icons-dired-mode)
-)
+  :hook   (dired-mode . all-the-icons-dired-mode))
 
 (use-package all-the-icons-ivy
   :ensure t
@@ -1135,29 +1133,6 @@
   :config
   (all-the-icons-ivy-setup))
 
-
-#+END_SRC
-
-* neotree
-
-#+BEGIN_SRC emacs-lisp
-
-;;neotree
-(require 'all-the-icons)
-
-(use-package neotree
-  :ensure t
-  :defer t
-  :bind ("H-." . 'neotree-toggle)
-        ("C-c n t" . 'neotree-toggle)
-  :init (require 'all-the-icons)
-         (setq neo-theme (or 'icons 'arrows))
-                                        ;          (setq neo-theme 'icons)
-         (setq neo-window-fixed-size nil))
-
-(add-hook 'neotree-mode-hook 'my-neotree-hook)
-(defun my-neotree-hook ()
-  (nlinum-mode 0))
 
 #+END_SRC
 
@@ -2112,41 +2087,50 @@
 #+BEGIN_SRC emacs-lisp
 
 (use-package dired
-;;  :ensure t
+  ;;  :ensure t
   :defer t
   :hook (dired-mode . (lambda () (dired-hide-details-mode t)))
   :config
-     (require 'dired-x)
-     (require 'dired-narrow)
-     (require 'dired-subtree)
-     (put 'dired-find-alternate-file 'disabled nil)
-     (define-key dired-mode-map (kbd "C-<return>") 'dired-find-file)
-     (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-     (define-key dired-mode-map (kbd "M-<return>") 'dired-find-file-other-window)
-     ;; allow dired to delete or copy dir
-     (setq dired-recursive-copies (quote always)) ; “always” means no asking
-     (setq dired-recursive-deletes (quote top)) ; “top” means ask once
-     (setq dired-dwim-target t)
+  (require 'dired-x)
+  (require 'dired-narrow)
+  (require 'dired-subtree)
+  (setq dired-listing-switches "--group-directories-first -lah")
+  (put 'dired-find-alternate-file 'disabled nil)
+  (define-key dired-mode-map (kbd "C-<return>") 'dired-find-file)
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+  (define-key dired-mode-map (kbd "M-<return>") 'dired-find-file-other-window)
+  ;; allow dired to delete or copy dir
+  (setq dired-recursive-copies (quote always)) ; “always” means no asking
+  (setq dired-recursive-deletes (quote top)) ; “top” means ask once
+  (setq dired-dwim-target t)
 
-     (defun dired-dotfiles-toggle ()
-       "Show/hide dot-files"
-       (interactive)
-       (when (equal major-mode 'dired-mode)
-	 (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
-	     (progn
-	       (set (make-local-variable 'dired-dotfiles-show-p) nil)
-	       (message "h")
-	       (dired-mark-files-regexp "^\\\.")
-	       (dired-do-kill-lines))
-	   (progn (revert-buffer) ; otherwise just revert to re-show
-		  (set (make-local-variable 'dired-dotfiles-show-p) t)))))
+  (defun dired-dotfiles-toggle ()
+    "Show/hide dot-files"
+    (interactive)
+    (when (equal major-mode 'dired-mode)
+      (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
+	  (progn
+	    (set (make-local-variable 'dired-dotfiles-show-p) nil)
+	    (message "h")
+	    (dired-mark-files-regexp "^\\\.")
+	    (dired-do-kill-lines))
+	(progn (revert-buffer) ; otherwise just revert to re-show
+	       (set (make-local-variable 'dired-dotfiles-show-p) t)))))
 
-     (define-key dired-mode-map (kbd "H-l")
-       (lambda () (interactive) (dired-dotfiles-toggle)))
-     
-     (define-key dired-mode-map (kbd "^")
-       (lambda () (interactive) (find-alternate-file "..")))
-)
+  (define-key dired-mode-map (kbd "H-l")
+    (lambda () (interactive) (dired-dotfiles-toggle)))
+
+  (define-key dired-mode-map (kbd "^")
+    (lambda () (interactive) (find-alternate-file "..")))
+
+  (setq wdired-allow-to-change-permissions t)
+
+
+  (use-package peep-dired
+    :ensure t
+    ;; :defer t
+    :bind (:map dired-mode-map
+		("E" . peep-dired))))
 
 
 (use-package dired-narrow
@@ -2156,7 +2140,7 @@
   (bind-key "C-c C-n" #'dired-narrow)
   (bind-key "C-c C-f" #'dired-narrow-fuzzy)
   (bind-key "C-x C-N" #'dired-narrow-regexp)
-)
+  )
 
 (use-package dired-subtree :ensure t
   :defer t
@@ -2164,7 +2148,57 @@
   :config
   (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
   (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map)
-)
+  )
+
+;; (use-package dired-quick-sort
+;;   :ensure t
+;;   :defer t
+;;   :hook (dired-mode)
+;;   :config
+;;   (dired-quick-sort-setup)
+;;   (all-the-icons-dired-mode t))
+
+
+(use-package dired-sidebar
+  :bind (("C-c n t" . dired-sidebar-toggle-sidebar))
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar)
+  :init
+  (add-hook 'dired-sidebar-mode-hook
+            (lambda ()
+              (unless (file-remote-p default-directory)
+                (auto-revert-mode))))
+  (add-hook 'dired-sidebar-mode-hook (lambda () (display-line-numbers-mode -1)))
+  (add-hook 'dired-sidebar-mode-hook (lambda () (nlinum-mode -1)))
+;;  (add-hook 'dired-sidebar-mode-hook (lambda () (all-the-icons-dired-mode -1)))
+
+  (add-hook 'dired-sidebar-mode-hook
+            (lambda ()
+              (unless (file-remote-p default-directory)
+                (auto-revert-mode))))
+  :config
+  (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
+  (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
+  (setq dired-sidebar-theme 'nerd)
+  (setq dired-sidebar-subtree-line-prefix "__")
+  (setq dired-sidebar-width 25))
+
+;;   ;; (use-package diredfl
+;;   ;;   :ensure t
+;;   ;;   :config
+;;   ;;   (diredfl-global-mode))
+;;   ;; (use-package dired-x
+;;   ;;   :config
+;;   ;;   ;; do not bind C-x C-j, it may be binded later
+;;   ;;   (setq dired-bind-jump nil))
+;;   ;; (use-package dired-hide-dotfiles
+;;   ;;   :ensure t
+;;   ;;   :after (dired)
+;;   ;;   :general
+;;   ;;   (:keymaps 'dired-mode-map
+;;   ;;             "." 'dired-hide-dotfiles-mode)
+;;   ;;   :hook
+;;   ;;   (dired-mode . dired-hide-dotfiles-mode)))
 
 #+END_SRC
 
