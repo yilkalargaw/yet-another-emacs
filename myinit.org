@@ -69,7 +69,7 @@
       undo-tree which-key magit git-gutter git-timemachine forge monky yasnippet
       yasnippet-snippets flycheck expand-region avy ace-window ag
       smart-hungry-delete ws-butler company multiple-cursors smartparens
-      rainbow-delimiters all-the-icons neotree company-c-headers irony company-irony
+      rainbow-delimiters all-the-icons dired-sidebar company-c-headers irony company-irony
       flycheck-irony irony-eldoc flycheck-rust racer rust-mode cargo
       go-mode company-go go-dlv inf-ruby robe company-jedi lua-mode company-lua
       geiser slime slime-company emmet-mode web-mode company-web js2-mode
@@ -77,10 +77,11 @@
       json-mode markdown-mode markdown-mode+ markdown-preview-mode markdown-toc
       auctex company-auctex nov restclient realgud projectile ecb god-mode
       php-mode company-php ace-link try dired-narrow dired-subtree lsp-mode company-lsp
-      lsp-ui dap-mode emojify writeroom-mode spray org-pdfview
+      lsp-ui dap-mode emojify writeroom-mode spray org-pdfview origami peep-dired
+      dired-quick-sort interleave rg
       
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
-      ox-epub org-beautify-theme
+      ox-epub org-beautify-theme moe-theme abyss-theme
 
       ;;themes
       ample-theme dracula-theme color-theme-sanityinc-tomorrow darktooth-theme
