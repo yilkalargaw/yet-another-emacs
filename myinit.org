@@ -1055,7 +1055,9 @@
                                  )
                                ;;(add-to-list 'eshell-visual-commands "vim")
 ))
-
+(add-hook 'eshell-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'eshell-mode-hook (lambda () (nlinum-mode -1)))
+(add-hook 'eshell-mode-hook (lambda () (setq show-trailing-whitespace nil)))
 
 #+END_SRC
 
