@@ -9,7 +9,7 @@ Is my personal emacs config and it is based on the earlier yet-another-emacs. I 
 
   + telephone line with a customization for both emacsclient and emacs as a powerline
 
-  + neotree for side tab file manager
+  + dired-sidebar for side tab file manager
 
   + hydra
 
