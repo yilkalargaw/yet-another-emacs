@@ -1,6 +1,94 @@
 #+TITLE: Init File
 #+AUTHOR: Yilkal Argaw , StackOverflow, Github, Emacs-wiki and The Internet in General
 
+* table of contents                                                   :TOC_1:
+- [[#windowframe-look-and-feel-settings][window(frame) look and feel settings]]
+- [[#initial-setup][initial setup]]
+- [[#gnutls][gnutls]]
+- [[#themes][themes]]
+- [[#default-directory][default directory]]
+- [[#backup][backup]]
+- [[#clipboard][clipboard]]
+- [[#yesno][yes,no]]
+- [[#exec-path-form-shell][exec path form shell]]
+- [[#telephone-line][telephone-line]]
+- [[#indentation-stuff][indentation stuff]]
+- [[#line-spacing][line-spacing]]
+- [[#scrolling][scrolling]]
+- [[#input-method][input method]]
+- [[#key-chords][key-chords]]
+- [[#use-package-chords][use-package-chords]]
+- [[#trailing-white-spaces][trailing white spaces]]
+- [[#beacon][beacon]]
+- [[#symbol-overlay][symbol-overlay]]
+- [[#hydra][hydra]]
+- [[#ibuffer][ibuffer]]
+- [[#ivyconsel-and-swiper][ivy,consel and swiper]]
+- [[#line-number][line-number]]
+- [[#nlinum-mode][nlinum-mode]]
+- [[#line-highlight][line-highlight]]
+- [[#undo-tree][undo-tree]]
+- [[#which-key][which-key]]
+- [[#git][git]]
+- [[#monky][monky]]
+- [[#yasnippet][yasnippet]]
+- [[#flycheck][flycheck]]
+- [[#flyspell][flyspell]]
+- [[#expand-region][expand-region]]
+- [[#avy][avy]]
+- [[#ace-window][ace-window]]
+- [[#ag][ag]]
+- [[#rg][rg]]
+- [[#smart-hungry-delete][smart-hungry delete]]
+- [[#ws-butler][ws-butler]]
+- [[#multiple-cursors][multiple-cursors]]
+- [[#smartparens][smartparens]]
+- [[#rainbow-delimiters][rainbow-delimiters]]
+- [[#company][company]]
+- [[#eshell][eshell]]
+- [[#shell-mode][shell-mode]]
+- [[#term-mode][term-mode]]
+- [[#comint-mode][comint-mode]]
+- [[#all-the-icons][all-the-icons]]
+- [[#lsp-mode][lsp-mode]]
+- [[#cc][C/C++]]
+- [[#rust][rust]]
+- [[#go][go]]
+- [[#ruby][ruby]]
+- [[#python][python]]
+- [[#lua][lua]]
+- [[#scheme][scheme]]
+- [[#common-lisp][common-lisp]]
+- [[#web][web]]
+- [[#javascript][javascript]]
+- [[#skewer][skewer]]
+- [[#ocaml][ocaml]]
+- [[#crystal][crystal]]
+- [[#php][php]]
+- [[#csv][csv]]
+- [[#yamltoml-and-json][yaml,toml and json]]
+- [[#markdown][markdown]]
+- [[#latexauctex][latex/auctex]]
+- [[#eww][eww]]
+- [[#novel][nov.el]]
+- [[#restclient][restclient]]
+- [[#realgud][realgud]]
+- [[#projectile][projectile]]
+- [[#ecb][ecb]]
+- [[#org][org]]
+- [[#org-beautify][org-beautify]]
+- [[#god-mode][god mode]]
+- [[#dired][dired]]
+- [[#try][try]]
+- [[#emojify][emojify]]
+- [[#writeroom-mode][writeroom-mode]]
+- [[#spray][spray]]
+- [[#whitespace][whitespace]]
+- [[#pdf][pdf]]
+- [[#outline-and-outshine][outline and outshine]]
+- [[#origami][origami]]
+- [[#custom_faces][custom_faces]]
+
 * window(frame) look and feel settings
 
 #+BEGIN_SRC emacs-lisp
@@ -78,7 +166,7 @@
       auctex company-auctex nov restclient realgud projectile ecb god-mode
       php-mode company-php ace-link try dired-narrow dired-subtree lsp-mode company-lsp
       lsp-ui dap-mode emojify writeroom-mode spray org-pdfview origami peep-dired
-      dired-quick-sort interleave rg
+      dired-quick-sort interleave rg toc-org
       
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
       ox-epub org-beautify-theme moe-theme abyss-theme
@@ -2015,6 +2103,17 @@
 (use-package interleave
   :ensure t
   :defer t)
+#+END_SRC
+
+** toc-org
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package toc-org
+  :ensure t
+  :defer t
+  :hook (org-mode . toc-org-mode))
+
 #+END_SRC
 
 * org-beautify
