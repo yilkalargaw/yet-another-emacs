@@ -2220,15 +2220,9 @@
   :ensure t
   :defer 2
   :hook (emojify-mode . prettify-symbols-mode)
-	;; (after-init . global-emojify-mode))
   :bind (("H-e e" . emojify-mode)
-	 (:map emojify-mode
-	       ("H-e i" . emojify-insert-emoji)
-	       ("H-e d" . emojify-describe-emoji)
-	       ("H-e l" . emojify-list-emojis)))
-;; :init (add-hook 'after-init-hook #'global-emojify-mode)
- :config (lambda () (global-emojify-mode))
- )
+         :map emojify-mode-map
+	 ("φ e" . 'hydra-emojify/body)))
 
 #+END_SRC
 

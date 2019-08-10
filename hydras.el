@@ -500,6 +500,11 @@ _h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
   ("M-r" lsp-restart-workspace)
   ("S" lsp-shutdown-workspace))
 
+(defhydra hydra-emojify (:hint nil)
+  ("i" emojify-insert-emoji "insert")
+  ("d" emojify-describe-emoji "describe")
+  ("l" emojify-list-emojis "list"))
+
 (define-prefix-command 'hydra-map)
 (global-set-key (kbd "φ") 'hydra-map)
 (define-key global-map (kbd "φ z") 'hydra-zoom/body)
