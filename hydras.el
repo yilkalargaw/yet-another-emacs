@@ -146,6 +146,8 @@ Git gutter:
 [_p_]   Next    [_n_]   Next    [_l_] Edit lines
 [_P_]   Skip    [_N_]   Skip    [_a_] Mark all
 [_M-p_] Unmark  [_M-n_] Unmark  [_r_] Mark by regexp
+^ ^             ^ ^             [_#_] mc/insert-numbers
+^ ^             ^ ^             [_@_] mc/insert-letters
 ^ ^             ^ ^             [_q_] Quit
 "
   ("l" mc/edit-lines :exit t)
@@ -157,6 +159,8 @@ Git gutter:
   ("P" mc/skip-to-previous-like-this)
   ("M-p" mc/unmark-previous-like-this)
   ("r" mc/mark-all-in-region-regexp :exit t)
+  ("#" mc/insert-numbers)
+  ("@" mc/insert-letters)
   ("q" nil))
 
 (defhydra hydra-transpose (:color red)

@@ -319,7 +319,7 @@
 
 (add-hook 'after-init-hook 
 	  (progn
-	    (setq base16-theme-256-color-source 'terminal)
+	    (setq base16-theme-256-color-source 'colors)
 	    (setq base16-distinct-fringe-background nil)
 ;;	    (setq base16-highlight-mode-line 'box)
 	    (load-theme 'base16-brewer t)))
@@ -1326,6 +1326,7 @@
   :hook (c++-mode . (lambda () irony-mode 1))
         (c-mode . (lambda () (irony-mode 1)))
         (objc-mode . (lambda () ('irony-mode 1)))
+	(irony-mode-hook . irony-cdb-autosetup-compile-options)
   :config (add-to-list 'company-backends 'company-irony)
           (add-to-list 'company-backends 'company-c-headers)
           (flycheck-irony-setup)
