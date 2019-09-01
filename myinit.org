@@ -87,6 +87,7 @@
 - [[#pdf][pdf]]
 - [[#outline-and-outshine][outline and outshine]]
 - [[#origami][origami]]
+- [[#dashboard][dashboard]]
 - [[#custom_faces][custom_faces]]
 
 * window(frame) look and feel settings
@@ -166,7 +167,7 @@
       auctex company-auctex nov restclient realgud projectile ecb god-mode
       php-mode company-php ace-link try dired-narrow dired-subtree lsp-mode company-lsp
       lsp-ui dap-mode emojify writeroom-mode spray org-pdfview origami peep-dired
-      dired-quick-sort interleave rg toc-org
+      dired-quick-sort interleave rg toc-org dashboard
       
       ox-gfm org-bullets org-tree-slide epresent ox-pandoc ox-twbs
       ox-epub org-beautify-theme moe-theme abyss-theme
@@ -2407,6 +2408,34 @@
   :defer t
   :hook (prog-mode . origami-mode)
 )
+
+#+END_SRC
+
+* dashboard
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package dashboard
+  :ensure t
+  :hook ((dashboard-mode . (lambda () (display-line-numbers-mode -1)))
+	 (dashboard-mode . (lambda () (nlinum-mode -1))))
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t)
+;;  (setq dashboard-set-footer nil)
+(setq dashboard-footer
+      (let ((x '("The one true editor, Emacs!"
+		 "Free as free speech, free as free Beer"
+		 "Richard Stallman is proud of you"
+		 "Happy coding!"
+		 "Welcome to the church of Emacs"
+		 "While any text editor can save your files,\
+ only Emacs can save your soul"
+		 "I showed you my source code,pls respond")))
+	(elt x (random (length x)))))
+  )
 
 #+END_SRC
 
