@@ -384,7 +384,7 @@
 ;;exec-path-from-shell
   (use-package exec-path-from-shell
     :ensure t
-    :defer 2
+    :defer 1
     :config
     (exec-path-from-shell-initialize))
 
