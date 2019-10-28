@@ -2141,9 +2141,10 @@
 
 (use-package god-mode
   :ensure t
-;;  :defer t
-  :init 
-     (global-set-key (kbd "C-h") 'previous-line)
+  ;; :defer t
+  ;; :init 
+  ;;    (global-set-key (kbd "C-h") 'previous-line)
+
   :config
 ;;     (define-key god-local-mode-map (kbd "h") 'previous-line)
 ;;     (define-key god-mode-map (kbd "h"
