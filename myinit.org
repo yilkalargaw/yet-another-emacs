@@ -2221,7 +2221,7 @@
 #+BEGIN_SRC emacs-lisp
 
 (use-package dired
-  ;;  :ensure t
+  :ensure nil
   :defer t
   :hook (dired-mode . (lambda () (dired-hide-details-mode t)))
   :config
@@ -2262,14 +2262,33 @@
 
   (use-package peep-dired
     :ensure t
-    ;; :defer t
+    :defer t
+    :after dired
     :bind (:map dired-mode-map
-		("E" . peep-dired))))
+		("E" . peep-dired)))
+
+  (defadvice dired-subtree-toggle (after dired-icons-refreash ())
+    "Insert an empty line when moving up from the top line."
+    (let ((dafile "~/.emacs.d/custom_faces.el"))		     
+      (revert-buffer)))
+
+  (ad-activate 'dired-subtree-toggle)
+
+  (defadvice dired-subtree-cycle (after dired-icons-refreash ())
+    "Insert an empty line when moving up from the top line."
+    (let ((dafile "~/.emacs.d/custom_faces.el"))		     
+      (revert-buffer)))
+
+  (ad-activate 'dired-subtree-cycle)
+
+
+  )
 
 
 (use-package dired-narrow
   :ensure t
   :defer t
+  :after dired
   :config
   (bind-key "C-c C-n" #'dired-narrow)
   (bind-key "C-c C-f" #'dired-narrow-fuzzy)
@@ -2279,6 +2298,7 @@
 (use-package dired-subtree :ensure t
   :defer t
   :ensure t
+  :after dired
   :config
   (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
   (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map)
@@ -2296,6 +2316,7 @@
 (use-package dired-sidebar
   :bind (("C-c n t" . dired-sidebar-toggle-sidebar))
   :ensure t
+  :defer t
   :commands (dired-sidebar-toggle-sidebar)
   :init
   (add-hook 'dired-sidebar-mode-hook
@@ -2304,12 +2325,14 @@
                 (auto-revert-mode))))
   (add-hook 'dired-sidebar-mode-hook (lambda () (display-line-numbers-mode -1)))
   (add-hook 'dired-sidebar-mode-hook (lambda () (nlinum-mode -1)))
-;;  (add-hook 'dired-sidebar-mode-hook (lambda () (all-the-icons-dired-mode -1)))
+  ;;  (add-hook 'dired-sidebar-mode-hook (lambda () (all-the-icons-dired-mode -1)))
 
   (add-hook 'dired-sidebar-mode-hook
             (lambda ()
               (unless (file-remote-p default-directory)
                 (auto-revert-mode))))
+
+  ;; (setq dired-sidebar-display-alist (quote ((side . right) (slot . -1))))
   :config
   (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
   (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
@@ -2335,6 +2358,7 @@
 ;;   ;;   (dired-mode . dired-hide-dotfiles-mode)))
 
 #+END_SRC
+
 
 * try
 
