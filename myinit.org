@@ -11,6 +11,7 @@
 - [[#clipboard][clipboard]]
 - [[#yesno][yes,no]]
 - [[#exec-path-form-shell][exec path form shell]]
+- [[#libraries][libraries]]]]
 - [[#telephone-line][telephone-line]]
 - [[#indentation-stuff][indentation stuff]]
 - [[#line-spacing][line-spacing]]
@@ -372,6 +373,24 @@
     :defer 2
     :config
     (exec-path-from-shell-initialize))
+
+#+END_SRC
+
+* libraries
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package dash
+    :ensure t)
+
+  (use-package f
+    :ensure t)
+
+  (require 's)
+
+  (require 'color)
+
+  (require 'cl-lib)
 
 #+END_SRC
 
