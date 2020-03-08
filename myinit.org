@@ -394,8 +394,6 @@
 
 #+END_SRC
 
-* telephone-line
-
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
