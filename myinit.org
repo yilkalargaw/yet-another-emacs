@@ -278,14 +278,39 @@
 ;; 	      (load-theme 'sanityinc-solarized-dark t) 
 ;; 	    (load-theme 'danneskjold t)))
 
+(add-hook 'after-init-time-hook
+	  (progn
+	    (defadvice load-theme (after custom-faces-after-load-theme())
+	      "Insert an empty line when moving up from the top line."
+	      (let ((dafile "~/.emacs.d/custom_faces.el"))		     
+		(if (file-exists-p dafile) (load-file dafile))))
+
+
+	    (ad-activate 'load-theme)
+
+	    (defadvice disable-theme (after custom-faces-after-disable-theme())
+	      "Insert an empty line when moving up from the top line."
+	      (let ((dafile "~/.emacs.d/custom_faces.el"))		     
+		(if (file-exists-p dafile) (load-file dafile))))
+
+
+	    (ad-activate 'disable-theme)
+
+	    ))
+
 (add-hook 'after-init-hook 
 	  (progn
 	    (setq base16-theme-256-color-source 'colors)
 	    (setq base16-distinct-fringe-background nil)
-;;	    (setq base16-highlight-mode-line 'box)
-	    (load-theme 'base16-brewer t)))
+	    (setq base16-highlight-mode-line 'box)
+	    (load-theme 'base16-brewer t)
+	    ;; (load-file "~/.emacs.d/custom_faces.el")
+	    ))
 
-;; (load-theme 'manoj-dark t)
+(add-hook 'after-init-time-hook
+	  (load-file "~/.emacs.d/custom_faces.el"))
+
+
 
 #+END_SRC
 
