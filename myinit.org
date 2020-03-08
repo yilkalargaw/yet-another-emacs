@@ -94,29 +94,25 @@
 
 #+BEGIN_SRC emacs-lisp
 
-;; (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-;; (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-;; (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 (if (display-graphic-p)
     (progn
       (setq initial-frame-alist
-            '(
-              (tool-bar-lines . 0)
-              (width . 94) ; chars
-              (height . 52) ; lines
-              ))
+	    '(
+	      (tool-bar-lines . 0)
+	      (width . 94) ; chars
+	      (height . 56) ; lines
+	      ))
 
       (setq default-frame-alist
-            '(
-              (tool-bar-lines . 0)
-              (width . 94)
-              (height . 52)
-              ))
+	    '(
+	      (tool-bar-lines . 0)
+	      (width . 94)
+	      (height . 56)
+	      ))
 
 (set-frame-position (selected-frame) 0 15)
 
@@ -124,24 +120,27 @@
 
 
 (add-hook 'after-make-frame-functions
-          (lambda (frame)
-              (select-frame frame)
-              (if (display-graphic-p)
-                  (progn
-                    (set-frame-size frame 94 52)
-                    (set-frame-position frame 0 15)
-;;                  (set-frame-font "Liberation Mono-9.5" nil t)
-;;                  (set-face-attribute 'default nil :height 93 )
-                    ))))
+	  (lambda (frame)
+	      (select-frame frame)
+	      (if (display-graphic-p)
+		  (progn
+		    (set-frame-size frame 94 56)
+		    (set-frame-position frame 0 15)
+		    ))))
 
 
 (setq inhibit-startup-message t)
-(show-paren-mode t)
 (global-set-key (kbd "C-c m b") 'menu-bar-mode)
 (column-number-mode 1)
 (toggle-indicate-empty-lines t)
-
-(add-to-list 'default-frame-alist '(font . "Liberation Mono-9.5" ))
+(setq initial-scratch-message nil)
+;; (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-11"))
+;; ;; (add-to-list 'default-frame-alist '(:height . 133))
+(set-face-attribute 'default nil :height 102
+		    ;; :family "DejaVu Sans Mono"
+		    :family "Fira Mono"
+		    ;; :family "Droid Sans Mono"
+		    :width 'normal :weight 'normal)
 
 #+END_SRC
 
