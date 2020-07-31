@@ -26,6 +26,7 @@
 - [[#imenu][imenu]]
 - [[#symbol-overlay][symbol-overlay]]
 - [[#hydra][hydra]]
+- [[#major-mode-hydrapretty-hydra][major-mode-hydra/pretty-hydra]]
 - [[#ibuffer][ibuffer]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
@@ -646,6 +647,24 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "η .") 'hydra-dired/body)))
   ;; (add-hook 'projectile-mode-hook (lambda () (define-key projectile-mode-map (kbd "η p") 'hydra-projectile/body)))
 )
+
+#+END_SRC
+
+* major-mode-hydra/pretty-hydra
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package major-mode-hydra
+  :ensure t
+  :after hydra
+  :bind
+  ("M-SPC" . major-mode-hydra)
+)
+
+(use-package pretty-hydra
+  :ensure t
+  :defer t
+  :after hydra)
 
 #+END_SRC
 
