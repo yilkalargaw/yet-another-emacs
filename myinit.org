@@ -85,12 +85,13 @@
 - [[#lsp-mode][lsp-mode]]
 - [[#cc][C/C++]]
 - [[#rust][rust]]
+- [[#ruby][ruby]]
+- [[#php][php]]
+- [[#go][go]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
-- [[#go][go]]
-- [[#ruby][ruby]]
 - [[#python][python]]
 - [[#lua][lua]]
 - [[#scheme][scheme]]
@@ -100,7 +101,6 @@
 - [[#skewer][skewer]]
 - [[#ocaml][ocaml]]
 - [[#crystal][crystal]]
-- [[#php][php]]
 - [[#csv][csv]]
 - [[#yamltoml-and-json][yaml,toml and json]]
 - [[#markdown][markdown]]
@@ -2736,6 +2736,107 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
+* ruby
+
+#+BEGIN_SRC emacs-lisp
+
+;;ruby
+
+(use-package inf-ruby
+  :ensure t
+  ;; :init  (setq inf-ruby-default-implementation "pry")
+  :defer t)
+
+(use-package seeing-is-believing
+  :ensure t
+  :defer t
+  :hook ((ruby-mode . seeing-is-believing)
+         (enh-ruby-mode . seeing-is-believing))
+  :config (setq seeing-is-believing-max-length 90
+                ;; seeing-is-believing-max-results 10
+                seeing-is-believing-timeout 10.5
+                seeing-is-believing-alignment 'file)
+  )
+
+(use-package enh-ruby-mode
+  :mode (("Appraisals\\'" . enh-ruby-mode)
+      ("\\(Rake\\|Thor\\|Guard\\|Gem\\|Cap\\|Vagrant\\|Berks\\|Pod\\|Puppet\\)file\\'" . enh-ruby-mode)
+      ("\\.\\(rb\\|rabl\\|ru\\|builder\\|rake\\|thor\\|gemspec\\|jbuilder\\)\\'" . enh-ruby-mode))
+  :interpreter "ruby"
+  :init
+  (progn
+    (setq enh-ruby-deep-indent-paren nil
+       enh-ruby-hanging-paren-deep-indent-level 2))
+  :hook (seeing-is-beliving)
+)
+
+
+;;  (add-hook 'ruby-mode-hook 'robe-mode))
+
+;; (eval-after-load 'company
+;;   '(push 'company-robe company-backends))
+
+#+END_SRC
+
+* php
+
+#+BEGIN_SRC emacs-lisp
+
+;;php
+
+(use-package php-mode
+  :ensure t
+  :defer t
+  :mode "\\.php\\'"
+  ;;:config (require 'php-extras)
+)
+
+;; (use-package company-php
+;;   :ensure t
+;;   :defer t)
+
+;; ;; (use-package php-extras
+;; ;;   :ensure t
+;; ;;   :defer t)
+
+;; ;; (eval-after-load 'php-mode
+;; ;;   (require 'php-extras))
+
+;; (add-hook 'php-mode-hook
+;;           '(lambda ()
+;;              (require 'company-php)
+;;              (company-mode t)
+;; ;;             (ac-php-core-eldoc-setup) ;; enable eldoc
+;;              (make-local-variable 'company-backends)
+;;              (add-to-list 'company-backends 'company-ac-php-backend)))
+;; ;(eval-after-load 'php-mode
+;; ;  (require 'php-extras))
+
+#+END_SRC
+
+* go
+
+#+BEGIN_SRC emacs-lisp
+
+;;go
+
+(use-package go-mode
+  :ensure t
+  :defer t)
+
+(use-package company-go
+  :ensure t
+  :defer t
+  :hook (go-mode . (lambda ()
+                     (set (make-local-variable 'company-backends) '(company-go))
+                     (company-mode))))
+
+(use-package go-dlv
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
 * key-chords
 
 #+BEGIN_SRC emacs-lisp
@@ -2780,53 +2881,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :ensure t
   :defer 3
   :config (beacon-mode 1))
-
-#+END_SRC
-
-* go
-
-#+BEGIN_SRC emacs-lisp
-
-;;go
-
-(use-package go-mode
-  :ensure t
-  :defer t)
-
-(use-package company-go
-  :ensure t
-  :defer t
-  :hook (go-mode . (lambda ()
-                     (set (make-local-variable 'company-backends) '(company-go))
-                     (company-mode))))
-
-(use-package go-dlv
-  :ensure t
-  :defer t)
-
-#+END_SRC
-
-* ruby
-
-#+BEGIN_SRC emacs-lisp
-
-;;ruby
-
-(use-package inf-ruby
-  :ensure t
-  :defer t)
-
-(use-package robe
-  :ensure t
-  :defer t
-  :bind ("C-c r s" . robe-start)
-  :hook (ruby-mode . robe-mode)
-  :config (push 'company-robe company-backends))
-
-;  (add-hook 'ruby-mode-hook 'robe-mode))
-
-;; (eval-after-load 'company
-;;   '(push 'company-robe company-backends))
 
 #+END_SRC
 
@@ -3014,41 +3068,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package crystal-mode
   :mode ("\\.cr$" . crystal-mode))
-
-#+END_SRC
-
-* php
-
-#+BEGIN_SRC emacs-lisp
-
-;;php
-
-(use-package php-mode
-  :ensure t
-  :mode "\\.php\\'"
-  ;;:config (require 'php-extras)
-)
-
-(use-package company-php
-  :ensure t
-  :defer t)
-
-;; (use-package php-extras
-;;   :ensure t
-;;   :defer t)
-
-;; (eval-after-load 'php-mode
-;;   (require 'php-extras))
-
-(add-hook 'php-mode-hook
-          '(lambda ()
-             (require 'company-php)
-             (company-mode t)
-;;             (ac-php-core-eldoc-setup) ;; enable eldoc
-             (make-local-variable 'company-backends)
-             (add-to-list 'company-backends 'company-ac-php-backend)))
-;(eval-after-load 'php-mode
-;  (require 'php-extras))
 
 #+END_SRC
 
