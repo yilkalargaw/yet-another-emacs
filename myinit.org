@@ -1,9 +1,15 @@
 #+TITLE: Init File
 #+AUTHOR: Yilkal Argaw , StackOverflow, Github, Emacs-wiki and The Internet in General
+#+OPTIONS: toc:2          (only include two levels in TOC)
+#+PROPERTY: header-args:emacs-lisp    :tangle "~/.emacs.d/init.el"
+#+OPTIONS: ^:nil
+#+OPTIONS: _:nil
 
-* table of contents                                                   :TOC_1:
-- [[#windowframe-look-and-feel-settings][window(frame) look and feel settings]]
+* table of contents                                          :noexport:TOC_1:
+- [[#earlyinits][earlyinits]]
 - [[#initial-setup][initial setup]]
+- [[#windowframe-look-and-feel-setting][window(frame) look and feel setting]]
+- [[#font-settings][font-settings]]
 - [[#gnutls][gnutls]]
 - [[#themes][themes]]
 - [[#default-directory][default directory]]
@@ -91,57 +97,56 @@
 - [[#dashboard][dashboard]]
 - [[#custom_faces][custom_faces]]
 
-* window(frame) look and feel settings
+* earlyinits
 
 #+BEGIN_SRC emacs-lisp
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
 
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+;;(package-initialize)
 
-(if (display-graphic-p)
-    (progn
-      (setq initial-frame-alist
-	    '(
-	      (tool-bar-lines . 0)
-	      (width . 94) ; chars
-	      (height . 56) ; lines
-	      ))
+(let ((file-name-handler-alist nil))
+  (require 'package)
 
-      (setq default-frame-alist
-	    '(
-	      (tool-bar-lines . 0)
-	      (width . 94)
-	      (height . 56)
-	      ))
+  (when (version< emacs-version "27.0")
 
-(set-frame-position (selected-frame) 0 15)
+      ;; increase garbage collection threshold foor startup only
+      ;; (setq gc-cons-threshold 8000000)
+    (setq gc-cons-threshold (if (display-graphic-p) (* 400 1024 1024 ) (* 128 1024 1024)))
+    (setq gc-cons-percentage 0.7))
 
-))
+  (add-hook 'after-init-hook #'(lambda ()
+				 ;; restore after startup
+				 ;; (setq gc-cons-threshold 800000) ;; default
+				 (setq gc-cons-threshold (* 32 1024 1024))
+				 (setq gc-cons-percentage 0.5)))
 
 
-(add-hook 'after-make-frame-functions
-	  (lambda (frame)
-	      (select-frame frame)
-	      (if (display-graphic-p)
-		  (progn
-		    (set-frame-size frame 94 56)
-		    (set-frame-position frame 0 15)
-		    ))))
+  (setq package-archives '( ;; ("marmalade" . "https://marmalade-repo.org/packages/")
+			   ("ORG"       . "https://orgmode.org/elpa/")
+			   ("MELPA"     . "https://melpa.org/packages/")
+			   ("MELPA Stable" . "https://stable.melpa.org/packages/")
+			   ("GNU"       . "https://elpa.gnu.org/packages/"))
+	package-archive-priorities '(("ORG" . 15)
+				     ("MELPA" . 10)
+				     ("MELPA Stable" . 5)
+				     ("GNU" . 0)))
 
 
-(setq inhibit-startup-message t)
-(global-set-key (kbd "C-c m b") 'menu-bar-mode)
-(column-number-mode 1)
-(toggle-indicate-empty-lines t)
-(setq initial-scratch-message nil)
-;; (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-11"))
-;; ;; (add-to-list 'default-frame-alist '(:height . 133))
-(set-face-attribute 'default nil :height 102
-		    ;; :family "DejaVu Sans Mono"
-		    :family "Fira Mono"
-		    ;; :family "Droid Sans Mono"
-		    :width 'normal :weight 'normal)
+
+  ;; Set custom settings to load in own file
+  (setq custom-file (make-temp-file "emacs-custom"))
+
+
+  ;; directories for custom themes and elsip-scripts
+  (add-to-list 'load-path (concat user-emacs-directory "lisp"))
+  (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes"))
+
+  (setq inhibit-default-init 1)
+  (setq initial-major-mode 'fundamental-mode)
+  (kill-buffer "*scratch*")
+
 
 #+END_SRC
 
@@ -151,10 +156,103 @@
 
 (if (version< emacs-version "27.0")
     (package-initialize))
+
+
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
 
 (require 'use-package)
+
+;; fetch the list of packages available 
+;; (unless package-archive-contents
+;; (package-refresh-contents))
+
+;; (unless (package-installed-p 'use-package)
+;; (package-install 'use-package)
+;; )
+
+#+END_SRC
+
+* window(frame) look and feel setting
+
+#+BEGIN_SRC emacs-lisp
+(if (version< emacs-version "27.0")
+    (load-file (concat user-emacs-directory "early-init.el")))
+
+
+;; (if (display-graphic-p)
+;; 	  (progn
+;; 	    (setq initial-frame-alist
+;; 		  '(
+;; 		    (width . 93) ; chars
+;; 		    (height . 50) ; lines
+;; 		    (left . 0)
+;; 		    (top . 16)
+;; 		    ))
+;; 	    (setq default-frame-alist
+;; 		  '(
+;; 		    (width . 93)
+;; 		    (height . 50)
+;; 		    (left . 0)
+;; 		    (top . 16)))))
+
+
+(set-window-margins nil 2)
+(setq inhibit-startup-message t)
+(global-set-key (kbd "C-c m b") 'menu-bar-mode)
+(column-number-mode 1)
+;; (toggle-indicate-empty-lines t)
+(setq initial-scratch-message nil)
+(display-battery-mode t)
+(display-time-mode t)
+
+
+
+#+END_SRC
+
+* font-settings
+
+#+BEGIN_SRC emacs-lisp
+
+;; (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-11"))
+;; ;; (add-to-list 'default-frame-alist '(:height . 133))
+(defvar my-default-face-height 105  "height attribute to default face")
+(defvar my-default-face-height-increament 5  "by how much to increase or decrease default :height")
+
+(eval '(set-face-attribute 'default nil :height my-default-face-height
+                           ;; :family "DejaVu Sans Mono"
+                           ;; :family "Monospace"
+                           ;; :family "Fira Mono"
+                           :family "Droid Sans Mono"
+                           :width 'condensed :weight 'normal
+                           ))
+
+(defun my-default-font-height-increase ()
+  "Increase the value of the height parameter for the default font."
+  (interactive)
+  (let* ((default-face-height (face-attribute 'default :height)))
+    (eval `(set-face-attribute 'default nil :height ,(+ default-face-height my-default-face-height-increament)))
+    (message "default font height is now %d" (face-attribute 'default :height))))
+
+
+(defun my-default-font-height-decrease ()
+  "Decrease the value of the height parameter for the default font."
+  (interactive)
+  (let* ((default-face-height (face-attribute 'default :height)))
+    (eval `(set-face-attribute 'default nil :height ,(- default-face-height my-default-face-height-increament)))
+    (message "default font height is now %d" (face-attribute 'default :height))))
+
+
+(defun my-default-font-height-reset ()
+  "Reset the height value of default face back to my-default-face-height"
+  (interactive)
+  (eval `(set-face-attribute 'default nil :height my-default-face-height))
+  (message "default font height is now %d" (face-attribute 'default :height)))
+
+(define-key global-map (kbd "C-M-=")  'my-default-font-height-increase)
+(define-key global-map (kbd "C-M--")  'my-default-font-height-decrease)
+(define-key global-map (kbd "C-M-0")  'my-default-font-height-reset)
 
 #+END_SRC
 
@@ -164,7 +262,7 @@
 
 ;;gnutls
 
-(setq gnutls-min-prime-bits 4096)
+(add-hook 'after-init-time-hook (setq gnutls-min-prime-bits 4096))
 
 #+END_SRC
 
@@ -542,7 +640,6 @@
 )
 
 #+END_SRC
-
 
 * indentation stuff
 
@@ -2598,4 +2695,3 @@
 ;; (setq warning-minimum-level :warning)
 
 #+END_SRC
-
