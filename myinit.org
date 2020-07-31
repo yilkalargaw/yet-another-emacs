@@ -106,8 +106,11 @@
 - [[#async][async]]
 - [[#auto-tangle][auto-tangle]]
 - [[#scratch][scratch]]
-- [[#key-chords][key-chords]]
 - [[#custom_faces][custom_faces]]
+- [[#packages-to-try][packages to try]]
+- [[#load-custom-faces][load custom faces]]
+- [[#set-custom-variables][set custom variables]]
+- [[#provide-init][provide init]]
 
 * earlyinits
 
@@ -3559,16 +3562,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
-* key-chords
-
-#+BEGIN_SRC emacs-lisp
-
-;;keychords
-(use-package key-chord
-  :ensure t)
-
-#+END_SRC
-
 * custom_faces
 
 #+BEGIN_SRC emacs-lisp
@@ -3670,4 +3663,440 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 ;; (setq warning-minimum-level :warning)
 
+#+END_SRC
+* packages to try
+
+** boon
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package boon :defer t :ensure t)
+  
+#+END_SRC
+
+** ryo-modal
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package ryo-modal :defer t :ensure t)
+  
+#+END_SRC
+
+** modalka
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package modalka :defer t :ensure t)
+  
+#+END_SRC
+
+** xah-fly-keys
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package xah-fly-keys :defer t :ensure t)
+  
+#+END_SRC
+
+** xah-find
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package xah-find :defer t :ensure t)
+  
+#+END_SRC
+
+** pcre2
+
+#+BEGIN_SRC emacs-lisp
+
+
+(use-package pcre2el :ensure t :defer t
+:config 
+(pcre-mode))
+  
+#+END_SRC
+
+** esup
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package esup :defer t
+  :ensure t)
+
+#+END_SRC
+
+** kakoune
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package kakoune :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** org-pomodoro
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package org-pomodoro :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** anzu
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package anzu :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** amx
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package amx :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** smex
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package smex :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** jump-char
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package jump-char :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** phi-search
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package phi-search :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** eyebrowse
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package eyebrowse :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** iy-go-to-char
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package iy-go-to-char :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** shackle
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package shackle :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** zop-to-char
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package zop-to-char :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** zzz-to-char
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package zzz-to-char :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** key-pression-mode
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package keypression :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** iedit
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package iedit :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** dumb-jump
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package dumb-jump :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** smart-jump
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package smart-jump :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** fzf
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package fzf :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** easy-kill
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package easy-kill :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** deadgrep
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package deadgrep :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** auto-yasnippet
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package auto-yasnippet :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** aggressive-indent
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package aggressive-indent :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** becon
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package beacon :defer t
+  :ensure t
+  :config
+  (beacon-mode 1)
+  ; (setq beacon-color "#666600")
+  )
+
+#+END_SRC
+
+** virtualenv wrapper
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package virtualenvwrapper :defer t
+          :ensure t
+          :config
+          (venv-initialize-interactive-shells)
+          (venv-initialize-eshell))
+  
+#+END_SRC
+
+** yasnippet-classic-snippets
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package yasnippet-classic-snippets :defer t
+  :ensure t
+)
+  
+#+END_SRC
+
+** jdee for java
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package jdee :defer t
+:ensure t
+:config 
+(custom-set-variables
+ '(jdee-jdk-registry'(("10.0" . "/usr/lib/jvm/java-11-openjdk-amd64")))
+
+'(jdee-server-dir "/home/zamansky/.emacs.d/jdee-server"))
+ 
+)
+
+#+END_SRC
+
+** org-brain
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package org-brain :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** enh-ruby-mode
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package enh-ruby-mode
+  :ensure t
+  :defer t)
+  
+#+END_SRC
+
+** ace-link
+
+#+BEGIN_SRC emacs-lisp
+  
+(use-package ace-link :defer t
+  :ensure t)
+
+#+END_SRC
+
+** ace-mc
+
+#+BEGIN_SRC emacs-lisp
+  
+(use-package ace-mc :defer t
+  :ensure t)
+
+#+END_SRC
+
+** better-defaults
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package better-defaults :defer t
+  :ensure t)
+  
+#+END_SRC
+
+** with-editor (already installed with magit)
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package with-editor
+  :defer t
+  :ensure t
+  :hook ((eshell-mode . with-editor-export-editor)
+	 (shell-mode . with-editor-export-editor)
+	 ;; (term-mode . with-editor-export-editor)
+	 ;; (vterm-mode . with-editor-export-editor)
+	 (eshell-mode . with-editor-export-git-editor)
+	 (shell-mode . with-editor-export-git-editor)
+	 ;; (term-mode . with-editor-export-git-editor)
+	 ;; (vterm-mode . with-editor-export-git-editor)
+	 ))
+
+;; (defadvice make-term (after with-editor-make-term())
+;;               "Insert an empty line when moving up from the top line."
+;; 	      (require 'term)
+;;               (with-editor-export-editor)
+;; 	      (with-editor-export-git-editor))
+
+
+;; (ad-activate 'make-term)
+
+#+END_SRC
+
+** general-el
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package general
+  :ensure t)
+  
+#+END_SRC
+
+** keychords
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package key-chord
+  :ensure t
+  :defer t)
+
+(use-package use-package-chords
+  :ensure t
+  :defer              ;; remove the defer when I actually use it.
+  :config (key-chord-mode 1))
+  
+#+END_SRC
+
+* load custom faces
+
+#+BEGIN_SRC emacs-lisp
+
+(load-file (concat user-emacs-directory "custom_faces.el"))
+
+#+END_SRC
+
+* set custom variables
+
+#+BEGIN_SRC emacs-lisp
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ecb-options-version "2.50")
+ '(indicate-empty-lines t)
+ ;; '(safe-local-variable-values
+ ;;   ((eval add-hook 'after-save-hook
+ ;;       (lambda nil
+ ;;         (org-babel-tangle)
+ ;;         (message "tangled-document")))))
+ )
+  
+#+END_SRC
+
+* provide init
+
+#+BEGIN_SRC emacs-lisp
+
+(provide 'init))
+
+;;; init.el ends here
 #+END_SRC
