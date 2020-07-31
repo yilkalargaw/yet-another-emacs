@@ -47,15 +47,15 @@
 - [[#ag][ag]]
 - [[#rg][rg]]
 - [[#smart-hungry-delete][smart-hungry delete]]
+- [[#ws-butler][ws-butler]]
+- [[#multiple-cursors][multiple-cursors]]
+- [[#smartparens][smartparens]]
+- [[#rainbow-delimiters][rainbow-delimiters]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
-- [[#ws-butler][ws-butler]]
-- [[#multiple-cursors][multiple-cursors]]
-- [[#smartparens][smartparens]]
-- [[#rainbow-delimiters][rainbow-delimiters]]
 - [[#company][company]]
 - [[#eshell][eshell]]
 - [[#shell-mode][shell-mode]]
@@ -1132,6 +1132,81 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+END_SRC
 
+* ws-butler
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package ws-butler
+  :ensure t
+  :defer t
+  :hook (prog-mode . ws-butler-mode))
+
+#+END_SRC
+
+* multiple-cursors
+
+#+BEGIN_SRC emacs-lisp
+
+;;multiple-cursors
+
+(use-package multiple-cursors
+  :ensure t
+  :defer t
+  :config (define-key mc/keymap (kbd "<return>") nil)
+  :bind ;;("H-\\" . mc/mark-all-like-this)
+        ("C-S-<mouse-1>" . mc/add-cursor-on-click))
+
+#+END_SRC
+
+* smartparens
+
+#+BEGIN_SRC emacs-lisp
+
+;;smartparens
+
+(use-package smartparens
+  :ensure t
+  ;; :defer t
+  ;; :after init
+  :hook (prog-mode . smartparens-mode)
+        (markdown-mode . smartparens-mode)
+        (org-mode . smartparens-mode)
+        (fundamental-mode . smartparens-mode)
+        (lisp-interaction-mode . smartparens-mode)
+        (lisp-interaction-mode . (lambda () (show-smartparens-global-mode 1)))
+  
+  :config
+  (show-smartparens-global-mode 1)
+  )
+
+(use-package smartparens-config
+    :ensure smartparens
+    :defer t
+    :hook ((prog-mode . smartparens-mode)
+           (markdown-mode . smartparens-mode)
+           (org-mode . smartparens-mode)
+           (smartparens-mode . (lambda () (sp-local-pair 'web-mode  "<%" "%>" :wrap "C-%")))
+           )
+    :after init)
+
+
+;; (add-hook 'prog-mode-hook #'smartparens-mode)
+;; (add-hook 'markdown-mode-hook #'smartparens-mode)
+;; (add-hook 'smartparens-mode-hook (lambda () (sp-local-pair 'web-mode  "<%" "%>" :wrap "C-%")))
+
+#+END_SRC
+
+* rainbow-delimiters
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package rainbow-delimiters
+  :ensure t
+  :defer t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -1325,68 +1400,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :ensure t
   :defer 3
   :config (beacon-mode 1))
-
-#+END_SRC
-
-* ws-butler
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package ws-butler
-  :ensure t
-  :defer t
-  :hook (prog-mode . ws-butler-mode))
-
-#+END_SRC
-
-* multiple-cursors
-
-#+BEGIN_SRC emacs-lisp
-
-;;multiple-cursors
-
-(use-package multiple-cursors
-  :ensure t
-  :defer t
-  :config (define-key mc/keymap (kbd "<return>") nil)
-  :bind ;;("H-\\" . mc/mark-all-like-this)
-        ("C-S-<mouse-1>" . mc/add-cursor-on-click))
-
-#+END_SRC
-
-* smartparens
-
-#+BEGIN_SRC emacs-lisp
-
-;;smartparens
-
-(use-package smartparens-config
-    :ensure smartparens
-    :defer t
-    :hook ((prog-mode . smartparens-mode)
-	   (markdown-mode . smartparens-mode)
-	   (smartparens-mode-hook . (lambda () (sp-local-pair 'web-mode  "<%" "%>" :wrap "C-%"))))
-    :config
-    (progn
-      (show-smartparens-global-mode t)
-))
-
-
-
-;; (add-hook 'prog-mode-hook #'smartparens-mode)
-;; (add-hook 'markdown-mode-hook #'smartparens-mode)
-;; (add-hook 'smartparens-mode-hook (lambda () (sp-local-pair 'web-mode  "<%" "%>" :wrap "C-%")))
-
-#+END_SRC
-
-* rainbow-delimiters
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package rainbow-delimiters
-  :ensure t
-  :defer t
-  :hook (prog-mode . rainbow-delimiters-mode))
 
 #+END_SRC
 
