@@ -103,6 +103,9 @@
 - [[#default-text-scale][default-text-scale]]
 - [[#enable-disabled-commands][enable disabled commands]]
 - [[#org][org]]
+- [[#async][async]]
+- [[#auto-tangle][auto-tangle]]
+- [[#scratch][scratch]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
@@ -3496,6 +3499,68 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :ensure t
   :defer t
   :hook (org-mode . toc-org-mode))
+
+#+END_SRC
+
+* async
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package async
+  :ensure t
+)
+
+#+END_SRC
+
+* auto-tangle
+
+#+BEGIN_SRC emacs-lisp
+
+
+(add-hook 'org-mode-hook (lambda ()
+                           (defun my-auto-tangler-find-value (buffer)
+                               "Search the `auto_tangle' property in BUFFER and extracts it when found."
+                               (with-current-buffer buffer
+                                 (save-restriction
+                                   (widen)
+                                   (save-excursion
+                                     (goto-char (point-min))
+                                     (when (re-search-forward "^#\\+auto_tangle: \\(.*\\)" nil :noerror)
+                                       (match-string 1))))))
+
+
+
+                             
+                             (defun my/org-babel-tangle-async (file)
+                               "Invoke `org-babel-tangle-file' asynchronously."
+                               (message "Tangling %s..." (buffer-file-name))
+                               (async-start
+                                (let ((args (list file)))
+                                  `(lambda ()
+                                     (require 'org)
+                                     ;;(load "~/.emacs.d/init.el")
+                                     (let ((start-time (current-time)))
+                                       (apply #'org-babel-tangle-file ',args)
+                                       (format "%.2f" (float-time (time-since start-time))))))
+                                (let ((message-string (format "Tangling %S completed after " file)))
+                                  `(lambda (tangle-time)
+                                     (message (concat ,message-string
+                                                      (format "%s seconds" tangle-time)))))))
+
+                           (when (or (my-auto-tangler-find-value (current-buffer))
+                                     (string= (my-auto-tangler-find-value(current-buffer)) "nil"))
+                             (add-hook 'after-save-hook (lambda () (my/org-babel-tangle-async (buffer-file-name)))))))
+
+#+END_SRC
+
+* scratch
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package scratch
+  :ensure t
+  :config
+  (add-hook 'after-init-time-hook (scratch--create 'lisp-interaction-mode "*scratch*")))
 
 #+END_SRC
 
