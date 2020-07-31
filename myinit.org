@@ -62,6 +62,9 @@
 - [[#try][try]]
 - [[#whitespace][whitespace]]
 - [[#highlight-indent-guides][highlight-indent-guides]]
+- [[#outline-and-outshine][outline and outshine]]
+- [[#origami][origami]]
+- [[#start-server][start server]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
@@ -99,8 +102,6 @@
 - [[#writeroom-mode][writeroom-mode]]
 - [[#spray][spray]]
 - [[#pdf][pdf]]
-- [[#outline-and-outshine][outline and outshine]]
-- [[#origami][origami]]
 - [[#dashboard][dashboard]]
 - [[#custom_faces][custom_faces]]
 
@@ -1472,6 +1473,48 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+END_SRC
 
+* outline and outshine
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package outshine
+  :ensure t
+  :defer t
+  :hook ((outline-minor-mode . outshine-mode)
+         (prog-mode . outline-minor-mode))
+          )
+
+#+END_SRC
+
+* origami
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package origami
+  :ensure t
+  :defer t
+  :hook (prog-mode . origami-mode)
+)
+
+#+END_SRC
+
+* start server
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package server
+    :ensure nil
+    :hook (after-init . (lambda ()
+                          (unless (server-running-p)
+                            (server-start)))))
+
+
+  ;; (require 'server)
+  ;; (unless (server-running-p)
+  ;;   (server-start))
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -2822,30 +2865,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 (add-hook 'pdf-view-mode-hook (lambda () (nlinum-mode -1)))
 (add-hook 'pdf-view-mode-hook (lambda () (setq pdf-view-midnight-colors `(,(face-foreground 'default) . ,(face-background 'default)))))
 (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode t)
-
-#+END_SRC
-
-* outline and outshine
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package outshine
-  :ensure t
-  :defer t
-  :hook ((outline-minor-mode . outshine-mode)
-	 (prog-mode . outline-minor-mode)))
-
-#+END_SRC
-
-* origami
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package origami
-  :ensure t
-  :defer t
-  :hook (prog-mode . origami-mode)
-)
 
 #+END_SRC
 
