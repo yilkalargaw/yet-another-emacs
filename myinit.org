@@ -20,10 +20,10 @@
 - [[#indentation-stuff][indentation stuff]]
 - [[#sentences-end-with-a-single-space][Sentences end with a single space]]
 - [[#autorevert][autorevert]]
-- [[#mode-line][mode-line]]
 - [[#line-spacing][line-spacing]]
 - [[#scrolling][scrolling]]
 - [[#input-method][input method]]
+- [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
@@ -523,6 +523,75 @@
 
 #+END_SRC
 
+* line-spacing
+
+#+BEGIN_SRC emacs-lisp
+
+;; (setq-default line-spacing 1)
+;; (setq-default line-spacing 1)
+(add-hook 'minibuffer-setup-hook (lambda () (setq line-spacing nil)))
+
+#+END_SRC
+
+* scrolling
+
+** horizontal scrolling
+
+#+BEGIN_SRC emacs-lisp
+
+(add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
+(add-hook 'html-mode-hook (lambda () (setq truncate-lines t)))
+(add-hook 'web-mode-hook (lambda () (setq truncate-lines t)))
+(add-hook 'dired-mode-hook (lambda () (setq truncate-lines t)))
+(add-hook 'org-mode (lambda () (setq truncate-lines nil)))
+;; (add-hook 'eww-after-render-hook (lambda () (setq truncate-lines t)))
+
+(setq hscroll-margin 0)
+
+(global-set-key (kbd "<mouse-7>") '(lambda ()
+                                     (interactive)
+                                     (scroll-left 4)))
+
+(global-set-key (kbd "<mouse-6>") '(lambda ()
+                                     (interactive)
+                                     (scroll-right 4)))
+
+#+END_SRC
+
+** smooth-scrolling
+
+#+BEGIN_SRC emacs-lisp
+
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
+
+;; ;; nice scrolling
+;; (setq scroll-margin 0
+;;       scroll-conservatively 100000
+;;       scroll-preserve-screen-position 1)
+
+
+#+END_SRC
+
+* input method
+
+#+BEGIN_SRC emacs-lisp
+
+;;input-method
+
+(defun myinput-settings ()
+  "Settings based on input method."
+  (cond ((string= current-input-method "ethiopic")
+         (progn (setq ethio-primary-language 'amharic)
+                (ethio-select-a-translation)))
+        (t nil)))
+
+(add-hook 'input-method-activate-hook #'myinput-settings)
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -669,74 +738,6 @@
   (setq doom-modeline-before-update-env-hook nil)
   (setq doom-modeline-after-update-env-hook nil)
 )
-
-#+END_SRC
-
-* line-spacing
-
-#+BEGIN_SRC emacs-lisp
-
-(setq-default line-spacing 0.25)
-(add-hook 'minibuffer-setup-hook (lambda () (setq line-spacing nil)))
-
-#+END_SRC
-
-* scrolling
-
-** horizontal scrolling
-
-#+BEGIN_SRC emacs-lisp
-
-(add-hook 'prog-mode-hook (lambda ()(setq truncate-lines t)))
-(add-hook 'html-mode-hook (lambda ()(setq truncate-lines t)))
-(add-hook 'web-mode-hook (lambda ()(setq truncate-lines t)))
-(add-hook 'dired-mode-hook (lambda ()(setq truncate-lines t)))
-(add-hook 'org-mode (lambda ()(setq truncate-lines nil)))
-
-
-(global-set-key (kbd "<mouse-7>") '(lambda ()
-                                     (interactive)
-                                     (scroll-left 4)))
-
-(global-set-key (kbd "<mouse-6>") '(lambda ()
-                                     (interactive)
-                                     (scroll-right 4)))
-
-#+END_SRC
-
-** smooth-scrolling
-
-#+BEGIN_SRC emacs-lisp
-
-;;smooth-scrolling
-
-;; (use-package smooth-scrolling
-;;   :ensure t
-;;   :config (setq smooth-scroll-margin 2)
-;;   )
-;; scroll one line at a time (less "jumpy" than defaults)
-
-(setq mouse-wheel-scroll-amount '(10 ((shift) . 10))) ;; one line at a time
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-(setq scroll-step 1) ;; keyboard scroll one line at a time
-
-#+END_SRC
-
-* input method
-
-#+BEGIN_SRC emacs-lisp
-
-;;input-method
-
-(defun myinput-settings ()
-  "Settings based on input method."
-  (cond ((string= current-input-method "ethiopic")
-         (progn (setq ethio-primary-language 'amharic)
-                (ethio-select-a-translation)))
-        (t nil)))
-
-(add-hook 'input-method-activate-hook #'myinput-settings)
 
 #+END_SRC
 
