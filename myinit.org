@@ -97,15 +97,14 @@
 - [[#clojure][clojure]]
 - [[#markdown][markdown]]
 - [[#latexauctex][latex/auctex]]
+- [[#web][web]]
+- [[#csv][csv]]
+- [[#yamltoml-and-json][yaml,toml and json]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
 - [[#python][python]]
-- [[#web][web]]
-- [[#javascript][javascript]]
-- [[#csv][csv]]
-- [[#yamltoml-and-json][yaml,toml and json]]
 - [[#realgud][realgud]]
 - [[#org][org]]
 - [[#org-beautify][org-beautify]]
@@ -3051,6 +3050,108 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
+* web
+
+** html, css
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package emmet-mode
+  :ensure t
+  :hook (sgml-mode css-mode web-mode))
+
+
+ (use-package web-mode
+   :ensure t
+   :defer t
+   ;; :mode (;;"\\.html\\'"
+   ;;        ;;"\\.css?\\'"
+   ;;        "\\.phtml\\'"
+   ;;        "\\.erb\\'"
+   ;;        ;;"\\.html?\\'"
+   ;;        )
+   :config
+   (setq web-mode-markup-indent-offset 2)
+ ;  (setq web-mode-engines-alist
+ ;        '(("django" . "focus/.*\\.html\\'")
+ ;          ("ctemplate" . "realtimecrm/.*\\.html\\'")))
+   (setq web-mode-enable-auto-pairing nil)
+ )
+
+(use-package impatient-mode
+  :ensure t
+  :defer t
+  :hook ((web-mode . impatient-mode)
+         (sgml-mode . impatient-mode)))
+
+
+
+ (use-package company-web
+   :defer t
+   :ensure t
+   ;; :hook (('web-mode . (lambda () (add-to-list 'company-backends 'company-web-html)))
+   ;;     ('mhtml-mode . (lambda () (add-to-list 'company-backends 'company-web-html)))
+   ;;     ('html-mode . (lambda () (add-to-list 'company-backends 'company-web-html))))
+ )
+
+#+END_SRC
+
+** javascript
+
+#+BEGIN_SRC emacs-lisp
+  ;;javascript
+
+;; (use-package js2-mode
+;;   :ensure t
+;;   :defer t
+;;   :mode "\\.js\\'"
+;;   :interpreter "node")
+
+(use-package js2-mode
+  :ensure t
+  :interpreter (("node" . js2-mode))
+  :mode "\\.\\(js\\|json\\)$"
+  :config
+  (add-hook 'js-mode-hook 'js2-minor-mode)
+  (setq js2-basic-offset 2
+        js2-highlight-level 3
+        js2-mode-show-parse-errors nil
+        js2-mode-show-strict-warnings nil))
+
+
+
+#+END_SRC
+
+* csv
+
+#+BEGIN_SRC emacs-lisp
+
+;;csv
+
+(use-package csv-mode
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+* yaml,toml and json
+
+#+BEGIN_SRC emacs-lisp
+
+  ;;yaml,toml and json
+
+  (use-package yaml-mode
+    :ensure t
+    :defer t)
+  (use-package toml-mode
+    :ensure t
+    :defer t)
+  ;; (use-package json-mode
+  ;;   :ensure t
+  ;;   :defer t)
+
+#+END_SRC
+
 * key-chords
 
 #+BEGIN_SRC emacs-lisp
@@ -3111,111 +3212,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (add-to-list 'company-backends 'company-jedi))
 
 (add-hook 'python-mode-hook 'my/python-mode-hook)
-
-#+END_SRC
-
-* web
-
-#+BEGIN_SRC emacs-lisp
-
-;;web-mode
-
-(use-package emmet-mode
-  :ensure t
-  :hook (sgml-mode css-mode web-mode))
-
-
- (use-package web-mode
-   :ensure t
-   :defer t
-   :mode (;;"\\.html\\'"
-          ;;"\\.css?\\'"
-          "\\.phtml\\'"
-          "\\.erb\\'"
-          ;;"\\.html?\\'"
-          )
-   :config
-   (setq web-mode-markup-indent-offset 2)
- ;  (setq web-mode-engines-alist
- ;        '(("django" . "focus/.*\\.html\\'")
- ;          ("ctemplate" . "realtimecrm/.*\\.html\\'")))
-   (setq web-mode-enable-auto-pairing nil)
-;;   (add-hook 'web-mode-hook (lambda () (require 'emmet-mode)
- )
-
-
- (use-package company-web
-   :defer t
-   :hook (('web-mode . (lambda () (add-to-list 'company-backends 'company-web-html)))
-	  ('mhtml-mode . (lambda () (add-to-list 'company-backends 'company-web-html)))
-	  ('html-mode . (lambda () (add-to-list 'company-backends 'company-web-html))))
- )
-
-#+END_SRC
-
-* javascript
-
-  #+BEGIN_SRC emacs-lisp
-
-  ;;javascript
-
-  (use-package js2-mode
-    :ensure t
-    :defer t
-    :mode "\\.js\\'"
-    :interpreter "node")
-
-  (add-to-list 'load-path "~/user_softs/npm_related/node_modules/tern/emacs/")
-  (autoload 'tern-mode "tern.el" nil t)
-  (add-hook 'js-mode-hook (lambda () (tern-mode t)))
-  (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
-  ;;  (add-hook 'web-mode-hook (lambda () (tern-mode t)))
-
-  (use-package company-tern
-    :ensure t
-    :defer t
-    :hook
-    (company-mode . (lambda () (push 'company-tern company-backends)))
-    :config
-    (defadvice company-tern (before web-mode-set-up-ac-sources activate)
-      "Set `tern-mode' based on current language before running company-tern."
-      (if (equal major-mode 'web-mode)
-	  (let ((web-mode-cur-language
-		 (web-mode-language-at-pos)))
-	    (if (or (string= web-mode-cur-language "jsx")
-		    (string= web-mode-cur-language "javascript"))
-		(unless tern-mode (tern-mode))
-	      (if tern-mode (tern-mode -1)))))))
-
-  #+END_SRC
-
-* csv
-
-#+BEGIN_SRC emacs-lisp
-
-;;csv
-
-(use-package csv-mode
-  :ensure t
-  :defer t)
-
-#+END_SRC
-
-* yaml,toml and json
-
-#+BEGIN_SRC emacs-lisp
-
-;;yaml,toml and json
-
-(use-package yaml-mode
-  :ensure t
-  :defer t)
-(use-package toml-mode
-  :ensure t
-  :defer t)
-(use-package json-mode
-  :ensure t
-  :defer t)
 
 #+END_SRC
 
