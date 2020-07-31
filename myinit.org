@@ -32,12 +32,13 @@
 - [[#ivyconsel-and-swiper][ivy,consel and swiper]]
 - [[#line-number][line-number]]
 - [[#nlinum-mode][nlinum-mode]]
+- [[#line-highlight][line-highlight]]
+- [[#show-parens][show-parens]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
-- [[#line-highlight][line-highlight]]
 - [[#undo-tree][undo-tree]]
 - [[#which-key][which-key]]
 - [[#git][git]]
@@ -844,6 +845,38 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+END_SRC
 
+* line-highlight
+ 
+#+BEGIN_SRC emacs-lisp
+
+;;line-highlight
+
+;;(add-hook 'after-init-hook 'global-hl-line-mode t)
+(use-package hl-line
+  ;; Highlights the current line
+  :hook ((prog-mode text-mode conf-mode special-mode org-mode lisp-interaction) . (lambda () (hl-line-mode t)))
+  :after (init)
+  :defer t
+  :config
+  ;; Not having to render the hl-line overlay in multiple buffers offers a tiny
+  ;; performance boost. I also don't need to see it in other buffers.
+  (setq hl-line-sticky-flag nil
+        global-hl-line-sticky-flag nil))
+
+#+END_SRC
+
+* show-parens
+
+#+BEGIN_SRC emacs-lisp
+
+;; (add-hook 'after-init-hook (lambda () (show-paren-mode t)))
+;; (add-hook 'after-change-major-mode-hook (lambda () (show-paren-mode 1)))
+;; (add-hook 'after-init-mode-hook (lambda () (show-paren-mode 1)))
+
+;; (show-paren-mode 1)
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -1037,16 +1070,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :ensure t
   :defer 3
   :config (beacon-mode 1))
-
-#+END_SRC
-
-* line-highlight
- 
-#+BEGIN_SRC emacs-lisp
-
-;;line-highlight
-
-(add-hook 'after-init-hook 'global-hl-line-mode t)
 
 #+END_SRC
 
