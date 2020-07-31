@@ -71,6 +71,9 @@
 - [[#marking][marking]]
 - [[#pdf][pdf]]
 - [[#emojify][emojify]]
+- [[#writeroom-mode][writeroom-mode]]
+- [[#spray][spray]]
+- [[#ecb][ecb]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
@@ -99,13 +102,10 @@
 - [[#latexauctex][latex/auctex]]
 - [[#realgud][realgud]]
 - [[#projectile][projectile]]
-- [[#ecb][ecb]]
 - [[#org][org]]
 - [[#org-beautify][org-beautify]]
 - [[#god-mode][god mode]]
 - [[#dired][dired]]
-- [[#writeroom-mode][writeroom-mode]]
-- [[#spray][spray]]
 - [[#dashboard][dashboard]]
 - [[#custom_faces][custom_faces]]
 
@@ -1907,6 +1907,52 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
+* writeroom-mode
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package writeroom-mode
+  :ensure t
+  :defer t
+  :hook ((writeroom-mode . (lambda () (display-line-numbers-mode -1)))
+         (writeroom-mode . (lambda () (nlinum-mode -1)))
+         ;; (org-tree-slide-mode . writeroom-mode)
+         )
+  ;; :bind ("H-<f11>" . writeroom-mode)
+)
+
+#+END_SRC
+
+* spray
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package spray
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+* ecb
+
+#+BEGIN_SRC emacs-lisp
+
+;;ecb
+
+(use-package ecb
+  :ensure t
+  :defer t
+  :init (setq ecb-tip-of-the-day nil)
+  :bind (( "C-c e b" . ecb-minor-mode)
+         :map ecb-mode-map
+         ("γ 1" . 'ecb-goto-window-edit1)
+         ("γ 2" . 'ecb-goto-window-directories)
+         ("γ 3" . 'ecb-goto-window-sources)
+         ("γ 4" . 'ecb-goto-window-methods)
+         ("γ 5" . 'ecb-goto-window-history)))
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -2688,27 +2734,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
-* ecb
-
-#+BEGIN_SRC emacs-lisp
-
-;;ecb
-
-(use-package ecb
-  :ensure t
-  :defer t
-  :init (setq ecb-tip-of-the-day nil)
-        (custom-set-variables `(ecb-options-version "2.50"))
-  :bind (( "C-c e b" . ecb-minor-mode)
-         :map ecb-mode-map
-         ("H-1" . 'ecb-goto-window-edit1)
-         ("H-2" . 'ecb-goto-window-directories)
-         ("H-3" . 'ecb-goto-window-sources)
-         ("H-4" . 'ecb-goto-window-methods)
-         ("H-5" . 'ecb-goto-window-history)))
-
-#+END_SRC
-
 * org
 
 #+BEGIN_SRC emacs-lisp
@@ -3205,32 +3230,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ;;   ;;             "." 'dired-hide-dotfiles-mode)
 ;;   ;;   :hook
 ;;   ;;   (dired-mode . dired-hide-dotfiles-mode)))
-
-#+END_SRC
-
-* writeroom-mode
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package writeroom-mode
-  :ensure t
-  :defer t
-  :hook ((writeroom-mode . (lambda () (display-line-numbers-mode -1)))
-	 (writeroom-mode . (lambda () (nlinum-mode -1)))
-	 (org-tree-slide-mode . writeroom-mode)
-	 )
-  :bind ("H-<f11>" . writeroom-mode)
-)
-
-#+END_SRC
-
-* spray
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package spray
-  :ensure t
-  :defer t)
 
 #+END_SRC
 
