@@ -102,13 +102,12 @@
 - [[#yamltoml-and-json][yaml,toml and json]]
 - [[#default-text-scale][default-text-scale]]
 - [[#enable-disabled-commands][enable disabled commands]]
+- [[#org][org]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
 - [[#python][python]]
-- [[#realgud][realgud]]
-- [[#org][org]]
 - [[#org-beautify][org-beautify]]
 - [[#custom_faces][custom_faces]]
 
@@ -3175,92 +3174,19 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   
 #+END_SRC
 
-* key-chords
-
-#+BEGIN_SRC emacs-lisp
-
-;;keychords
-(use-package key-chord
-  :ensure t)
-
-#+END_SRC
-
-* use-package-chords
-
-#+BEGIN_SRC emacs-lisp
-
-;;use-package-chords
-(use-package use-package-chords
-  :ensure t
-  :config (key-chord-mode 1))
-
-#+END_SRC
-
-* trailing white spaces
-
-#+BEGIN_SRC emacs-lisp
-;;settings for trailng whitespaces
-;;(setq show-trailing-whitespace t)
-;;(setq-default show-trailing-whitespace t)
-(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'html-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'css-mode-hook (lambda () (setq show-trailing-whitespace t)))
-;;(add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace nil)))
-(add-hook 'markdown-mode-hook (lambda () (setq show-trailing-whitespace t)))
-
-#+END_SRC
-
-* beacon
-
-#+BEGIN_SRC emacs-lisp
-
-;;beacon
-(use-package beacon
-  :ensure t
-  :defer 3
-  :config (beacon-mode 1))
-
-#+END_SRC
-
-* python
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package company-jedi
-  :defer t
-  :ensure t
-  )
-
-(defun my/python-mode-hook ()
-  (add-to-list 'company-backends 'company-jedi))
-
-(add-hook 'python-mode-hook 'my/python-mode-hook)
-
-#+END_SRC
-
-* realgud
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package realgud
-  :ensure t
-  :defer t)
-
-#+END_SRC
-
 * org
 
 #+BEGIN_SRC emacs-lisp
 
-(global-set-key (kbd "H-o l") 'org-store-link)
-(global-set-key (kbd "H-o a") 'org-agenda)
-(global-set-key (kbd "H-o c") 'org-capture)
-(global-set-key (kbd "H-o b") 'org-switchb)
+;; (global-set-key (kbd "H-o l") 'org-store-link)
+;; (global-set-key (kbd "H-o a") 'org-agenda)
+;; (global-set-key (kbd "H-o c") 'org-capture)
+;; (global-set-key (kbd "H-o b") 'org-switchb)
 
-(global-set-key (kbd "C-c 0 l") 'org-store-link)
-(global-set-key (kbd "C-c 0 a") 'org-agenda)
-(global-set-key (kbd "C-c 0 c") 'org-capture)
-(global-set-key (kbd "C-c 0 b") 'org-switchb)
+;; (global-set-key (kbd "C-c 0 l") 'org-store-link)
+;; (global-set-key (kbd "C-c 0 a") 'org-agenda)
+;; (global-set-key (kbd "C-c 0 c") 'org-capture)
+;; (global-set-key (kbd "C-c 0 b") 'org-switchb)
 
 #+END_SRC
 
@@ -3351,29 +3277,30 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ;;org-latex
 
 ;pygment minted
-					;(require 'org-latex)
+                                        ;(require 'org-latex)
 (add-hook 'org-mode-hook (lambda () 
-			   (require 'ox-latex)
-			   (add-to-list 'org-latex-packages-alist '("" "minted"))
-			   (setq org-latex-listings 'minted)
+                           (require 'ox-latex)
+                           (add-to-list 'org-latex-packages-alist '("" "minted"))
+                           (setq org-latex-listings 'minted)
 
-			   (setq org-latex-default-packages-alist (cons '("mathletters" "ucs" nil) org-latex-default-packages-alist))
-			   (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
+                           (setq org-latex-default-packages-alist (cons '("mathletters" "ucs" nil) org-latex-default-packages-alist))
+                           (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
 
-			   ;; (setq org-latex-pdf-process
-			   ;;       '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-			   ;;         "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-			   ;;         "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+                           ;; (setq org-latex-pdf-process
+                           ;;       '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                           ;;         "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                           ;;         "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
-			   ;; (add-to-list 'load-path "~/.emacs.d/lisp/org-utf-to-xetex")
-			   ;; (require 'org-utf-to-xetex)
-			   ;; (add-hook 'org-mode-hook #'org-utf-to-xetex-prettify)
+                           ;; (add-to-list 'load-path "~/.emacs.d/lisp/org-utf-to-xetex")
+                           ;; (require 'org-utf-to-xetex)
+                           ;; (add-hook 'org-mode-hook #'org-utf-to-xetex-prettify)
 
-			   (setq org-latex-compiler "xelatex")
-			   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
-			   (setq-default TeX-engine 'xetex)
-			   (setq-default TeX-PDF-mode t)
-			   (add-to-list 'org-latex-packages-alist '("" "fontspec"))))
+                           ;; (setq org-latex-compiler "xelatex")
+                           ;; (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
+                           ;; (setq-default TeX-engine 'xetex)
+                           ;; (setq-default TeX-PDF-mode t)
+                           ;; (add-to-list 'org-latex-packages-alist '("" "fontspec"))
+                           ))
 
 
 #+END_SRC
@@ -3392,7 +3319,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
   (setq org-html-html5-fancy t
         org-html-doctype "html5"))
-;;; Loading custom backend
+;; Loading custom backend
 ;(add-to-list 'load-path "lisp/")
 ;(load-file "~/.emacs.d/lisp/pelican-html.el")
 ;(use-package pelican-html :ensure t :defer t :hook(org-mode))
@@ -3432,15 +3359,49 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 ;;org-tree-slide
 
-(use-package org-tree-slide
-  :ensure t
-  :defer t)
-(define-key org-mode-map (kbd "<f8>") 'org-tree-slide-mode)
-(define-key org-mode-map (kbd "S-<f8>") 'org-tree-slide-skip-done-toggle)
+  (use-package org-tree-slide
+    :diminish
+    :after org
+    :functions (org-display-inline-images
+                org-remove-inline-images)
+    :bind (:map org-mode-map
+                ("C-<f7>" . org-tree-slide-mode)
+                :map org-tree-slide-mode-map
+                ("<left>" . org-tree-slide-move-previous-tree)
+                ("<right>" . org-tree-slide-move-next-tree)
+                ("S-SPC" . org-tree-slide-move-previous-tree)
+                ("SPC" . org-tree-slide-move-next-tree))
+    :hook ((org-tree-slide-play . (lambda ()
+                                    (nlinum-mode -1)
+                                    (display-line-numbers-mode -1)
+                                    (writeroom-mode 1)
+                                    (text-scale-increase 2)
+                                    (org-display-inline-images)
+                                    (read-only-mode 1)))
+           (org-tree-slide-stop . (lambda ()
+                                    (text-scale-increase 0)
+                                    (writeroom-mode -1)
+                                    (nlinum-mode 1)
+                                    (display-line-numbers-mode 1)
+                                    (org-remove-inline-images)
+                                    (read-only-mode -1))))
+    :config
+    (org-tree-slide-simple-profile)
+    (setq org-tree-slide-skip-outline-level 2))
 
-(with-eval-after-load "org-tree-slide"
-  (define-key org-tree-slide-mode-map (kbd "<f9>") 'org-tree-slide-move-previous-tree)
-  (define-key org-tree-slide-mode-map (kbd "<f10>") 'org-tree-slide-move-next-tree))
+;; (use-package org-tree-slide
+;;   :ensure t
+;;   :defer t
+;;   :after org
+;;   :bind (:map org-mode-map
+;;            ("<f8>" . org-tree-slide-mode)
+;;            ("C-<f8>" .  org-tree-slide-skip-done-toggle)))
+;; ;; (define-key org-mode-map (kbd "<f8>") 'org-tree-slide-mode)
+;; ;; (define-key org-mode-map (kbd "S-<f8>") 'org-tree-slide-skip-done-toggle)
+
+;; (with-eval-after-load "org-tree-slide"
+;;   (define-key org-tree-slide-mode-map (kbd "<f9>") 'org-tree-slide-move-previous-tree)
+;;   (define-key org-tree-slide-mode-map (kbd "<f10>") 'org-tree-slide-move-next-tree))
 
 #+END_SRC
 
@@ -3503,19 +3464,19 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+BEGIN_SRC emacs-lisp
 
-(use-package org-pdfview
-  :defer t
-  :hook (org-mode . (lambda () (require 'org-pdfview)))
-  :config (add-to-list 'org-file-apps 
-             '("\\.pdf\\'" . (lambda (file link)
-                                     (org-pdfview-open link))))
-
-  :ensure t)
-;; (eval-after-load 'org '(require 'org-pdfview))
-
-;; (add-to-list 'org-file-apps 
+;; (use-package org-pdfview
+;;   :defer t
+;;   :hook (org-mode . (lambda () (require 'org-pdfview)))
+;;   :config (add-to-list 'org-file-apps 
 ;;              '("\\.pdf\\'" . (lambda (file link)
 ;;                                      (org-pdfview-open link))))
+
+;;   :ensure t)
+;; ;; (eval-after-load 'org '(require 'org-pdfview))
+
+;; ;; (add-to-list 'org-file-apps 
+;; ;;              '("\\.pdf\\'" . (lambda (file link)
+;; ;;                                      (org-pdfview-open link))))
 
 #+END_SRC
 
@@ -3535,6 +3496,69 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :ensure t
   :defer t
   :hook (org-mode . toc-org-mode))
+
+#+END_SRC
+
+* key-chords
+
+#+BEGIN_SRC emacs-lisp
+
+;;keychords
+(use-package key-chord
+  :ensure t)
+
+#+END_SRC
+
+* use-package-chords
+
+#+BEGIN_SRC emacs-lisp
+
+;;use-package-chords
+(use-package use-package-chords
+  :ensure t
+  :config (key-chord-mode 1))
+
+#+END_SRC
+
+* trailing white spaces
+
+#+BEGIN_SRC emacs-lisp
+;;settings for trailng whitespaces
+;;(setq show-trailing-whitespace t)
+;;(setq-default show-trailing-whitespace t)
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'html-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'css-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;;(add-hook 'org-mode-hook (lambda () (setq show-trailing-whitespace nil)))
+(add-hook 'markdown-mode-hook (lambda () (setq show-trailing-whitespace t)))
+
+#+END_SRC
+
+* beacon
+
+#+BEGIN_SRC emacs-lisp
+
+;;beacon
+(use-package beacon
+  :ensure t
+  :defer 3
+  :config (beacon-mode 1))
+
+#+END_SRC
+
+* python
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package company-jedi
+  :defer t
+  :ensure t
+  )
+
+(defun my/python-mode-hook ()
+  (add-to-list 'company-backends 'company-jedi))
+
+(add-hook 'python-mode-hook 'my/python-mode-hook)
 
 #+END_SRC
 
