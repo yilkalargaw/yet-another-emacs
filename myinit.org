@@ -59,6 +59,9 @@
 - [[#eww--shr][eww & shr]]
 - [[#novel][nov.el]]
 - [[#restclient][restclient]]
+- [[#try][try]]
+- [[#whitespace][whitespace]]
+- [[#highlight-indent-guides][highlight-indent-guides]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
@@ -92,11 +95,9 @@
 - [[#org-beautify][org-beautify]]
 - [[#god-mode][god mode]]
 - [[#dired][dired]]
-- [[#try][try]]
 - [[#emojify][emojify]]
 - [[#writeroom-mode][writeroom-mode]]
 - [[#spray][spray]]
-- [[#whitespace][whitespace]]
 - [[#pdf][pdf]]
 - [[#outline-and-outshine][outline and outshine]]
 - [[#origami][origami]]
@@ -1386,6 +1387,88 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 :after (restclient)
 :config 
 (add-to-list 'company-backends 'company-restclient))
+
+#+END_SRC
+
+* try
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package try
+  :defer t
+  :ensure t)
+
+#+END_SRC
+
+* whitespace
+
+#+BEGIN_SRC emacs-lisp
+
+;; (add-hook 
+;;  'after-init-hook 
+;;  (lambda ()
+;;    ;; Make whitespace-mode with very basic background coloring for whitespaces.
+;;    ;; http://ergoemacs.org/emacs/whitespace-mode.html
+   (setq whitespace-style (quote (face spaces tabs
+                                       newline space-mark tab-mark
+                                       newline-mark
+                                       ;; indentation
+                                       )))
+;; ;;    (setq whitespace-indentation-regexp (quote ("^\(\s-+\)" . "^ *\(       +\)[^
+;; ;; ]")))
+
+;;    (setq whitespace-style (quote (quote (face indentation::tab indentation::space
+;;                                            indentation))))  ;; face spaces tabs newline space-mark tab-mark newline-mark )))
+
+;;    (setq whitespace-style (quote (quote (face spaces tabs newline space-mark tab-mark newline-mark ))))
+   
+;;    ;; Make whitespace-mode and whitespace-newline-mode use “¶” for end of line char and “▷” for tab.
+;;    ;; (setq whitespace-display-mappings
+;;    ;;         ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
+;;    ;;         '(
+;;    ;;           (space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
+;;    ;;           (newline-mark 10 [182 10]) ; LINE FEED,
+;;    ;;           (tab-mark 9 [9655 9] [92 9]) ; tab
+;;    ;;           ))
+
+
+;;    ;; (setq whitespace-display-mappings '((space-mark ?\  [?.]) (newline-mark ?\n [?$ ?\n]) (tab-mark ?\t [?\\ ?\t]))) ;
+;; ))
+
+
+;; (progn
+
+  (defadvice whitespace-mode (after custom-faces-after-load-theme())
+    "Insert an empty line when moving up from the top line."
+    (let ((dafile (concat user-emacs-directory "custom_faces.el")))
+      (if (file-exists-p dafile) (load-file dafile))))
+
+
+  (ad-activate 'whitespace-mode)
+
+  ;; (defadvice disable-theme (after custom-faces-after-disable-theme())
+  ;;   "Insert an empty line when moving up from the top line."
+  ;;   (let ((dafile "~/.emacs.d/custom_faces.el"))                  
+  ;;     (if (file-exists-p dafile) (load-file dafile))))
+
+
+  ;; (ad-activate 'disable-theme)
+
+  ;; )
+
+#+END_SRC
+
+* highlight-indent-guides
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package highlight-indent-guides
+  :ensure t
+  :defer t
+  :config (setq highlight-indent-guides-responsive 'top)
+  (setq highlight-indent-guides-delay 0.1)
+   (setq highlight-indent-guides-method 'column)
+)
 
 #+END_SRC
 
@@ -2690,16 +2773,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+END_SRC
 
-* try
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package try
-  :defer t
-  :ensure t)
-
-#+END_SRC
-
 * emojify
 
 #+BEGIN_SRC emacs-lisp
@@ -2737,28 +2810,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 (use-package spray
   :ensure t
   :defer t)
-
-#+END_SRC
-
-* whitespace
-
-#+BEGIN_SRC emacs-lisp
-
-(add-hook 
- 'after-init-hook 
- (lambda ()
-   ;; Make whitespace-mode with very basic background coloring for whitespaces.
-   ;; http://ergoemacs.org/emacs/whitespace-mode.html
-   (setq whitespace-style (quote (face spaces tabs newline space-mark tab-mark newline-mark )))
-
-   ;; Make whitespace-mode and whitespace-newline-mode use “¶” for end of line char and “▷” for tab.
-   (setq whitespace-display-mappings
-	 ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
-	 '(
-	   (space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
-	   (newline-mark 10 [182 10]) ; LINE FEED,
-	   (tab-mark 9 [9655 9] [92 9]) ; tab
-	   ))))
 
 #+END_SRC
 
