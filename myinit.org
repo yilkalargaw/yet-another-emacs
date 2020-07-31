@@ -18,6 +18,8 @@
 - [[#exec-path-form-shell][exec path form shell]]
 - [[#libraries][libraries]]
 - [[#indentation-stuff][indentation stuff]]
+- [[#sentences-end-with-a-single-space][Sentences end with a single space]]
+- [[#autorevert][autorevert]]
 - [[#mode-line][mode-line]]
 - [[#line-spacing][line-spacing]]
 - [[#scrolling][scrolling]]
@@ -498,6 +500,26 @@
 (setq c-basic-indent 2)
 (setq tab-width 4)
 (setq indent-tabs-mode nil)
+
+#+END_SRC
+
+* Sentences end with a single space
+
+#+BEGIN_SRC emacs-lisp 
+
+(setq sentence-end-double-space nil)
+
+#+END_SRC
+
+* autorevert
+
+#+BEGIN_SRC emacs-lisp
+  
+;; Automatically reload files was modified by external program
+(use-package autorevert
+  :ensure nil
+  :diminish
+  :hook (after-init . global-auto-revert-mode))
 
 #+END_SRC
 
