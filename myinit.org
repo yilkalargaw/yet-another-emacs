@@ -4,6 +4,7 @@
 #+PROPERTY: header-args:emacs-lisp    :tangle "~/.emacs.d/init.el"
 #+OPTIONS: ^:nil
 #+OPTIONS: _:nil
+#+autotangle: t
 
 * table of contents                                          :noexport:TOC_1:
 - [[#earlyinits][earlyinits]]
