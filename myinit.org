@@ -3977,6 +3977,14 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   
 #+END_SRC
 
+** teco
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package teco :ensure t :defer t)
+  
+#+END_SRC
+
 * load custom faces
 
 #+BEGIN_SRC emacs-lisp
