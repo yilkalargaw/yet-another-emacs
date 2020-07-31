@@ -74,13 +74,15 @@
 - [[#writeroom-mode][writeroom-mode]]
 - [[#spray][spray]]
 - [[#ecb][ecb]]
+- [[#projectile][projectile]]
+- [[#dashboard][dashboard]]
+- [[#all-the-icons][all the icons]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
 - [[#company][company]]
-- [[#all-the-icons][all-the-icons]]
 - [[#lsp-mode][lsp-mode]]
 - [[#cc][C/C++]]
 - [[#rust][rust]]
@@ -101,12 +103,10 @@
 - [[#markdown][markdown]]
 - [[#latexauctex][latex/auctex]]
 - [[#realgud][realgud]]
-- [[#projectile][projectile]]
 - [[#org][org]]
 - [[#org-beautify][org-beautify]]
 - [[#god-mode][god mode]]
 - [[#dired][dired]]
-- [[#dashboard][dashboard]]
 - [[#custom_faces][custom_faces]]
 
 * earlyinits
@@ -1953,6 +1953,140 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
+* projectile
+
+#+BEGIN_SRC emacs-lisp
+
+;; projectile
+
+(use-package projectile
+  :ensure t
+  :defer t
+  :after init hydra
+  :hook (prog-mode . projectile-mode)
+  :bind (:map projectile-mode-map
+              ("η p" . hydra-projectile/body))
+  :config
+  (projectile-global-mode)
+  (setq projectile-completion-system 'ivy)
+)
+
+;; (add-hook 'prog-mode-hook 'projectile-mode)
+;; (add-hook 'projectile-mode-hook 'co  unsel-projectile-mode)
+
+#+END_SRC
+
+* dashboard
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package dashboard
+  :ensure t
+  :after (display-line-numbers ;; nlinum
+                               )
+  :hook ((dashboard-mode . (lambda () (display-line-numbers-mode -1)))
+         (dashboard-mode . (lambda () (nlinum-mode -1))))
+  ;; :commands dashboard
+  ;; :init
+  ;; (display-line-numbers-mode -1)
+  ;; (nlinum-mode -1)
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-set-footer nil)
+  (setq dashboard-footer
+        (let ((x  '("The one true editor, Emacs!"
+                   "Free as free speech, free as free Beer"
+                   "Richard Stallman is proud of you"
+                   "Happy coding!"
+                   "Welcome to the church of Emacs"
+                   "While any text editor can save your files,\
+ only Emacs can save your soul"
+                   "I showed you my source code,pls respond")))
+          (elt x (random (length x)))))
+    ;; (display-line-numbers-mode -1)
+  ;; (nlinum-mode -1)
+  )
+
+#+END_SRC
+
+* all the icons
+
+#+BEGIN_SRC emacs-lisp
+
+
+(use-package all-the-icons 
+  :ensure t
+  :defer t
+)
+
+;; (defun icons-displayable-p ()
+;;   "Return non-nil if `all-the-icons' is displayable."
+;;   (and ;; centaur-icon
+;;        (display-graphic-p)
+;;        (require 'all-the-icons nil t)))
+
+;; (use-package all-the-icons-ivy
+;;   :ensure t
+;;   :after (all-the-icons ivy)
+;;   :defer t
+;;   :custom (all-the-icons-ivy-buffer-commands '(ivy-switch-buffer-other-window ivy-switch-buffer))
+;;   :config
+;;   (add-to-list 'all-the-icons-ivy-file-commands 'counsel-dired-jump)
+;;   (add-to-list 'all-the-icons-ivy-file-commands 'counsel-find-library)
+;;   (add-to-list 'all-the-icons-ivy-file-commands 'counsel-find-file)
+;;   (add-to-list 'all-the-icons-ivy-file-commands 'counsel-dired)
+;;   (all-the-icons-ivy-setup)
+;;   )
+
+;; (use-package all-the-icons-dired
+;;   :ensure t
+;;   :defer t
+;;   :hook (dired-mode . all-the-icons-dired-mode))
+
+  ;; (use-package all-the-icons-dired
+  ;;   :ensure t
+  ;;   :defer t
+  ;;   :diminish
+  ;;   :if (icons-displayable-p)
+  ;;   :hook (dired-mode . all-the-icons-dired-mode)
+  ;;   :config
+  ;;   ;; FIXME: Refresh after creating or renaming the files/directories.
+  ;;   ;; @see https://github.com/jtbm37/all-the-icons-dired/issues/34.
+  ;;   (with-no-warnings
+  ;;     (advice-add 'dired-do-create-files :around #'all-the-icons-dired--refresh-advice)
+  ;;     (advice-add 'dired-create-directory :around #'all-the-icons-dired--refresh-advice))
+
+  ;;   (with-no-warnings
+  ;;     (defun my-all-the-icons-dired--refresh ()
+  ;;    "Display the icons of files in a dired buffer."
+  ;;    (all-the-icons-dired--remove-all-overlays)
+  ;;    ;; NOTE: don't display icons it too many items
+  ;;    (if (<= (count-lines (point-min) (point-max)) 1000)
+  ;;        (save-excursion
+  ;;          (goto-char (point-min))
+  ;;          (while (not (eobp))
+  ;;            (when (dired-move-to-filename nil)
+  ;;              (let ((file (file-local-name (dired-get-filename 'relative 'noerror))))
+  ;;                (when file
+  ;;                  (let ((icon (if (file-directory-p file)
+  ;;                                  (all-the-icons-icon-for-dir file
+  ;;                                                              :face 'all-the-icons-dired-dir-face
+  ;;                                                              :height 0.9
+  ;;                                                              :v-adjust all-the-icons-dired-v-adjust)
+  ;;                                (all-the-icons-icon-for-file file :height 0.9 :v-adjust all-the-icons-dired-v-adjust))))
+  ;;                    (if (member file '("." ".."))
+  ;;                        (all-the-icons-dired--add-overlay (point) "  \t")
+  ;;                      (all-the-icons-dired--add-overlay (point) (concat icon "\t")))))))
+  ;;            (forward-line 1)))
+  ;;      (message "Not display icons because of too many items.")))
+  ;;     (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
+
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -2166,24 +2300,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (define-key company-active-map (kbd "C-p") 'company-select-previous))
 
 (add-hook 'after-init-hook 'global-company-mode)
-
-#+END_SRC
-
-* all-the-icons
-
-#+BEGIN_SRC emacs-lisp
-(use-package all-the-icons-dired
-  :ensure t
-  :defer t
-  :hook   (dired-mode . all-the-icons-dired-mode))
-
-(use-package all-the-icons-ivy
-  :ensure t
-;;  :defer 1
-  :after ivy
-  :config
-  (all-the-icons-ivy-setup))
-
 
 #+END_SRC
 
@@ -2714,26 +2830,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
-* projectile
-
-#+BEGIN_SRC emacs-lisp
-
-;; projectile
-
-(use-package projectile
-  :ensure t
-  :defer 0.5
-  :hook (prog-mode-hook . projectile-mode)
-  :config
-  (projectile-global-mode)
-  (setq projectile-completion-system 'ivy)
-)
-
-;; (add-hook 'prog-mode-hook 'projectile-mode)
-;; (add-hook 'projectile-mode-hook 'counsel-projectile-mode)
-
-#+END_SRC
-
 * org
 
 #+BEGIN_SRC emacs-lisp
@@ -3230,34 +3326,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ;;   ;;             "." 'dired-hide-dotfiles-mode)
 ;;   ;;   :hook
 ;;   ;;   (dired-mode . dired-hide-dotfiles-mode)))
-
-#+END_SRC
-
-* dashboard
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package dashboard
-  :ensure t
-  :hook ((dashboard-mode . (lambda () (display-line-numbers-mode -1)))
-	 (dashboard-mode . (lambda () (nlinum-mode -1))))
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-set-navigator t)
-;;  (setq dashboard-set-footer nil)
-(setq dashboard-footer
-      (let ((x '("The one true editor, Emacs!"
-		 "Free as free speech, free as free Beer"
-		 "Richard Stallman is proud of you"
-		 "Happy coding!"
-		 "Welcome to the church of Emacs"
-		 "While any text editor can save your files,\
- only Emacs can save your soul"
-		 "I showed you my source code,pls respond")))
-	(elt x (random (length x)))))
-  )
 
 #+END_SRC
 
