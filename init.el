@@ -8,10 +8,10 @@
 
 
   (setq package-archives '( ;; ("marmalade" . "http://marmalade-repo.org/packages/")
-			   ("org"       . "http://orgmode.org/elpa/")
-			   ("gnu"       . "http://elpa.gnu.org/packages/")
+			   ("org"       . "https://orgmode.org/elpa/")
+			   ("gnu"       . "https://elpa.gnu.org/packages/")
 			   ("melpa-stable" . "https://stable.melpa.org/packages/")
-			   ("melpa"     . "http://melpa.org/packages/")))
+			   ("melpa"     . "https://melpa.org/packages/")))
 
 
 					;increase garbage collection threshold for startup only
