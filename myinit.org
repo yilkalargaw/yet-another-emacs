@@ -24,14 +24,14 @@
 - [[#scrolling][scrolling]]
 - [[#input-method][input method]]
 - [[#imenu][imenu]]
+- [[#symbol-overlay][symbol-overlay]]
+- [[#hydra][hydra]]
+- [[#ibuffer][ibuffer]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
-- [[#symbol-overlay][symbol-overlay]]
-- [[#hydra][hydra]]
-- [[#ibuffer][ibuffer]]
 - [[#ivyconsel-and-swiper][ivy,consel and swiper]]
 - [[#line-number][line-number]]
 - [[#nlinum-mode][nlinum-mode]]
@@ -600,6 +600,74 @@
   
 #+END_SRC
 
+* symbol-overlay
+
+#+BEGIN_SRC emacs-lisp
+
+;; symbol overlay
+(use-package symbol-overlay
+  :ensure t
+  :defer t
+  :hook (prog-mode . symbol-overlay-mode)
+        (html-mode . symbol-overlay-mode)
+        (web-mode . symbol-overlay-mode)
+        (css-mode . symbol-overlay-mode)
+        (yaml-mode . symbol-overlay-mode)
+        (toml-mode . symbol-overlay-mode)
+        (json-mode . symbol-overlay-mode)
+  ;; :config
+        ;; (progn (defface shackra-orange '((t (:foreground "white" :background "#98fbb8"))) "")
+        ;;        (add-to-list 'symbol-overlay-faces '(symbol-overlay-default-face . (shakra-orange))))
+t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
+    ;; (define-key symbol-overlay-mode-map (kbd "M-n") 'symbol-overlay-jump-next)
+    ;; (define-key symbol-overlay-mode-map (kbd "M-p") 'symbol-overlay-jump-prev)
+)
+
+;; (defface shackra-orange '((t (:foreground "white" :background "#98fbb8"))) "")
+
+;; (add-to-list 'symbol-overlay-faces '(symbol-overlay-default-face . (shakra-orange)))
+
+#+END_SRC
+
+* hydra
+
+#+BEGIN_SRC emacs-lisp
+
+;;hydra
+(use-package hydra
+  :defer 0.4
+  ;; :hook (after-init . (lambda () (require 'hydra)))
+  :ensure t
+  :defines (ibuffer-mode-map dired-mode-map projectile-mode-map smartparens-mode-map)
+  :config
+  (load-file (concat user-emacs-directory "hydras.el"))
+  (add-hook 'origami-mode-hook (lambda () (define-key prog-mode-map (kbd "η o") 'hydra-folding/body)))
+  (add-hook 'ibuffer-mode-hook (lambda () (define-key ibuffer-mode-map (kbd "η .") 'hydra-ibuffer-main/body)))
+  (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "η .") 'hydra-dired/body)))
+  ;; (add-hook 'projectile-mode-hook (lambda () (define-key projectile-mode-map (kbd "η p") 'hydra-projectile/body)))
+)
+
+#+END_SRC
+
+* ibuffer
+  
+#+BEGIN_SRC emacs-lisp
+
+;; ibuffer
+(use-package ibuffer
+ :ensure nil
+ :defer t
+  :bind (("C-x C-b" . ibuffer)
+         :map ibuffer-mode-map
+         ("η-." . hydra-ibuffer-main/body)
+         ("C-." . hydra-ibuffer-main/body)
+         )
+  :hook (ibuffer-mode . hydra-ibuffer-main/body)
+
+)
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -793,71 +861,6 @@
   :ensure t
   :defer 3
   :config (beacon-mode 1))
-
-#+END_SRC
-
-* symbol-overlay
-
-#+BEGIN_SRC emacs-lisp
-
-;; symbol overlay
-(use-package symbol-overlay
-  :ensure t
-  :defer t
-  :hook (prog-mode . symbol-overlay-mode)
-        (html-mode . symbol-overlay-mode)
-        (web-mode . symbol-overlay-mode)
-        (css-mode . symbol-overlay-mode)
-        (yaml-mode . symbol-overlay-mode)
-        (toml-mode . symbol-overlay-mode)
-        (json-mode . symbol-overlay-mode)
-  :config
-        (progn (defface shackra-orange '((t (:foreground "white" :background "#98fbb8"))) "")
-               (add-to-list 'symbol-overlay-faces '(symbol-overlay-default-face . (shakra-orange))))
-    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
-    ;; (define-key symbol-overlay-mode-map (kbd "M-n") 'symbol-overlay-jump-next)
-    ;; (define-key symbol-overlay-mode-map (kbd "M-p") 'symbol-overlay-jump-prev)
-)
-
-;; (defface shackra-orange '((t (:foreground "white" :background "#98fbb8"))) "")
-
-;; (add-to-list 'symbol-overlay-faces '(symbol-overlay-default-face . (shakra-orange)))
-
-#+END_SRC
-
-* hydra
-
-#+BEGIN_SRC emacs-lisp
-
-;;hydra
-(use-package hydra
-  :defer 0.4
-  ;; :hook (after-init . (lambda () (require 'hydra)))
-  :ensure t
-  :defines (ibuffer-mode-map dired-mode-map projectile-mode-map smartparens-mode-map)
-  :config
-  (load-file "~/.emacs.d/hydras.el")
-  (add-hook 'origami-mode-hook (lambda () (define-key prog-mode-map (kbd "φ o") 'hydra-folding/body)))
-  (add-hook 'ibuffer-mode-hook (lambda () (define-key ibuffer-mode-map (kbd "φ .") 'hydra-ibuffer-main/body)))
-  (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "φ .") 'hydra-dired/body)))
-  (add-hook 'projectile-mode-hook (lambda () (define-key projectile-mode-map (kbd "φ p") 'hydra-projectile/body))))
-
-#+END_SRC
-
-* ibuffer
-
-#+BEGIN_SRC emacs-lisp
-
-;; ibuffer
-(use-package ibuffer
-;;  :ensure t
-  :bind (("C-x C-b" . ibuffer)
-         ;; :map ibuffer-mode-map
-         ;; ("C-." . hydra-ibuffer-main/body)
-	 )
-  :hook (ibuffer-mode . hydra-ibuffer-main/body)
-
-)
 
 #+END_SRC
 
