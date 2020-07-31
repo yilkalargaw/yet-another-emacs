@@ -44,14 +44,14 @@
 - [[#expand-region][expand-region]]
 - [[#avy][avy]]
 - [[#ace-window][ace-window]]
+- [[#ag][ag]]
+- [[#rg][rg]]
+- [[#smart-hungry-delete][smart-hungry delete]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
-- [[#ag][ag]]
-- [[#rg][rg]]
-- [[#smart-hungry-delete][smart-hungry delete]]
 - [[#ws-butler][ws-butler]]
 - [[#multiple-cursors][multiple-cursors]]
 - [[#smartparens][smartparens]]
@@ -1094,6 +1094,44 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+END_SRC
 
+* ag
+
+#+BEGIN_SRC emacs-lisp
+
+;;ag
+
+(use-package ag
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+* rg
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package rg
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+* smart-hungry delete
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package smart-hungry-delete
+  :bind (:map prog-mode-map
+              ("<backspace>" . smart-hungry-delete-backward-char)
+              ("C-d" . smart-hungry-delete-forward-char))
+  :defer t
+  :ensure t
+  :after init
+;;  :config (smart-hungry-delete-add-default-hooks)
+)
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -1287,42 +1325,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :ensure t
   :defer 3
   :config (beacon-mode 1))
-
-#+END_SRC
-
-* ag
-
-#+BEGIN_SRC emacs-lisp
-
-;;ag
-
-(use-package ag
-  :ensure t
-  :defer t)
-
-#+END_SRC
-
-* rg
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package rg
-  :ensure t
-  :defer t)
-
-#+END_SRC
-
-* smart-hungry delete
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package smart-hungry-delete
-  :bind (:map prog-mode-map
-              ("<backspace>" . smart-hungry-delete-backward-char)
-              ("C-d" . smart-hungry-delete-forward-char))
-  :defer t
-;;  :config (smart-hungry-delete-add-default-hooks)
-)
 
 #+END_SRC
 
