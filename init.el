@@ -7,7 +7,7 @@
   (require 'package)
 
 
-  (setq package-archives '( ;; ("marmalade" . "http://marmalade-repo.org/packages/")
+  (setq package-archives '( ;; ("marmalade" . "https://marmalade-repo.org/packages/")
 			   ("org"       . "https://orgmode.org/elpa/")
 			   ("gnu"       . "https://elpa.gnu.org/packages/")
 			   ("melpa-stable" . "https://stable.melpa.org/packages/")
