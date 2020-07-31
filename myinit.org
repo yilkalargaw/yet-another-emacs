@@ -23,6 +23,7 @@
 - [[#line-spacing][line-spacing]]
 - [[#scrolling][scrolling]]
 - [[#input-method][input method]]
+- [[#imenu][imenu]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
@@ -590,6 +591,13 @@
 
 (add-hook 'input-method-activate-hook #'myinput-settings)
 
+#+END_SRC
+
+* imenu
+#+BEGIN_SRC emacs-lisp
+
+(define-key global-map (kbd "M-ι") 'imenu)
+  
 #+END_SRC
 
 * mode-line
