@@ -95,3 +95,4 @@ irony/
 emojis/
 /nov-places
 /forge-database.sqlite
+/init.el
