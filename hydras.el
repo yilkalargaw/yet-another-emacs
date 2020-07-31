@@ -1,11 +1,20 @@
-(defhydra hydra-zoom (:hint nil)
+
+(defhydra hydra-buffer-zoom (:hint nil :quit-key ("q" "C-g"))
   "zoom"
   ("g" text-scale-increase "in")
   ("l" text-scale-decrease "out")
   ("o" (text-scale-adjust 0) "reset")
   )
 
-(defhydra hydra-ibuffer-main (:color pink :hint nil)
+(defhydra hydra-global-zoom (:hint nil)
+  "zoom"
+  ("g" default-text-scale-increase "in")
+  ("l" default-text-scale-decrease "out")
+  ("o" default-text-scale-reset "reset")
+  )
+
+
+(defhydra hydra-ibuffer-main (:color pink :hint nil :quit-key ("q" "C-g"))
   "
  ^Navigation^ | ^Mark^        | ^Actions^        | ^View^
 -^----------^-+-^----^--------+-^-------^--------+-^----^-------
@@ -35,7 +44,7 @@
   ("." nil "toggle hydra" :color blue))
 
 (defhydra hydra-ibuffer-mark (:color teal :columns 5
-                              :after-exit (hydra-ibuffer-main/body))
+                              :after-exit (hydra-ibuffer-main/body) :quit-key ("q" "C-g"))
   "Mark"
   ("*" ibuffer-unmark-all "unmark all")
   ("M" ibuffer-mark-by-mode "mode")
@@ -52,7 +61,7 @@
 (defhydra hydra-ibuffer-action (:color teal :columns 4
                                 :after-exit
                                 (if (eq major-mode 'ibuffer-mode)
-                                    (hydra-ibuffer-main/body)))
+                                    (hydra-ibuffer-main/body)) :quit-key ("q" "C-g"))
   "Action"
   ("A" ibuffer-do-view "view")
   ("E" ibuffer-do-eval "eval")
@@ -72,7 +81,7 @@
   ("X" ibuffer-do-shell-command-pipe "shell-command-pipe")
   ("b" nil "back"))
 
-(defhydra hydra-ibuffer-sort (:color amaranth :columns 3)
+(defhydra hydra-ibuffer-sort (:color amaranth :columns 3 :quit-key ("q" "C-g"))
   "Sort"
   ("i" ibuffer-invert-sorting "invert")
   ("a" ibuffer-do-sort-by-alphabetic "alphabetic")
@@ -82,7 +91,7 @@
   ("m" ibuffer-do-sort-by-major-mode "mode")
   ("b" hydra-ibuffer-main/body "back" :color blue))
 
-(defhydra hydra-ibuffer-filter (:color amaranth :columns 4)
+(defhydra hydra-ibuffer-filter (:color amaranth :columns 4 :quit-key ("q" "C-g"))
   "Filter"
   ("m" ibuffer-filter-by-used-mode "mode")
   ("M" ibuffer-filter-by-derived-mode "derived mode")
@@ -96,7 +105,7 @@
   ("b" hydra-ibuffer-main/body "back" :color blue))
 
 (defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
-                            :hint nil)
+                            :hint nil :quit-key ("q" "C-g"))
   "
 Git gutter:
   _j_: next hunk        _s_tage hunk     _q_uit
@@ -124,7 +133,7 @@ Git gutter:
        :color blue))
 
 
-(defhydra hydra-avy ( :hint nil)
+(defhydra hydra-avy ( :hint nil :quit-key ("q" "C-g"))
   "
      ^Char^            ^other^
 -------------------------------------
@@ -139,7 +148,7 @@ Git gutter:
     ("s" avy-goto-subword-1 :exit t)
     ("l" avy-goto-line :exit t))
 
-(defhydra hydra-multiple-cursors (:hint nil)
+(defhydra hydra-multiple-cursors (:hint nil :quit-key ("q" "C-g"))
   "
      ^Up^            ^Down^        ^Other^
 ----------------------------------------------
@@ -163,7 +172,7 @@ Git gutter:
   ("@" mc/insert-letters)
   ("q" nil))
 
-(defhydra hydra-transpose (:color red)
+(defhydra hydra-transpose (:color red :quit-key ("q" "C-g"))
   "Transpose"
   ("c" transpose-chars "characters")
   ("w" transpose-words "words")
@@ -175,15 +184,17 @@ Git gutter:
   ("t" org-table-transpose-table-at-point "Org mode table")
   ("q" nil "cancel" :color blue))
 
-(defhydra hydra-launcher (:columns 2)
+(defhydra hydra-launcher (:columns 2 :quit-key ("q" "C-g"))
   "Launch"
   ("m" woman "man")
   ("d" (eww-browse-url "https://www.duckduckgo.com/") "duckduckgo")
+  ("f" (call-interactively 'eww-open-file) "eww-open-file")
   ("s" shell "shell")
   ("e" eshell "eshell")
+  ("t" scratch "scratch/tmp")
   ("q" nil "cancel"))
 
-(defhydra hydra-learn-sp (:hint nil)
+(defhydra hydra-learn-sp (:hint nil :quit-key ("q" "C-g"))
          "
   _B_ backward-sexp            -----
   _F_ forward-sexp               _s_ splice-sexp
@@ -273,9 +284,16 @@ Git gutter:
   ("_" sp-join-sexp ) ;;Good
   ("|" sp-split-sexp ))
 
+(defhydra hydra-projectile-other-window (:color teal :quit-key ("q" "C-g"))
+  "projectile-other-window"
+  ("f"  projectile-find-file-other-window        "file")
+  ("g"  projectile-find-file-dwim-other-window   "file dwim")
+  ("d"  projectile-find-dir-other-window         "dir")
+  ("b"  projectile-switch-to-buffer-other-window "buffer")
+  ("q"  nil                                      "cancel" :color blue))
 
 (defhydra hydra-projectile (:color teal
-				     :hint nil)
+				     :hint nil :quit-key ("q" "C-g"))
     "
      PROJECTILE: %(projectile-project-root)
 
@@ -315,7 +333,7 @@ Git gutter:
 
 
 (defhydra hydra-window (:color red
-                        :columns nil)
+                        :columns nil :quit-key ("q" "C-g"))
   "window"
   ("h" windmove-left nil)
   ("j" windmove-down nil)
@@ -348,7 +366,7 @@ Git gutter:
   ("f" nil))
 
 (defhydra hydra-move
-   (:body-pre (next-line))
+   (:body-pre (next-line) :quit-key ("q" "C-g"))
    "move"
    ("n" next-line)
    ("p" previous-line)
@@ -359,9 +377,10 @@ Git gutter:
    ("v" scroll-up-command)
    ;; Converting M-v to V here by analogy.
    ("V" scroll-down-command)
-   ("l" recenter-top-bottom))
+   ("l" recenter-top-bottom)
+   ("q" nil "exit"))
 
-(defhydra hydra-transpose (:color red)
+(defhydra hydra-transpose (:color red :quit-key ("q" "C-g"))
   "Transpose"
   ("c" transpose-chars "characters")
   ("w" transpose-words "words")
@@ -383,7 +402,7 @@ Git gutter:
 		    ;; Also handle undocumented (<active> <inactive>) form.
 		    ((numberp (cadr alpha)) (cadr alpha)))
 	      100)
-	 '(85 . 50) '(100 . 100)))))
+	 '(95 . 95) '(100 . 100)))))
 
 (defun increase-transparency ()
   (interactive)
@@ -391,7 +410,7 @@ Git gutter:
 	 (new-opacity (- (car opacity) 5)))
     (set-frame-parameter
      nil 'alpha
-     (cons (if (< new-opacity 0) 0 new-opacity) 50))))
+     (cons (if (< new-opacity 0) 0 new-opacity) (if (< new-opacity 0) 0 new-opacity)))))
 
 
 
@@ -401,15 +420,16 @@ Git gutter:
 	(new-opacity (+ (car opacity) 5)))
     (set-frame-parameter
      nil 'alpha
-     (cons (if (> new-opacity 100) 100 new-opacity) 50))))
+     (cons (if (> new-opacity 100) 100 new-opacity) (if (> new-opacity 100) 100 new-opacity)))))
 
-(defhydra hydra-transparency (:hint nil)
+(defhydra hydra-transparency (:hint nil :quit-key ("q" "C-g"))
   ("g" increase-transparency "increase")
   ("l" decrease-transparency "decrease")
-  ("o" toggle-transparency "toggle"))
+  ("o" toggle-transparency "toggle")
+  ("q" nil "exit"))
 
 
-(defhydra hydra-dired (:hint nil :color pink)
+(defhydra hydra-dired (:hint nil :color pink :quit-key ("q" "C-g"))
   "
 _+_ mkdir          _v_iew           _m_ark             _(_ details        _i_nsert-subdir    wdired
 _C_opy             _O_ view other   _U_nmark all       _)_ omit-mode      _$_ hide-subdir    C-x C-q : edit
@@ -460,7 +480,7 @@ T - tag prefix
   ("q" nil)
   ("." nil :color blue))
 
-(defhydra hydra-folding (:color red)
+(defhydra hydra-folding (:color red :quit-key ("q" "C-g"))
    "
  Move ^^^^|  open/close^^ |  move by fold ^^^| toggle          ^^^^^^^^
 -----^^^^-+------------^^-+---------------^^^+-----------------------^^
@@ -480,7 +500,7 @@ _h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
    ("f" origami-forward-toggle-node)
    ("a" origami-toggle-all-nodes))
 
-(defhydra hydra-lsp (:exit t :hint nil)
+(defhydra hydra-lsp (:exit t :hint nil :quit-key ("q" "C-g"))
   "
  Buffer^^               Server^^                   Symbol
 -------------------------------------------------------------------------------------
@@ -504,25 +524,79 @@ _h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
   ("M-r" lsp-restart-workspace)
   ("S" lsp-shutdown-workspace))
 
-(defhydra hydra-emojify (:hint nil)
+(defhydra hydra-emojify (:hint nil :quit-key ("q" "C-g"))
   ("i" emojify-insert-emoji "insert")
   ("d" emojify-describe-emoji "describe")
-  ("l" emojify-list-emojis "list"))
+  ("l" emojify-list-emojis "list")
+  ("q" nil "exit"))
+
+
+(defhydra hydra-rubysib (:hint nil :quit-key ("q" "C-g"))
+  "Seeing is Believing\n"
+  ("r" seeing-is-believing-run "SiB-run")
+  ("c" seeing-is-believing-clear "SiB-clear")
+  ("x" seeing-is-believing-run-as-xmpfilter "SiB-run-as-xmpfilter")
+  ("m" seeing-is-believing-mark-current-line-for-xmpfilter "SiB-mark-for-xmpfilter")
+  ("q" nil "exit"))
+
+(defhydra hydra-ruby-eval (:hint nil :quit-key ("q" "C-g"))
+  "send/eval\n"
+  ("l" ruby-send-line "send-line")
+  ("r" ruby-send-region "send-region")
+  ("b" ruby-send-buffer "send-buffer")
+  ("e" ruby-send-block "send-block")
+  ("s" hydra-rubysib/body "SiB"  :color blue)
+  ("q" nil "exit")
+  )
+
+(defhydra hydra-rectangle (:body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key ("q" "C-g") :hint nil)
+    "
+     ^Move^            ^Action^                   ^Misc^
+-----------------------------------------------------------------------
+[_h_] ← backward-char    [_w_] copy-as-kill     [_e_] exchange
+[_j_] ↓  next-line        [_y_] yank             [_N_] number-lines
+[_k_] ↑  previous-line    [_t_] string           [_u_] undo
+[_l_] → forward-char     [_d_] kill             [_r_] reset
+^ ^                       [_c_] clear
+^ ^                       [_o_] open
+"
+    ("h" backward-char)
+    ("j" next-line)
+    ("k" previous-line)
+    ("l" forward-char)
+    ("w" copy-rectangle-as-kill) ; C-x r M-w
+    ("y" yank-rectangle)         ; C-x r y
+    ("t" string-rectangle)     ; C-x r t
+    ("d" kill-rectangle)         ; C-x r d
+    ("c" clear-rectangle)       ; C-x r c
+    ("o" open-rectangle)        ; C-x r o
+    ("N" rectangle-number-lines)        ; C-x r N
+    ("e" rectangle-exchange-point-and-mark) ; C-x C-x
+    ("u" undo)
+    ("r" (if (region-active-p)
+             (deactivate-mark)
+           (rectangle-mark-mode 1)))
+
+    ;; ("q" nil "exit")
+
+  )
 
 (define-prefix-command 'hydra-map)
-(global-set-key (kbd "φ") 'hydra-map)
-(define-key global-map (kbd "φ z") 'hydra-zoom/body)
-(define-key global-map (kbd "φ m") 'hydra-multiple-cursors/body)
-(define-key global-map (kbd "φ a") 'hydra-avy/body)
-(define-key global-map (kbd "φ n") 'hydra-move/body)
-(define-key global-map (kbd "φ w") 'hydra-window/body)
-(define-key global-map (kbd "φ s") 'hydra-learn-sp/body)
-(define-key global-map (kbd "φ t") 'hydra-transpose/body)
-(define-key global-map (kbd "φ l") 'hydra-launcher/body)
-(define-key global-map (kbd "φ <f4>") 'hydra-transparency/body)
-(define-key global-map (kbd "φ SPC") (lambda ()
+(global-set-key (kbd "η") 'hydra-map)
+(define-key global-map (kbd "η z b") 'hydra-buffer-zoom/body)
+(define-key global-map (kbd "η z g") 'hydra-global-zoom/body)
+(define-key global-map (kbd "η m") 'hydra-multiple-cursors/body)
+(define-key global-map (kbd "η a") 'hydra-avy/body)
+(define-key global-map (kbd "η n") 'hydra-move/body)
+(define-key global-map (kbd "η r") 'hydra-rectangle/body)
+(define-key global-map (kbd "η w") 'hydra-window/body)
+(define-key global-map (kbd "η s") 'hydra-learn-sp/body)
+(define-key global-map (kbd "η t") 'hydra-transpose/body)
+(define-key global-map (kbd "η l") 'hydra-launcher/body)
+(define-key global-map (kbd "η <f4>") 'hydra-transparency/body)
+(define-key global-map (kbd "η SPC") (lambda ()
 					   (interactive)
-					   (insert-char (string-to-char "φ"))))
-(define-key global-map (kbd "φ x")  (lambda ()
+					   (insert-char (string-to-char "η"))))
+(define-key global-map (kbd "η x")  (lambda ()
 				      (interactive)
 				      (counsel-M-x "^hydra")))
