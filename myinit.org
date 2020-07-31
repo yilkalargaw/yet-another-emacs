@@ -41,14 +41,14 @@
 - [[#yasnippet][yasnippet]]
 - [[#flycheck][flycheck]]
 - [[#flyspell][flyspell]]
+- [[#expand-region][expand-region]]
+- [[#avy][avy]]
+- [[#ace-window][ace-window]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
-- [[#expand-region][expand-region]]
-- [[#avy][avy]]
-- [[#ace-window][ace-window]]
 - [[#ag][ag]]
 - [[#rg][rg]]
 - [[#smart-hungry-delete][smart-hungry delete]]
@@ -1034,6 +1034,66 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+END_SRC
 
+* expand-region
+
+#+BEGIN_SRC emacs-lisp
+
+;;expand-region
+
+(use-package expand-region
+  :ensure t
+  :defer t
+  :bind (("C-=". er/expand-region)))
+
+#+END_SRC
+
+* avy
+
+#+BEGIN_SRC emacs-lisp
+
+;;avy
+
+(use-package avy
+  :ensure t
+  :defer t
+  :bind (
+  ;; ("γ a c" . avy-goto-char)
+  ;; ("γ a 2" . avy-goto-char-2)
+  ;; ("γ a w" . avy-goto-word-1)
+  ;; ("γ a l" . avy-goto-line)
+  :map isearch-mode-map
+       ("C-'" . avy-isearch))
+ )
+
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package ace-link
+  :demand t
+  :defer t
+  :after (:any elbank helpful info eww)
+  :config
+  (ace-link-setup-default))
+
+#+END_SRC
+
+* ace-window
+
+#+BEGIN_SRC emacs-lisp
+
+;;ace-window
+
+(use-package ace-window
+  :ensure t
+  :defer t
+  :bind ("γ w" . ace-window)
+        ;; ("C-c <f12>" . ace-window)
+        )
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -1227,63 +1287,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :ensure t
   :defer 3
   :config (beacon-mode 1))
-
-#+END_SRC
-
-* expand-region
-
-#+BEGIN_SRC emacs-lisp
-
-;;expand-region
-
-(use-package expand-region
-  :ensure t
-  :defer t
-  :bind (("C-=". er/expand-region)))
-
-#+END_SRC
-
-* avy
-
-#+BEGIN_SRC emacs-lisp
-
-;;avy
-
-(use-package avy
-  :ensure t
-  :defer t
-  :bind (("C-c v c" . avy-goto-char)
-  ("C-c v 2" . avy-goto-char-2)
-  ("C-c v w" . avy-goto-word-1)
-  ("C-c v l" . avy-goto-line)
-  :map isearch-mode-map
-       ("C-'" . avy-isearch))
- )
-
-#+END_SRC
-
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package ace-link
-  :demand t
-  :after (:any elbank helpful info eww)
-  :config
-  (progn
-(ace-link-setup-default)))
-
-#+END_SRC
-
-* ace-window
-
-#+BEGIN_SRC emacs-lisp
-
-;;ace-window
-
-(use-package ace-window
-  :ensure t
-  :bind ("H-<f12>" . ace-window)
-        ("C-c <f12>" . ace-window))
 
 #+END_SRC
 
