@@ -12,7 +12,6 @@
 - [[#font-settings][font-settings]]
 - [[#gnutls][gnutls]]
 - [[#themes][themes]]
-- [[#default-directory][default directory]]
 - [[#backup][backup]]
 - [[#clipboard][clipboard]]
 - [[#yesno][yes,no]]
@@ -270,10 +269,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
-;;themes
-(use-package doom-themes
-  :ensure t
-  :defer t)
+;;themes (use-package doom-themes :ensure t :defer t)
 
 (use-package ample-theme
   :ensure t
@@ -350,11 +346,11 @@
 (use-package base16-theme
   :ensure t
   :defer t
-)
+  )
 
-(use-package abyss-theme
-  :ensure t
-  :defer t)
+;; (use-package abyss-theme
+;;   :ensure t
+;;   :defer t)
 
 
 ;; (defun disable-all-themes ()
@@ -369,56 +365,55 @@
 ;;           (lambda (frame)
 ;;               (select-frame frame)
 ;;               (if (display-graphic-p)
-;; 		  (load-theme 'sanityinc-solarized-dark t) 
-;; 		(load-theme 'danneskjold t))))
+;;                (load-theme 'sanityinc-solarized-dark t) 
+;;              (load-theme 'danneskjold t))))
 
 ;; (add-hook 'after-init-hook
-;; 	  (if (display-graphic-p) 
-;; 	      (load-theme 'sanityinc-solarized-dark t) 
-;; 	    (load-theme 'danneskjold t)))
+;;        (if (display-graphic-p) 
+;;            (load-theme 'sanityinc-solarized-dark t) 
+;;          (load-theme 'danneskjold t)))
+
+;; (add-hook 'after-init-hook 
+;;        (progn
+;;          (setq base16-theme-256-color-source 'colors)
+;;          (setq base16-distinct-fringe-background nil)
+;;          ;; (setq base16-highlight-mode-line 'box)
+;;          (load-theme 'doom-solarized-dark t)))
+
 
 (add-hook 'after-init-time-hook
-	  (progn
-	    (defadvice load-theme (after custom-faces-after-load-theme())
-	      "Insert an empty line when moving up from the top line."
-	      (let ((dafile "~/.emacs.d/custom_faces.el"))		     
-		(if (file-exists-p dafile) (load-file dafile))))
+          (progn
+            (defadvice load-theme (after custom-faces-after-load-theme())
+              "Insert an empty line when moving up from the top line."
+              (let ((dafile "~/.emacs.d/custom_faces.el"))                   
+                (if (file-exists-p dafile) (load-file dafile))))
 
 
-	    (ad-activate 'load-theme)
+            (ad-activate 'load-theme)
 
-	    (defadvice disable-theme (after custom-faces-after-disable-theme())
-	      "Insert an empty line when moving up from the top line."
-	      (let ((dafile "~/.emacs.d/custom_faces.el"))		     
-		(if (file-exists-p dafile) (load-file dafile))))
+            (defadvice disable-theme (after custom-faces-after-disable-theme())
+              "Insert an empty line when moving up from the top line."
+              (let ((dafile "~/.emacs.d/custom_faces.el"))                   
+                (if (file-exists-p dafile) (load-file dafile))))
 
 
-	    (ad-activate 'disable-theme)
+            (ad-activate 'disable-theme)
 
-	    ))
+            ))
 
-(add-hook 'after-init-hook 
-	  (progn
-	    (setq base16-theme-256-color-source 'colors)
-	    (setq base16-distinct-fringe-background nil)
-	    (setq base16-highlight-mode-line 'box)
-	    (load-theme 'base16-brewer t)
-	    ;; (load-file "~/.emacs.d/custom_faces.el")
-	    ))
+(add-hook 'after-init-time-hook 
+          (progn
+            (setq base16-theme-256-color-source 'colors)
+            (setq base16-distinct-fringe-background nil)
+            (setq base16-highlight-mode-line 'box)
+            (load-theme 'base16-embers t)
+            ;; (load-file "~/.emacs.d/custom_faces.el")
+            ))
 
 (add-hook 'after-init-time-hook
-	  (load-file "~/.emacs.d/custom_faces.el"))
+          (load-file (concat user-emacs-directory "custom_faces.el")))
 
-
-
-#+END_SRC
-
-* default directory
-
-#+BEGIN_SRC emacs-lisp
-
-;;default directory
-(setq default-directory "~/")
+;; (load-theme 'manoj-dark t)
 
 #+END_SRC
 
@@ -462,15 +457,18 @@
 #+END_SRC
 
 * exec path form shell
-
 #+BEGIN_SRC emacs-lisp
 
 ;;exec-path-from-shell
   (use-package exec-path-from-shell
     :ensure t
-    :defer 2
-    :config
-    (exec-path-from-shell-initialize))
+    ;; :defer 2
+    ;; :after init
+    :hook (after-init . (lambda () (require 'exec-path-from-shell)
+                          (exec-path-from-shell-initialize)))
+    ;; :config
+    ;; (exec-path-from-shell-initialize)
+    )
 
 #+END_SRC
 
