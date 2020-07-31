@@ -88,18 +88,19 @@
 - [[#ruby][ruby]]
 - [[#php][php]]
 - [[#go][go]]
+- [[#lua][lua]]
+- [[#java][java]]
+- [[#ocaml][ocaml]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
 - [[#python][python]]
-- [[#lua][lua]]
 - [[#scheme][scheme]]
 - [[#common-lisp][common-lisp]]
 - [[#web][web]]
 - [[#javascript][javascript]]
 - [[#skewer][skewer]]
-- [[#ocaml][ocaml]]
 - [[#crystal][crystal]]
 - [[#csv][csv]]
 - [[#yamltoml-and-json][yaml,toml and json]]
@@ -2837,6 +2838,95 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
+* lua
+
+#+BEGIN_SRC emacs-lisp
+
+;;lua
+
+(use-package lua-mode
+  :ensure t
+  :defer t)
+
+(use-package company-lua
+  :ensure t
+  :defer t
+  :after init company-mode
+  :hook
+  (company-mode . (lambda () (push 'company-lua company-backends))))
+
+#+END_SRC
+
+* java
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package lsp-java
+  :mode ("\\.java$")
+  :ensure t
+  :config
+  ;; Enable dap-java
+  (require 'dap-java)
+
+  ;; Support Lombok in our projects, among other things
+  (setq lsp-java-vmargs
+        (list "-noverify"
+              "-Xmx2G"
+              "-XX:+UseG1GC"
+              "-XX:+UseStringDeduplication"
+              ;; (concat "-javaagent:" jmi/lombok-jar)
+              ;; (concat "-Xbootclasspath/a:" jmi/lombok-jar)
+              )
+        lsp-file-watch-ignored
+        '(".idea" ".ensime_cache" ".eunit" "node_modules"
+          ".git" ".hg" ".fslckout" "_FOSSIL_"
+          ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
+          "build")
+
+        lsp-java-import-order '["" "java" "javax" "#"]
+        ;; Don't organize imports on save
+        lsp-java-save-action-organize-imports nil
+
+        ;; Formatter profile
+        ;; lsp-java-format-settings-url
+        ;; (concat "file://" jmi/java-format-settings-file)
+        )
+
+  :demand t
+  :defer t
+  :after (lsp lsp-mode dap-mode))
+
+(use-package dap-java
+  :ensure nil
+  :defer t
+  :after (lsp-java)
+
+  ;; The :bind here makes use-package fail to lead the dap-java block!
+  ;; :bind
+  ;; (("C-c R" . dap-java-run-test-class)
+  ;;  ("C-c d" . dap-java-debug-test-method)
+  ;;  ("C-c r" . dap-java-run-test-method)
+  ;;  )
+
+  :config
+  (global-set-key (kbd "<f7>") 'dap-step-in)
+  (global-set-key (kbd "<f8>") 'dap-next)
+  (global-set-key (kbd "<f9>") 'dap-continue)
+  )
+
+#+END_SRC
+
+* ocaml
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package tuareg
+  :mode ("\\.ml[ily]?$" . tuareg-mode)
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
 * key-chords
 
 #+BEGIN_SRC emacs-lisp
@@ -2897,24 +2987,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (add-to-list 'company-backends 'company-jedi))
 
 (add-hook 'python-mode-hook 'my/python-mode-hook)
-
-#+END_SRC
-
-* lua
-
-#+BEGIN_SRC emacs-lisp
-
-;;lua
-
-(use-package lua-mode
-  :ensure t
-  :defer t)
-
-(use-package company-lua
-  :ensure t
-  :defer t
-  :hook
-  (company-mode . (lambda () (push 'company-lua company-backends))))
 
 #+END_SRC
 
@@ -3052,15 +3124,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
  ;  :config (define-key skewer-repl-mode-map (kbd "C-c C-z") #'quit-window))
 
  #+END_SRC
-
-* ocaml
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package tuareg
-  :mode ("\\.ml[ily]?$" . tuareg-mode))
-
-#+END_SRC
 
 * crystal
 
