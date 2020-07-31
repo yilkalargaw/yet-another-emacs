@@ -34,15 +34,15 @@
 - [[#nlinum-mode][nlinum-mode]]
 - [[#line-highlight][line-highlight]]
 - [[#show-parens][show-parens]]
+- [[#undo-tree][undo-tree]]
+- [[#which-key][which-key]]
+- [[#git][git]]
+- [[#monky][monky]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
-- [[#undo-tree][undo-tree]]
-- [[#which-key][which-key]]
-- [[#git][git]]
-- [[#monky][monky]]
 - [[#yasnippet][yasnippet]]
 - [[#flycheck][flycheck]]
 - [[#flyspell][flyspell]]
@@ -877,6 +877,98 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+END_SRC
 
+* undo-tree
+
+#+BEGIN_SRC emacs-lisp
+
+;;undo-tree
+
+(use-package undo-tree
+  :ensure t
+  :diminish undo-tree-mode
+  :hook (after-init . global-undo-tree-mode)
+  :config (setq undo-tree-visualizer-timestamps t)
+          (setq undo-tree-visualizer-diff t))
+
+#+END_SRC
+
+* which-key
+
+#+BEGIN_SRC emacs-lisp
+
+;;which mode
+
+(use-package which-key
+  :ensure t
+  :hook (after-init . which-key-mode)
+  :config (which-key-enable-god-mode-support)
+  ;; Allow C-h to trigger which-key before it is done automatically
+  (setq which-key-show-early-on-C-h t)
+  ;; make sure which-key doesn't show normally but refreshes quickly after it is
+  ;; triggered.
+  ;; (setq which-key-idle-delay 10000)
+  ;; (setq which-key-idle-secondary-delay 0.05)
+  (which-key-mode)
+)
+
+#+END_SRC
+
+* git
+
+** git-gutter
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package git-gutter
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+** git-timemachine
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package git-timemachine
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+** magit & forge
+
+#+BEGIN_SRC emacs-lisp
+
+;;magit
+
+(use-package magit
+  :ensure t
+  :config (setq auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
+  :defer t)
+
+;; (global-set-key (kbd "C-C g m") 'magit-status)
+;; (global-set-key (kbd "γ g") 'magit-status)
+
+
+(use-package forge
+  :ensure t
+  :defer t
+  :after magit)
+
+#+END_SRC
+
+* monky
+
+#+BEGIN_SRC emacs-lisp
+
+;;monky
+
+(use-package monky
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -1070,95 +1162,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :ensure t
   :defer 3
   :config (beacon-mode 1))
-
-#+END_SRC
-
-* undo-tree
-
-#+BEGIN_SRC emacs-lisp
-
-;;undo-tree
-
-(use-package undo-tree
-  :diminish undo-tree-mode
-  :hook (after-init . global-undo-tree-mode)
-  :config (setq undo-tree-visualizer-timestamps t)
-          (setq undo-tree-visualizer-diff t))
-
-#+END_SRC
-
-* which-key
-
-#+BEGIN_SRC emacs-lisp
-
-;;which mode
-
-(use-package which-key
-  :ensure t
-  :hook (after-init . which-key-mode)
-  :config (which-key-enable-god-mode-support)
-)
-
-#+END_SRC
-
-* git
-
-** git-gutter
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package git-gutter
-  :ensure t
-  :defer t)
-
-#+END_SRC
-
-** git-timemachine
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package git-timemachine
-  :ensure t
-  :defer t)
-
-#+END_SRC
-
-** magit & forge
-
-#+BEGIN_SRC emacs-lisp
-
-;;magit
-
-(use-package magit
-  :ensure t
-  :config (setq auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
-  :defer t)
-
-(global-set-key (kbd "C-C g m") 'magit-status)
-(global-set-key (kbd "H-g") 'magit-status)
-
-
-(use-package forge
-  :ensure t
-  :defer t
-  :after magit)
-
-;; (use-package magithub
-;;   :after magit
-;;   :ensure t
-;;   :config (magithub-feature-autoinject t))
-
-#+END_SRC
-
-* monky
-
-#+BEGIN_SRC emacs-lisp
-
-;;monky
-
-(use-package monky
-  :ensure t
-  :defer t)
 
 #+END_SRC
 
