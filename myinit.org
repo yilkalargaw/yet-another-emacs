@@ -91,17 +91,18 @@
 - [[#lua][lua]]
 - [[#java][java]]
 - [[#ocaml][ocaml]]
+- [[#crystal][crystal]]
+- [[#scheme][scheme]]
+- [[#common-lisp][common-lisp]]
+- [[#clojure][clojure]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
 - [[#python][python]]
-- [[#scheme][scheme]]
-- [[#common-lisp][common-lisp]]
 - [[#web][web]]
 - [[#javascript][javascript]]
 - [[#skewer][skewer]]
-- [[#crystal][crystal]]
 - [[#csv][csv]]
 - [[#yamltoml-and-json][yaml,toml and json]]
 - [[#markdown][markdown]]
@@ -2927,6 +2928,68 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
+* crystal
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package crystal-mode
+  :mode ("\\.cr$" . crystal-mode)
+  :ensure t
+  :defer t)
+
+#+END_SRC
+
+* scheme
+
+#+BEGIN_SRC emacs-lisp
+
+;;scheme
+
+(use-package geiser
+  :ensure t
+  :defer t
+  ;; :bind (:map scheme-mode-map
+  ;;             ("C-c C-c" . geiser-eval-last-sexp))
+  :hook (scheme-mode)
+  :config
+    (setq geiser-default-implementation 'guile)
+    (setq geiser-guile-binary "/usr/bin/guile2.2")
+    (setq geiser-chicken-binary "~/.nix-profile/bin/csi")
+    (setq geiser-chibi-binary "~/.nix-profile/bin/chibi-scheme"))
+
+#+END_SRC
+
+* common-lisp
+
+#+BEGIN_SRC emacs-lisp
+
+;; common-lisp
+
+(use-package slime-company
+  :ensure t
+  :defer t
+  :after company slime)
+
+(use-package slime
+  :ensure t
+  :config (setq inferior-lisp-program "~/.nix-profile/bin/sbcl")
+          (setq slime-contribs '(slime-fancy slime-company))
+  :bind (:map slime-mode-map
+              ("C-t C-e" . slime-eval-last-expression))
+  :defer t)
+
+#+END_SRC
+
+* clojure
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package cider
+  :ensure t
+  :defer t)
+ 
+#+END_SRC
+
 * key-chords
 
 #+BEGIN_SRC emacs-lisp
@@ -2987,46 +3050,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (add-to-list 'company-backends 'company-jedi))
 
 (add-hook 'python-mode-hook 'my/python-mode-hook)
-
-#+END_SRC
-
-* scheme
-
-#+BEGIN_SRC emacs-lisp
-
-;;scheme
-
-(use-package geiser
-  :ensure t
-  :defer t
-  :bind (:map scheme-mode-map
-              ("C-c C-c" . geiser-eval-last-sexp))
-  :hook (scheme-mode)
-  :init
-    (setq geiser-default-implementation 'guile)
-    (setq geiser-guile-binary "/usr/bin/guile2.2")
-    (setq geiser-chicken-binary "~/.nix-profile/bin/csi")
-    (setq geiser-chibi-binary "~/.nix-profile/bin/chibi-scheme"))
-
-#+END_SRC
-
-* common-lisp
-
-#+BEGIN_SRC emacs-lisp
-
-;; common-lisp
-
-(use-package slime-company
-  :ensure t
-  :defer t)
-
-(use-package slime
-  :ensure t
-  :config (setq inferior-lisp-program "~/.nix-profile/bin/sbcl")
-          (setq slime-contribs '(slime-fancy slime-company))
-  :bind (:map slime-mode-map
-              ("C-t C-e" . slime-eval-last-expression))
-  :defer t)
 
 #+END_SRC
 
@@ -3124,15 +3147,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
  ;  :config (define-key skewer-repl-mode-map (kbd "C-c C-z") #'quit-window))
 
  #+END_SRC
-
-* crystal
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package crystal-mode
-  :mode ("\\.cr$" . crystal-mode))
-
-#+END_SRC
 
 * csv
 
