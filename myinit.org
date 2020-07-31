@@ -51,16 +51,17 @@
 - [[#multiple-cursors][multiple-cursors]]
 - [[#smartparens][smartparens]]
 - [[#rainbow-delimiters][rainbow-delimiters]]
+- [[#eshell][eshell]]
+- [[#shell-mode][shell-mode]]
+- [[#term-mode][term-mode]]
+- [[#comint-mode][comint-mode]]
+- [[#vterm][vterm]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
 - [[#company][company]]
-- [[#eshell][eshell]]
-- [[#shell-mode][shell-mode]]
-- [[#term-mode][term-mode]]
-- [[#comint-mode][comint-mode]]
 - [[#all-the-icons][all-the-icons]]
 - [[#lsp-mode][lsp-mode]]
 - [[#cc][C/C++]]
@@ -1207,6 +1208,138 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+END_SRC
 
+* eshell
+
+#+BEGIN_SRC emacs-lisp
+
+;;eshell
+
+(use-package eshell
+  :defer t
+  :hook ((eshell-mode . (lambda () (setq line-spacing 0)))
+         (eshell-mode . (lambda () (display-line-numbers-mode -1)))
+         (eshell-mode . (lambda () (nlinum-mode -1)))
+         (eshell-mode . (lambda () (setq show-trailing-whitespace nil)))
+         (eshell-mode . (lambda () (objed-local-mode -1)))
+         (eshell-mode . (lambda () (remove-hook 'eshell-output-filter-functions
+                                                'eshell-postoutput-scroll-to-bottom)))
+         (eshell-mode . (lambda ()
+                          (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
+                                                         "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
+                                                         "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
+                                                         "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger")
+                                ))))
+  ;; :bind(("<tab>" . completion-at-point)
+  ;;    ("<backtab>" . completion-at-point))
+  :config 
+           (defun eshell-clear-buffer ()
+             "Clear terminal"
+             (interactive)
+             (let ((inhibit-read-only t))
+               (erase-buffer)
+               (eshell-send-input)))
+           (add-hook 'eshell-mode-hook
+                     '(lambda()
+                        (local-set-key (kbd "H-l") 'eshell-clear-buffer)))
+           )
+
+#+END_SRC
+
+* shell-mode
+
+#+BEGIN_SRC emacs-lisp
+
+;;shell-mode
+
+(use-package shell
+  :defer t
+  :hook ((shell-mode . (lambda () (setq line-spacing 0)))
+         (shell-mode . (lambda ()
+                               (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
+         (shell-mode . (lambda ()
+                               (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)))
+         (shell-mode . (lambda () (objed-local-mode -1)))
+         ))
+
+;; (add-hook 'shell-mode-hook '(lambda ()
+;;                                (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
+;; (add-hook 'shell-mode-hook '(lambda ()
+;;                                (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)))
+;; (add-hook 'eshell-mode-hook (lambda () (objed-mode -1)))
+
+#+END_SRC
+
+* term-mode
+
+#+BEGIN_SRC emacs-lisp
+
+;;(defun my-display-line-number (lambda () (display-line-numbers-mode -1)))
+(use-package term
+  :defer t
+  :hook (term-mode . (lambda () (nlinum-mode -1)))
+  (term-mode . (lambda () (display-line-numbers-mode -1)))
+  (term-mode . (lambda () (setq line-spacing 0)))
+  (term-mode . (lambda () (objed-local-mode -1)))
+  (term-mode . (lambda () (setq show-trailing-whitespace nil))))
+
+;; (add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1)))
+;; (add-hook 'term-mode-hook (lambda () (nlinum-mode -1)))
+;; (add-hook 'term-mode-hook (lambda () (setq show-trailing-whitespace nil)))
+;; (add-hook 'term-mode-hook (lambda () (objed-mode -1)))
+
+#+END_SRC
+
+* comint-mode
+
+#+BEGIN_SRC emacs-lisp
+
+;;conmint-mode
+(use-package comint
+  :defer t
+  :hook ((comint-mode . (lambda () (display-line-numbers-mode -1)))
+         (comint-mode . (lambda () (nlinum-mode -1)))
+         (comint-mode . (lambda () (setq line-spacing 0)))
+         (comint-mode . (lambda () (setq show-trailing-whitespace nil))))
+  :init (setq comint-scroll-show-maximum-output nil)
+        (setq comint-scroll-to-bottom-on-input nil)
+        (setq comint-scroll-to-bottom-on-output nil)
+)
+
+;; (setq comint-scroll-show-maximum-output nil)
+;; (setq comint-scroll-to-bottom-on-input nil)
+;; (setq comint-scroll-to-bottom-on-output nil)
+;; (add-hook 'comint-mode-hook (lambda () (display-line-numbers-mode -1)))
+;; (add-hook 'comint-mode-hook (lambda () (nlinum-mode -1)))
+;; (add-hook 'comint-mode-hook (lambda () (setq show-trailing-whitespace nil)))
+
+#+END_SRC
+
+* vterm
+
+#+BEGIN_SRC emacs-lisp
+(use-package vterm
+  :ensure t
+  :defer t
+  :hook ((vterm-mode . (lambda () (global-hl-line-mode -1)))
+         (vterm-mode . (lambda () (display-line-numbers-mode -1)))
+         (vterm-mode . (lambda () (nlinum-mode -1)))
+         (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
+         (vterm-mode . (lambda () (setq line-spacing 0)))
+         (vterm-mode . (lambda () (objed-local-mode -1)))
+                    ))
+
+;; (use-package vterm
+;;   :commands (vterm)
+;;   :ensure t
+;;   :init
+;;   (unless (file-exists-p (concat (file-name-directory (locate-library "vterm"))
+;;                                  "vterm-module.so"))
+;;     (message "Set vterm to install.")
+;;     (setq vterm-install t)))
+
+;
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -1420,87 +1553,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   (define-key company-active-map (kbd "C-p") 'company-select-previous))
 
 (add-hook 'after-init-hook 'global-company-mode)
-
-#+END_SRC
-
-* eshell
-
-#+BEGIN_SRC emacs-lisp
-
-;;eshell
-
-(add-hook 'eshell-mode-hook '(lambda ()
-                               (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)))
-(add-hook 'eshell-mode-hook '(lambda ()
-                               (define-key eshell-mode-map (kbd "<backtab>") 'completion-at-point)))
-
-
-(defun eshell-clear-buffer ()
-  "Clear terminal"
-  (interactive)
-  (let ((inhibit-read-only t))
-    (erase-buffer)
-    (eshell-send-input)))
-(add-hook 'eshell-mode-hook
-          '(lambda()
-             (local-set-key (kbd "H-l") 'eshell-clear-buffer)))
-
-
-(add-hook 'eshell-mode-hook
-          (defun my-eshell-mode-setup ()
-            (remove-hook 'eshell-output-filter-functions
-                         'eshell-postoutput-scroll-to-bottom)))
-
-(add-hook 'eshell-mode-hook '(lambda ()
-                               (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
-                                 "ncftp" "pine" "tin" "trn" "elm" "vim"
-                                 "htop")
-                                 )
-                               ;;(add-to-list 'eshell-visual-commands "vim")
-))
-(add-hook 'eshell-mode-hook (lambda () (display-line-numbers-mode -1)))
-(add-hook 'eshell-mode-hook (lambda () (nlinum-mode -1)))
-(add-hook 'eshell-mode-hook (lambda () (setq show-trailing-whitespace nil)))
-
-#+END_SRC
-
-* shell-mode
-
-#+BEGIN_SRC emacs-lisp
-
-;;shell-mode
-
-(add-hook 'shell-mode-hook '(lambda ()
-                               (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
-(add-hook 'shell-mode-hook '(lambda ()
-                               (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)))
-
-#+END_SRC
-
-* term-mode
-
-#+BEGIN_SRC emacs-lisp
-
-;;(defun my-display-line-number (lambda () (display-line-numbers-mode -1)))
-
-(add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1)))
-(add-hook 'term-mode-hook (lambda () (nlinum-mode -1)))
-(add-hook 'term-mode-hook (lambda () (setq show-trailing-whitespace nil)))
-
-#+END_SRC
-
-* comint-mode
-
-#+BEGIN_SRC emacs-lisp
-
-;;conmint-mode
-
-(setq comint-scroll-show-maximum-output nil)
-(setq comint-scroll-to-bottom-on-input nil)
-(setq comint-scroll-to-bottom-on-output nil)
-(add-hook 'comint-mode-hook (lambda () (display-line-numbers-mode -1)))
-(add-hook 'comint-mode-hook (lambda () (nlinum-mode -1)))
-(add-hook 'comint-mode-hook (lambda () (setq show-trailing-whitespace nil)))
 
 #+END_SRC
 
