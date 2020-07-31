@@ -95,6 +95,8 @@
 - [[#scheme][scheme]]
 - [[#common-lisp][common-lisp]]
 - [[#clojure][clojure]]
+- [[#markdown][markdown]]
+- [[#latexauctex][latex/auctex]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
@@ -102,11 +104,8 @@
 - [[#python][python]]
 - [[#web][web]]
 - [[#javascript][javascript]]
-- [[#skewer][skewer]]
 - [[#csv][csv]]
 - [[#yamltoml-and-json][yaml,toml and json]]
-- [[#markdown][markdown]]
-- [[#latexauctex][latex/auctex]]
 - [[#realgud][realgud]]
 - [[#org][org]]
 - [[#org-beautify][org-beautify]]
@@ -2990,6 +2989,68 @@ This is the same as using \\[set-mark-command] with the prefix argument."
  
 #+END_SRC
 
+* markdown
+
+#+BEGIN_SRC emacs-lisp
+
+;;markdown
+
+(use-package markdown-mode
+  :ensure t
+  :defer t
+  :init
+  (setq markdown-enable-wiki-links t
+        markdown-italic-underscore t
+        markdown-asymmetric-header t
+        markdown-make-gfm-checkboxes-buttons t
+        markdown-gfm-uppercase-checkbox t
+        markdown-fontify-code-blocks-natively t
+
+        ;; markdown-content-type "application/xhtml+xml"
+  )
+  :config
+  (use-package markdown-mode+
+    :ensure t)
+  (use-package markdown-preview-mode
+    :ensure t)
+  (use-package markdown-toc
+    :ensure t
+    :bind (:map markdown-mode-command-map
+                ("r" . markdown-toc-generate-or-refresh-toc))
+    ))
+
+    (autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
+    (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+    (setq markdown-command "pandoc -c ~/.emacs.d/github-pandoc.css --from gfm -t html5 --mathjax --highlight-style pygments --standalone")
+
+#+END_SRC
+
+* latex/auctex
+
+#+BEGIN_SRC emacs-lisp
+
+;;latex/auctex
+
+  (use-package auctex
+    :ensure t
+    :defer t)
+
+  (use-package  company-auctex
+  :ensure t
+  :defer t
+  :config  (company-auctex-init))
+
+  (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+  (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+  (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+  (add-hook 'LaTeX-mode-hook 'company-auctex-init)
+
+(add-hook 'TeX-mode-hook
+          (lambda ()
+            (setq TeX-command-extra-options "-shell-escape")))
+
+#+END_SRC
+
 * key-chords
 
 #+BEGIN_SRC emacs-lisp
@@ -3128,26 +3189,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
   #+END_SRC
 
-* skewer
-
- #+BEGIN_SRC emacs-lisp
-
- ;;skewer
-
- (use-package skewer-mode
-   :ensure t
-   :defer t
-   :hook (web-mode, html-mode, js2-mode)
-   :config
-   (skewer-setup))
-
- ;(use-package skewer-repl
- ;  :ensure t
- ;  :defer t
- ;  :config (define-key skewer-repl-mode-map (kbd "C-c C-z") #'quit-window))
-
- #+END_SRC
-
 * csv
 
 #+BEGIN_SRC emacs-lisp
@@ -3175,54 +3216,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (use-package json-mode
   :ensure t
   :defer t)
-
-#+END_SRC
-
-* markdown
-
-#+BEGIN_SRC emacs-lisp
-
-;;markdown
-
-(use-package markdown-mode
-  :ensure t
-  :defer t
-  :config
-  (use-package markdown-mode+
-    :ensure t)
-  (use-package markdown-preview-mode
-    :ensure t)
-  (use-package markdown-toc
-    :ensure t))
-(autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
-(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-(setq markdown-command "pandoc -c ~/.emacs.d/github-pandoc.css --from gfm -t html5 --mathjax --highlight-style pygments --standalone")
-
-#+END_SRC
-
-* latex/auctex
-
-#+BEGIN_SRC emacs-lisp
-
-;;latex/auctex
-
-  (use-package auctex
-    :ensure t
-    :defer t)
-
-  (use-package  company-auctex
-  :ensure t
-  :defer t
-  :config  (company-auctex-init))
-
-  (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-  (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-  (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-  (add-hook 'LaTeX-mode-hook 'company-auctex-init)
-
-(add-hook 'TeX-mode-hook
-          (lambda ()
-            (setq TeX-command-extra-options "-shell-escape")))
 
 #+END_SRC
 
