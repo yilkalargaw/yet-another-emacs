@@ -17,6 +17,7 @@
 - [[#clipboard][clipboard]]
 - [[#yesno][yes,no]]
 - [[#exec-path-form-shell][exec path form shell]]
+- [[#common-important-prefixes][common important prefixes]]
 - [[#libraries][libraries]]
 - [[#indentation-stuff][indentation stuff]]
 - [[#sentences-end-with-a-single-space][Sentences end with a single space]]
@@ -486,6 +487,20 @@
     ;; (exec-path-from-shell-initialize)
     )
 
+#+END_SRC
+
+* common important prefixes
+
+#+BEGIN_SRC emacs-lisp
+
+(define-prefix-command 'goer-map)
+(global-set-key (kbd "γ") 'goer-map)
+(define-key global-map (kbd "γ SPC") (lambda ()
+                                           (interactive)
+                                           (insert-char (string-to-char "γ"))))
+
+
+  
 #+END_SRC
 
 * libraries
