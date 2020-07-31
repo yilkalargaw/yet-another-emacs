@@ -17,8 +17,8 @@
 - [[#yesno][yes,no]]
 - [[#exec-path-form-shell][exec path form shell]]
 - [[#libraries][libraries]]
-- [[#mode-line][mode-line]]
 - [[#indentation-stuff][indentation stuff]]
+- [[#mode-line][mode-line]]
 - [[#line-spacing][line-spacing]]
 - [[#scrolling][scrolling]]
 - [[#input-method][input method]]
@@ -476,17 +476,28 @@
 
 #+BEGIN_SRC emacs-lisp
 
-  (use-package dash
-    :ensure t)
+(use-package dash
+  :ensure t)
 
-  (use-package f
-    :ensure t)
+(use-package f
+  :ensure t)
 
-  (require 's)
+(require 's)
 
-  (require 'color)
+(require 'color)
 
-  (require 'cl-lib)
+(require 'cl-lib)
+
+#+END_SRC
+
+* indentation stuff
+
+#+BEGIN_SRC emacs-lisp
+
+;; to setup tabs
+(setq c-basic-indent 2)
+(setq tab-width 4)
+(setq indent-tabs-mode nil)
 
 #+END_SRC
 
@@ -636,17 +647,6 @@
   (setq doom-modeline-before-update-env-hook nil)
   (setq doom-modeline-after-update-env-hook nil)
 )
-
-#+END_SRC
-
-* indentation stuff
-
-#+BEGIN_SRC emacs-lisp
-
-;;; to setup tabs
-(setq c-basic-indent 2)
-(setq tab-width 4)
-(setq indent-tabs-mode nil)
 
 #+END_SRC
 
