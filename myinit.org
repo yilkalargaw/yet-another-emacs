@@ -65,6 +65,9 @@
 - [[#outline-and-outshine][outline and outshine]]
 - [[#origami][origami]]
 - [[#start-server][start server]]
+- [[#pomidor][pomidor]]
+- [[#keyfreq][keyfreq]]
+- [[#tramp][tramp]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
@@ -1512,6 +1515,55 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   ;; (require 'server)
   ;; (unless (server-running-p)
   ;;   (server-start))
+
+#+END_SRC
+
+* pomidor
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package pomidor
+  :ensure t
+  :defer t
+  :bind (("<S-f6>" . pomidor))
+  :config (setq pomidor-sound-tick nil
+                pomidor-sound-tack nil)
+  :hook (pomidor-mode . (lambda ()
+                          (display-line-numbers-mode -1) ; Emacs 26.1+
+                          (setq left-fringe-width 0 right-fringe-width 0)
+                          (setq left-margin-width 2 right-margin-width 0)
+                          ;; force fringe update
+                          (set-window-buffer nil (current-buffer))
+                          ;;minutes
+                          (setq pomidor-seconds (* 25 60)) ; 25 minutes for the work period
+                          (setq pomidor-break-seconds (* 5 60)) ; 5 minutes break time
+                          ))
+  )
+#+END_SRC
+
+* keyfreq
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package keyfreq
+  :ensure t
+  :defer t
+  :after init
+  :config (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
+
+#+END_SRC
+
+* tramp
+
+#+BEGIN_SRC emacs-lisp
+
+(setq remote-file-name-inhibit-cache nil)
+(setq vc-ignore-dir-regexp
+      (format "%s\\|%s"
+                    vc-ignore-dir-regexp
+                    tramp-file-name-regexp))
+(setq tramp-verbose 1)
 
 #+END_SRC
 
