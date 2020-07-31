@@ -28,6 +28,7 @@
 - [[#hydra][hydra]]
 - [[#major-mode-hydrapretty-hydra][major-mode-hydra/pretty-hydra]]
 - [[#ibuffer][ibuffer]]
+- [[#ediff][ediff]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
@@ -684,6 +685,24 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :hook (ibuffer-mode . hydra-ibuffer-main/body)
 
 )
+
+#+END_SRC
+
+* ediff
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package ediff
+  :ensure nil
+  :hook(;; show org ediffs unfolded
+        (ediff-prepare-buffer . outline-show-all)
+        ;; restore window layout when done
+        (ediff-quit . winner-undo))
+  :config
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (setq ediff-merge-split-window-function 'split-window-horizontally))
+
 
 #+END_SRC
 
