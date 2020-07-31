@@ -79,11 +79,13 @@
 - [[#all-the-icons][all the icons]]
 - [[#dired][dired]]
 - [[#mode-line][mode-line]]
+- [[#objed][objed]]
+- [[#god-mode][god-mode]]
+- [[#company][company]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
-- [[#company][company]]
 - [[#lsp-mode][lsp-mode]]
 - [[#cc][C/C++]]
 - [[#rust][rust]]
@@ -106,7 +108,6 @@
 - [[#realgud][realgud]]
 - [[#org][org]]
 - [[#org-beautify][org-beautify]]
-- [[#god-mode][god mode]]
 - [[#custom_faces][custom_faces]]
 
 * earlyinits
@@ -2380,6 +2381,153 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
+* objed
+
+#+BEGIN_SRC emacs-lisp
+
+
+(use-package objed
+  :ensure t
+  :defer t
+  :hook (after-init . objed-mode)
+  :bind(:map objed-map
+         ;; ("<SPC>" . 'objed-char-object)
+         ("C-f" . 'objed-right-char)
+         ("C-b" . 'objed-left-char)
+         ("," . 'objed-identifier-object)
+         ("." . 'objed-sentence-object)
+         ("b" . 'objed-word-object)
+
+         ("F" . nil)
+         ("B" . nil)
+         ("S" . nil)
+         ("R" . nil)
+         ("L" . nil)
+         ("." . nil)
+         ;; ("N" . nil)
+         ;; ("P" . nil)
+         ;; ("b" . nil)
+         ("B" . nil)
+
+         ("<SPC>" . 'objed-object-map)
+         ("c" . 'objed-user-map)
+         ("r" . 'objed-toggle-side)
+         ("l" . 'objed-next-specialized)
+         ("h" . 'objed-previous-specialized)
+         ("L" . 'objed-move-object-forward)
+         ("H" . 'objed-move-object-backward)
+
+         ("f" . 'objed-next-specialized)
+         ("s" . 'objed-previous-specialized)
+         ("F" . 'objed-move-object-forward)
+         ("S" . 'objed-move-object-backward)
+
+         ("J" . 'objed-move-line-forward)
+         ("i" . 'objed-kill)
+         ("I" . 'objed-kill)
+         ("K" . 'objed-move-line-backward)
+         ;; ("K" . nil)
+         ("j" . 'objed-next-line)
+         ("k" . 'objed-previous-line)
+         ("G" . 'objed-del-insert)
+         ("<H-SPC>" . 'objed-quit)
+
+         :map objed-user-map
+         ("f" . 'move-to-char)
+         ("g" . 'move-upto-char)
+
+         :map objed-object-map
+         ("," . 'objed-identifier-object)
+
+         ;; :map objed-mode-map
+         ;; ("<M-SPC>" . 'my-objed-activate)
+         )
+
+  :config
+  (setq objed--which-key-avail-p t
+        objed--avy-avail-p t)
+  (setq objed-use-avy-if-available 1)
+  (define-key objed-mode-map (kbd "M-SPC") (objed-activate 'char))
+
+    ;; :config
+  (load (concat user-emacs-directory "lisp/objed-goto-next-specialized.el"))
+
+  )
+
+#+END_SRC
+
+* god-mode
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package god-mode
+  :load-path "~/.emacs.d/lisp/god-mode"
+  :config
+     (define-key god-local-mode-map (kbd ".") 'repeat)
+     (define-key god-local-mode-map (kbd "i") 'god-local-mode)
+
+     (global-set-key (kbd "C-x C-1") 'delete-other-windows)
+     (global-set-key (kbd "C-x C-2") 'split-window-below)
+     (global-set-key (kbd "C-x C-3") 'split-window-right)
+     (global-set-key (kbd "C-x C-0") 'delete-window)
+
+     (require 'god-mode-isearch)
+     (define-key isearch-mode-map (kbd "<escape>") 'god-mode-isearch-activate)
+     (define-key god-mode-isearch-map (kbd "<escape>") 'god-mode-isearch-disable)
+     ;; org-mode
+     (define-key god-local-mode-map [remap self-insert-command] 'my-god-mode-self-insert)
+
+     (defun my-god-mode-self-insert ()
+       (interactive)
+       (if (and (bolp)
+                (eq major-mode 'org-mode))
+           (call-interactively 'org-self-insert-command)
+         (call-interactively 'god-mode-self-insert)))
+     )
+
+(defun my-update-cursor ()
+  (setq cursor-type (if (or god-local-mode buffer-read-only)
+                        'box
+                      'bar)))
+
+(add-hook 'god-mode-enabled-hook 'my-update-cursor)
+(add-hook 'god-mode-disabled-hook 'my-update-cursor)
+
+;;(global-set-key (kbd "<f12>") 'god-local-mode)
+
+;;(global-set-key (kbd "<f12>") 'god-mode-all)
+
+
+#+END_SRC
+
+* company
+
+#+BEGIN_SRC emacs-lisp
+
+;;company
+
+(use-package company
+  :ensure t
+  :defer t
+  ;; :hook (prog-mode . global-company-mode)
+  :config (require 'company)
+;;  (global-set-key (kbd "<backtab>") 'company-complete-common)
+  ;; (global-set-key (kbd "H-<SPC>") 'company-complete-common)
+  (global-set-key (kbd "થ") 'company-complete-common)
+  (global-set-key (kbd "C-`") 'company-yasnippet)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous))
+
+(add-hook 'after-init-time-hook (global-company-mode 1))
+
+(use-package company-box
+  :ensure t
+  :defer t
+  :hook (company-mode . company-box-mode))
+
+
+#+END_SRC
+
 * key-chords
 
 #+BEGIN_SRC emacs-lisp
@@ -2424,26 +2572,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :ensure t
   :defer 3
   :config (beacon-mode 1))
-
-#+END_SRC
-
-* company
-
-#+BEGIN_SRC emacs-lisp
-
-;;company
-
-(use-package company
-  :ensure t
-  :defer t
-  :config (require 'company)
-;;  (global-set-key (kbd "<backtab>") 'company-complete-common)
-  (global-set-key (kbd "H-<SPC>") 'company-complete-common)
-  (global-set-key (kbd "C-`") 'company-yasnippet)
-  (define-key company-active-map (kbd "C-n") 'company-select-next)
-  (define-key company-active-map (kbd "C-p") 'company-select-previous))
-
-(add-hook 'after-init-hook 'global-company-mode)
 
 #+END_SRC
 
@@ -3278,55 +3406,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
  )
 
 ;; (add-hook 'org-mode-hook (lambda () (load-theme 'modified-org-beautify t)))
-
-#+END_SRC
-
-* god mode
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package god-mode
-  :ensure t
-  ;; :defer t
-  ;; :init 
-  ;;    (global-set-key (kbd "C-h") 'previous-line)
-
-  :config
-;;     (define-key god-local-mode-map (kbd "h") 'previous-line)
-;;     (define-key god-mode-map (kbd "h"
-     (define-key god-local-mode-map (kbd ".") 'repeat)
-     (define-key god-local-mode-map (kbd "i") 'god-local-mode)
-
-     (global-set-key (kbd "C-x C-1") 'delete-other-windows)
-     (global-set-key (kbd "C-x C-2") 'split-window-below)
-     (global-set-key (kbd "C-x C-3") 'split-window-right)
-     (global-set-key (kbd "C-x C-0") 'delete-window)
-
-     (require 'god-mode-isearch)
-     (define-key isearch-mode-map (kbd "<escape>") 'god-mode-isearch-activate)
-     (define-key god-mode-isearch-map (kbd "<escape>") 'god-mode-isearch-disable)
-     ;; org-mode
-     (define-key god-local-mode-map [remap self-insert-command] 'my-god-mode-self-insert)
-
-     (defun my-god-mode-self-insert ()
-       (interactive)
-       (if (and (bolp)
-                (eq major-mode 'org-mode))
-           (call-interactively 'org-self-insert-command)
-         (call-interactively 'god-mode-self-insert)))
-     )
-
-(defun my-update-cursor ()
-  (setq cursor-type (if (or god-local-mode buffer-read-only)
-                        'box
-                      'bar)))
-
-(add-hook 'god-mode-enabled-hook 'my-update-cursor)
-(add-hook 'god-mode-disabled-hook 'my-update-cursor)
-
-;;(global-set-key (kbd "<f12>") 'god-local-mode)
-
-(global-set-key (kbd "<f12>") 'god-mode-all)
 
 #+END_SRC
 
