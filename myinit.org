@@ -38,14 +38,14 @@
 - [[#which-key][which-key]]
 - [[#git][git]]
 - [[#monky][monky]]
+- [[#yasnippet][yasnippet]]
+- [[#flycheck][flycheck]]
+- [[#flyspell][flyspell]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
-- [[#yasnippet][yasnippet]]
-- [[#flycheck][flycheck]]
-- [[#flyspell][flyspell]]
 - [[#expand-region][expand-region]]
 - [[#avy][avy]]
 - [[#ace-window][ace-window]]
@@ -969,6 +969,71 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+END_SRC
 
+* yasnippet
+
+#+BEGIN_SRC emacs-lisp
+
+    ;;yasnippet
+
+    (use-package yasnippet
+      :ensure t
+      :defer 0.5
+      ;; :hook (after-init .  yas-global-mode)
+      :diminish yas-minor-mode
+      :config 
+      (yas-global-mode 1))
+
+    (use-package yasnippet-snippets
+      :ensure t
+      :defer t
+      :after (yasnippet))
+
+#+END_SRC
+
+* flycheck
+
+#+BEGIN_SRC emacs-lisp
+
+  ;;flycheck
+
+  (use-package flycheck
+  :ensure t
+  :defer t
+  ;; :hook (prog-mode . flycheck-mode)
+  :config (progn
+            (setq flycheck-standard-error-navigation nil)
+            (setq flycheck-indication-mode 'right-fringe)
+          (global-flycheck-mode t)))
+
+#+END_SRC
+
+* flyspell
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package flyspell
+  :defer 0.3
+  :hook ((prog-mode . flyspell-prog-mode)
+         (text-mode . flyspell-mode))
+  :config
+  (cond
+   ((executable-find "aspell")
+    (setq ispell-program-name "aspell")
+    (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US")))
+   ((executable-find "hunspell")
+    (setq ispell-program-name "hunspell")
+    (setq ispell-extra-args '("-d en_US")))
+   )
+
+  ;; Sets flyspell correction to use two-finger mouse click
+  (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+  (define-key flyspell-mode-map (kbd "C-;") 'flyspell-correct-wrapper)
+  )
+
+;; (define-key flyspell-mode-map (kbd "C-;") 'flyspell-correct-wrapper)
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -1162,70 +1227,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :ensure t
   :defer 3
   :config (beacon-mode 1))
-
-#+END_SRC
-
-* yasnippet
-
-#+BEGIN_SRC emacs-lisp
-
-;;yasnippet
-
-(use-package yasnippet
-  :ensure t
-  :defer 1.5
-  ;; :hook (after-init . (lambda () yas-global-mode 1))
-  :diminish yas-minor-mode
-  :config (use-package yasnippet-snippets
-          :ensure t
-          :defer t)
-  (yas-global-mode 1))
-
-;;(add-hook 'prog-mode-hook 'yas-minor-mode)
-
-#+END_SRC
-
-* flycheck
-
-#+BEGIN_SRC emacs-lisp
-
-;;flycheck
-
-(use-package flycheck
-:ensure t
-:defer t
-:hook (prog-mode . flycheck-mode)
-:config (progn
-	  (setq flycheck-standard-error-navigation nil)
-        (global-flycheck-mode t)))
-
-;; (add-hook 'prog-mode-hook
-;;           (lambda () (flyspell-prog-mode)))
-;(add-hook 'prog-mode-hook 'flycheck-mode)
-
-#+END_SRC
-
-* flyspell
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package flyspell
-;;  :ensure t
-  :defer t
-  :hook ((prog-mode . flyspell-prog-mode)
-	 (text-mode . flyspell-mode))
-  :config
-  (cond
-           ((executable-find "hunspell")
-            (setq ispell-program-name "hunspell")
-            (setq ispell-extra-args '("-d en_US")))
-           ((executable-find "aspell")
-            (setq ispell-program-name "aspell")
-            (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))))
-
-  ;; Sets flyspell correction to use two-finger mouse click
-  (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
-  )
 
 #+END_SRC
 
