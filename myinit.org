@@ -56,6 +56,9 @@
 - [[#term-mode][term-mode]]
 - [[#comint-mode][comint-mode]]
 - [[#vterm][vterm]]
+- [[#eww--shr][eww & shr]]
+- [[#novel][nov.el]]
+- [[#restclient][restclient]]
 - [[#mode-line][mode-line]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
@@ -82,9 +85,6 @@
 - [[#yamltoml-and-json][yaml,toml and json]]
 - [[#markdown][markdown]]
 - [[#latexauctex][latex/auctex]]
-- [[#eww][eww]]
-- [[#novel][nov.el]]
-- [[#restclient][restclient]]
 - [[#realgud][realgud]]
 - [[#projectile][projectile]]
 - [[#ecb][ecb]]
@@ -1340,6 +1340,55 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 ;
 #+END_SRC
 
+* eww & shr
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package eww
+  :hook (eww-mode . visual-line-mode)
+  (eww-mode . (lambda () (display-line-numbers-mode -1)))
+  (eww-mode . (lambda () (nlinum-mode -1)))
+  )
+
+;; (setq shr-inhibit-images 1)
+;; (setq shr-width 80)
+
+#+END_SRC
+
+* nov.el
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package nov
+  :ensure t
+  :defer t
+  :mode ("\\.epub\\'" . nov-mode))
+
+(add-hook 'nov-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'nov-mode-hook (lambda () (nlinum-mode -1)))
+
+
+#+END_SRC
+
+* restclient
+
+#+BEGIN_SRC emacs-lisp
+
+;;restclient
+
+(use-package restclient
+  :ensure t
+  :defer t)
+
+
+(use-package company-restclient
+:ensure t
+:after (restclient)
+:config 
+(add-to-list 'company-backends 'company-restclient))
+
+#+END_SRC
+
 * mode-line
 
 #+BEGIN_SRC emacs-lisp
@@ -2091,41 +2140,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+END_SRC
 
-* eww
-
-#+BEGIN_SRC emacs-lisp
-
-(setq shr-inhibit-images 1)
-
-#+END_SRC
-
-* nov.el
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package nov
-  :ensure t
-  :defer t
-  :mode ("\\.epub\\'" . nov-mode))
-
-(add-hook 'nov-mode-hook (lambda () (display-line-numbers-mode -1)))
-(add-hook 'nov-mode-hook (lambda () (nlinum-mode -1)))
-
-
-#+END_SRC
-
-* restclient
-
-#+BEGIN_SRC emacs-lisp
-
-;;restclient
-
-(use-package restclient
-  :ensure t
-  :defer t)
-
-#+END_SRC
-
 * realgud
 
 #+BEGIN_SRC emacs-lisp
@@ -2675,7 +2689,6 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 ;;   ;;   (dired-mode . dired-hide-dotfiles-mode)))
 
 #+END_SRC
-
 
 * try
 
