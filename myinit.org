@@ -82,13 +82,13 @@
 - [[#objed][objed]]
 - [[#god-mode][god-mode]]
 - [[#company][company]]
+- [[#lsp-mode][lsp-mode]]
+- [[#cc][C/C++]]
+- [[#rust][rust]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
 - [[#beacon][beacon]]
-- [[#lsp-mode][lsp-mode]]
-- [[#cc][C/C++]]
-- [[#rust][rust]]
 - [[#go][go]]
 - [[#ruby][ruby]]
 - [[#python][python]]
@@ -2528,6 +2528,214 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+END_SRC
 
+* lsp-mode
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package lsp-mode
+  :ensure t
+  :defer t
+  :init (setq lsp-keymap-prefix "γ l")
+  :hook ((ruby-mode . lsp)
+         (enh-ruby-mode . lsp)
+         (php-mode . lsp)
+         (java-mode . lsp)
+         (js-mode . lsp)
+         ;; (js2-mode . lsp)
+         (web-mode . lsp)
+         (css-mode . lsp)
+         ;; (crystal-mode . lsp)
+         (python-mode  . lsp)
+         (rust-mode . lsp)
+         ;; (go-mode . lsp)
+         (c-mode . lsp)
+         (c++-mode .lsp)
+         ;; (lua-mode . lsp)
+         )
+  :config
+
+  ;; change nil to 't to enable logging of packets between emacs and the LS
+  ;; this was invaluable for debugging communication with the MS Python Language Server
+  ;; and comparing this with what vs.code is doing
+
+  (setq lsp-print-io nil)
+
+
+  (setq lsp-prefer-flymake nil)
+  (setq lsp-enable-file-watchers nil)
+  
+  (require 'lsp-clients)
+
+  )
+
+
+;; lsp-ui gives us the blue documentation boxes and the sidebar info
+(use-package lsp-ui
+  :ensure t
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-use-childframe t
+        lsp-ui-doc-position 'top
+        lsp-ui-doc-include-signature t
+        lsp-ui-sideline-enable t
+        lsp-ui-flycheck-enable t
+        lsp-ui-flycheck-list-position 'right
+        lsp-ui-flycheck-live-reporting t
+        lsp-ui-peek-enable t
+        lsp-ui-peek-list-width 60
+        lsp-ui-peek-peek-height 25)
+  (setq lsp-ui-sideline-ignore-duplicate t)
+  ;; (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+
+  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  )
+
+;;(use-package company-lsp :ensure t :defer t :hook (lsp-mode))
+
+;; (setq lsp-language-id-configuration '(;; (java-mode . "java")
+;;                                    ;; (python-mode . "python")
+;;                                    ;; (gfm-view-mode . "markdown")
+;;                                    ;; (rust-mode . "rust")
+;;                                    (ruby-mode . "ruby")
+;;                                    ;; (css-mode . "css")
+;;                                    ;; (xml-mode . "xml")
+;;                                    ;; (c-mode . "c")
+;;                                    ;; (c++-mode . "cpp")
+;;                                    ;; (objc-mode . "objective-c")
+;;                                    ;; (web-mode . "html")
+;;                                    ;; (html-mode . "html")
+;;                                    ;; (sgml-mode . "html")
+;;                                    ;; (mhtml-mode . "html")
+;;                                    ;; (go-mode . "go")
+;;                                    ;; (haskell-mode . "haskell")
+;;                                    ;; (php-mode . "php")
+;;                                    ;; (json-mode . "json")
+;;                                    ;; (js2-mode . "javascript")
+;;                                    ;;(typescript-mode . "typescript")
+
+;;                                    ))
+
+;; LSP debugging
+
+;;(setq lsp-print-io t)
+
+;;(setq lsp-trace t)
+
+;;(setq lsp-print-performance t)
+
+(use-package dap-mode
+  :ensure t ;;:after lsp-mode
+  :defer t
+  :hook (lsp-mode . dap-mode)
+  :config
+  ;;(dap-mode t)
+  (dap-ui-mode t)
+  (require 'dap-ruby)
+  (require 'dap-php)
+  (require 'dap-java)
+  )
+
+(use-package lsp-ivy :ensure t :after lsp)
+(use-package lsp-treemacs :ensure t :after lsp)
+
+#+END_SRC
+
+* C/C++
+
+#+BEGIN_SRC emacs-lisp
+
+;;C/C++
+
+(use-package company-c-headers
+  :after company
+  :defer t
+  :ensure t)
+
+
+;; (use-package irony
+;;   :ensure t
+;;   :defer t
+;;   :init ;(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
+;;   :hook (c++-mode . (lambda () irony-mode 1))
+;;         (c-mode . (lambda () (irony-mode 1)))
+;;         (objc-mode . (lambda () (irony-mode 1)))
+;;         (irony-mode-hook . irony-cdb-autosetup-compile-options)
+;;         (irony-mode-hook . irony-cdb-autosetup-compile-options)
+;;   :config (add-to-list 'company-backends 'company-irony)
+;;           (add-to-list 'company-backends 'company-c-headers)
+;;           (flycheck-irony-setup)
+;;           (irony-eldoc)
+;;          ;; (add-hook 'irony-mode-hook #'irony-eldoc)
+;; )
+
+;; ;; (add-hook 'irony-mode-hook
+;; 'irony-cdb-autosetup-compile-options)
+
+;; (use-package company-irony
+;;   :ensure t
+;;   :defer t)
+
+
+;; (use-package flycheck-irony
+;;   :ensure t
+;;   :defer t)
+
+;; (eval-after-load 'flycheck
+;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+;; (use-package irony-eldoc
+;;   :ensure t
+;;   :defer t)
+;; ;;(add-hook 'irony-mode-hook #'irony-eldoc)
+
+#+END_SRC
+
+#+RESULTS:
+
+* rust
+
+#+BEGIN_SRC emacs-lisp
+
+;; rust
+
+(use-package flycheck-rust
+  :ensure t
+  :defer t
+  :after rust-mode
+  :config
+;;  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  (add-hook 'rust-mode-hook 'flycheck-mode)) ;;quite unecessary but I will try it's effects
+
+
+;; (use-package racer
+;;   :ensure t
+;;   :defer t
+;;   :after rust-mode
+;;   :init
+;;   (setq company-tooltip-align-annotations t)
+;;   (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
+
+(use-package rust-mode
+  :ensure t
+  :defer t
+  ;; :hook (rust-mode . racer-mode)
+  ;;       (racer-mode . eldoc-mode)
+  :config
+        (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+        (setq rust-format-on-save t))
+
+(use-package cargo
+  :ensure t
+  :defer t
+  :after rust-mode
+  :hook (rust-mode . cargo-minor-mode)
+  :config
+  (setq compilation-scroll-output t))
+
+#+END_SRC
+
 * key-chords
 
 #+BEGIN_SRC emacs-lisp
@@ -2572,176 +2780,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :ensure t
   :defer 3
   :config (beacon-mode 1))
-
-#+END_SRC
-
-* lsp-mode
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package lsp-mode
-  :ensure t
-  :defer t
-  :hook (ruby-mode)
-  :config
-
-  ;; change nil to 't to enable logging of packets between emacs and the LS
-  ;; this was invaluable for debugging communication with the MS Python Language Server
-  ;; and comparing this with what vs.code is doing
-  (setq lsp-print-io nil)
-
-  ;; lsp-ui gives us the blue documentation boxes and the sidebar info
-  (use-package lsp-ui
-    :ensure t
-    :config
-    (setq lsp-ui-sideline-ignore-duplicate t)
-    (add-hook 'lsp-mode-hook 'lsp-ui-mode))
-
-  ;; install LSP company backend for LSP-driven completion
-  (use-package company-lsp
-    :ensure t
-    :config
-    (push 'company-lsp company-backends))
-
-  (require 'lsp-clients)
-  ;; (add-hook 'typescript-mode-hook 'lsp)
-  ;; (add-hook 'js2-mode-hook 'lsp)
-  ;; (add-hook 'php-mode 'lsp)
-  ;; (add-hook 'css-mode 'lsp)
-  ;; (add-hook 'ruby-mode 'lsp)
-  ;; (add-hook 'web-mode 'lsp)
-  (setq lsp-prefer-flymake nil)
-  (setq lsp-enable-file-watchers nil)
-  )
-
-;;(use-package company-lsp :ensure t :defer t :hook (lsp-mode))
-
-;; (setq lsp-language-id-configuration '(;; (java-mode . "java")
-;; 				      ;; (python-mode . "python")
-;; 				      ;; (gfm-view-mode . "markdown")
-;; 				      ;; (rust-mode . "rust")
-;; 				      (ruby-mode . "ruby")
-;; 				      ;; (css-mode . "css")
-;; 				      ;; (xml-mode . "xml")
-;; 				      ;; (c-mode . "c")
-;; 				      ;; (c++-mode . "cpp")
-;; 				      ;; (objc-mode . "objective-c")
-;; 				      ;; (web-mode . "html")
-;; 				      ;; (html-mode . "html")
-;; 				      ;; (sgml-mode . "html")
-;; 				      ;; (mhtml-mode . "html")
-;; 				      ;; (go-mode . "go")
-;; 				      ;; (haskell-mode . "haskell")
-;; 				      ;; (php-mode . "php")
-;; 				      ;; (json-mode . "json")
-;; 				      ;; (js2-mode . "javascript")
-;; 				      ;;(typescript-mode . "typescript")
-
-;; 				      ))
-
-;; LSP debugging
-
-;;(setq lsp-print-io t)
-
-;;(setq lsp-trace t)
-
-;;(setq lsp-print-performance t)
-
-(use-package dap-mode
-  :ensure t ;;:after lsp-mode
-  :defer t
-  :hook (lsp-mode . dap-mode)
-  :config
-    ;;(dap-mode t)
-    (dap-ui-mode t)
-    (require 'dap-ruby))
-
-#+END_SRC
-
-* C/C++
-
-#+BEGIN_SRC emacs-lisp
-
-;;C/C++
-
-(use-package company-c-headers
-  :after company
-  :defer t
-  :ensure t)
-
-
-(use-package irony
-  :ensure t
-  :defer t
-  :init ;(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
-  :hook (c++-mode . (lambda () irony-mode 1))
-        (c-mode . (lambda () (irony-mode 1)))
-        (objc-mode . (lambda () ('irony-mode 1)))
-	(irony-mode-hook . irony-cdb-autosetup-compile-options)
-  :config (add-to-list 'company-backends 'company-irony)
-          (add-to-list 'company-backends 'company-c-headers)
-          (flycheck-irony-setup)
-          (irony-eldoc)
-         ;; (add-hook 'irony-mode-hook #'irony-eldoc)
-)
-
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
-(use-package company-irony
-  :ensure t
-  :defer t)
-
-
-(use-package flycheck-irony
-  :ensure t
-  :defer t)
-
-;; (eval-after-load 'flycheck
-;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
-(use-package irony-eldoc
-  :ensure t
-  :defer t)
-;;(add-hook 'irony-mode-hook #'irony-eldoc)
-
-#+END_SRC
-
-* rust
-
-#+BEGIN_SRC emacs-lisp
-
-;; rust
-
-(use-package flycheck-rust
-  :ensure t
-  :after rust-mode
-  :config
-;;  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  (add-hook 'rust-mode-hook 'flycheck-mode)) ;;quite unecessary but I will try it's effects
-
-
-(use-package racer
-  :ensure t
-  :defer t
-  :init
-  (setq company-tooltip-align-annotations t)
-  (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"))
-
-(use-package rust-mode
-  :ensure t
-  :defer t
-  :hook (rust-mode . racer-mode)
-        (racer-mode . eldoc-mode)
-  :config
-        (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-        (setq rust-format-on-save t))
-
-(use-package cargo
-  :ensure t
-  :defer t
-  :hook (rust-mode . cargo-minor-mode)
-  :config
-  (setq compilation-scroll-output t))
 
 #+END_SRC
 
