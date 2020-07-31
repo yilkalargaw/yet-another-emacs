@@ -3985,6 +3985,14 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   
 #+END_SRC
 
+** org-beautify
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package org-beautify :defer t :ensure t)
+  
+#+END_SRC
+
 * load custom faces
 
 #+BEGIN_SRC emacs-lisp
