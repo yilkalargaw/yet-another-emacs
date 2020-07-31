@@ -100,6 +100,8 @@
 - [[#web][web]]
 - [[#csv][csv]]
 - [[#yamltoml-and-json][yaml,toml and json]]
+- [[#default-text-scale][default-text-scale]]
+- [[#enable-disabled-commands][enable disabled commands]]
 - [[#key-chords][key-chords]]
 - [[#use-package-chords][use-package-chords]]
 - [[#trailing-white-spaces][trailing white spaces]]
@@ -3150,6 +3152,27 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;;   :ensure t
   ;;   :defer t)
 
+#+END_SRC
+
+* default-text-scale
+
+#+BEGIN_SRC emacs-lisp
+
+;; (use-package default-text-scale
+;;   :ensure t
+;;   :hook (after-init . default-text-scale-mode)
+;;   :defer t
+;;   :commands default-text-scale-mode
+;; )
+
+#+END_SRC
+
+* enable disabled commands
+
+#+BEGIN_SRC emacs-lisp
+
+(put 'narrow-to-region 'disabled nil)
+  
 #+END_SRC
 
 * key-chords
