@@ -685,7 +685,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :ensure t
   :after hydra
   :bind
-  ("M-SPC" . major-mode-hydra)
+  ;; ("M-SPC" . major-mode-hydra)
 )
 
 (use-package pretty-hydra
@@ -2542,7 +2542,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :defer t
   :hook (company-mode . company-box-mode))
 
-
 #+END_SRC
 
 * lsp-mode
@@ -2557,6 +2556,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
          (enh-ruby-mode . lsp)
          (php-mode . lsp)
          (java-mode . lsp)
+	 (html-mode .lsp)
          (js-mode . lsp)
          ;; (js2-mode . lsp)
          (web-mode . lsp)
@@ -2568,6 +2568,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
          (c-mode . lsp)
          (c++-mode .lsp)
          ;; (lua-mode . lsp)
+	 (bash . lsp)
          )
   :config
 
@@ -3081,12 +3082,15 @@ This is the same as using \\[set-mark-command] with the prefix argument."
  (use-package web-mode
    :ensure t
    :defer t
-   ;; :mode (;;"\\.html\\'"
-   ;;        ;;"\\.css?\\'"
-   ;;        "\\.phtml\\'"
-   ;;        "\\.erb\\'"
-   ;;        ;;"\\.html?\\'"
-   ;;        )
+   :after init
+   :mode ("\\.html\\'"
+          "\\.css?\\'"
+          "\\.phtml\\'"
+          "\\.erb\\'"
+          "\\.html?\\'"
+	  "\\.djhtml\\'"
+	  "\\.jinja\\'"
+          )
    :config
    (setq web-mode-markup-indent-offset 2)
  ;  (setq web-mode-engines-alist
