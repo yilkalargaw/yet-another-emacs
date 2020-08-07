@@ -237,11 +237,12 @@
 (defvar my-default-face-height-increament 5  "by how much to increase or decrease default :height")
 
 (eval '(set-face-attribute 'default nil :height my-default-face-height
-                           ;; :family "DejaVu Sans Mono"
+                           ;; :family "DejaVu Sans Mono" 
                            ;; :family "Monospace"
-                           ;; :family "Fira Mono"
-                           :family "Droid Sans Mono"
-                           :width 'condensed :weight 'normal
+                           :family "Fira Mono" :foundry "mozilla"
+                           ;; :family "Droid Sans Mono" :foundry "google"
+			   ;; :family "Noto Sans Mono" :foundry "google"
+                           :width 'normal :weight 'normal
                            ))
 
 (defun my-default-font-height-increase ()
@@ -423,7 +424,7 @@
             (setq base16-theme-256-color-source 'colors)
             (setq base16-distinct-fringe-background nil)
             (setq base16-highlight-mode-line 'box)
-            (load-theme 'base16-brewer t)
+            (load-theme 'base16-material-darker t)
             ;; (load-file "~/.emacs.d/custom_faces.el")
             ))
 
@@ -556,8 +557,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
-;; (setq-default line-spacing 1)
-;; (setq-default line-spacing 1)
+(setq-default line-spacing 0.1)
 (add-hook 'minibuffer-setup-hook (lambda () (setq line-spacing nil)))
 
 #+END_SRC
