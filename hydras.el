@@ -157,6 +157,8 @@ Git gutter:
 [_M-p_] Unmark  [_M-n_] Unmark  [_r_] Mark by regexp
 ^ ^             ^ ^             [_#_] mc/insert-numbers
 ^ ^             ^ ^             [_@_] mc/insert-letters
+^ ^             ^ ^             [_]_] mc/vertical-align
+^ ^             ^ ^             [_|_] mc/vertical-align-with-space
 ^ ^             ^ ^             [_q_] Quit
 "
   ("l" mc/edit-lines :exit t)
@@ -170,6 +172,8 @@ Git gutter:
   ("r" mc/mark-all-in-region-regexp :exit t)
   ("#" mc/insert-numbers)
   ("@" mc/insert-letters)
+  ("|" mc/vertical-align)
+  ("]" mc/vertical-align-with-space)
   ("q" nil))
 
 (defhydra hydra-transpose (:color red :quit-key ("q" "C-g"))
