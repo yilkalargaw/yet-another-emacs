@@ -287,7 +287,11 @@
 
 #+BEGIN_SRC emacs-lisp
 
-;;themes (use-package doom-themes :ensure t :defer t)
+;;themes 
+
+(use-package doom-themes 
+  :ensure t
+  :defer t)
 
 (use-package ample-theme
   :ensure t
