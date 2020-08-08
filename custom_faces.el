@@ -101,13 +101,7 @@
 
    `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
 
-   ;; `(whitespace-space ((t (:foreground ,(face-background 'default) ))))
 
-   ;; `(mode-line ((t (:foreground ,(face-foreground 'default) :background ,(color-darken-name (face-background 'default) 10) :box (:line-width 1 :color ,(color-darken-name (face-background 'default) 25))))));; ,(face-foreground 'font-lock-comment-face))))))
-   ;; `(mode-line-inactive ((t (:foreground ,(face-foreground 'default) :background ,(color-lighten-name (face-background 'default) 10) :box (:line-width 1 :color ,(color-darken-name (face-background 'default) 10))))))
-   ;; `(mode-line-buffer-id ((t (:background ,(face-background 'default)))))
-   ;; `(spaceline-highlight-face ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :inherit 'mode-line))))
-   ;; `(spaceline-unmodified  ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :inherit 'mode-line))))
 
 
    ;; `(tab-bar ((t (:inherit variable-pitch :background "SlateGray4" :foreground "white"))))
@@ -132,7 +126,10 @@
    `(mode-line-buffer-id ((t (:box (:color ,(face-foreground 'link) :line-width 2) :foreground ,(face-foreground 'link) :background nil :bold t))))
    ;; ;; '(mode-line ((t (:background "#002b36"  :foreground "white" :box "dark cyan"))))
    ;; ;; '(mode-line-inactive ((t (:background "#002b36" :foreground "white" :box nil))))
+   ;; `(spaceline-highlight-face ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :inherit 'mode-line))))
+   ;; `(spaceline-unmodified  ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :inherit 'mode-line))))
 
+   ;;;;; whitespace-mode
    ;; `(trailing-whitespace ((t nil)))
    `(whitespace-empty ((t nil)))
    `(whitespace-line ((t nil)))
@@ -146,7 +143,6 @@
    `(whitespace-trailing ((t nil)))
    ;; `(whitespace-space-after-tab ((t nil)))
    ;; `(whitespace-space-before-tab ((t nil)))
-
 
 
    ;; ;;;;; whitespace-mode
