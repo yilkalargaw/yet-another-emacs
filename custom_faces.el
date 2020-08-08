@@ -172,10 +172,11 @@
    ;; 			      :inherit ivy-current-match :background ,(face-foreground 'link) ;; :foreground ,(face-background 'link)
    ;; 			      :box (:line-width 1 :color ,(face-foreground 'default;; font-lock-comment-face
    ;; 									   ))))))
-   ;; `(ivy-minibuffer-match-face-1 ((t (:inherit bold))))
-   ;; `(ivy-minibuffer-match-face-2 ((t (:underline t))))
-   ;; `(ivy-minibuffer-match-face-3 ((t (:underline t))))
-   ;; `(ivy-minibuffer-match-face-4 ((t (:underline t))))
+   `(ivy-current-match ((t (:background ,(face-background 'highlight) :inherit bold))))
+   `(ivy-minibuffer-match-face-1 ((t (:inherit bold))))
+   `(ivy-minibuffer-match-face-2 ((t (:underline t))))
+   `(ivy-minibuffer-match-face-3 ((t (:underline t))))
+   `(ivy-minibuffer-match-face-4 ((t (:underline t))))
 
    ;; ;;;;; swiper
    ;; `(swiper-line-face ((t (;; :underline t
@@ -196,6 +197,13 @@
    `(dired-subtree-depth-4-face ((t (:background nil)))) ;; :foreground ,(face-foreground 'default)))))
    `(dired-subtree-depth-5-face ((t (:background nil)))) ;; :foreground ,(face-foreground 'default)))))
    `(dired-subtree-depth-6-face ((t (:background nil)))) ;; :foreground ,(face-foreground 'default)))))
+
+
+   `(font-lock-function-name-face ((t (:inherit bold))))
+   `(font-lock-keyword-face ((t (:inherit bold))))
+   `(font-lock-type-face ((t (:inherit bold))))
+   `(minibuffer-prompt ((t (:inherit bold))))
+   `(tooltip ((t (:bold nil :italic nil :underline nil))))
 
    ))
 
