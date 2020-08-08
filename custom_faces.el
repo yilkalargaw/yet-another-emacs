@@ -6,18 +6,11 @@
   really bad under some circumstances."
   :type 'boolean)
 
-(let* (;; (sans-font (cond ((x-list-fonts "Lucida Grande") '(:font "Lucida Grande"))
-       ;;                  ((x-list-fonts "Verdana") '(:font "Verdana"))
-       ;;                  ((x-family-fonts "Sans Serif") '(:family "Sans Serif"))
-       ;;                  (nil (warn "Cannot find a Sans Serif Font.  Please report at: https://github.com/jonnay/org-beautify-theme/issues"))))
-       (base-font-color (face-foreground 'default  nil 'default))
+(let* ((base-font-color (face-foreground 'default  nil 'default))
        (background-color (face-background 'default nil 'default))
        (headline `(:inherit default :foreground ,base-font-color))
        ;; (primary-color (face-foreground 'mode-line nil))
        (secondary-color (face-background 'secondary-selection nil 'region))
-       ;; (padding (if modified-org-beautify-theme-use-box-hack
-       ;;              `(:line-width 5 :color ,background-color)
-       ;;              nil))
        (org-highlights `(:foreground ,base-font-color :background ,secondary-color))
 
        )
