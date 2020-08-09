@@ -16,6 +16,24 @@
        )
 
   (custom-set-faces
+
+   ;; ;;;;; spacemacs-boldening
+   ;; `(font-lock-function-name-face ((t (:inherit bold))))
+   ;; `(font-lock-keyword-face ((t (:inherit bold))))
+   ;; `(font-lock-type-face ((t (:inherit bold))))
+   ;; `(minibuffer-prompt ((t (:inherit bold))))
+   ;; `(tooltip ((t (:bold nil :italic nil :underline nil))))
+
+   ;;;;; some fontlock italics
+   ;; `(font-lock-comment-face ((t (:background nil :slant italic))))
+   ;; ;;`(font-lock-constant-face ((t (:weight bold))))
+   ;; `(font-lock-constant-face ((t (:weight normal :slant italic))))
+   ;; `(font-lock-function-name-face ((t (:weight normal))))
+   ;; ;;`(font-lock-keyword-face ((t (:weight bold :slant italic))))
+   ;; `(font-lock-type-face ((t (:slant italic)))) ;:weight bold))))
+
+
+   ;;;;; org
    ;; `(org-agenda-structure ((t (:inherit default ,@sans-font :height 2.0 :underline nil))))
    `(org-level-8 ((t (:inherit 'outline-8
 			       ;; :weight bold
@@ -80,12 +98,6 @@
    ;; `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :box nil))))
    ;; '(mode-line ((t (:background "#002b36"  :foreground "white" :box "dark cyan"))))
    ;; '(mode-line-inactive ((t (:background "#002b36" :foreground "white" :box nil))))
-   `(font-lock-comment-face ((t (:background nil :slant italic))))
-   ;;`(font-lock-constant-face ((t (:weight bold))))
-   `(font-lock-constant-face ((t (:weight normal :slant italic))))
-   `(font-lock-function-name-face ((t (:weight normal))))
-   ;;`(font-lock-keyword-face ((t (:weight bold :slant italic))))
-   `(font-lock-type-face ((t (:slant italic)))) ;:weight bold))))
 
    ;; `(highlight ((t (:box (:line-width 1 :color ,(face-foreground 'default )))))) ;; font-lock-comment-face
 
@@ -119,15 +131,18 @@
    ;; ;;;;; linum-relative
    ;; `(linum-relative-current-face ((,class (:foreground ,comp))))
 
-
-
-   `(mode-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :box (:color ,(face-foreground 'link) :line-width 1) :underline nil :overline nil))))
+      ;;;;; modeline
+   `(mode-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :box (:color ,(face-foreground 'default) :line-width 1) :underline nil :overline nil))))
    `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1)))))
    `(mode-line-buffer-id ((t (:box (:color ,(face-foreground 'link) :line-width 2) :foreground ,(face-foreground 'link) :background nil :bold t))))
    ;; ;; '(mode-line ((t (:background "#002b36"  :foreground "white" :box "dark cyan"))))
    ;; ;; '(mode-line-inactive ((t (:background "#002b36" :foreground "white" :box nil))))
    ;; `(spaceline-highlight-face ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :inherit 'mode-line))))
    ;; `(spaceline-unmodified  ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :inherit 'mode-line))))
+
+   ;; ;;;;; doom-modeline
+   ;; `(doom-modeline-bar ((t (:background ,(face-background 'font-lock-keyword-face)))))
+
 
    ;;;;; whitespace-mode
    ;; `(trailing-whitespace ((t nil)))
@@ -154,14 +169,14 @@
    ;;   `(whitespace-space-after-tab ((t (:background nil))))
    ;;   `(whitespace-space-before-tab ((t (:background nil))))
    ;;   `(whitespace-tab ((t (:background nil))))
-   ;; `(whitespace-trailing ((t (:background ,err ))))
+   ;;   `(whitespace-trailing ((t (:background ,err ))))
 
    ;; ;;;;; ivy
    ;;  `(ivy-current-match ((t (;; :underline t
    ;; 			      :inherit ivy-current-match :background ,(face-foreground 'link) ;; :foreground ,(face-background 'link)
    ;; 			      :box (:line-width 1 :color ,(face-foreground 'default;; font-lock-comment-face
    ;; 									   ))))))
-   `(ivy-current-match ((t (:background ,(face-background 'highlight) :inherit bold))))
+   `(ivy-current-match ((t (:inherit bold))))
    `(ivy-minibuffer-match-face-1 ((t (:inherit bold))))
    `(ivy-minibuffer-match-face-2 ((t (:underline t))))
    `(ivy-minibuffer-match-face-3 ((t (:underline t))))
@@ -188,12 +203,15 @@
    `(dired-subtree-depth-6-face ((t (:background nil)))) ;; :foreground ,(face-foreground 'default)))))
 
 
-   `(font-lock-function-name-face ((t (:inherit bold))))
-   `(font-lock-keyword-face ((t (:inherit bold))))
-   `(font-lock-type-face ((t (:inherit bold))))
-   `(minibuffer-prompt ((t (:inherit bold))))
-   `(tooltip ((t (:bold nil :italic nil :underline nil))))
-
+   ;;;;; tabbar
+   `(tab-bar ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
+			      ;; :box (:color ,(face-foreground 'default) :line-width 1)
+			      ))))
+   `(tab-bar-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 :inverse-video t :underline t
+				  ;; :box (:color ,(face-foreground 'default) :line-width 1)
+				  ))))
+   `(tab-bar-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
+					   :box (:color ,(face-foreground 'default) :line-width 2)))))
    ))
 
 (setq warning-minimum-level :warning)
