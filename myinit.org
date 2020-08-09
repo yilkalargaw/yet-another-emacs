@@ -75,7 +75,6 @@
 - [[#emojify][emojify]]
 - [[#writeroom-mode][writeroom-mode]]
 - [[#spray][spray]]
-- [[#ecb][ecb]]
 - [[#projectile][projectile]]
 - [[#dashboard][dashboard]]
 - [[#all-the-icons][all the icons]]
@@ -1957,26 +1956,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (use-package spray
   :ensure t
   :defer t)
-
-#+END_SRC
-
-* ecb
-
-#+BEGIN_SRC emacs-lisp
-
-;;ecb
-
-(use-package ecb
-  :ensure t
-  :defer t
-  :init (setq ecb-tip-of-the-day nil)
-  :bind (( "C-c e b" . ecb-minor-mode)
-         :map ecb-mode-map
-         ("γ 1" . 'ecb-goto-window-edit1)
-         ("γ 2" . 'ecb-goto-window-directories)
-         ("γ 3" . 'ecb-goto-window-sources)
-         ("γ 4" . 'ecb-goto-window-methods)
-         ("γ 5" . 'ecb-goto-window-history)))
 
 #+END_SRC
 
