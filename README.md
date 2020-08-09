@@ -7,7 +7,7 @@ Is my personal emacs config and it is based on the earlier yet-another-emacs. I 
 
   + ivy as a completion framework
 
-  + telephone line with a customization for both emacsclient and emacs as a powerline
+  + doom-line
 
   + dired-sidebar for side tab file manager
 
@@ -15,7 +15,7 @@ Is my personal emacs config and it is based on the earlier yet-another-emacs. I 
 
   + projectile
 
-  + the Hyper key for expanding the emacs key config and semicolon as a mod_shift key
+  + modshift key for extra characters to expand the keymap
 
   + etc ...
 
