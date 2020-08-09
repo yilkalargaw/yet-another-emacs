@@ -564,7 +564,7 @@
 
 #+BEGIN_SRC emacs-lisp
 
-(setq-default line-spacing 0.1)
+(setq-default line-spacing 0.2)
 (add-hook 'minibuffer-setup-hook (lambda () (setq line-spacing nil)))
 
 #+END_SRC
@@ -1996,7 +1996,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;; :init
   ;; (display-line-numbers-mode -1)
   ;; (nlinum-mode -1)
-  :config
+  :init
   (dashboard-setup-startup-hook)
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
