@@ -1991,6 +1991,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :ensure t
   :defer t
   :after init hydra
+  :init (setq projectile-mode-line-prefix ""
+        projectile-sort-order 'recentf
+        projectile-use-git-grep t)
   :hook (prog-mode . projectile-mode)
   :bind (:map projectile-mode-map
               ("η p" . hydra-projectile/body))
