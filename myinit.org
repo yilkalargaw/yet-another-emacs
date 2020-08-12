@@ -686,8 +686,9 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 ;;hydra
 (use-package hydra
-  :defer 0.4
+  ;; :defer 0.4
   ;; :hook (after-init . (lambda () (require 'hydra)))
+  :init (add-hook 'after-init-time-hook (require 'hydra))
   :ensure t
   :defines (ibuffer-mode-map dired-mode-map projectile-mode-map smartparens-mode-map)
   :config
@@ -1026,20 +1027,21 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+BEGIN_SRC emacs-lisp
 
-    ;;yasnippet
+;;yasnippet
 
-    (use-package yasnippet
-      :ensure t
-      :defer 0.5
-      ;; :hook (after-init .  yas-global-mode)
-      :diminish yas-minor-mode
-      :config 
-      (yas-global-mode 1))
+(use-package yasnippet
+  :ensure t
+  :defer 0.4
+  ;; :hook (after-init .  yas-global-mode)
+  ;; :init (add-hook 'after-init-time-hook  (yas-global-mode))
+  :diminish yas-minor-mode
+  :config 
+  (yas-global-mode 1))
 
-    (use-package yasnippet-snippets
-      :ensure t
-      :defer t
-      :after (yasnippet))
+(use-package yasnippet-snippets
+  :ensure t
+  :defer t
+  :after (yasnippet))
 
 #+END_SRC
 
