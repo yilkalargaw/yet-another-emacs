@@ -161,7 +161,7 @@
 
   (setq inhibit-default-init 1)
   (setq initial-major-mode 'fundamental-mode)
-  (kill-buffer "*scratch*")
+  ;; (kill-buffer "*scratch*")
 
 
 #+END_SRC
@@ -2014,21 +2014,24 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :init
   (dashboard-setup-startup-hook)
   (setq dashboard-set-heading-icons t)
+  (setq dashboard-center-content t)
+  (setq dashboard-page-separator "\n\f\n")
   (setq dashboard-set-file-icons t)
   (setq dashboard-set-navigator t)
-  (setq dashboard-set-footer nil)
-  (setq dashboard-footer
-        (let ((x  '("The one true editor, Emacs!"
-                   "Free as free speech, free as free Beer"
-                   "Richard Stallman is proud of you"
-                   "Happy coding!"
-                   "Welcome to the church of Emacs"
-                   "While any text editor can save your files,\
+  (setq dashboard-footer-messages '("The one true editor, Emacs!"
+				    "Free as free speech, free as free Beer"
+				    "Richard Stallman is proud of you"
+				    "Happy coding!"
+				    "Welcome to the church of Emacs"
+				    "While any text editor can save your files,\
  only Emacs can save your soul"
-                   "I showed you my source code,pls respond")))
-          (elt x (random (length x)))))
+				    "I showed you my source code,pls respond"
+				    "fuck you"
+				    ))
     ;; (display-line-numbers-mode -1)
   ;; (nlinum-mode -1)
+
+  (setq dashboard-set-footer t)
   )
 
 #+END_SRC
