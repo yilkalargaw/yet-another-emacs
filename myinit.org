@@ -636,6 +636,20 @@
   
 #+END_SRC
 
+* diminish and delight
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package diminish
+  :ensure t
+  :after use-package)
+
+(use-package delight
+  :after use-package
+  :ensure t)
+
+#+END_SRC
+
 * symbol-overlay
 
 #+BEGIN_SRC emacs-lisp
