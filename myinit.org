@@ -430,8 +430,8 @@
 (add-hook 'after-init-time-hook 
           (progn
             (setq base16-theme-256-color-source 'colors)
-            (setq base16-distinct-fringe-background nil)
-            (setq base16-highlight-mode-line 'box)
+            ;; (setq base16-distinct-fringe-background nil)
+            ;; (setq base16-highlight-mode-line 'box)
             (load-theme 'base16-brewer t)
             ;; (load-file "~/.emacs.d/custom_faces.el")
             ))
