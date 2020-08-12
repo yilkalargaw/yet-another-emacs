@@ -3587,10 +3587,22 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+BEGIN_SRC emacs-lisp
 
-(use-package scratch
+(use-package scratch :defer t
   :ensure t
-  :config
-  (add-hook 'after-init-time-hook (scratch--create 'lisp-interaction-mode "*scratch*")))
+  :after init
+  ;; :config
+  ;; (add-hook 'after-init-time-hook (scratch--create 'lisp-interaction-mode "*scratch*"))
+  )
+
+;; (defun create-scratch-buffer nil
+;;    "create a scratch buffer"
+;;    (interactive)
+;;    (switch-to-buffer (get-buffer-create "*scratch*"))
+;;    (lisp-interaction-mode))
+
+(add-hook 'after-init-time-hook (progn
+				  (switch-to-buffer "*scratch*")
+				  (lisp-interaction-mode)))
 
 #+END_SRC
 
