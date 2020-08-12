@@ -4080,6 +4080,23 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   
 #+END_SRC
 
+** dired-hacks
+
+#+BEGIN_SRC emacs-lisp
+
+;; (use-package dired-list :defer t
+;;   :ensure t)
+  
+(use-package dired-collapse :defer t
+  :hook dired-mode
+  :ensure t)
+
+;; (use-package dired-open :defer t
+;;   :hook dired-mode
+;;   :ensure t)
+
+#+END_SRC
+
 * load custom faces
 
 #+BEGIN_SRC emacs-lisp
