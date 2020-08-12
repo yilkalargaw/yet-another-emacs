@@ -4141,7 +4141,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+BEGIN_SRC emacs-lisp
 
-(load-file (concat user-emacs-directory "custom_faces.el"))
+;; (load-file (concat user-emacs-directory "custom_faces.el"))
 
 #+END_SRC
 
