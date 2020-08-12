@@ -3054,7 +3054,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
     (autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
     (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-    (setq markdown-command "pandoc -c ~/.emacs.d/github-pandoc.css --from gfm -t html5 --mathjax --highlight-style pygments --standalone")
+    (setq markdown-command "pandoc -c ~/.emacs.d/etc/github-pandoc.css --from gfm -t html5 --mathjax --highlight-style pygments --standalone")
 
 #+END_SRC
 
