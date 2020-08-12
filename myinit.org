@@ -26,6 +26,7 @@
 - [[#scrolling][scrolling]]
 - [[#input-method][input method]]
 - [[#imenu][imenu]]
+- [[#diminish-and-delight][diminish and delight]]
 - [[#symbol-overlay][symbol-overlay]]
 - [[#hydra][hydra]]
 - [[#major-mode-hydrapretty-hydra][major-mode-hydra/pretty-hydra]]
