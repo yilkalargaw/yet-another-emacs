@@ -970,7 +970,11 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 (use-package git-gutter
   :ensure t
-  :defer t)
+  :defer t
+  :hook ((org-mode . git-gutter-mode)
+	 (prog-mode . git-gutter-mode)
+	 (markdown-mode . git-gutter-mode))
+  )
 
 #+END_SRC
 
