@@ -41,8 +41,8 @@
                   ;; (set-frame-position frame 0 15)
                   ;; (set-window-margins nil 2)
                   (scroll-bar-mode -1)
-		  (menu-bar-mode -1)
-		  (tool-bar-mode -1)
+                  (menu-bar-mode -1)
+                  (tool-bar-mode -1)
                   ))))
 
 
