@@ -2681,8 +2681,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (require 'dap-java)
   )
 
-(use-package lsp-ivy :ensure t :after lsp)
-(use-package lsp-treemacs :ensure t :after lsp)
+(use-package lsp-ivy :ensure t :defer t :after lsp)
+(use-package lsp-treemacs :ensure t :defer t :after lsp)
 
 #+END_SRC
 
