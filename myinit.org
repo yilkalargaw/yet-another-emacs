@@ -3041,7 +3041,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (use-package markdown-mode
     :ensure t
     :defer t
-    :init
+    :config
     (setq markdown-enable-wiki-links t
           markdown-italic-underscore t
           markdown-asymmetric-header t
