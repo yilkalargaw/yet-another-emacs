@@ -511,8 +511,6 @@
 (define-key global-map (kbd "γ SPC") (lambda ()
                                            (interactive)
                                            (insert-char (string-to-char "γ"))))
-
-
   
 #+END_SRC
 
