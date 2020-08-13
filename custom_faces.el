@@ -212,6 +212,28 @@
 				  ))))
    `(tab-bar-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
 					   :box (:color ,(face-foreground 'default) :line-width 2)))))
+   ;;;;; tabbar
+   ;; tab-line
+   ;; tab-line-tab
+   ;; tab-line-tab-inactive
+   ;; tab-line-tab-current
+   ;; tab-line-highlight
+   ;; tab-line-close-highlight
+
+
+   `(tab-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
+			      ;; :box (:color ,(face-foreground 'default) :line-width 1)
+			      ))))
+   `(tab-line-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 :inverse-video t :underline t
+				  ;; :box (:color ,(face-foreground 'default) :line-width 1)
+				   ))))
+   `(tab-line-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
+					   :box (:color ,(face-foreground 'default) :line-width 2)))))
+
+   `(tab-line-tab-current ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 :inverse-video t :underline t
+					   ;; :box (:color ,(face-foreground 'default) :line-width 1)
+					   ))))
+
    ))
 
 (setq warning-minimum-level :warning)
