@@ -133,21 +133,21 @@
     (setq gc-cons-percentage 0.7))
 
   (add-hook 'after-init-hook #'(lambda ()
-				 ;; restore after startup
-				 ;; (setq gc-cons-threshold 800000) ;; default
-				 (setq gc-cons-threshold (* 32 1024 1024))
-				 (setq gc-cons-percentage 0.5)))
+                                 ;; restore after startup
+                                 ;; (setq gc-cons-threshold 800000) ;; default
+                                 (setq gc-cons-threshold (* 32 1024 1024))
+                                 (setq gc-cons-percentage 0.5)))
 
 
   (setq package-archives '( ;; ("marmalade" . "https://marmalade-repo.org/packages/")
-			   ("ORG"       . "https://orgmode.org/elpa/")
-			   ("MELPA"     . "https://melpa.org/packages/")
-			   ("MELPA Stable" . "https://stable.melpa.org/packages/")
-			   ("GNU"       . "https://elpa.gnu.org/packages/"))
-	package-archive-priorities '(("ORG" . 15)
-				     ("MELPA" . 10)
-				     ("MELPA Stable" . 5)
-				     ("GNU" . 0)))
+                           ("ORG"       . "https://orgmode.org/elpa/")
+                           ("MELPA"     . "https://melpa.org/packages/")
+                           ("MELPA Stable" . "https://stable.melpa.org/packages/")
+                           ("GNU"       . "https://elpa.gnu.org/packages/"))
+        package-archive-priorities '(("ORG" . 15)
+                                     ("MELPA" . 10)
+                                     ("MELPA Stable" . 5)
+                                     ("GNU" . 0)))
 
 
 
@@ -180,7 +180,7 @@
 
 (require 'use-package)
 
-;; fetch the list of packages available 
+;; fetch the list of packages available
 ;; (unless package-archive-contents
 ;; (package-refresh-contents))
 
@@ -198,20 +198,20 @@
 
 
 ;; (if (display-graphic-p)
-;; 	  (progn
-;; 	    (setq initial-frame-alist
-;; 		  '(
-;; 		    (width . 93) ; chars
-;; 		    (height . 50) ; lines
-;; 		    (left . 0)
-;; 		    (top . 16)
-;; 		    ))
-;; 	    (setq default-frame-alist
-;; 		  '(
-;; 		    (width . 93)
-;; 		    (height . 50)
-;; 		    (left . 0)
-;; 		    (top . 16)))))
+;;        (progn
+;;          (setq initial-frame-alist
+;;                '(
+;;                  (width . 93) ; chars
+;;                  (height . 50) ; lines
+;;                  (left . 0)
+;;                  (top . 16)
+;;                  ))
+;;          (setq default-frame-alist
+;;                '(
+;;                  (width . 93)
+;;                  (height . 50)
+;;                  (left . 0)
+;;                  (top . 16)))))
 
 
 (set-window-margins nil 2)
@@ -237,11 +237,11 @@
 (defvar my-default-face-height-increament 5  "by how much to increase or decrease default :height")
 
 (eval '(set-face-attribute 'default nil :height my-default-face-height
-                           ;; :family "DejaVu Sans Mono" 
+                           ;; :family "DejaVu Sans Mono"
                            ;; :family "Monospace"
                            :family "Fira Mono" :foundry "mozilla"
                            ;; :family "Droid Sans Mono" :foundry "google"
-			   ;; :family "Noto Sans Mono" :foundry "google"
+                           ;; :family "Noto Sans Mono" :foundry "google"
                            :width 'normal :weight 'normal
                            ))
 
@@ -287,13 +287,13 @@
 
 #+BEGIN_SRC emacs-lisp
 
-;;themes 
+;;themes
 
-(use-package doom-themes 
+(use-package doom-themes
   :ensure t
   :defer t)
 
-(use-package nord-theme 
+(use-package nord-theme
   :ensure t
   :defer t)
 
@@ -391,15 +391,15 @@
 ;;           (lambda (frame)
 ;;               (select-frame frame)
 ;;               (if (display-graphic-p)
-;;                (load-theme 'sanityinc-solarized-dark t) 
+;;                (load-theme 'sanityinc-solarized-dark t)
 ;;              (load-theme 'danneskjold t))))
 
 ;; (add-hook 'after-init-hook
-;;        (if (display-graphic-p) 
-;;            (load-theme 'sanityinc-solarized-dark t) 
+;;        (if (display-graphic-p)
+;;            (load-theme 'sanityinc-solarized-dark t)
 ;;          (load-theme 'danneskjold t)))
 
-;; (add-hook 'after-init-hook 
+;; (add-hook 'after-init-hook
 ;;        (progn
 ;;          (setq base16-theme-256-color-source 'colors)
 ;;          (setq base16-distinct-fringe-background nil)
@@ -411,7 +411,7 @@
           (progn
             (defadvice load-theme (after custom-faces-after-load-theme())
               "Insert an empty line when moving up from the top line."
-              (let ((dafile "~/.emacs.d/custom_faces.el"))                   
+              (let ((dafile "~/.emacs.d/custom_faces.el"))
                 (if (file-exists-p dafile) (load-file dafile))))
 
 
@@ -419,7 +419,7 @@
 
             (defadvice disable-theme (after custom-faces-after-disable-theme())
               "Insert an empty line when moving up from the top line."
-              (let ((dafile "~/.emacs.d/custom_faces.el"))                   
+              (let ((dafile "~/.emacs.d/custom_faces.el"))
                 (if (file-exists-p dafile) (load-file dafile))))
 
 
@@ -427,7 +427,7 @@
 
             ))
 
-(add-hook 'after-init-time-hook 
+(add-hook 'after-init-time-hook
           (progn
             (setq base16-theme-256-color-source 'colors)
             ;; (setq base16-distinct-fringe-background nil)
@@ -498,7 +498,7 @@
     )
 
   (add-hook 'after-init-time-hook  (progn (require 'exec-path-from-shell)
-					  (exec-path-from-shell-initialize)))
+                                          (exec-path-from-shell-initialize)))
 
 #+END_SRC
 
@@ -511,7 +511,7 @@
 (define-key global-map (kbd "γ SPC") (lambda ()
                                            (interactive)
                                            (insert-char (string-to-char "γ"))))
-  
+
 #+END_SRC
 
 * libraries
@@ -545,7 +545,7 @@
 
 * Sentences end with a single space
 
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
 
 (setq sentence-end-double-space nil)
 
@@ -554,7 +554,7 @@
 * autorevert
 
 #+BEGIN_SRC emacs-lisp
-  
+
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
@@ -636,7 +636,7 @@
 #+BEGIN_SRC emacs-lisp
 
 (define-key global-map (kbd "M-ι") 'imenu)
-  
+
 #+END_SRC
 
 * diminish and delight
@@ -722,7 +722,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 #+END_SRC
 
 * ibuffer
-  
+
 #+BEGIN_SRC emacs-lisp
 
 ;; ibuffer
@@ -807,50 +807,50 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   ;;   :after (init)
   ;;   :defer t
   ;;   :config (
-  ;; 	   ;; (require 'flx)
+  ;;       ;; (require 'flx)
 
-  ;; 	   (setq ivy-re-builders-alist
-  ;; 		 '((swiper . ivy--regex-plus)
-  ;; 		   (swiper-isearch . ivy--regex)
-  ;; 		   (counsel-grep  . ivy--regex-plus)
-  ;; 		   (counsel-git-grep . ivy--regex-plus)
-  ;; 		   (t . ivy--regex-fuzzy)))
+  ;;       (setq ivy-re-builders-alist
+  ;;             '((swiper . ivy--regex-plus)
+  ;;               (swiper-isearch . ivy--regex)
+  ;;               (counsel-grep  . ivy--regex-plus)
+  ;;               (counsel-git-grep . ivy--regex-plus)
+  ;;               (t . ivy--regex-fuzzy)))
 
-  ;; 	   (setq ivy-initial-inputs-alist nil)
-  ;; 	   (setq ivy-format-function 'ivy-format-function-line)
-  ;; 	   )
+  ;;       (setq ivy-initial-inputs-alist nil)
+  ;;       (setq ivy-format-function 'ivy-format-function-line)
+  ;;       )
 
-  ;; 	   (setq ivy-use-virtual-buffers t
-  ;; 		 ivy-count-format "%d/%d ")
-  ;; 	   ;; (setq ivy-use-virtual-buffers t)
-  ;; 	   (setq ivy-display-style 'fancy)
+  ;;       (setq ivy-use-virtual-buffers t
+  ;;             ivy-count-format "%d/%d ")
+  ;;       ;; (setq ivy-use-virtual-buffers t)
+  ;;       (setq ivy-display-style 'fancy)
 
 
-  ;; 	   ;; (ivy-mode 1)
+  ;;       ;; (ivy-mode 1)
 
-  ;; 	   :bind ("C-x b" . ivy-switch-buffer)
-  ;; 	   ;;              ("C-x C-b" . ivy-switch-buffer)
-  ;; 	   ("C-c C-r" . ivy-resume))
+  ;;       :bind ("C-x b" . ivy-switch-buffer)
+  ;;       ;;              ("C-x C-b" . ivy-switch-buffer)
+  ;;       ("C-c C-r" . ivy-resume))
 
   (use-package counsel
     :ensure t
     :defer t
     :bind(
-	  ("C-x C-f" . counsel-find-file)
-	  ("M-x" . counsel-M-x)
-	  ("M-y" . counsel-yank-pop)
-	  ;; :map ivy-minibuffer-map
-	  ;; ("M-y" . ivy-next-line)
-	  :map ivy-minibuffer-map
-	  ("M-y" . ivy-next-line)))
+          ("C-x C-f" . counsel-find-file)
+          ("M-x" . counsel-M-x)
+          ("M-y" . counsel-yank-pop)
+          ;; :map ivy-minibuffer-map
+          ;; ("M-y" . ivy-next-line)
+          :map ivy-minibuffer-map
+          ("M-y" . ivy-next-line)))
 
   (use-package swiper
     :ensure t
     :defer t
     :bind (("M-s s" . swiper-isearch)
-	   ;; ("C-s" . swiper-isearch)
-	   ;; ("C-r" . swiper-backward)
-	   ))
+           ;; ("C-s" . swiper-isearch)
+           ;; ("C-r" . swiper-backward)
+           ))
 
   (use-package ivy-hydra
     :ensure t
@@ -864,20 +864,20 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
   ;;line-number
 
-  ;; ;; use customized linum-format: add a addition space after the line number                                                                      
-  ;; (setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%" 
+  ;; ;; use customized linum-format: add a addition space after the line number
+  ;; (setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%"
   ;;                                                                                                                                         (number-to-string w) "d  ")) line) 'face 'linum)))
 
 
   (add-hook 'after-init-time-hook (progn
-				    (if (version< emacs-version "26.0")
-					(linum-relative-global-mode)
-				      (progn  (setq display-line-numbers-type (quote relative))
-					      (setq display-line-numbers-grow-only t)
-					      (setq display-line-numbers-width-start t)
-					      ;; (setq display-line-numbers-width 2)
-					      ;; (setq display-line-numbers-current-absolute nil)
-					      (global-display-line-numbers-mode)))))
+                                    (if (version< emacs-version "26.0")
+                                        (linum-relative-global-mode)
+                                      (progn  (setq display-line-numbers-type (quote relative))
+                                              (setq display-line-numbers-grow-only t)
+                                              (setq display-line-numbers-width-start t)
+                                              ;; (setq display-line-numbers-width 2)
+                                              ;; (setq display-line-numbers-current-absolute nil)
+                                              (global-display-line-numbers-mode)))))
 
 #+END_SRC
 
@@ -898,7 +898,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 #+END_SRC
 
 * line-highlight
- 
+
 #+BEGIN_SRC emacs-lisp
 
 ;;line-highlight
@@ -975,8 +975,8 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :ensure t
   :defer t
   :hook ((org-mode . git-gutter-mode)
-	 (prog-mode . git-gutter-mode)
-	 (markdown-mode . git-gutter-mode))
+         (prog-mode . git-gutter-mode)
+         (markdown-mode . git-gutter-mode))
   )
 
 #+END_SRC
@@ -1037,7 +1037,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   ;; :hook (after-init .  yas-global-mode)
   ;; :init (add-hook 'after-init-time-hook  (yas-global-mode))
   :diminish yas-minor-mode
-  :config 
+  :config
   (yas-global-mode 1))
 
 (use-package yasnippet-snippets
@@ -1231,7 +1231,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
         (fundamental-mode . smartparens-mode)
         (lisp-interaction-mode . smartparens-mode)
         (lisp-interaction-mode . (lambda () (show-smartparens-global-mode 1)))
-  
+
   :config
   (show-smartparens-global-mode 1)
   )
@@ -1287,7 +1287,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
                                 ))))
   ;; :bind(("<tab>" . completion-at-point)
   ;;    ("<backtab>" . completion-at-point))
-  :config 
+  :config
            (defun eshell-clear-buffer ()
              "Clear terminal"
              (interactive)
@@ -1440,7 +1440,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 (use-package company-restclient
 :ensure t
 :after (restclient)
-:config 
+:config
 (add-to-list 'company-backends 'company-restclient))
 
 #+END_SRC
@@ -1459,8 +1459,8 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+BEGIN_SRC emacs-lisp
 
-;; (add-hook 
-;;  'after-init-hook 
+;; (add-hook
+;;  'after-init-hook
 ;;  (lambda ()
 ;;    ;; Make whitespace-mode with very basic background coloring for whitespaces.
 ;;    ;; http://ergoemacs.org/emacs/whitespace-mode.html
@@ -1476,7 +1476,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 ;;                                            indentation))))  ;; face spaces tabs newline space-mark tab-mark newline-mark )))
 
 ;;    (setq whitespace-style (quote (quote (face spaces tabs newline space-mark tab-mark newline-mark ))))
-   
+
 ;;    ;; Make whitespace-mode and whitespace-newline-mode use “¶” for end of line char and “▷” for tab.
 ;;    ;; (setq whitespace-display-mappings
 ;;    ;;         ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
@@ -1503,7 +1503,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
   ;; (defadvice disable-theme (after custom-faces-after-disable-theme())
   ;;   "Insert an empty line when moving up from the top line."
-  ;;   (let ((dafile "~/.emacs.d/custom_faces.el"))                  
+  ;;   (let ((dafile "~/.emacs.d/custom_faces.el"))
   ;;     (if (file-exists-p dafile) (load-file dafile))))
 
 
@@ -1535,8 +1535,8 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :ensure t
   :defer t
   :hook ((outline-minor-mode . outshine-mode)
-	 (prog-mode . outline-minor-mode))
-	  )
+         (prog-mode . outline-minor-mode))
+          )
 
 #+END_SRC
 
@@ -1791,9 +1791,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                (pdf-util-scale-relative-to-pixel (car edges)))))))
       (advice-add #'pdf-annot-show-annotation :override #'my-pdf-annot-show-annotation)))
 
-          
+
     )
-    
+
 ;;     (pdf-loader-install)
 
     ;; (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1)))
@@ -2016,9 +2016,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
     (use-package dashboard
       :ensure t
       :after (display-line-numbers ;; nlinum
-				   )
+                                   )
       :hook ((dashboard-mode . (lambda () (display-line-numbers-mode -1)))
-	     (dashboard-mode . (lambda () (nlinum-mode -1))))
+             (dashboard-mode . (lambda () (nlinum-mode -1))))
       ;; :commands dashboard
       ;; :init
       ;; (display-line-numbers-mode -1)
@@ -2031,15 +2031,15 @@ This is the same as using \\[set-mark-command] with the prefix argument."
       (setq dashboard-set-file-icons t)
       (setq dashboard-set-navigator t)
       (setq dashboard-footer-messages '("The one true editor, Emacs!"
-					"Free as free speech, free as free Beer"
-					"Richard Stallman is proud of you"
-					"Happy coding!"
-					"Welcome to the church of Emacs"
-					"While any text editor can save your files,\
+                                        "Free as free speech, free as free Beer"
+                                        "Richard Stallman is proud of you"
+                                        "Happy coding!"
+                                        "Welcome to the church of Emacs"
+                                        "While any text editor can save your files,\
      only Emacs can save your soul"
-					"I showed you my source code,pls respond"
-					))
-	;; (display-line-numbers-mode -1)
+                                        "I showed you my source code,pls respond"
+                                        ))
+        ;; (display-line-numbers-mode -1)
       ;; (nlinum-mode -1)
 
       (setq dashboard-set-footer t)
@@ -2052,7 +2052,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 
-(use-package all-the-icons 
+(use-package all-the-icons
   :ensure t
   :defer t
 )
@@ -2414,8 +2414,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
     )
 
   (add-hook 'after-init-time-hook (progn
-				    (require 'doom-modeline)
-				    (doom-modeline-mode)))
+                                    (require 'doom-modeline)
+                                    (doom-modeline-mode)))
 
 #+END_SRC
 
@@ -2429,61 +2429,61 @@ This is the same as using \\[set-mark-command] with the prefix argument."
     ;; :defer 0.7
     :hook (after-init . objed-mode)
     :bind(:map objed-map
-	   ;; ("<SPC>" . 'objed-char-object)
-	   ("C-f" . 'objed-right-char)
-	   ("C-b" . 'objed-left-char)
-	   ("," . 'objed-identifier-object)
-	   ("." . 'objed-sentence-object)
-	   ("b" . 'objed-word-object)
+           ;; ("<SPC>" . 'objed-char-object)
+           ("C-f" . 'objed-right-char)
+           ("C-b" . 'objed-left-char)
+           ("," . 'objed-identifier-object)
+           ("." . 'objed-sentence-object)
+           ("b" . 'objed-word-object)
 
-	   ("F" . nil)
-	   ("B" . nil)
-	   ("S" . nil)
-	   ("R" . nil)
-	   ("L" . nil)
-	   ("." . nil)
-	   ;; ("N" . nil)
-	   ;; ("P" . nil)
-	   ;; ("b" . nil)
-	   ("B" . nil)
+           ("F" . nil)
+           ("B" . nil)
+           ("S" . nil)
+           ("R" . nil)
+           ("L" . nil)
+           ("." . nil)
+           ;; ("N" . nil)
+           ;; ("P" . nil)
+           ;; ("b" . nil)
+           ("B" . nil)
 
-	   ("<SPC>" . 'objed-object-map)
-	   ("c" . 'objed-user-map)
-	   ("r" . 'objed-toggle-side)
-	   ("l" . 'objed-next-specialized)
-	   ("h" . 'objed-previous-specialized)
-	   ("L" . 'objed-move-object-forward)
-	   ("H" . 'objed-move-object-backward)
+           ("<SPC>" . 'objed-object-map)
+           ("c" . 'objed-user-map)
+           ("r" . 'objed-toggle-side)
+           ("l" . 'objed-next-specialized)
+           ("h" . 'objed-previous-specialized)
+           ("L" . 'objed-move-object-forward)
+           ("H" . 'objed-move-object-backward)
 
-	   ("f" . 'objed-next-specialized)
-	   ("s" . 'objed-previous-specialized)
-	   ("F" . 'objed-move-object-forward)
-	   ("S" . 'objed-move-object-backward)
+           ("f" . 'objed-next-specialized)
+           ("s" . 'objed-previous-specialized)
+           ("F" . 'objed-move-object-forward)
+           ("S" . 'objed-move-object-backward)
 
-	   ("J" . 'objed-move-line-forward)
-	   ("i" . 'objed-kill)
-	   ("I" . 'objed-kill)
-	   ("K" . 'objed-move-line-backward)
-	   ;; ("K" . nil)
-	   ("j" . 'objed-next-line)
-	   ("k" . 'objed-previous-line)
-	   ("G" . 'objed-del-insert)
-	   ("<H-SPC>" . 'objed-quit)
+           ("J" . 'objed-move-line-forward)
+           ("i" . 'objed-kill)
+           ("I" . 'objed-kill)
+           ("K" . 'objed-move-line-backward)
+           ;; ("K" . nil)
+           ("j" . 'objed-next-line)
+           ("k" . 'objed-previous-line)
+           ("G" . 'objed-del-insert)
+           ("<H-SPC>" . 'objed-quit)
 
-	   :map objed-user-map
-	   ("f" . 'move-to-char)
-	   ("g" . 'move-upto-char)
+           :map objed-user-map
+           ("f" . 'move-to-char)
+           ("g" . 'move-upto-char)
 
-	   :map objed-object-map
-	   ("," . 'objed-identifier-object)
+           :map objed-object-map
+           ("," . 'objed-identifier-object)
 
-	   ;; :map objed-mode-map
-	   ;; ("<M-SPC>" . 'my-objed-activate)
-	   )
+           ;; :map objed-mode-map
+           ;; ("<M-SPC>" . 'my-objed-activate)
+           )
 
     :config
     (setq objed--which-key-avail-p t
-	  objed--avy-avail-p t)
+          objed--avy-avail-p t)
     (setq objed-use-avy-if-available 1)
     (define-key objed-mode-map (kbd "M-SPC") (objed-activate 'char))
 
@@ -2582,7 +2582,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
          (enh-ruby-mode . lsp)
          (php-mode . lsp)
          (java-mode . lsp)
-	 (html-mode .lsp)
+         (html-mode .lsp)
          (js-mode . lsp)
          ;; (js2-mode . lsp)
          (web-mode . lsp)
@@ -2594,7 +2594,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
          (c-mode . lsp)
          (c++-mode .lsp)
          ;; (lua-mode . lsp)
-	 (bash . lsp)
+         (bash . lsp)
          )
   :config
 
@@ -2607,7 +2607,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
   (setq lsp-prefer-flymake nil)
   (setq lsp-enable-file-watchers nil)
-  
+
   (require 'lsp-clients)
 
   )
@@ -3029,7 +3029,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (use-package cider
   :ensure t
   :defer t)
- 
+
 #+END_SRC
 
 * markdown
@@ -3043,13 +3043,13 @@ This is the same as using \\[set-mark-command] with the prefix argument."
     :defer t
     :init
     (setq markdown-enable-wiki-links t
-	  markdown-italic-underscore t
-	  markdown-asymmetric-header t
-	  markdown-make-gfm-checkboxes-buttons t
-	  markdown-gfm-uppercase-checkbox t
-	  markdown-fontify-code-blocks-natively t
+          markdown-italic-underscore t
+          markdown-asymmetric-header t
+          markdown-make-gfm-checkboxes-buttons t
+          markdown-gfm-uppercase-checkbox t
+          markdown-fontify-code-blocks-natively t
 
-	  ;; markdown-content-type "application/xhtml+xml"
+          ;; markdown-content-type "application/xhtml+xml"
     )
     ;; :config
     (use-package markdown-mode+
@@ -3059,7 +3059,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
     (use-package markdown-toc
       :ensure t
       :bind (:map markdown-mode-command-map
-		  ("r" . markdown-toc-generate-or-refresh-toc))
+                  ("r" . markdown-toc-generate-or-refresh-toc))
       ))
 
       (autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
@@ -3114,8 +3114,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
           "\\.phtml\\'"
           "\\.erb\\'"
           "\\.html?\\'"
-	  "\\.djhtml\\'"
-	  "\\.jinja\\'"
+          "\\.djhtml\\'"
+          "\\.jinja\\'"
           )
    :config
    (setq web-mode-markup-indent-offset 2)
@@ -3217,7 +3217,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 (put 'narrow-to-region 'disabled nil)
-  
+
 #+END_SRC
 
 * org
@@ -3324,7 +3324,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 ;pygment minted
                                         ;(require 'org-latex)
-(add-hook 'org-mode-hook (lambda () 
+(add-hook 'org-mode-hook (lambda ()
                            (require 'ox-latex)
                            (add-to-list 'org-latex-packages-alist '("" "minted"))
                            (setq org-latex-listings 'minted)
@@ -3378,7 +3378,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 ;;xelatex
 
-;; (setq org-latex-to-pdf-process 
+;; (setq org-latex-to-pdf-process
 ;;   '("xelatex -interaction nonstopmode %f"
 ;;      "xelatex -interaction nonstopmode %f")) ;; for multiple passes
 
@@ -3390,7 +3390,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 ;;org-bullets
 
-(use-package org-bullets 
+(use-package org-bullets
   :ensure t
   :defer t
   :hook (org-mode . (lambda () (org-bullets-mode 1))))
@@ -3513,14 +3513,14 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ;; (use-package org-pdfview
 ;;   :defer t
 ;;   :hook (org-mode . (lambda () (require 'org-pdfview)))
-;;   :config (add-to-list 'org-file-apps 
+;;   :config (add-to-list 'org-file-apps
 ;;              '("\\.pdf\\'" . (lambda (file link)
 ;;                                      (org-pdfview-open link))))
 
 ;;   :ensure t)
 ;; ;; (eval-after-load 'org '(require 'org-pdfview))
 
-;; ;; (add-to-list 'org-file-apps 
+;; ;; (add-to-list 'org-file-apps
 ;; ;;              '("\\.pdf\\'" . (lambda (file link)
 ;; ;;                                      (org-pdfview-open link))))
 
@@ -3561,7 +3561,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 (add-hook 'org-mode-hook (lambda ()
-			   ;; (require 'async)
+                           ;; (require 'async)
                            (defun my-auto-tangler-find-value (buffer)
                                "Search the `auto_tangle' property in BUFFER and extracts it when found."
                                (with-current-buffer buffer
@@ -3574,7 +3574,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 
-                             
+
                              (defun my/org-babel-tangle-async (file)
                                "Invoke `org-babel-tangle-file' asynchronously."
                                (message "Tangling %s..." (buffer-file-name))
@@ -3615,8 +3615,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ;;    (lisp-interaction-mode))
 
 (add-hook 'after-init-time-hook (progn
-				  (switch-to-buffer "*scratch*")
-				  (lisp-interaction-mode)))
+                                  (switch-to-buffer "*scratch*")
+                                  (lisp-interaction-mode)))
 
 #+END_SRC
 
@@ -3627,7 +3627,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 (use-package boon :defer t :ensure t)
-  
+
 #+END_SRC
 
 ** ryo-modal
@@ -3635,7 +3635,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 (use-package ryo-modal :defer t :ensure t)
-  
+
 #+END_SRC
 
 ** modalka
@@ -3643,7 +3643,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 (use-package modalka :defer t :ensure t)
-  
+
 #+END_SRC
 
 ** xah-fly-keys
@@ -3651,7 +3651,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 (use-package xah-fly-keys :defer t :ensure t)
-  
+
 #+END_SRC
 
 ** xah-find
@@ -3659,7 +3659,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 (use-package xah-find :defer t :ensure t)
-  
+
 #+END_SRC
 
 ** pcre2
@@ -3668,9 +3668,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 (use-package pcre2el :ensure t :defer t
-:config 
+:config
 (pcre-mode))
-  
+
 #+END_SRC
 
 ** esup
@@ -3688,7 +3688,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package kakoune :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** org-pomodoro
@@ -3697,7 +3697,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package org-pomodoro :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** anzu
@@ -3706,7 +3706,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package anzu :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** amx
@@ -3715,7 +3715,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package amx :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** smex
@@ -3724,7 +3724,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package smex :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** jump-char
@@ -3733,7 +3733,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package jump-char :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** phi-search
@@ -3742,7 +3742,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package phi-search :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** eyebrowse
@@ -3751,7 +3751,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package eyebrowse :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** iy-go-to-char
@@ -3760,7 +3760,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package iy-go-to-char :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** shackle
@@ -3769,7 +3769,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package shackle :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** zop-to-char
@@ -3778,7 +3778,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package zop-to-char :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** zzz-to-char
@@ -3787,7 +3787,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package zzz-to-char :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** key-pression-mode
@@ -3796,7 +3796,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package keypression :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** iedit
@@ -3805,7 +3805,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package iedit :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** dumb-jump
@@ -3814,7 +3814,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package dumb-jump :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** smart-jump
@@ -3823,7 +3823,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package smart-jump :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** fzf
@@ -3832,7 +3832,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package fzf :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** easy-kill
@@ -3841,7 +3841,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package easy-kill :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** deadgrep
@@ -3850,7 +3850,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package deadgrep :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** auto-yasnippet
@@ -3859,7 +3859,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package auto-yasnippet :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** aggressive-indent
@@ -3868,7 +3868,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package aggressive-indent :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** becon
@@ -3893,7 +3893,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
           :config
           (venv-initialize-interactive-shells)
           (venv-initialize-eshell))
-  
+
 #+END_SRC
 
 ** yasnippet-classic-snippets
@@ -3903,7 +3903,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (use-package yasnippet-classic-snippets :defer t
   :ensure t
 )
-  
+
 #+END_SRC
 
 ** jdee for java
@@ -3912,12 +3912,12 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package jdee :defer t
 :ensure t
-:config 
+:config
 (custom-set-variables
  '(jdee-jdk-registry'(("10.0" . "/usr/lib/jvm/java-11-openjdk-amd64")))
 
 '(jdee-server-dir "/home/zamansky/.emacs.d/jdee-server"))
- 
+
 )
 
 #+END_SRC
@@ -3928,7 +3928,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package org-brain :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** enh-ruby-mode
@@ -3938,13 +3938,13 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (use-package enh-ruby-mode
   :ensure t
   :defer t)
-  
+
 #+END_SRC
 
 ** ace-link
 
 #+BEGIN_SRC emacs-lisp
-  
+
 (use-package ace-link :defer t
   :ensure t)
 
@@ -3953,7 +3953,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ** ace-mc
 
 #+BEGIN_SRC emacs-lisp
-  
+
 (use-package ace-mc :defer t
   :ensure t)
 
@@ -3965,7 +3965,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package better-defaults :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** with-editor (already installed with magit)
@@ -3976,20 +3976,20 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :defer t
   :ensure t
   :hook ((eshell-mode . with-editor-export-editor)
-	 (shell-mode . with-editor-export-editor)
-	 ;; (term-mode . with-editor-export-editor)
-	 ;; (vterm-mode . with-editor-export-editor)
-	 (eshell-mode . with-editor-export-git-editor)
-	 (shell-mode . with-editor-export-git-editor)
-	 ;; (term-mode . with-editor-export-git-editor)
-	 ;; (vterm-mode . with-editor-export-git-editor)
-	 ))
+         (shell-mode . with-editor-export-editor)
+         ;; (term-mode . with-editor-export-editor)
+         ;; (vterm-mode . with-editor-export-editor)
+         (eshell-mode . with-editor-export-git-editor)
+         (shell-mode . with-editor-export-git-editor)
+         ;; (term-mode . with-editor-export-git-editor)
+         ;; (vterm-mode . with-editor-export-git-editor)
+         ))
 
 ;; (defadvice make-term (after with-editor-make-term())
 ;;               "Insert an empty line when moving up from the top line."
-;; 	      (require 'term)
+;;            (require 'term)
 ;;               (with-editor-export-editor)
-;; 	      (with-editor-export-git-editor))
+;;            (with-editor-export-git-editor))
 
 
 ;; (ad-activate 'make-term)
@@ -4002,7 +4002,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package general
   :ensure t)
-  
+
 #+END_SRC
 
 ** keychords
@@ -4017,7 +4017,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :ensure t
   :defer t              ;; remove the defer when I actually use it.
   :config (key-chord-mode 1))
-  
+
 #+END_SRC
 
 ** teco
@@ -4025,7 +4025,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 (use-package teco :ensure t :defer t)
-  
+
 #+END_SRC
 
 ** org-beautify
@@ -4033,7 +4033,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 (use-package org-beautify-theme :defer t :ensure t)
-  
+
 #+END_SRC
 
 ** telephone-line
@@ -4042,7 +4042,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package telephone-line :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** all-the-icons
@@ -4056,7 +4056,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (use-package all-the-icons-dired
   :ensure t
   :defer t)
-  
+
 #+END_SRC
 
 ** crux
@@ -4065,7 +4065,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package crux :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** lentic
@@ -4074,7 +4074,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package lentic :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** navigel
@@ -4083,7 +4083,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package navigel :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** skewer-mode
@@ -4092,7 +4092,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package skewer-mode :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** nyan-mode
@@ -4101,7 +4101,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package nyan-mode :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** minimap
@@ -4110,7 +4110,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package minimap :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** sublimity
@@ -4119,7 +4119,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package sublimity :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** vimgolf
@@ -4128,7 +4128,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package vimgolf :defer t
   :ensure t)
-  
+
 #+END_SRC
 
 ** dired-hacks
@@ -4137,7 +4137,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 ;; (use-package dired-list :defer t
 ;;   :ensure t)
-  
+
 (use-package dired-collapse :defer t
   :hook dired-mode
   :ensure t)
@@ -4172,7 +4172,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
  ;;         (org-babel-tangle)
  ;;         (message "tangled-document")))))
  )
-  
+
 #+END_SRC
 
 * provide init
