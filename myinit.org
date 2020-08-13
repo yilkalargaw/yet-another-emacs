@@ -2424,73 +2424,75 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 
-(use-package objed
-  :ensure t
-  :defer t
-  :hook (after-init . objed-mode)
-  :bind(:map objed-map
-         ;; ("<SPC>" . 'objed-char-object)
-         ("C-f" . 'objed-right-char)
-         ("C-b" . 'objed-left-char)
-         ("," . 'objed-identifier-object)
-         ("." . 'objed-sentence-object)
-         ("b" . 'objed-word-object)
+  (use-package objed
+    :ensure t
+    ;; :defer 0.7
+    :hook (after-init . objed-mode)
+    :bind(:map objed-map
+	   ;; ("<SPC>" . 'objed-char-object)
+	   ("C-f" . 'objed-right-char)
+	   ("C-b" . 'objed-left-char)
+	   ("," . 'objed-identifier-object)
+	   ("." . 'objed-sentence-object)
+	   ("b" . 'objed-word-object)
 
-         ("F" . nil)
-         ("B" . nil)
-         ("S" . nil)
-         ("R" . nil)
-         ("L" . nil)
-         ("." . nil)
-         ;; ("N" . nil)
-         ;; ("P" . nil)
-         ;; ("b" . nil)
-         ("B" . nil)
+	   ("F" . nil)
+	   ("B" . nil)
+	   ("S" . nil)
+	   ("R" . nil)
+	   ("L" . nil)
+	   ("." . nil)
+	   ;; ("N" . nil)
+	   ;; ("P" . nil)
+	   ;; ("b" . nil)
+	   ("B" . nil)
 
-         ("<SPC>" . 'objed-object-map)
-         ("c" . 'objed-user-map)
-         ("r" . 'objed-toggle-side)
-         ("l" . 'objed-next-specialized)
-         ("h" . 'objed-previous-specialized)
-         ("L" . 'objed-move-object-forward)
-         ("H" . 'objed-move-object-backward)
+	   ("<SPC>" . 'objed-object-map)
+	   ("c" . 'objed-user-map)
+	   ("r" . 'objed-toggle-side)
+	   ("l" . 'objed-next-specialized)
+	   ("h" . 'objed-previous-specialized)
+	   ("L" . 'objed-move-object-forward)
+	   ("H" . 'objed-move-object-backward)
 
-         ("f" . 'objed-next-specialized)
-         ("s" . 'objed-previous-specialized)
-         ("F" . 'objed-move-object-forward)
-         ("S" . 'objed-move-object-backward)
+	   ("f" . 'objed-next-specialized)
+	   ("s" . 'objed-previous-specialized)
+	   ("F" . 'objed-move-object-forward)
+	   ("S" . 'objed-move-object-backward)
 
-         ("J" . 'objed-move-line-forward)
-         ("i" . 'objed-kill)
-         ("I" . 'objed-kill)
-         ("K" . 'objed-move-line-backward)
-         ;; ("K" . nil)
-         ("j" . 'objed-next-line)
-         ("k" . 'objed-previous-line)
-         ("G" . 'objed-del-insert)
-         ("<H-SPC>" . 'objed-quit)
+	   ("J" . 'objed-move-line-forward)
+	   ("i" . 'objed-kill)
+	   ("I" . 'objed-kill)
+	   ("K" . 'objed-move-line-backward)
+	   ;; ("K" . nil)
+	   ("j" . 'objed-next-line)
+	   ("k" . 'objed-previous-line)
+	   ("G" . 'objed-del-insert)
+	   ("<H-SPC>" . 'objed-quit)
 
-         :map objed-user-map
-         ("f" . 'move-to-char)
-         ("g" . 'move-upto-char)
+	   :map objed-user-map
+	   ("f" . 'move-to-char)
+	   ("g" . 'move-upto-char)
 
-         :map objed-object-map
-         ("," . 'objed-identifier-object)
+	   :map objed-object-map
+	   ("," . 'objed-identifier-object)
 
-         ;; :map objed-mode-map
-         ;; ("<M-SPC>" . 'my-objed-activate)
-         )
+	   ;; :map objed-mode-map
+	   ;; ("<M-SPC>" . 'my-objed-activate)
+	   )
 
-  :config
-  (setq objed--which-key-avail-p t
-        objed--avy-avail-p t)
-  (setq objed-use-avy-if-available 1)
-  (define-key objed-mode-map (kbd "M-SPC") (objed-activate 'char))
+    :config
+    (setq objed--which-key-avail-p t
+	  objed--avy-avail-p t)
+    (setq objed-use-avy-if-available 1)
+    (define-key objed-mode-map (kbd "M-SPC") (objed-activate 'char))
 
-    ;; :config
-  (load (concat user-emacs-directory "lisp/objed-goto-next-specialized.el"))
+      ;; :config
+    (load (concat user-emacs-directory "lisp/objed-goto-next-specialized.el"))
 
-  )
+    )
+
+;; (add-hook 'after-init-time-hook (progn (require 'objed) (objed-mode)))
 
 #+END_SRC
 
