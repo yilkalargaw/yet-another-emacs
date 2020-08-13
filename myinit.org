@@ -3036,35 +3036,35 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+BEGIN_SRC emacs-lisp
 
-;;markdown
+  ;;markdown
 
-(use-package markdown-mode
-  :ensure t
-  :defer t
-  :init
-  (setq markdown-enable-wiki-links t
-        markdown-italic-underscore t
-        markdown-asymmetric-header t
-        markdown-make-gfm-checkboxes-buttons t
-        markdown-gfm-uppercase-checkbox t
-        markdown-fontify-code-blocks-natively t
-
-        ;; markdown-content-type "application/xhtml+xml"
-  )
-  :config
-  (use-package markdown-mode+
-    :ensure t)
-  (use-package markdown-preview-mode
-    :ensure t)
-  (use-package markdown-toc
+  (use-package markdown-mode
     :ensure t
-    :bind (:map markdown-mode-command-map
-                ("r" . markdown-toc-generate-or-refresh-toc))
-    ))
+    :defer t
+    :init
+    (setq markdown-enable-wiki-links t
+	  markdown-italic-underscore t
+	  markdown-asymmetric-header t
+	  markdown-make-gfm-checkboxes-buttons t
+	  markdown-gfm-uppercase-checkbox t
+	  markdown-fontify-code-blocks-natively t
 
-    (autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
-    (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-    (setq markdown-command "pandoc -c ~/.emacs.d/etc/github-pandoc.css --from gfm -t html5 --mathjax --highlight-style pygments --standalone")
+	  ;; markdown-content-type "application/xhtml+xml"
+    )
+    ;; :config
+    (use-package markdown-mode+
+      :ensure t)
+    (use-package markdown-preview-mode
+      :ensure t)
+    (use-package markdown-toc
+      :ensure t
+      :bind (:map markdown-mode-command-map
+		  ("r" . markdown-toc-generate-or-refresh-toc))
+      ))
+
+      (autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
+      (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+      (setq markdown-command "pandoc -c ~/.emacs.d/etc/github-pandoc.css --from gfm -t html5 --mathjax --highlight-style pygments --standalone")
 
 #+END_SRC
 
