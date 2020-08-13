@@ -4015,7 +4015,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package use-package-chords
   :ensure t
-  :defer              ;; remove the defer when I actually use it.
+  :defer t              ;; remove the defer when I actually use it.
   :config (key-chord-mode 1))
   
 #+END_SRC
