@@ -3561,6 +3561,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 (add-hook 'org-mode-hook (lambda ()
+			   ;; (require 'async)
                            (defun my-auto-tangler-find-value (buffer)
                                "Search the `auto_tangle' property in BUFFER and extracts it when found."
                                (with-current-buffer buffer
