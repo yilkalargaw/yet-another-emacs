@@ -488,13 +488,17 @@
 ;;exec-path-from-shell
   (use-package exec-path-from-shell
     :ensure t
+    :defer t
     ;; :defer 2
     ;; :after init
-    :hook (after-init . (lambda () (require 'exec-path-from-shell)
-                          (exec-path-from-shell-initialize)))
+    ;; :hook (after-init . (lambda () (require 'exec-path-from-shell)
+    ;;                       (exec-path-from-shell-initialize)))
     ;; :config
     ;; (exec-path-from-shell-initialize)
     )
+
+  (add-hook 'after-init-time-hook  (progn (require 'exec-path-from-shell)
+					  (exec-path-from-shell-initialize)))
 
 #+END_SRC
 
