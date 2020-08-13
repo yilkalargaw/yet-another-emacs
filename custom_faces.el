@@ -36,38 +36,38 @@
    ;;;;; org
    ;; `(org-agenda-structure ((t (:inherit default ,@sans-font :height 2.0 :underline nil))))
    `(org-level-8 ((t (:inherit 'outline-8
-			       ;; :weight bold
-			       :height 1.0))))
+                               ;; :weight bold
+                               :height 1.0))))
    `(org-level-7 ((t (:inherit 'outline-7
-			       ;; :weight bold
-			       :height 1.0))))
+                               ;; :weight bold
+                               :height 1.0))))
    `(org-level-6 ((t (:inherit 'outline-6
-			       ;; :weight bold
-			       :height 1.0))))
+                               ;; :weight bold
+                               :height 1.0))))
    `(org-level-5 ((t (:inherit 'outline-5
-			       ;; :weight bold
-			       :height 1.0))))
+                               ;; :weight bold
+                               :height 1.0))))
    `(org-level-4 ((t (:inherit 'outline-4
-			       ;; :weight bold
-			       :height 1.0))))
+                               ;; :weight bold
+                               :height 1.0))))
    `(org-level-3 ((t (:inherit 'outline-3
-			       ;; :weight bold
-			       :height 1.0))))
+                               ;; :weight bold
+                               :height 1.0))))
    `(org-level-2 ((t (:inherit 'outline-2
-			       ;; :weight bold
-			       :height 1.0))))
+                               ;; :weight bold
+                               :height 1.0))))
    `(org-level-1 ((t (:inherit 'outline-1
-			       ;; :weight bold
-			       :height 1.0))))
+                               ;; :weight bold
+                               :height 1.0))))
 
    `(org-document-title ((t (:family "sans"
-				     :inherit org-level-1
-				     :height 1.5
-				     :underline nil
-				     :box ))))
+                                     :inherit org-level-1
+                                     :height 1.5
+                                     :underline nil
+                                     :box ))))
 
    `(org-block ((t (:foreground ,base-font-color
-				:background nil :box nil))))
+                                :background nil :box nil))))
 
    ;; `(org-block-begin-line ((t ,org-highlights)))
    ;; `(org-block-end-line ((t ,org-highlights)))
@@ -75,9 +75,9 @@
    ;; `(org-block-begin-line ((t (:underline t))))
    ;; `(org-block-end-line ((t (:overline t))))
    `(org-block-begin-line ((t (;; :background ,(face-background 'highlight)
-			       :foreground ,(face-foreground 'shadow))))) ;; :underline t :overline t :italic t))))
+                               :foreground ,(face-foreground 'shadow))))) ;; :underline t :overline t :italic t))))
    `(org-block-end-line ((t (;; :background ,(face-background 'highlight)
-			     :foreground ,(face-foreground 'shadow) )))) ;; :overline t :underline t :italic t))))
+                             :foreground ,(face-foreground 'shadow) )))) ;; :overline t :underline t :italic t))))
 
 
    `(org-checkbox ((t (:foreground "#000000", :background "#93a1a1" :box (:line-width -3 :color "#93a1a1" :style "released-button")))))
@@ -85,13 +85,13 @@
    `(org-headline-done ((t (:strike-through t))))
    `(org-done ((t (:strike-through t :underline t :overline t))))
    `(org-todo ((t (:foreground ,(face-foreground 'default) :background nil
-			       :underline t :overline t))))
+                               :underline t :overline t))))
 
    ;; `(symbol-overlay-default-face ((t (:background ,(color-lighten-name (face-background 'default) 10)
-   ;; 						    :foreground ,(color-darken-name (face-foreground 'default) 10)))))
+   ;;                                               :foreground ,(color-darken-name (face-foreground 'default) 10)))))
 
    ;; `(symbol-overlay-default-face ((t (:background ,(face-foreground 'font-lock-comment-face)
-   ;; 						  :foreground ,(face-background 'font-lock-comment-face)))))
+   ;;                                             :foreground ,(face-background 'font-lock-comment-face)))))
 
    `(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0))))
    ;; `(mode-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :box ,(face-foreground 'link)))))
@@ -103,13 +103,13 @@
 
 
    ;; `(hl-line ((t (:inherit 'nil
-   ;; 		  :background ,(face-background 'highlight) :box (:line-width 1 :color ,(face-foreground 'default ) ;; font-lock-comment-face
-   ;; 									      )))))
+   ;;             :background ,(face-background 'highlight) :box (:line-width 1 :color ,(face-foreground 'default ) ;; font-lock-comment-face
+   ;;                                                                         )))))
    ;; `(hl-line-face((t (:box nil))))
 
    ;; `(objed-hl ((t (:inherit 'nil
-   ;; 		  :background ,(face-background 'highlight) :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face) ;; font-lock-comment-face
-   ;; 									    )))))
+   ;;             :background ,(face-background 'highlight) :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face) ;; font-lock-comment-face
+   ;;                                                                       )))))
 
    `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
 
@@ -173,9 +173,9 @@
 
    ;; ;;;;; ivy
    ;;  `(ivy-current-match ((t (;; :underline t
-   ;; 			      :inherit ivy-current-match :background ,(face-foreground 'link) ;; :foreground ,(face-background 'link)
-   ;; 			      :box (:line-width 1 :color ,(face-foreground 'default;; font-lock-comment-face
-   ;; 									   ))))))
+   ;;                         :inherit ivy-current-match :background ,(face-foreground 'link) ;; :foreground ,(face-background 'link)
+   ;;                         :box (:line-width 1 :color ,(face-foreground 'default;; font-lock-comment-face
+   ;;                                                                      ))))))
    `(ivy-current-match ((t (:inherit bold))))
    `(ivy-minibuffer-match-face-1 ((t (:inherit bold))))
    `(ivy-minibuffer-match-face-2 ((t (:underline t))))
@@ -184,9 +184,9 @@
 
    ;; ;;;;; swiper
    ;; `(swiper-line-face ((t (;; :underline t
-   ;; 			     :inherit swiper-line-face :background ,(face-foreground 'link) ;; :foreground ,(face-background 'link)
-   ;; 			     :box (:line-width 1 :color ,(face-foreground 'default;; font-lock-comment-face
-   ;; 									   ))))))
+   ;;                        :inherit swiper-line-face :background ,(face-foreground 'link) ;; :foreground ,(face-background 'link)
+   ;;                        :box (:line-width 1 :color ,(face-foreground 'default;; font-lock-comment-face
+   ;;                                                                      ))))))
    ;; `(swiper-match-face-1 ((t (:inherit bold))))
    ;; `(swiper-match-face-2 ((t (:underline t))))
    ;; `(swiper-match-face-3 ((t (:underline t))))
@@ -205,13 +205,13 @@
 
    ;;;;; tabbar
    `(tab-bar ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
-			      ;; :box (:color ,(face-foreground 'default) :line-width 1)
-			      ))))
+                              ;; :box (:color ,(face-foreground 'default) :line-width 1)
+                              ))))
    `(tab-bar-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 :inverse-video t :underline t
-				  ;; :box (:color ,(face-foreground 'default) :line-width 1)
-				  ))))
+                                  ;; :box (:color ,(face-foreground 'default) :line-width 1)
+                                  ))))
    `(tab-bar-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
-					   :box (:color ,(face-foreground 'default) :line-width 2)))))
+                                           :box (:color ,(face-foreground 'default) :line-width 2)))))
    ;;;;; tabbar
    ;; tab-line
    ;; tab-line-tab
@@ -222,17 +222,17 @@
 
 
    `(tab-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
-			      ;; :box (:color ,(face-foreground 'default) :line-width 1)
-			      ))))
+                              ;; :box (:color ,(face-foreground 'default) :line-width 1)
+                              ))))
    `(tab-line-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 :inverse-video t :underline t
-				  ;; :box (:color ,(face-foreground 'default) :line-width 1)
-				   ))))
+                                  ;; :box (:color ,(face-foreground 'default) :line-width 1)
+                                   ))))
    `(tab-line-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
-					   :box (:color ,(face-foreground 'default) :line-width 2)))))
+                                           :box (:color ,(face-foreground 'default) :line-width 2)))))
 
    `(tab-line-tab-current ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 :inverse-video t :underline t
-					   ;; :box (:color ,(face-foreground 'default) :line-width 1)
-					   ))))
+                                           ;; :box (:color ,(face-foreground 'default) :line-width 1)
+                                           ))))
 
    ))
 
