@@ -3395,7 +3395,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :defer t
   :hook (org-mode . (lambda () (org-bullets-mode 1))))
 
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
+;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
 
 #+END_SRC
 
