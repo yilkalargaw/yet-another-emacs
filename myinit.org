@@ -1535,8 +1535,8 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :ensure t
   :defer t
   :hook ((outline-minor-mode . outshine-mode)
-         (prog-mode . outline-minor-mode))
-          )
+	 (prog-mode . outline-minor-mode))
+	  )
 
 #+END_SRC
 
