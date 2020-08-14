@@ -2063,7 +2063,18 @@ This is the same as using \\[set-mark-command] with the prefix argument."
            (,(all-the-icons-icon-for-dir "Home" :height 1.1 :v-adjust 0.0)
             "Files"
             "Browse Files"
-            (lambda (&rest _) (find-file "~"))))))
+            (lambda (&rest _) (find-file "~")))
+           (,(all-the-icons-octicon "package" :height 1.1 :v-adjust 0.0)
+            "Packages"
+            "Browse Packages"
+            (lambda (&rest _) (package-list-packages)))
+           (,(all-the-icons-octicon "info" :height 1.1 :v-adjust 0.0)
+            "News"
+            "Emacs News"
+            (lambda (&rest _) (view-emacs-news)))
+           )
+          )
+        )
   )
 
 #+END_SRC
