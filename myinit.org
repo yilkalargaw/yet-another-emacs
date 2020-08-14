@@ -1405,8 +1405,8 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 #+BEGIN_SRC emacs-lisp
 
 (use-package eww
-  :hook (eww-mode . visual-line-mode)
   :ensure nil
+  :hook (eww-mode . visual-line-mode)
   (eww-mode . (lambda () (display-line-numbers-mode -1)))
   (eww-mode . (lambda () (nlinum-mode -1)))
   )
