@@ -909,6 +909,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   :hook ((prog-mode text-mode conf-mode special-mode org-mode lisp-interaction) . (lambda () (hl-line-mode t)))
   :after (init)
   :defer t
+  :ensure nil
   :config
   ;; Not having to render the hl-line overlay in multiple buffers offers a tiny
   ;; performance boost. I also don't need to see it in other buffers.
@@ -1070,6 +1071,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 (use-package flyspell
   :defer 0.3
+  :ensure nil
   :hook ((prog-mode . flyspell-prog-mode)
          (text-mode . flyspell-mode))
   :config
@@ -1272,6 +1274,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 (use-package eshell
   :defer t
+  :ensure nil
   :hook ((eshell-mode . (lambda () (setq line-spacing 0)))
          (eshell-mode . (lambda () (display-line-numbers-mode -1)))
          (eshell-mode . (lambda () (nlinum-mode -1)))
@@ -1309,6 +1312,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 (use-package shell
   :defer t
+  :ensure nil
   :hook ((shell-mode . (lambda () (setq line-spacing 0)))
          (shell-mode . (lambda ()
                                (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
@@ -1402,6 +1406,7 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 (use-package eww
   :hook (eww-mode . visual-line-mode)
+  :ensure nil
   (eww-mode . (lambda () (display-line-numbers-mode -1)))
   (eww-mode . (lambda () (nlinum-mode -1)))
   )
