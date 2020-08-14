@@ -2018,37 +2018,53 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+BEGIN_SRC emacs-lisp
 
-    (use-package dashboard
-      :ensure t
-      :after (display-line-numbers ;; nlinum
-                                   )
-      :hook ((dashboard-mode . (lambda () (display-line-numbers-mode -1)))
-             (dashboard-mode . (lambda () (nlinum-mode -1))))
-      ;; :commands dashboard
-      ;; :init
-      ;; (display-line-numbers-mode -1)
-      ;; (nlinum-mode -1)
-      :config
-      (dashboard-setup-startup-hook)
-      (setq dashboard-set-heading-icons t)
-      (setq dashboard-center-content t)
-      (setq dashboard-page-separator "\n\f\n")
-      (setq dashboard-set-file-icons t)
-      (setq dashboard-set-navigator t)
-      (setq dashboard-footer-messages '("The one true editor, Emacs!"
-                                        "Free as free speech, free as free Beer"
-                                        "Richard Stallman is proud of you"
-                                        "Happy coding!"
-                                        "Welcome to the church of Emacs"
-                                        "While any text editor can save your files,\
+(use-package dashboard
+  :ensure t
+  :after (display-line-numbers ;; nlinum
+          )
+  :hook ((dashboard-mode . (lambda () (display-line-numbers-mode -1)))
+         (dashboard-mode . (lambda () (nlinum-mode -1))))
+  ;; :commands dashboard
+  ;; :init
+  ;; (display-line-numbers-mode -1)
+  ;; (nlinum-mode -1)
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-center-content t)
+  (setq dashboard-page-separator "\n\f\n")
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-footer-messages '("The one true editor, Emacs!"
+                                    "Free as free speech, free as free Beer"
+                                    "Richard Stallman is proud of you"
+                                    "Happy coding!"
+                                    "Welcome to the church of Emacs"
+                                    "While any text editor can save your files,\
      only Emacs can save your soul"
-                                        "I showed you my source code,pls respond"
-                                        ))
-        ;; (display-line-numbers-mode -1)
-      ;; (nlinum-mode -1)
+                                    "I showed you my source code,pls respond"
+                                    ))
+  ;; (display-line-numbers-mode -1)
+  ;; (nlinum-mode -1)
 
-      (setq dashboard-set-footer t)
-      )
+  (setq dashboard-set-footer t)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-navigator-buttons
+        `(;; line1
+          ((,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
+            "Source"
+            "Source Page"
+            (lambda (&rest _) (browse-web "https://github.com/yilkalargaw/yet-another-emacs")))
+           (,(all-the-icons-octicon "gear" :height 1.1 :v-adjust 0.0)
+            "Config"
+            "Config File"
+            (lambda (&rest _) (let ((upath (expand-file-name "myinit.org" user-emacs-directory)))
+				(find-file upath))))
+           (,(all-the-icons-icon-for-dir "Home" :height 1.1 :v-adjust 0.0)
+            "Files"
+            "Browse Files"
+            (lambda (&rest _) (find-file "~"))))))
+  )
 
 #+END_SRC
 
