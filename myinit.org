@@ -2059,7 +2059,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
             "Config"
             "Config File"
             (lambda (&rest _) (let ((upath (expand-file-name "myinit.org" user-emacs-directory)))
-				(find-file upath))))
+                                (find-file upath))))
            (,(all-the-icons-icon-for-dir "Home" :height 1.1 :v-adjust 0.0)
             "Files"
             "Browse Files"
