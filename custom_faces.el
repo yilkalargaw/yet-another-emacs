@@ -1,17 +1,17 @@
 ;; (setq warning-minimum-level :emergency)
 
-(defcustom modified-org-beautify-theme-use-box-hack 't
-  "Use a 3 pixel box with the background color to add spacing.
-  Note that this has a side effect that can make the theme look
-  really bad under some circumstances."
-  :type 'boolean)
+;; (defcustom modified-org-beautify-theme-use-box-hack 't
+;;   "Use a 3 pixel box with the background color to add spacing.
+;;   Note that this has a side effect that can make the theme look
+;;   really bad under some circumstances."
+;;   :type 'boolean)
 
-(let* ((base-font-color (face-foreground 'default  nil 'default))
-       (background-color (face-background 'default nil 'default))
-       (headline `(:inherit default :foreground ,base-font-color))
-       ;; (primary-color (face-foreground 'mode-line nil))
-       (secondary-color (face-background 'secondary-selection nil 'region))
-       (org-highlights `(:foreground ,base-font-color :background ,secondary-color))
+(let* (;; (base-font-color (face-foreground 'default  nil 'default))
+       ;; (background-color (face-background 'default nil 'default))
+       ;; (headline `(:inherit default :foreground ,base-font-color))
+       ;; ;; (primary-color (face-foreground 'mode-line nil))
+       ;; (secondary-color (face-background 'secondary-selection nil 'region))
+       ;; (org-highlights `(:foreground ,base-font-color :background ,secondary-color))
 
        )
 
@@ -24,12 +24,12 @@
    ;; `(minibuffer-prompt ((t (:inherit bold))))
    ;; `(tooltip ((t (:bold nil :italic nil :underline nil))))
 
-   ;;;;; some fontlock italics
+   ;; ;;;;; some fontlock italics
    ;; `(font-lock-comment-face ((t (:background nil :slant italic))))
    ;; ;;`(font-lock-constant-face ((t (:weight bold))))
    ;; `(font-lock-constant-face ((t (:weight normal :slant italic))))
    ;; `(font-lock-function-name-face ((t (:weight normal))))
-   ;; ;;`(font-lock-keyword-face ((t (:weight bold :slant italic))))
+   ;; `(font-lock-keyword-face ((t (:weight bold :slant italic))))
    ;; `(font-lock-type-face ((t (:slant italic)))) ;:weight bold))))
 
 
