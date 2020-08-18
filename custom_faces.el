@@ -66,8 +66,8 @@
                                      :underline nil
                                      :box ))))
 
-   `(org-block ((t (:foreground ,base-font-color
-                                :background nil :box nil))))
+   ;; `(org-block ((t (:foreground ,base-font-color
+   ;;                              :background nil :box nil))))
 
    ;; `(org-block-begin-line ((t ,org-highlights)))
    ;; `(org-block-end-line ((t ,org-highlights)))
@@ -132,9 +132,12 @@
    ;; `(linum-relative-current-face ((,class (:foreground ,comp))))
 
       ;;;;; modeline
-   `(mode-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :box (:color ,(face-foreground 'default) :line-width 1) :underline nil :overline nil))))
-   `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1)))))
-   `(mode-line-buffer-id ((t (:box (:color ,(face-foreground 'link) :line-width 2) :foreground ,(face-foreground 'link) :background nil :bold t))))
+   `(mode-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default)
+				:box (:color ,(face-foreground 'default) :line-width 1) :underline nil :overline nil :height 1.0))))
+   `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default)
+					 :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1) :height 1.0))))
+   `(mode-line-buffer-id ((t (:box (:color ,(face-foreground 'link) :line-width 2) :foreground ,(face-foreground 'link)
+				   :background nil :bold t :height 1.0))))
    ;; ;; '(mode-line ((t (:background "#002b36"  :foreground "white" :box "dark cyan"))))
    ;; ;; '(mode-line-inactive ((t (:background "#002b36" :foreground "white" :box nil))))
    ;; `(spaceline-highlight-face ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :inherit 'mode-line))))
@@ -181,6 +184,8 @@
    `(ivy-minibuffer-match-face-2 ((t (:underline t))))
    `(ivy-minibuffer-match-face-3 ((t (:underline t))))
    `(ivy-minibuffer-match-face-4 ((t (:underline t))))
+   `(ivy-virtual ((t (:foreground ,(face-foreground font-lock-comment-face) :slant italic))))
+
 
    ;; ;;;;; swiper
    ;; `(swiper-line-face ((t (;; :underline t
@@ -204,13 +209,13 @@
 
 
    ;;;;; tabbar
-   `(tab-bar ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
+   `(tab-bar ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
                               ;; :box (:color ,(face-foreground 'default) :line-width 1)
                               ))))
-   `(tab-bar-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 :inverse-video t :underline t
+   `(tab-bar-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
                                   ;; :box (:color ,(face-foreground 'default) :line-width 1)
                                   ))))
-   `(tab-bar-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
+   `(tab-bar-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
                                            :box (:color ,(face-foreground 'default) :line-width 2)))))
    ;;;;; tabbar
    ;; tab-line
@@ -221,16 +226,16 @@
    ;; tab-line-close-highlight
 
 
-   `(tab-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
+   `(tab-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
                               ;; :box (:color ,(face-foreground 'default) :line-width 1)
                               ))))
-   `(tab-line-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 :inverse-video t :underline t
+   `(tab-line-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
                                   ;; :box (:color ,(face-foreground 'default) :line-width 1)
                                    ))))
-   `(tab-line-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 ;; :overline t
+   `(tab-line-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
                                            :box (:color ,(face-foreground 'default) :line-width 2)))))
 
-   `(tab-line-tab-current ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.1 :inverse-video t :underline t
+   `(tab-line-tab-current ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
                                            ;; :box (:color ,(face-foreground 'default) :line-width 1)
                                            ))))
 
