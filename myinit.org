@@ -2581,29 +2581,29 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+BEGIN_SRC emacs-lisp
 
-  ;;company
+;;company
 
-  (use-package company
-    :ensure t
-    :defer 0.8
-    ;; :hook (prog-mode . global-company-mode)
-    :config ;; (require 'company)
-    (global-company-mode 1)
-  ;;  (global-set-key (kbd "<backtab>") 'company-complete-common)
-    ;; (global-set-key (kbd "H-<SPC>") 'company-complete-common)
-    (global-set-key (kbd "થ") 'company-complete-common)
-    (global-set-key (kbd "C-`") 'company-yasnippet)
-    (define-key company-active-map (kbd "C-n") 'company-select-next)
-    (define-key company-active-map (kbd "C-p") 'company-select-previous))
+(use-package company
+  :ensure t
+  :defer 0.8
+  ;; :hook (prog-mode . global-company-mode)
+  :config ;; (require 'company)
+  (global-company-mode 1)
+;;  (global-set-key (kbd "<backtab>") 'company-complete-common)
+  ;; (global-set-key (kbd "H-<SPC>") 'company-complete-common)
+  (global-set-key (kbd "થ") 'company-complete-common)
+  (global-set-key (kbd "C-`") 'company-yasnippet)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous))
 
-  ;; (add-hook 'after-init-time-hook (global-company-mode 1))
+;; (add-hook 'after-init-time-hook (global-company-mode 1))
 
-  (use-package company-box
-    :ensure t
-    :defer t
-    :after company
-    ;; :hook (company-mode . company-box-mode)
-    )
+(use-package company-box
+  :ensure t
+  :defer t
+  ;; :after company
+  :hook (company-mode . company-box-mode)
+  )
 
 #+END_SRC
 
