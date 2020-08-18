@@ -770,9 +770,9 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
 
 #+BEGIN_SRC emacs-lisp
 
-  ;;ivy,console and swiper
+;;ivy,console and swiper
 
-  (use-package flx
+(use-package flx
   :ensure t
   :defer t)
 
@@ -790,79 +790,127 @@ t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
   (setq ivy-fixed-height-minibuffer t)
   ;; virtual buffers - combines many good things into one command
   (setq ivy-use-virtual-buffers t)
-  ;; full file names - useful when multiple files have same names
-  (setq ivy-virtual-abbreviate 'full)
+  ;; full file names - useful when multiple files have same names (oneof '(full name abbreviate))
+  (setq ivy-virtual-abbreviate 'abbreviate)
+  ;; display-style
+  (setq ivy-display-style 'fancy)
   ;; fuzzy everywhere except when searching for something
   (setq ivy-re-builders-alist
-    '((swiper . ivy--regex-plus)
-      (swiper-isearch . ivy--regex-plus)
-      (counsel-ag . ivy--regex-plus)
-      (counsel-grep . ivy--regex-plus)
-      (counsel-rg . ivy--regex-plus)
-      (counsel-grep-or-swiper . ivy--regex-plus)
-      (t . ivy--regex-fuzzy)))
+        '((swiper . ivy--regex-plus)
+          (swiper-isearch . ivy--regex-plus)
+          (counsel-ag . ivy--regex-plus)
+          (counsel-grep . ivy--regex-plus)
+          (counsel-rg . ivy--regex-plus)
+          (counsel-grep-or-swiper . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
+
 
   :bind ("C-x b" . ivy-switch-buffer)
   ;;              ("C-x C-b" . ivy-switch-buffer)
   ("C-c C-r" . ivy-resume)
   :config (ivy-mode 1)
+  (setq ivy-virtual-abbreviate 'abbreviate)
 
-)
-
-
-  ;; (use-package ivy :demand
-  ;;   :ensure t
-  ;;   :after (init)
-  ;;   :defer t
-  ;;   :config (
-  ;;       ;; (require 'flx)
-
-  ;;       (setq ivy-re-builders-alist
-  ;;             '((swiper . ivy--regex-plus)
-  ;;               (swiper-isearch . ivy--regex)
-  ;;               (counsel-grep  . ivy--regex-plus)
-  ;;               (counsel-git-grep . ivy--regex-plus)
-  ;;               (t . ivy--regex-fuzzy)))
-
-  ;;       (setq ivy-initial-inputs-alist nil)
-  ;;       (setq ivy-format-function 'ivy-format-function-line)
-  ;;       )
-
-  ;;       (setq ivy-use-virtual-buffers t
-  ;;             ivy-count-format "%d/%d ")
-  ;;       ;; (setq ivy-use-virtual-buffers t)
-  ;;       (setq ivy-display-style 'fancy)
+  )
 
 
-  ;;       ;; (ivy-mode 1)
+;; (use-package ivy :demand
+;;   :ensure t
+;;   :after (init)
+;;   :defer t
+;;   :config (
+;;       ;; (require 'flx)
 
-  ;;       :bind ("C-x b" . ivy-switch-buffer)
-  ;;       ;;              ("C-x C-b" . ivy-switch-buffer)
-  ;;       ("C-c C-r" . ivy-resume))
+;;       (setq ivy-re-builders-alist
+;;             '((swiper . ivy--regex-plus)
+;;               (swiper-isearch . ivy--regex)
+;;               (counsel-grep  . ivy--regex-plus)
+;;               (counsel-git-grep . ivy--regex-plus)
+;;               (t . ivy--regex-fuzzy)))
 
-  (use-package counsel
-    :ensure t
-    :defer t
-    :bind(
-          ("C-x C-f" . counsel-find-file)
-          ("M-x" . counsel-M-x)
-          ("M-y" . counsel-yank-pop)
-          ;; :map ivy-minibuffer-map
-          ;; ("M-y" . ivy-next-line)
-          :map ivy-minibuffer-map
-          ("M-y" . ivy-next-line)))
+;;       (setq ivy-initial-inputs-alist nil)
+;;       (setq ivy-format-function 'ivy-format-function-line)
+;;       )
 
-  (use-package swiper
-    :ensure t
-    :defer t
-    :bind (("M-s s" . swiper-isearch)
-           ;; ("C-s" . swiper-isearch)
-           ;; ("C-r" . swiper-backward)
-           ))
+;;       (setq ivy-use-virtual-buffers t
+;;             ivy-count-format "%d/%d ")
+;;       ;; (setq ivy-use-virtual-buffers t)
+;;       (setq ivy-display-style 'fancy)
 
-  (use-package ivy-hydra
-    :ensure t
-    :after (ivy hydra))
+
+;;       ;; (ivy-mode 1)
+
+;;       :bind ("C-x b" . ivy-switch-buffer)
+;;       ;;              ("C-x C-b" . ivy-switch-buffer)
+;;       ("C-c C-r" . ivy-resume))
+
+(use-package counsel
+  :ensure t
+  :defer t
+  :bind(
+        ("C-x C-f" . counsel-find-file)
+        ("M-x" . counsel-M-x)
+        ("M-y" . counsel-yank-pop)
+        ;; :map ivy-minibuffer-map
+        ;; ("M-y" . ivy-next-line)
+        :map ivy-minibuffer-map
+        ("M-y" . ivy-next-line)))
+
+(use-package swiper
+  :ensure t
+  :defer t
+  :bind (("M-s s" . swiper-isearch)
+         ;; ("C-s" . swiper-isearch)
+         ;; ("C-r" . swiper-backward)
+         ))
+
+(use-package ivy-hydra
+  :ensure t
+  :after (ivy hydra))
+
+(use-package ivy-rich
+  :defer t
+  :ensure t
+  :hook (ivy-mode . (lambda () (ivy-rich-mode +1)))
+  :config
+  (setq ivy-rich-display-transformers-list
+        '(ivy-switch-buffer
+          (:columns
+           ((ivy-switch-buffer-transformer (:width 30))    ; add face by the original transformer
+            (ivy-rich-switch-buffer-size (:width 7))  ; return buffer size
+            (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))  ; return buffer indicator
+            (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))            ; return major mode info
+            (ivy-rich-switch-buffer-project (:width 15 :face success))               ; return project name `projectile'
+            (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path x (ivy-rich-minibuffer-width 0.3))))))  ; return file path relative to project root or `default-directory' if project is nil
+           :predicate
+           (lambda (cand) (get-buffer cand)))
+          counsel-find-file
+          (:columns
+           ((ivy-read-file-transformer)
+            (ivy-rich-counsel-find-file-truename (:face font-lock-doc-face))))
+          counsel-M-x
+          (:columns
+           ((counsel-M-x-transformer (:width 40))
+            (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))) ; return docstring of the command
+          counsel-describe-function
+          (:columns
+           ((counsel-describe-function-transformer (:width 40))
+            (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))  ; return docstring of the function
+          counsel-describe-variable
+          (:columns
+           ((counsel-describe-variable-transformer (:width 40))
+            (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))  ; return docstring of the variable
+          counsel-recentf
+          (:columns
+           ((ivy-rich-candidate (:width 0.8))
+            (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))  ; return last modified time of the file
+          package-install
+          (:columns
+           ((ivy-rich-candidate (:width 30))
+            (ivy-rich-package-version (:width 16 :face font-lock-comment-face))  ; return package version
+            (ivy-rich-package-archive-summary (:width 7 :face font-lock-builtin-face))  ; return archive summary
+            (ivy-rich-package-install-summary (:face font-lock-doc-face)))))  ; return package description
+        ))
 
 #+END_SRC
 
@@ -2048,8 +2096,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                                     "Richard Stallman is proud of you"
                                     "Happy coding!"
                                     "Welcome to the church of Emacs"
-                                    "While any text editor can save your files,\
-     only Emacs can save your soul"
+                                    "While any text editor can save your files, only Emacs can save your soul"
                                     "I showed you my source code,pls respond"
                                     ))
   ;; (display-line-numbers-mode -1)
@@ -2104,6 +2151,11 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;; :after (ivy)
   :hook (ivy-mode . all-the-icons-ivy-setup)
   )
+
+(use-package all-the-icons-ivy-rich
+   :ensure t
+   :defer t
+   :hook (ivy-mode . (lambda () (all-the-icons-ivy-rich-mode 1))))
 
 #+END_SRC
 
