@@ -784,7 +784,7 @@
   :after init
   :diminish ivy-mode
   :demand t
-  :init
+  :config
   (require 'flx)
   ;; set ivy height
   (setq ivy-height 10)
@@ -1011,7 +1011,8 @@
 
 (use-package which-key
   :ensure t
-  :hook (after-init . which-key-mode)
+  :defer t
+  ;; :after init
   :config (which-key-enable-god-mode-support)
   ;; Allow C-h to trigger which-key before it is done automatically
   (setq which-key-show-early-on-C-h t)
@@ -1021,6 +1022,8 @@
   ;; (setq which-key-idle-secondary-delay 0.05)
   (which-key-mode)
 )
+
+(add-hook 'after-init-time-hook (progn (require 'which-key) (which-key-mode)))
 
 #+END_SRC
 
@@ -2465,8 +2468,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
   (use-package objed
     :ensure t
-    ;; :defer 0.7
-    :hook (after-init . objed-mode)
+    :defer t
+    ;; ;; :defer 0.7
+    ;; :hook (after-init . objed-mode)
     :bind(:map objed-map
            ;; ("<SPC>" . 'objed-char-object)
            ("C-f" . 'objed-right-char)
@@ -2531,51 +2535,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
     )
 
-;; (add-hook 'after-init-time-hook (progn (require 'objed) (objed-mode)))
-
-#+END_SRC
-
-* god-mode
-
-#+BEGIN_SRC emacs-lisp
-
-(use-package god-mode
-  :load-path "~/.emacs.d/lisp/god-mode"
-  :config
-     (define-key god-local-mode-map (kbd ".") 'repeat)
-     (define-key god-local-mode-map (kbd "i") 'god-local-mode)
-
-     (global-set-key (kbd "C-x C-1") 'delete-other-windows)
-     (global-set-key (kbd "C-x C-2") 'split-window-below)
-     (global-set-key (kbd "C-x C-3") 'split-window-right)
-     (global-set-key (kbd "C-x C-0") 'delete-window)
-
-     (require 'god-mode-isearch)
-     (define-key isearch-mode-map (kbd "<escape>") 'god-mode-isearch-activate)
-     (define-key god-mode-isearch-map (kbd "<escape>") 'god-mode-isearch-disable)
-     ;; org-mode
-     (define-key god-local-mode-map [remap self-insert-command] 'my-god-mode-self-insert)
-
-     (defun my-god-mode-self-insert ()
-       (interactive)
-       (if (and (bolp)
-                (eq major-mode 'org-mode))
-           (call-interactively 'org-self-insert-command)
-         (call-interactively 'god-mode-self-insert)))
-     )
-
-(defun my-update-cursor ()
-  (setq cursor-type (if (or god-local-mode buffer-read-only)
-                        'box
-                      'bar)))
-
-(add-hook 'god-mode-enabled-hook 'my-update-cursor)
-(add-hook 'god-mode-disabled-hook 'my-update-cursor)
-
-;;(global-set-key (kbd "<f12>") 'god-local-mode)
-
-;;(global-set-key (kbd "<f12>") 'god-mode-all)
-
+(add-hook 'after-init-time-hook (progn (require 'objed) (objed-mode)))
 
 #+END_SRC
 
