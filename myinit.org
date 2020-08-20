@@ -498,8 +498,8 @@
 ;;exec-path-from-shell
   (use-package exec-path-from-shell
     :ensure t
-    :defer t
-    ;; :defer 2
+    ;; :defer t
+    ;; :defer 0.2
     ;; :after init
     ;; :hook (after-init . (lambda () (require 'exec-path-from-shell)
     ;;                       (exec-path-from-shell-initialize)))
@@ -681,7 +681,7 @@
   ;; :config
         ;; (progn (defface shackra-orange '((t (:foreground "white" :background "#98fbb8"))) "")
         ;;        (add-to-list 'symbol-overlay-faces '(symbol-overlay-default-face . (shakra-orange))))
-t    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
+    ;; (define-key symbol-overlay-mode-map (kbd "M-i") 'symbol-overlay-put)
     ;; (define-key symbol-overlay-mode-map (kbd "M-n") 'symbol-overlay-jump-next)
     ;; (define-key symbol-overlay-mode-map (kbd "M-p") 'symbol-overlay-jump-prev)
 )
