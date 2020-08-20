@@ -3837,7 +3837,13 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+BEGIN_SRC emacs-lisp
 
 (use-package minimap :defer t
-  :ensure t)
+  :ensure t
+  :config 
+  (setq minimap-hide-fringes t)
+  (setq minimap-hide-scroll-bar t)
+  (setq minimap-hide-cursor t)
+  (setq minimap-disable-mode-line t)
+  (setq  minimap-window-location 'right))
 
 #+END_SRC
 
