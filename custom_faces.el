@@ -15,6 +15,27 @@
 
        )
 
+  (defun doomish-blend (color1 color2 alpha)
+    "Blend two colors (hexidecimal strings) together by a coefficient ALPHA (a
+float between 0 and 1)"
+    (when (and color1 color2)
+      (cond ((and color1 color2 (symbolp color1) (symbolp color2))
+             (doom-blend (doom-color color1) (doom-color color2) alpha))
+
+            ((or (listp color1) (listp color2))
+             (cl-loop for x in color1
+                      when (if (listp color2) (pop color2) color2)
+                      collect (doom-blend x it alpha)))
+
+            ((and (string-prefix-p "#" color1) (string-prefix-p "#" color2))
+             (apply (lambda (r g b) (format "#%02x%02x%02x" (* r 255) (* g 255) (* b 255)))
+                    (cl-loop for it    in (doom-name-to-rgb color1)
+                             for other in (doom-name-to-rgb color2)
+                             collect (+ (* alpha it) (* other (- 1 alpha))))))
+
+            (color1))))
+
+
   (custom-set-faces
 
    ;; ;;;;; spacemacs-boldening
@@ -238,6 +259,42 @@
    `(tab-line-tab-current ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
                                            ;; :box (:color ,(face-foreground 'default) :line-width 1)
                                            ))))
+
+   ;;;;; dashboard
+   `(dashboard-items-face ((t (:underline nil :height 0.9 ))))
+   `(dashboard-no-items-face ((t (:underline nil :height 1.0 :foreground ,(face-foreground font-lock-comment-face) ))))
+   `(dashboard-text-banner-face ((t (:underline nil :height 1.2))))
+   ;;    (dashboard-navigator-face)
+   ;;    (dashboard-heading-face)
+   ;;    (dashboard-footer-face)
+
+   ;;;; diredfl
+
+   `(diredfl-autofile-name          ((t (:background nil :foreground ,(face-foreground 'border)))))
+   `(diredfl-compressed-file-name   ((t (:background nil :foreground ,(face-foreground 'cursor)))))
+   `(diredfl-compressed-file-suffix ((t (:background nil :foreground ,(doomish-blend (face-foreground 'default) (face-background 'default) 0.4)))))
+   `(diredfl-date-time              ((t (:background nil :foreground ,(doomish-blend (face-foreground 'default) (face-background 'default) 0.4) :weight light :slant italic))))
+   `(diredfl-deletion               ((t (:background nil :foreground ,(face-foreground 'success) :weight bold))))
+   `(diredfl-deletion-file-name     ((t (:background nil :foreground ,(face-foreground 'success)))))
+   `(diredfl-dir-heading            ((t (:background nil :foreground ,(face-foreground 'link) :weight bold))))
+   `(diredfl-dir-name               ((t (:background nil :foreground ,(face-foreground 'link) :weight bold))))
+   `(diredfl-dir-priv               ((t (:background nil :foreground ,(face-foreground 'link)))))
+   `(diredfl-exec-priv              ((t (:background nil :foreground ,(face-foreground 'warning)))))
+   `(diredfl-executable-tag         ((t (:background nil :foreground ,(face-foreground 'warning)))))
+   `(diredfl-file-name              ((t (:background nil :foreground ,(face-foreground 'default) :weight bold))))
+   `(diredfl-file-suffix            ((t (:background nil :foreground ,(doomish-blend (face-foreground 'default) (face-background 'default) 0.4)))))
+   `(diredfl-flag-mark              ((t (:background nil :foreground ,(face-foreground 'shadow) :weight bold))))
+   `(diredfl-flag-mark-line         ((t (:background ,(doomish-blend "#ffff00" (face-background 'default) 0.1)))))
+   `(diredfl-ignored-file-name      ((t (:background nil :foreground ,(face-foreground 'font-lock-comment-face)))))
+   `(diredfl-link-priv              ((t (:background nil :foreground ,(face-foreground 'trailing-whitespace)))))
+   `(diredfl-no-priv                ((t (:background nil :foreground ,(face-foreground 'default)))))
+   `(diredfl-number                 ((t (:background nil :foreground ,(face-foreground 'header-line)))))
+   `(diredfl-other-priv             ((t (:background nil :foreground ,(face-foreground 'highlight)))))
+   `(diredfl-rare-priv              ((t (:background nil :foreground ,(face-foreground 'default)))))
+   `(diredfl-read-priv              ((t (:background nil :foreground ,(face-foreground 'font-lock-regexp-grouping-construct)))))
+   `(diredfl-symlink                ((t (:background nil :foreground ,(face-foreground 'trailing-whitespace)))))
+   `(diredfl-tagged-autofile-name   ((t (:background nil :foreground ,(face-foreground 'region)))))
+   `(diredfl-write-priv             ((t (:background nil :foreground ,(face-foreground 'font-lock-variable-name-face)))))
 
    ))
 
