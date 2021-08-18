@@ -6,12 +6,12 @@
   ("o" (text-scale-adjust 0) "reset")
   )
 
-(defhydra hydra-global-zoom (:hint nil)
-  "zoom"
-  ("g" default-text-scale-increase "in")
-  ("l" default-text-scale-decrease "out")
-  ("o" default-text-scale-reset "reset")
-  )
+;; (defhydra hydra-global-zoom (:hint nil)
+;;   "zoom"
+;;   ("g" default-text-scale-increase "in")
+;;   ("l" default-text-scale-decrease "out")
+;;   ("o" default-text-scale-reset "reset")
+;;   )
 
 
 (defhydra hydra-ibuffer-main (:color pink :hint nil :quit-key ("q" "C-g"))
