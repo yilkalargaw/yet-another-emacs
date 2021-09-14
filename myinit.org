@@ -37,6 +37,7 @@
 - [[#sentences-end-with-a-single-space][Sentences end with a single space]]
 - [[#line-spacing][line-spacing]]
 - [[#ligatures][ligatures]]
+- [[#unicode-fonts][unicode-fonts]]
 - [[#exec-path-form-shell][exec path form shell]]
 - [[#helpful][helpful]]
 - [[#objed][objed]]
@@ -932,6 +933,52 @@
   ;; per mode with `ligature-mode'.
   (global-ligature-mode t))  
 
+  #+end_src
+
+* unicode-fonts
+
+  #+begin_src emacs-lisp
+
+    
+
+      (use-package unicode-fonts
+       :straight t
+       :config
+	(unicode-fonts-setup)
+	;; (set-face-attribute 'default nil :font "Source Code Pro")
+	;;(set-fontset-font "fontset-default" 'unicode "Consolas" nil)
+	;; (set-fontset-font "fontset-default" 'unicode "DejaVu Sans Mono" nil)
+	;; (set-fontset-font "fontset-default" 'unicode "Symbola" nil)
+	)
+    
+  
+    ;; ;;Enable proper Unicode glyph support
+    
+    ;;   (defun dw/replace-unicode-font-mapping (block-name old-font new-font)
+    ;;   (let* ((block-idx (cl-position-if
+    ;;                          (lambda (i) (string-equal (car i) block-name))
+    ;;                          unicode-fonts-block-font-mapping))
+    ;;          (block-fonts (cadr (nth block-idx unicode-fonts-block-font-mapping)))
+    ;;          (updated-block (cl-substitute new-font old-font block-fonts :test 'string-equal)))
+    ;;     (setf (cdr (nth block-idx unicode-fonts-block-font-mapping))
+    ;;           `(,updated-block))))
+    
+    ;; (use-package unicode-fonts
+    ;;   :disabled
+    ;;   :if (not dw/is-termux)
+    ;;   :custom
+    ;;   (unicode-fonts-skip-font-groups '(low-quality-glyphs))
+    ;;   :config
+    ;;   ;; Fix the font mappings to use the right emoji font
+    ;;   (mapcar
+    ;;     (lambda (block-name)
+    ;;       (dw/replace-unicode-font-mapping block-name "Apple Color Emoji" "Noto Color Emoji"))
+    ;;     '("Dingbats"
+    ;;       "Emoticons"
+    ;;       "Miscellaneous Symbols and Pictographs"
+    ;;       "Transport and Map Symbols"))
+    ;;   (unicode-fonts-setup))
+    
   #+end_src
 
 * exec path form shell
@@ -2891,4 +2938,3 @@
 ;;; init.el ends here
 
 #+END_SRC
-
