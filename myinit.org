@@ -36,6 +36,7 @@
 - [[#indentation-stuff][indentation stuff]]
 - [[#sentences-end-with-a-single-space][Sentences end with a single space]]
 - [[#line-spacing][line-spacing]]
+- [[#ligatures][ligatures]]
 - [[#exec-path-form-shell][exec path form shell]]
 - [[#helpful][helpful]]
 - [[#objed][objed]]
@@ -65,7 +66,9 @@
 - [[#smartparens][smartparens]]
 - [[#rainbow-delimiters][rainbow-delimiters]]
 - [[#eshell][eshell]]
+- [[#binbash-instead-of-binsh-for-shells][/bin/bash instead of /bin/sh for shells]]
 - [[#shell-mode][shell-mode]]
+- [[#term-mode][term-mode]]
 - [[#comint-mode][comint-mode]]
 - [[#vterm][vterm]]
 - [[#eww--shr][eww & shr]]
@@ -328,7 +331,7 @@
   #+BEGIN_SRC emacs-lisp
   
   (add-to-list 'default-frame-alist
-	       '(font . "Liberation Mono-9"))
+	       '(font . "JetBrains Mono-9"))
   
   (use-package default-font-presets
     :straight t
@@ -603,7 +606,7 @@
               (setq base16-theme-256-color-source 'base16-shell)
               ;; (setq base16-distinct-fringe-background nil)
               ;; (setq base16-highlight-mode-line 'box)
-              (load-theme 'doom-dark+ t)
+              (load-theme 'doom-vibrant t)
               ;; (load-file (concat user-emacs-directory "custom_faces.el"))
               ))
 
@@ -897,6 +900,39 @@
   (add-hook 'minibuffer-setup-hook (lambda () (setq line-spacing nil)))
 
   #+END_SRC
+
+* ligatures
+
+#+begin_src emacs-lisp
+
+
+(use-package ligature
+  :straight (ligature :type git :host github :repo "mickeynp/ligature.el" :build (:not native-compile))
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))  
+
+  #+end_src
 
 * exec path form shell
 
@@ -1636,25 +1672,25 @@
 * eshell
 
   #+BEGIN_SRC emacs-lisp
-
+  
   ;;eshell
-
+  
   (use-package eshell
     :defer t
     :ensure nil
     :hook ((eshell-mode . (lambda () (setq line-spacing 0)))
-           (eshell-mode . (lambda () (display-line-numbers-mode -1)))
-           ;; (eshell-mode . (lambda () (nlinum-mode -1)))
-           (eshell-mode . (lambda () (setq show-trailing-whitespace nil)))
-           (eshell-mode . (lambda () (objed-local-mode -1)))
-           (eshell-mode . (lambda () (remove-hook 'eshell-output-filter-functions
-                                                  'eshell-postoutput-scroll-to-bottom)))
-           (eshell-mode . (lambda ()
-                            (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
-                                                           "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
-                                                           "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
-                                                           "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger")
-                                  ))))
+	   (eshell-mode . (lambda () (display-line-numbers-mode -1)))
+	   ;; (eshell-mode . (lambda () (nlinum-mode -1)))
+	   (eshell-mode . (lambda () (setq show-trailing-whitespace nil)))
+	   ;; (eshell-mode . (lambda () (objed-local-mode -1)))
+	   (eshell-mode . (lambda () (remove-hook 'eshell-output-filter-functions
+						  'eshell-postoutput-scroll-to-bottom)))
+	   (eshell-mode . (lambda ()
+			    (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
+							   "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
+							   "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
+							   "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger")
+				  ))))
     ;; :bind(("<tab>" . completion-at-point)
     ;;    ("<backtab>" . completion-at-point))
     :config
@@ -1662,58 +1698,80 @@
       "Clear terminal"
       (interactive)
       (let ((inhibit-read-only t))
-        (erase-buffer)
-        (eshell-send-input)))
+	(erase-buffer)
+	(eshell-send-input)))
     ;; (add-hook 'eshell-mode-hook
     ;;           #'(lambda()
     ;;               (local-set-key (kbd "H-l") 'eshell-clear-buffer)))
     )
-
+  
   #+END_SRC
+
+* /bin/bash instead of /bin/sh for shells
+
+  #+begin_src emacs-lisp
+
+   (setq explicit-shell-file-name "/bin/bash")
+  
+  #+end_src
 
 * shell-mode
 
   #+BEGIN_SRC emacs-lisp
-
+  
   ;;shell-mode
-
+  
   (use-package shell
     :defer t
     :ensure nil
     :hook ((shell-mode . (lambda () (setq line-spacing 0)))
-           (shell-mode . (lambda ()
-                           (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
-           (shell-mode . (lambda ()
-                           (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)))
-           (shell-mode . (lambda () (objed-local-mode -1)))
-           ))
-
+	   (shell-mode . (lambda ()
+			   (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
+	   (shell-mode . (lambda ()
+			   (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)))
+	   ;; (shell-mode . (lambda () (objed-local-mode -1)))
+	   ))
+  
   ;; (add-hook 'shell-mode-hook '(lambda ()
   ;;                                (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
   ;; (add-hook 'shell-mode-hook '(lambda ()
   ;;                                (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)))
   ;; (add-hook 'eshell-mode-hook (lambda () (objed-mode -1)))
-
+  
   #+END_SRC
 
-  * term-mode
+* term-mode
 
   #+BEGIN_SRC emacs-lisp
-
-  ;;(defun my-display-line-number (lambda () (display-line-numbers-mode -1)))
-  (use-package term
-    :defer t
-    :hook ;; (term-mode . (lambda () (nlinum-mode -1)))
-    (term-mode . (lambda () (display-line-numbers-mode -1)))
-    (term-mode . (lambda () (setq line-spacing 0)))
-    (term-mode . (lambda () (objed-local-mode -1)))
-    (term-mode . (lambda () (setq show-trailing-whitespace nil))))
-
-  ;; (add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1)))
-  ;; (add-hook 'term-mode-hook (lambda () (nlinum-mode -1)))
-  ;; (add-hook 'term-mode-hook (lambda () (setq show-trailing-whitespace nil)))
-  ;; (add-hook 'term-mode-hook (lambda () (objed-mode -1)))
-
+    
+    ;;(defun my-display-line-number (lambda () (display-line-numbers-mode -1)))
+    (use-package term
+      :defer t
+      :hook ;; (term-mode . (lambda () (nlinum-mode -1)))
+      (term-mode . (lambda () (display-line-numbers-mode -1)))
+      (term-mode . (lambda () (setq line-spacing 0)))
+      ;; (term-mode . (lambda () (objed-local-mode -1)))
+      (term-mode . (lambda () (setq show-trailing-whitespace nil))))
+    
+    ;; (add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1)))
+    ;; (add-hook 'term-mode-hook (lambda () (nlinum-mode -1)))
+    ;; (add-hook 'term-mode-hook (lambda () (setq show-trailing-whitespace nil)))
+    ;; (add-hook 'term-mode-hook (lambda () (objed-mode -1)))
+    
+    ;;   (defun oleh-term-exec-hook ()
+    ;;   (let* ((buff (current-buffer))
+    ;;          (proc (get-buffer-process buff)))
+    ;;     (set-process-sentinel
+    ;;      proc
+    ;;      `(lambda (process event)
+    ;;         (if (string= event "finished\n")
+    ;;             (kill-buffer ,buff))))))
+  
+    ;; (add-hook 'term-exec-hook 'oleh-term-exec-hook)
+    
+    (eval-after-load "term"
+      '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
+    
   #+END_SRC
 
 * comint-mode
@@ -1753,7 +1811,7 @@
 	   ;; (vterm-mode . (lambda () (nlinum-mode -1)))
 	   (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
 	   (vterm-mode . (lambda () (setq line-spacing 0)))
-	   (vterm-mode . (lambda () (objed-local-mode -1)))
+	   ;; (vterm-mode . (lambda () (objed-local-mode -1)))
 	   )
     :init (setq vterm-shell "/usr/bin/bash"))
   
