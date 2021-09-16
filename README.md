@@ -5,17 +5,13 @@ Is my personal emacs config and it is based on the earlier yet-another-emacs. I 
 
 # It Uses
 
-  + ivy as a completion framework
+  + selectrum, consult, marginelia, embark for completion
 
   + doom-line
-
-  + dired-sidebar for side tab file manager
 
   + hydra
 
   + projectile
-
-  + modshift key for extra characters to expand the keymap
 
   + etc ...
 
