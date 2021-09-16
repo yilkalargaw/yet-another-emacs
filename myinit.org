@@ -897,7 +897,7 @@
 
   #+BEGIN_SRC emacs-lisp
 
-  (setq-default line-spacing 0.1)
+  (setq-default line-spacing 0.2)
   (add-hook 'minibuffer-setup-hook (lambda () (setq line-spacing nil)))
 
   #+END_SRC
