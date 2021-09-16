@@ -87,8 +87,9 @@ float between 0 and 1)"
                                      :underline nil
                                      :box ))))
 
-   ;; `(org-block ((t (:foreground ,base-font-color
-   ;;                              :background nil :box nil))))
+   `(org-block ((t (:background nil :box nil))))
+   ;; `(org-block-begin-line ((t (:background nil :box nil))))
+   ;; `(org-block-end-line ((t (:background nil :box nil))))
 
    ;; `(org-block-begin-line ((t ,org-highlights)))
    ;; `(org-block-end-line ((t ,org-highlights)))
@@ -96,9 +97,11 @@ float between 0 and 1)"
    ;; `(org-block-begin-line ((t (:underline t))))
    ;; `(org-block-end-line ((t (:overline t))))
    `(org-block-begin-line ((t (;; :background ,(face-background 'highlight)
-                               :foreground ,(face-foreground 'shadow))))) ;; :underline t :overline t :italic t))))
+                               :background nil
+                               :foreground ,(face-foreground 'shadow) :underline nil :overline nil :italic t))))
    `(org-block-end-line ((t (;; :background ,(face-background 'highlight)
-                             :foreground ,(face-foreground 'shadow) )))) ;; :overline t :underline t :italic t))))
+                               :background nil
+                               :foreground ,(face-foreground 'shadow) :overline nil :underline nil :italic t))))
 
 
    `(org-checkbox ((t (:foreground "#000000", :background "#93a1a1" :box (:line-width -3 :color "#93a1a1" :style "released-button")))))
@@ -154,11 +157,11 @@ float between 0 and 1)"
 
       ;;;;; modeline
    `(mode-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default)
-				:box (:color ,(face-foreground 'default) :line-width 1) :underline nil :overline nil :height 1.0))))
+                                :box (:color ,(face-foreground 'default) :line-width 1) :underline nil :overline nil :height 1.0))))
    `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default)
-					 :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1) :height 1.0))))
+                                         :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1) :height 1.0))))
    `(mode-line-buffer-id ((t (:box (:color ,(face-foreground 'link) :line-width 2) :foreground ,(face-foreground 'link)
-				   :background nil :bold t :height 1.0))))
+                                   :background nil :bold t :height 1.0))))
    ;; ;; '(mode-line ((t (:background "#002b36"  :foreground "white" :box "dark cyan"))))
    ;; ;; '(mode-line-inactive ((t (:background "#002b36" :foreground "white" :box nil))))
    ;; `(spaceline-highlight-face ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :inherit 'mode-line))))
