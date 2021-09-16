@@ -297,7 +297,7 @@ Git gutter:
   ("q"  nil                                      "cancel" :color blue))
 
 (defhydra hydra-projectile (:color teal
-				     :hint nil :quit-key ("q" "C-g"))
+                                     :hint nil :quit-key ("q" "C-g"))
     "
      PROJECTILE: %(projectile-project-root)
 
@@ -402,16 +402,16 @@ Git gutter:
     (set-frame-parameter
      nil 'alpha
      (if (eql (cond ((numberp alpha) alpha)
-		    ((numberp (cdr alpha)) (cdr alpha))
-		    ;; Also handle undocumented (<active> <inactive>) form.
-		    ((numberp (cadr alpha)) (cadr alpha)))
-	      100)
-	 '(95 . 95) '(100 . 100)))))
+                    ((numberp (cdr alpha)) (cdr alpha))
+                    ;; Also handle undocumented (<active> <inactive>) form.
+                    ((numberp (cadr alpha)) (cadr alpha)))
+              100)
+         '(95 . 95) '(100 . 100)))))
 
 (defun increase-transparency ()
   (interactive)
   (let* ((opacity (or (frame-parameter nil 'alpha) 100))
-	 (new-opacity (- (car opacity) 5)))
+         (new-opacity (- (car opacity) 5)))
     (set-frame-parameter
      nil 'alpha
      (cons (if (< new-opacity 0) 0 new-opacity) (if (< new-opacity 0) 0 new-opacity)))))
@@ -421,7 +421,7 @@ Git gutter:
 (defun decrease-transparency ()
   (interactive)
   (let* ((opacity (or (frame-parameter nil 'alpha) 100))
-	(new-opacity (+ (car opacity) 5)))
+        (new-opacity (+ (car opacity) 5)))
     (set-frame-parameter
      nil 'alpha
      (cons (if (> new-opacity 100) 100 new-opacity) (if (> new-opacity 100) 100 new-opacity)))))
@@ -599,8 +599,8 @@ _h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
 (define-key global-map (kbd "η l") 'hydra-launcher/body)
 (define-key global-map (kbd "η <f4>") 'hydra-transparency/body)
 (define-key global-map (kbd "η SPC") (lambda ()
-					   (interactive)
-					   (insert-char (string-to-char "η"))))
+                                           (interactive)
+                                           (insert-char (string-to-char "η"))))
 (define-key global-map (kbd "η x")  (lambda ()
-				      (interactive)
-				      (counsel-M-x "^hydra")))
+                                      (interactive)
+                                      (counsel-M-x "^hydra")))

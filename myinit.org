@@ -332,7 +332,7 @@
   #+BEGIN_SRC emacs-lisp
   
   (add-to-list 'default-frame-alist
-	       '(font . "JetBrains Mono-9"))
+               '(font . "JetBrains Mono-9"))
   
   (use-package default-font-presets
     :straight t
@@ -347,28 +347,28 @@
   
     :config
     (setq default-font-presets-list
-	  (list
-	   "Fantasque Sans Mono Medium 10"
-	   "Fantasque Sans Mono Medium 11"
-	   "Ubuntu Mono 11"
-	   "Cascadia Code-9"
-	   "IBM Plex Mono-9"
-	   "Source Code Pro Medium-9"
-	   "JetBrains Mono-9"
-	   "Monospace-9"
-	   "Fira Mono-9"
-	   "Fira Code-9"
-	   "Droid Sans Mono-9"
-	   "DejaVu Sans Mono-9"
-	   "Liberation Mono-9"
-	   "Roboto Mono Medium-9"
-	   "Victor Mono-9"
-	   "Hack-9"
-	   "Monoid-8"
-	   )))
+          (list
+           "Fantasque Sans Mono Medium 10"
+           "Fantasque Sans Mono Medium 11"
+           "Ubuntu Mono 11"
+           "Cascadia Code-9"
+           "IBM Plex Mono-9"
+           "Source Code Pro Medium-9"
+           "JetBrains Mono-9"
+           "Monospace-9"
+           "Fira Mono-9"
+           "Fira Code-9"
+           "Droid Sans Mono-9"
+           "DejaVu Sans Mono-9"
+           "Liberation Mono-9"
+           "Roboto Mono Medium-9"
+           "Victor Mono-9"
+           "Hack-9"
+           "Monoid-8"
+           )))
   
   ;; (add-to-list 'default-frame-alist
-  ;; 	     '(font . "Liberation Mono-10.5"))
+  ;;         '(font . "Liberation Mono-10.5"))
   
   ;; (use-package default-font-presets
   ;;   :straight t
@@ -383,25 +383,25 @@
   
   ;;   :config
   ;;   (setq default-font-presets-list
-  ;; 	(list
-  ;; 	 "Fantasque Sans Mono Medium 12"
-  ;; 	 "Fantasque Sans Mono Medium 11"
-  ;; 	 "Ubuntu Mono 12"
-  ;; 	 "Cascadia Code-10.5"
-  ;; 	 "IBM Plex Mono-10.5"
-  ;; 	 "Source Code Pro Medium-10.5"
-  ;; 	 "JetBrains Mono-10.5"
-  ;; 	 "Monospace-10.5"
-  ;; 	 "Fira Mono-10.5"
-  ;; 	 "Fira Code-10.5"
-  ;; 	 "Droid Sans Mono-10.5"
-  ;; 	 "DejaVu Sans Mono-10.5"
-  ;; 	 "Liberation Mono-10.5"
-  ;; 	 "Roboto Mono Medium-10.5"
-  ;; 	 "Victor Mono-10"
-  ;; 	 "Hack-10.5"
-  ;; 	 "Monoid-8.5"
-  ;; 	 )))
+  ;;    (list
+  ;;     "Fantasque Sans Mono Medium 12"
+  ;;     "Fantasque Sans Mono Medium 11"
+  ;;     "Ubuntu Mono 12"
+  ;;     "Cascadia Code-10.5"
+  ;;     "IBM Plex Mono-10.5"
+  ;;     "Source Code Pro Medium-10.5"
+  ;;     "JetBrains Mono-10.5"
+  ;;     "Monospace-10.5"
+  ;;     "Fira Mono-10.5"
+  ;;     "Fira Code-10.5"
+  ;;     "Droid Sans Mono-10.5"
+  ;;     "DejaVu Sans Mono-10.5"
+  ;;     "Liberation Mono-10.5"
+  ;;     "Roboto Mono Medium-10.5"
+  ;;     "Victor Mono-10"
+  ;;     "Hack-10.5"
+  ;;     "Monoid-8.5"
+  ;;     )))
   
   ;; Typical key bindings:
   
@@ -944,12 +944,12 @@
       (use-package unicode-fonts
        :straight t
        :config
-	(unicode-fonts-setup)
-	;; (set-face-attribute 'default nil :font "Source Code Pro")
-	;;(set-fontset-font "fontset-default" 'unicode "Consolas" nil)
-	;; (set-fontset-font "fontset-default" 'unicode "DejaVu Sans Mono" nil)
-	;; (set-fontset-font "fontset-default" 'unicode "Symbola" nil)
-	)
+        (unicode-fonts-setup)
+        ;; (set-face-attribute 'default nil :font "Source Code Pro")
+        ;;(set-fontset-font "fontset-default" 'unicode "Consolas" nil)
+        ;; (set-fontset-font "fontset-default" 'unicode "DejaVu Sans Mono" nil)
+        ;; (set-fontset-font "fontset-default" 'unicode "Symbola" nil)
+        )
     
   
     ;; ;;Enable proper Unicode glyph support
@@ -1020,61 +1020,61 @@
     ;; :defer 0.7
     ;; :hook (after-init . objed-mode)
     :bind(:map objed-map
-	       ;; ("<SPC>" . 'objed-char-object)
-	       ("C-f" . 'objed-right-char)
-	       ("C-b" . 'objed-left-char)
-	       ("," . 'objed-identifier-object)
-	       ("." . 'objed-sentence-object)
-	       ("b" . 'objed-word-object)
+               ;; ("<SPC>" . 'objed-char-object)
+               ("C-f" . 'objed-right-char)
+               ("C-b" . 'objed-left-char)
+               ("," . 'objed-identifier-object)
+               ("." . 'objed-sentence-object)
+               ("b" . 'objed-word-object)
   
-	       ("F" . nil)
-	       ("B" . nil)
-	       ("S" . nil)
-	       ("R" . nil)
-	       ("L" . nil)
-	       ("." . nil)
-	       ;; ("N" . nil)
-	       ;; ("P" . nil)
-	       ;; ("b" . nil)
-	       ("B" . nil)
+               ("F" . nil)
+               ("B" . nil)
+               ("S" . nil)
+               ("R" . nil)
+               ("L" . nil)
+               ("." . nil)
+               ;; ("N" . nil)
+               ;; ("P" . nil)
+               ;; ("b" . nil)
+               ("B" . nil)
   
-	       ("<SPC>" . 'objed-object-map)
-	       ("c" . 'objed-user-map)
-	       ("r" . 'objed-toggle-side)
-	       ;; ("l" . 'objed-next-specialized)
-	       ;; ("h" . 'objed-previous-specialized)
-	       ("l" . 'objed-next)
-	       ("h" . 'objed-previous)
-	       ("L" . 'objed-move-object-forward)
-	       ("H" . 'objed-move-object-backward)
+               ("<SPC>" . 'objed-object-map)
+               ("c" . 'objed-user-map)
+               ("r" . 'objed-toggle-side)
+               ;; ("l" . 'objed-next-specialized)
+               ;; ("h" . 'objed-previous-specialized)
+               ("l" . 'objed-next)
+               ("h" . 'objed-previous)
+               ("L" . 'objed-move-object-forward)
+               ("H" . 'objed-move-object-backward)
   
-	       ("f" . 'objed-next-specialized)
-	       ("s" . 'objed-previous-specialized)
-	       ;; ("f" . 'objed-next)
-	       ;; ("s" . 'objed-previous)
-	       ("F" . 'objed-move-object-forward)
-	       ("S" . 'objed-move-object-backward)
+               ("f" . 'objed-next-specialized)
+               ("s" . 'objed-previous-specialized)
+               ;; ("f" . 'objed-next)
+               ;; ("s" . 'objed-previous)
+               ("F" . 'objed-move-object-forward)
+               ("S" . 'objed-move-object-backward)
   
-	       ("J" . 'objed-move-line-forward)
-	       ("i" . 'objed-kill)
-	       ("I" . 'objed-kill)
-	       ("K" . 'objed-move-line-backward)
-	       ;; ("K" . nil)
-	       ("j" . 'objed-next-line)
-	       ("k" . 'objed-previous-line)
-	       ("G" . 'objed-del-insert)
-	       ("<H-SPC>" . 'objed-quit)
+               ("J" . 'objed-move-line-forward)
+               ("i" . 'objed-kill)
+               ("I" . 'objed-kill)
+               ("K" . 'objed-move-line-backward)
+               ;; ("K" . nil)
+               ("j" . 'objed-next-line)
+               ("k" . 'objed-previous-line)
+               ("G" . 'objed-del-insert)
+               ("<H-SPC>" . 'objed-quit)
   
-	       ;; :map objed-user-map
-	       ;; ("f" . 'move-to-char)
-	       ;; ("g" . 'move-upto-char)
+               ;; :map objed-user-map
+               ;; ("f" . 'move-to-char)
+               ;; ("g" . 'move-upto-char)
   
-	       ;;        :map objed-object-map
-	       ;;        ("," . 'objed-identifier-object)
+               ;;        :map objed-object-map
+               ;;        ("," . 'objed-identifier-object)
   
-	       ;;        ;; :map objed-mode-map
-	       ;;        ;; ("<M-SPC>" . 'my-objed-activate)
-	       )
+               ;;        ;; :map objed-mode-map
+               ;;        ;; ("<M-SPC>" . 'my-objed-activate)
+               )
   
     :config
     ;; (setq objed--which-key-avail-p t
@@ -1087,29 +1087,29 @@
   
   With postitive prefix argument ARG move to the nth next object."
       (let ((arg (or arg 1))
-	    (obj nil))
-	(if (equal objed--object 'line)
-	    (objed-next-line)
-	  (progn
-	    (dotimes (_ arg obj)
-	      (when (setq obj  (objed--get-next))
-		(objed--update-current-object obj)
-		(cond ((or (equal objed--object 'word)
-			   (equal objed--object 'sexp))
-		       (goto-char (objed--end obj)))
-		      (t (objed--goto-char (objed--beg obj))))))))))
+            (obj nil))
+        (if (equal objed--object 'line)
+            (objed-next-line)
+          (progn
+            (dotimes (_ arg obj)
+              (when (setq obj  (objed--get-next))
+                (objed--update-current-object obj)
+                (cond ((or (equal objed--object 'word)
+                           (equal objed--object 'sexp))
+                       (goto-char (objed--end obj)))
+                      (t (objed--goto-char (objed--beg obj))))))))))
   
     (defun objed-next-specialized (&optional arg)
       "Move to ARG next object of current type."
       (interactive "p")
       ;; on init skip current
       (when (and (region-active-p)
-		 (eq last-command 'objed-extend))
-	(exchange-point-and-mark))
+                 (eq last-command 'objed-extend))
+        (exchange-point-and-mark))
       (let ((pos (point)))
-	(objed--goto-next-specialized (or arg 1))
-	(when (eq pos (point))
-	  (error "No next %s" objed--object))))
+        (objed--goto-next-specialized (or arg 1))
+        (when (eq pos (point))
+          (error "No next %s" objed--object))))
   
   
     (defun objed--goto-previous-specialized (&optional arg)
@@ -1117,26 +1117,26 @@
   
   With postitive prefix argument ARG move to the nth previous object."
       (let ((arg (or arg 1))
-	    (obj nil))
-	(if (equal objed--object 'line)
-	    (objed-previous-line)
-	  (progn
-	    (dotimes (_ arg obj)
-	      (when (setq obj (objed--get-prev))
-		(objed--update-current-object obj)
-		(objed--goto-char (objed--beg obj))))))))
+            (obj nil))
+        (if (equal objed--object 'line)
+            (objed-previous-line)
+          (progn
+            (dotimes (_ arg obj)
+              (when (setq obj (objed--get-prev))
+                (objed--update-current-object obj)
+                (objed--goto-char (objed--beg obj))))))))
   
     (defun objed-previous-specialized (&optional arg)
       "Move to ARG previous object of current type."
       (interactive "p")
       ;; on init skip current
       (when (and (region-active-p)
-		 (eq last-command 'objed-extend))
-	(exchange-point-and-mark))
+                 (eq last-command 'objed-extend))
+        (exchange-point-and-mark))
       (let ((pos (point)))
-	(objed--goto-previous-specialized (or arg 1))
-	(when (eq pos (point))
-	  (error "No next %s" objed--object))))
+        (objed--goto-previous-specialized (or arg 1))
+        (when (eq pos (point))
+          (error "No next %s" objed--object))))
   
     ;; ;;   ;; :config
     ;; ;; (load (concat user-emacs-directory "lisp/objed-goto-next-specialized.el"))
@@ -1261,10 +1261,10 @@
     :ensure nil
     :defer t
     :bind (("C-x C-b" . ibuffer)
-	   :map ibuffer-mode-map
-	   ;; ("η-." . hydra-ibuffer-main/body)
-	   ("C-." . hydra-ibuffer-main/body)
-	   )
+           :map ibuffer-mode-map
+           ;; ("η-." . hydra-ibuffer-main/body)
+           ("C-." . hydra-ibuffer-main/body)
+           )
     :hook (ibuffer-mode . hydra-ibuffer-main/body)
   
     )
@@ -1344,7 +1344,7 @@
     :straight t
     :custom (completion-styles '(orderless))
     :config (setq-local orderless-matching-styles '(orderless-literal)
-			orderless-style-dispatchers nil))
+                        orderless-style-dispatchers nil))
   
   (use-package selectrum
     :straight t
@@ -1370,8 +1370,8 @@
   (use-package marginalia
     ;; Either bind `marginalia-cycle` globally or only in the minibuffer
     :bind (("M-A" . marginalia-cycle)
-	   :map minibuffer-local-map
-	   ("M-A" . marginalia-cycle))
+           :map minibuffer-local-map
+           ("M-A" . marginalia-cycle))
     :straight t
   
     ;; The :init configuration is always executed (Not lazy!)
@@ -1397,9 +1397,9 @@
   
     ;; Hide the mode line of the Embark live/completions buffers
     (add-to-list 'display-buffer-alist
-		 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-		   nil
-		   (window-parameters (mode-line-format . none)))))
+                 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                   nil
+                   (window-parameters (mode-line-format . none)))))
   
   ;; Consult users will also want the embark-consult package.
   (use-package embark-consult
@@ -1726,18 +1726,18 @@
     :defer t
     :ensure nil
     :hook ((eshell-mode . (lambda () (setq line-spacing 0)))
-	   (eshell-mode . (lambda () (display-line-numbers-mode -1)))
-	   ;; (eshell-mode . (lambda () (nlinum-mode -1)))
-	   (eshell-mode . (lambda () (setq show-trailing-whitespace nil)))
-	   ;; (eshell-mode . (lambda () (objed-local-mode -1)))
-	   (eshell-mode . (lambda () (remove-hook 'eshell-output-filter-functions
-						  'eshell-postoutput-scroll-to-bottom)))
-	   (eshell-mode . (lambda ()
-			    (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
-							   "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
-							   "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
-							   "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger")
-				  ))))
+           (eshell-mode . (lambda () (display-line-numbers-mode -1)))
+           ;; (eshell-mode . (lambda () (nlinum-mode -1)))
+           (eshell-mode . (lambda () (setq show-trailing-whitespace nil)))
+           ;; (eshell-mode . (lambda () (objed-local-mode -1)))
+           (eshell-mode . (lambda () (remove-hook 'eshell-output-filter-functions
+                                                  'eshell-postoutput-scroll-to-bottom)))
+           (eshell-mode . (lambda ()
+                            (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
+                                                           "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
+                                                           "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
+                                                           "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger")
+                                  ))))
     ;; :bind(("<tab>" . completion-at-point)
     ;;    ("<backtab>" . completion-at-point))
     :config
@@ -1745,8 +1745,8 @@
       "Clear terminal"
       (interactive)
       (let ((inhibit-read-only t))
-	(erase-buffer)
-	(eshell-send-input)))
+        (erase-buffer)
+        (eshell-send-input)))
     ;; (add-hook 'eshell-mode-hook
     ;;           #'(lambda()
     ;;               (local-set-key (kbd "H-l") 'eshell-clear-buffer)))
@@ -1772,12 +1772,12 @@
     :defer t
     :ensure nil
     :hook ((shell-mode . (lambda () (setq line-spacing 0)))
-	   (shell-mode . (lambda ()
-			   (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
-	   (shell-mode . (lambda ()
-			   (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)))
-	   ;; (shell-mode . (lambda () (objed-local-mode -1)))
-	   ))
+           (shell-mode . (lambda ()
+                           (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
+           (shell-mode . (lambda ()
+                           (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)))
+           ;; (shell-mode . (lambda () (objed-local-mode -1)))
+           ))
   
   ;; (add-hook 'shell-mode-hook '(lambda ()
   ;;                                (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)))
@@ -1854,12 +1854,12 @@
     :straight t
     :defer t
     :hook ((vterm-mode . (lambda () (global-hl-line-mode -1)))
-	   (vterm-mode . (lambda () (display-line-numbers-mode -1)))
-	   ;; (vterm-mode . (lambda () (nlinum-mode -1)))
-	   (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
-	   (vterm-mode . (lambda () (setq line-spacing 0)))
-	   ;; (vterm-mode . (lambda () (objed-local-mode -1)))
-	   )
+           (vterm-mode . (lambda () (display-line-numbers-mode -1)))
+           ;; (vterm-mode . (lambda () (nlinum-mode -1)))
+           (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
+           (vterm-mode . (lambda () (setq line-spacing 0)))
+           ;; (vterm-mode . (lambda () (objed-local-mode -1)))
+           )
     :init (setq vterm-shell "/usr/bin/bash"))
   
   ;; (use-package vterm
@@ -1871,7 +1871,7 @@
   ;;     (message "Set vterm to install.")
   ;;     (setq vterm-install t)))
   
-					  ;
+                                          ;
   #+END_SRC
 
 * eww & shr
@@ -2083,14 +2083,14 @@
       "Show/hide dot-files"
       (interactive)
       (when (equal major-mode 'dired-mode)
-	(if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
-	    (progn
-	      (set (make-local-variable 'dired-dotfiles-show-p) nil)
-	      (message "h")
-	      (dired-mark-files-regexp "^\\\.")
-	      (dired-do-kill-lines))
-	  (progn (revert-buffer) ; otherwise just revert to re-show
-		 (set (make-local-variable 'dired-dotfiles-show-p) t)))))
+        (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
+            (progn
+              (set (make-local-variable 'dired-dotfiles-show-p) nil)
+              (message "h")
+              (dired-mark-files-regexp "^\\\.")
+              (dired-do-kill-lines))
+          (progn (revert-buffer) ; otherwise just revert to re-show
+                 (set (make-local-variable 'dired-dotfiles-show-p) t)))))
   
     (define-key dired-mode-map (kbd "H-l")
       (lambda () (interactive) (dired-dotfiles-toggle)))
@@ -2129,10 +2129,10 @@
     :defer t
     :after dired
     :bind (:map dired-mode-map
-		("C-c C-n" .'dired-narrow)
-		("C-c C-f" .'dired-narrow-fuzzy)
-		("C-x C-N" .'dired-narrow-regexp)
-		)
+                ("C-c C-n" .'dired-narrow)
+                ("C-c C-f" .'dired-narrow-fuzzy)
+                ("C-x C-N" .'dired-narrow-regexp)
+                )
     )
   
   (use-package dired-subtree
@@ -2140,9 +2140,9 @@
     :straight t
     :after dired ;; treemacs-icons-dired
     :bind (:map dired-mode-map
-		("<tab>" . dired-subtree-toggle)
-		("<backtab>" . dired-subtree-cycle)
-		)
+                ("<tab>" . dired-subtree-toggle)
+                ("<backtab>" . dired-subtree-cycle)
+                )
     )
   
   (use-package dired-quick-sort
@@ -2165,7 +2165,7 @@
     :defer t
     :after dired
     :bind (:map dired-mode-map
-		("C-c C-r" . #'dired-rsync)))
+                ("C-c C-r" . #'dired-rsync)))
   
   #+END_SRC
 
@@ -2653,14 +2653,14 @@
     :defer t
     :config
     (setq markdown-enable-wiki-links t
-	  markdown-italic-underscore t
-	  markdown-asymmetric-header t
-	  markdown-make-gfm-checkboxes-buttons t
-	  markdown-gfm-uppercase-checkbox t
-	  markdown-fontify-code-blocks-natively t
+          markdown-italic-underscore t
+          markdown-asymmetric-header t
+          markdown-make-gfm-checkboxes-buttons t
+          markdown-gfm-uppercase-checkbox t
+          markdown-fontify-code-blocks-natively t
   
-	  ;; markdown-content-type "application/xhtml+xml"
-	  )
+          ;; markdown-content-type "application/xhtml+xml"
+          )
     ;; :config
     ;; (use-package markdown-mode+
     ;;   :straight t)
@@ -2669,7 +2669,7 @@
     ;; (use-package markdown-toc
     ;;   :straight t
     ;;   :bind (:map markdown-mode-command-map
-    ;; 		("r" . markdown-toc-generate-or-refresh-toc))
+    ;;          ("r" . markdown-toc-generate-or-refresh-toc))
     ;;   )
     )
   
@@ -2684,7 +2684,7 @@
   (use-package markdown-toc
       :straight t
       :bind (:map markdown-mode-command-map
-		  ("r" . markdown-toc-generate-or-refresh-toc))
+                  ("r" . markdown-toc-generate-or-refresh-toc))
       :hook markdown-mode
       )
   
@@ -2844,8 +2844,8 @@
     :defer 0.3
     :after init ;; hydra
     :init (setq projectile-mode-line-prefix ""
-		projectile-sort-order 'recentf
-		projectile-use-git-grep t)
+                projectile-sort-order 'recentf
+                projectile-use-git-grep t)
     :hook (prog-mode . projectile-mode)
     :config
     (projectile-global-mode)
@@ -2893,12 +2893,12 @@
   ;;   :defer 0.2
   ;;   :config
   ;;   (add-hook 'after-init-time-hook (progn
-  ;; 				    (switch-to-buffer "*scratch*")
-  ;; 				    (lisp-interaction-mode))))
+  ;;                                (switch-to-buffer "*scratch*")
+  ;;                                (lisp-interaction-mode))))
   
     (add-hook 'after-init-time-hook (progn
-				      (switch-to-buffer "*scratch*")
-				      (lisp-interaction-mode)))
+                                      (switch-to-buffer "*scratch*")
+                                      (lisp-interaction-mode)))
   
   #+END_SRC
 
