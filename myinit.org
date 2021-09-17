@@ -2188,6 +2188,7 @@
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-git-mode 'deferred)
+  ;; (treemacs-display-current-project-exclusively t)
   :config
   ;; (setq
   ;;  treemacs-git-mode nil
