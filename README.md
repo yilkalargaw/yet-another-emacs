@@ -15,9 +15,4 @@ Is my personal emacs config and it is based on the earlier yet-another-emacs. I 
 
   + etc ...
 
-# Screenshots
-
-![screenshot1](./screenshots/screenshot1.gif)
-![screenshot2](./screenshots/screenshot2.gif)
-![screenshot4](./screenshots/screenshot4.gif)
 
