@@ -40,7 +40,6 @@
 - [[#unicode-fonts][unicode-fonts]]
 - [[#exec-path-form-shell][exec path form shell]]
 - [[#helpful][helpful]]
-- [[#objed][objed]]
 - [[#scrolling][scrolling]]
 - [[#line-number][line-number]]
 - [[#line-highlight][line-highlight]]
@@ -103,6 +102,7 @@
 - [[#nim][nim]]
 - [[#raku][raku]]
 - [[#markdown][markdown]]
+- [[#latexauctex][latex/auctex]]
 - [[#web][web]]
 - [[#csv][csv]]
 - [[#yamltoml-and-json][yaml,toml and json]]
@@ -110,7 +110,6 @@
 - [[#projectile][projectile]]
 - [[#org][org]]
 - [[#scratch-page-settings][scratch-page settings]]
-- [[#load-custom-faces][load custom faces]]
 - [[#set-custom-variables][set custom variables]]
 - [[#provide-init][provide init]]
 
@@ -1009,7 +1008,7 @@
 
   #+END_SRC
 
-* objed
+* COMMENT objed
 
   #+BEGIN_SRC emacs-lisp
   
@@ -1442,23 +1441,24 @@
 ** magit & forge
 
    #+BEGIN_SRC emacs-lisp
-
-   ;;magit
-
-   (use-package magit
-     :straight t
-     :config (setq auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
-     :defer t)
-
-   ;; (global-set-key (kbd "C-C g m") 'magit-status)
-   ;; (global-set-key (kbd "γ g") 'magit-status)
-
-
-   (use-package forge
-     :straight t
-     :defer t
-     :after magit)
-
+   
+      ;;magit
+   
+      (use-package magit
+	:straight t
+	:config (setq auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
+	:defer t
+	:after projectile)
+   
+      ;; (global-set-key (kbd "C-C g m") 'magit-status)
+      ;; (global-set-key (kbd "γ g") 'magit-status)
+   
+   
+      (use-package forge
+	:straight t
+	:defer t
+	:after magit)
+   
    #+END_SRC
 
 * monky
@@ -2184,20 +2184,27 @@
 
 (use-package treemacs
   :straight t
+  :after projectile
+  :init
+  (setq
+   treemacs-git-mode nil
+   ;; treemacs-sorting 'mod-time-desc ; modified early
+   ;; treemacs-is-never-other-window t
+   treemacs-follow-after-init t
+   ;; treemacs-is-never-other-window t
+   treemacs-sorting 'alphabetic-case-insensitive-asc
+   treemacs-width 25
+   ;; treemacs-display-current-project-exclusively t
+   ;; treemacs-project-follow-mode t
+)
   :config
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
+  (treemacs-fringe-indicator-mode 'always)
   (treemacs-git-mode 'deferred)
-  ;; (treemacs-display-current-project-exclusively t)
-  :config
-  ;; (setq
-  ;;  treemacs-git-mode nil
-  ;;  treemacs-sorting 'mod-time-desc ; modified early
-  ;;  treemacs-is-never-other-window t
-  ;;  treemacs-width 25)
-  ;; (treemacs-follow-mode t)
-  ;; (treemacs-filewatch-mode t)
-  ;; (treemacs-fringe-indicator-mode 'always)
+  ;; (treemacs-project-follow-mode t)
+  ;; treemacs-display-current-project-exclusively t
+  ;; (add-hook 'projectile-after-switch-project-hook 'treemacs-display-current-project-exclusively)
   )
 
 ;; quickly add projectile projects to treemacs workspace
@@ -2364,7 +2371,7 @@
 
   (use-package rust-mode
     :straight t
-    :defer t
+    :defer ty
     ;; :hook (rust-mode . racer-mode)
     ;;       (racer-mode . eldoc-mode)
     :config
@@ -2692,7 +2699,7 @@
   
   #+END_SRC
 
-* COMMENT latex/auctex
+* latex/auctex
 
   #+BEGIN_SRC emacs-lisp
 
@@ -2845,8 +2852,8 @@
     :defer 0.3
     :after init ;; hydra
     :init (setq projectile-mode-line-prefix ""
-                projectile-sort-order 'recentf
-                projectile-use-git-grep t)
+		projectile-sort-order 'recentf
+		projectile-use-git-grep t)
     :hook (prog-mode . projectile-mode)
     :config
     (projectile-global-mode)
@@ -2903,7 +2910,7 @@
   
   #+END_SRC
 
-* load custom faces
+* COMMENT load custom faces
 
 #+BEGIN_SRC emacs-lisp
 
