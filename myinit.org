@@ -2919,6 +2919,10 @@
     (add-hook 'after-init-time-hook (progn
                                       (switch-to-buffer "*scratch*")
                                       (lisp-interaction-mode)))
+    (use-package scratch
+      ;; :ensure t
+      :straight t
+      :defer t)
   
   #+END_SRC
 
