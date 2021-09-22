@@ -594,6 +594,7 @@ _h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
 (define-key global-map (kbd "η n") 'hydra-move/body)
 (define-key global-map (kbd "η r") 'hydra-rectangle/body)
 (define-key global-map (kbd "η w") 'hydra-window/body)
+(define-key global-map (kbd "η p") 'hydra-projectile/body)
 (define-key global-map (kbd "η s") 'hydra-learn-sp/body)
 (define-key global-map (kbd "η t") 'hydra-transpose/body)
 (define-key global-map (kbd "η l") 'hydra-launcher/body)
