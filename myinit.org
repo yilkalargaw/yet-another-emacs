@@ -17,6 +17,7 @@
 - [[#constants][constants]]
 - [[#auto-tangle][auto-tangle]]
 - [[#gnutls-and-security][gnutls and security]]
+- [[#encryption-related-additional][encryption related additional]]
 - [[#set-utf-8-as-default-coding-system][set utf-8 as default coding system]]
 - [[#lexical-binding][lexical binding]]
 - [[#windowframe-look-and-feel-setting][window(frame) look and feel setting]]
@@ -40,6 +41,7 @@
 - [[#unicode-fonts][unicode-fonts]]
 - [[#exec-path-form-shell][exec path form shell]]
 - [[#helpful][helpful]]
+- [[#objed][objed]]
 - [[#scrolling][scrolling]]
 - [[#line-number][line-number]]
 - [[#line-highlight][line-highlight]]
@@ -294,6 +296,15 @@
   (add-hook 'after-init-time-hook (setq gnutls-min-prime-bits 4096))
 
   #+END_SRC
+
+* encryption related additional
+
+#+begin_src emacs-lisp
+
+   (setq epg-gpg-program "gpg2")
+   (setq auth-sources '("~/.authinfo.gpg"))
+   
+#+end_src
 
 * set utf-8 as default coding system
 
@@ -1008,7 +1019,7 @@
 
   #+END_SRC
 
-* COMMENT objed
+* objed
 
   #+BEGIN_SRC emacs-lisp
   
@@ -1442,22 +1453,23 @@
 
    #+BEGIN_SRC emacs-lisp
    
-      ;;magit
+   ;;magit
    
-      (use-package magit
-        :straight t
-        :config (setq auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
-        :defer t
-        :after projectile)
+   (use-package magit
+     :straight t
+     :config (setq auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
+     :defer t
+     :after projectile)
    
-      ;; (global-set-key (kbd "C-C g m") 'magit-status)
-      ;; (global-set-key (kbd "γ g") 'magit-status)
+   ;; (global-set-key (kbd "C-C g m") 'magit-status)
+   ;; (global-set-key (kbd "γ g") 'magit-status)
    
    
-      (use-package forge
-        :straight t
-        :defer t
-        :after magit)
+   (use-package forge
+     :straight t
+     :defer t
+     :after magit)
+   
    
    #+END_SRC
 
@@ -2730,40 +2742,40 @@
 ** html, css
 
    #+BEGIN_SRC emacs-lisp
-
+   
    (use-package emmet-mode
      :straight t
      :hook (sgml-mode css-mode web-mode))
-
-
+   
+   
    (use-package web-mode
      :straight t
      :defer t
      :after init
      :mode ("\\.html\\'"
-            "\\.css?\\'"
-            "\\.phtml\\'"
-            "\\.erb\\'"
-            "\\.html?\\'"
-            "\\.djhtml\\'"
-            "\\.jinja\\'"
-            )
+	    "\\.css?\\'"
+	    "\\.phtml\\'"
+	    "\\.erb\\'"
+	    "\\.html?\\'"
+	    "\\.djhtml\\'"
+	    "\\.jinja\\'"
+	    )
      :config
      (setq web-mode-markup-indent-offset 2)
-                                           ;  (setq web-mode-engines-alist
-                                           ;        '(("django" . "focus/.*\\.html\\'")
-                                           ;          ("ctemplate" . "realtimecrm/.*\\.html\\'")))
+					   ;  (setq web-mode-engines-alist
+					   ;        '(("django" . "focus/.*\\.html\\'")
+					   ;          ("ctemplate" . "realtimecrm/.*\\.html\\'")))
      (setq web-mode-enable-auto-pairing nil)
      )
-
-   (use-package impatient-mode
-     :straight t
-     :defer t
-     :hook ((web-mode . impatient-mode)
-            (sgml-mode . impatient-mode)))
-
-
-
+   
+   ;; (use-package impatient-mode
+   ;;   :straight t
+   ;;   :defer t
+   ;;   :hook ((web-mode . impatient-mode)
+   ;;          (sgml-mode . impatient-mode)))
+   
+   
+   
    (use-package company-web
      :defer t
      :straight t
@@ -2771,7 +2783,7 @@
      ;;     ('mhtml-mode . (lambda () (add-to-list 'company-backends 'company-web-html)))
      ;;     ('html-mode . (lambda () (add-to-list 'company-backends 'company-web-html))))
      )
-
+   
    #+END_SRC
 
 ** javascript
@@ -2852,8 +2864,8 @@
     :defer 0.3
     :after init ;; hydra
     :init (setq projectile-mode-line-prefix ""
-                projectile-sort-order 'recentf
-                projectile-use-git-grep t)
+		projectile-sort-order 'recentf
+		projectile-use-git-grep t)
     :hook (prog-mode . projectile-mode)
     :config
     (projectile-global-mode)
