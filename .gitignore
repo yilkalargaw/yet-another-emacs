@@ -67,7 +67,7 @@ network-security.data
 recentf
 recentf/
 
-.mc-lists.el
+# .mc-lists.el
 myinit.el
 
 #minted_directory
