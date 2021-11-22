@@ -24,7 +24,7 @@
 (push '(tool-bar-lines . 0) default-frame-alist)
 
 ;; Vertical window divider
-(setq window-divider-default-right-width 14
+(setq window-divider-default-right-width 4
       window-divider-default-places 'right-only)
 (window-divider-mode 1)
 
