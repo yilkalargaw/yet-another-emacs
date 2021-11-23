@@ -5,7 +5,7 @@ Is my personal emacs config and it is based on the earlier yet-another-emacs. I 
 
 # It Uses
 
-  + selectrum, consult, marginelia, embark for completion
+  + selectrum, consult, marginelia for completion
 
   + doom-line
 
@@ -14,5 +14,3 @@ Is my personal emacs config and it is based on the earlier yet-another-emacs. I 
   + projectile
 
   + etc ...
-
-
