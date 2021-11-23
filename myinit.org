@@ -1508,11 +1508,12 @@
 
 * org
 
+** basic org
 #+begin_src emacs-lisp
 
   (use-package org
-    ;; :straight (:type built-in)
-    :straight t
+    :straight (:type built-in)
+    ;; :straight t
     :defer t
     :mode (("\\.org\\'" . org-mode)
            ("\\.org$" . org-mode))
@@ -1521,7 +1522,8 @@
           org-src-tab-acts-natively t
           org-confirm-babel-evaluate nil
           org-edit-src-content-indentation 0)
-    )
+   )
+
 #+end_src
 
 ** org-bullets
@@ -1532,7 +1534,8 @@
   (use-package org-bullets
     :straight t
     :defer t
-    :hook (org-mode . (lambda () (org-bullets-mode 1))))
+    :hook (org-mode . org-bullets-mode))
+
 #+end_src
 
 ** ox-pandoc
@@ -1543,7 +1546,7 @@
   (use-package ox-pandoc
     :straight t
     :defer t
-    :hook (org-mode . (lambda () (when (executable-find "hunspell") (require 'ox-pandoc)))))
+    :hook (org-mode . (lambda () (when (executable-find "pandoc") (require 'ox-pandoc)))))
 
 #+end_src
 
