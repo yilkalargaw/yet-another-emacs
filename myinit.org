@@ -94,6 +94,7 @@
   - [[#minions][minions]]
   - [[#projectile][projectile]]
 - [[#org][org]]
+  - [[#basic-org][basic org]]
   - [[#org-bullets][org-bullets]]
   - [[#ox-pandoc][ox-pandoc]]
 - [[#dired][dired]]
@@ -1286,6 +1287,144 @@
 
 #+end_src
 
+** COMMENT objed
+
+  #+BEGIN_SRC emacs-lisp
+
+
+  (use-package objed
+    :ensure t
+    :defer t
+    ;; :defer 0.7
+    :hook (after-init . objed-mode)
+    :bind(:map objed-map
+               ;; ("<SPC>" . 'objed-char-object)
+               ("C-f" . 'objed-right-char)
+               ("C-b" . 'objed-left-char)
+               ("," . 'objed-identifier-object)
+               ("." . 'objed-sentence-object)
+               ("b" . 'objed-word-object)
+
+               ("F" . nil)
+               ("B" . nil)
+               ("S" . nil)
+               ("R" . nil)
+               ("L" . nil)
+               ("." . nil)
+               ;; ("N" . nil)
+               ;; ("P" . nil)
+               ;; ("b" . nil)
+               ("B" . nil)
+
+               ("<SPC>" . 'objed-object-map)
+               ("c" . 'objed-user-map)
+               ("r" . 'objed-toggle-side)
+               ;; ("l" . 'objed-next-specialized)
+               ;; ("h" . 'objed-previous-specialized)
+               ("l" . 'objed-next)
+               ("h" . 'objed-previous)
+               ("L" . 'objed-move-object-forward)
+               ("H" . 'objed-move-object-backward)
+
+               ;; ("f" . 'objed-next-specialized)
+               ;; ("s" . 'objed-previous-specialized)
+               ("f" . 'objed-next)
+               ("s" . 'objed-previous)
+               ("F" . 'objed-move-object-forward)
+               ("S" . 'objed-move-object-backward)
+
+               ("J" . 'objed-move-line-forward)
+               ("i" . 'objed-kill)
+               ("I" . 'objed-kill)
+               ("K" . 'objed-move-line-backward)
+               ;; ("K" . nil)
+               ("j" . 'objed-next-line)
+               ("k" . 'objed-previous-line)
+               ("G" . 'objed-del-insert)
+               ("<H-SPC>" . 'objed-quit)
+
+               ;; :map objed-user-map
+               ;; ("f" . 'move-to-char)
+               ;; ("g" . 'move-upto-char)
+
+               ;;        :map objed-object-map
+               ;;        ("," . 'objed-identifier-object)
+
+               ;;        ;; :map objed-mode-map
+               ;;        ;; ("<M-SPC>" . 'my-objed-activate)
+               )
+
+    :config
+    ;; (setq objed--which-key-avail-p t
+    ;;       objed--avy-avail-p t)
+    ;; (setq objed-use-avy-if-available 1)
+    ;; (define-key objed-mode-map (kbd "M-SPC") (objed-activate 'char))
+
+    (defun objed--goto-next-specialized (&optional arg)
+      "Move to the next object.
+
+  With postitive prefix argument ARG move to the nth next object."
+      (let ((arg (or arg 1))
+            (obj nil))
+        (if (equal objed--object 'line)
+            (objed-next-line)
+          (progn
+            (dotimes (_ arg obj)
+              (when (setq obj  (objed--get-next))
+                (objed--update-current-object obj)
+                (cond ((or (equal objed--object 'word)
+                           (equal objed--object 'sexp))
+                       (goto-char (objed--end obj)))
+                      (t (objed--goto-char (objed--beg obj))))))))))
+
+    (defun objed-next-specialized (&optional arg)
+      "Move to ARG next object of current type."
+      (interactive "p")
+      ;; on init skip current
+      (when (and (region-active-p)
+                 (eq last-command 'objed-extend))
+        (exchange-point-and-mark))
+      (let ((pos (point)))
+        (objed--goto-next-specialized (or arg 1))
+        (when (eq pos (point))
+          (error "No next %s" objed--object))))
+
+
+    (defun objed--goto-previous-specialized (&optional arg)
+      "Move to the previous object.
+
+  With postitive prefix argument ARG move to the nth previous object."
+      (let ((arg (or arg 1))
+            (obj nil))
+        (if (equal objed--object 'line)
+            (objed-previous-line)
+          (progn
+            (dotimes (_ arg obj)
+              (when (setq obj (objed--get-prev))
+                (objed--update-current-object obj)
+                (objed--goto-char (objed--beg obj))))))))
+
+    (defun objed-previous-specialized (&optional arg)
+      "Move to ARG previous object of current type."
+      (interactive "p")
+      ;; on init skip current
+      (when (and (region-active-p)
+                 (eq last-command 'objed-extend))
+        (exchange-point-and-mark))
+      (let ((pos (point)))
+        (objed--goto-previous-specialized (or arg 1))
+        (when (eq pos (point))
+          (error "No next %s" objed--object))))
+
+    ;; ;;   ;; :config
+    ;; ;; (load (concat user-emacs-directory "lisp/objed-goto-next-specialized.el"))
+
+    )
+
+  ;; (add-hook 'after-init-time-hook (progn (require 'objed) (objed-mode)))
+
+  #+END_SRC
+
 ** restclient
 
 #+begin_src emacs-lisp
@@ -1824,9 +1963,6 @@
 
 #+end_src
 
-#+RESULTS:
-| t | disable-theme | 4096 |
-
 ** mode-line
 
 *** COMMENT doom-modeline
@@ -2071,23 +2207,23 @@
     :defer 2
     ;; :init (setq lsp-keymap-prefix "γ l")
     :hook ((ruby-mode . lsp)
-	   (enh-ruby-mode . lsp)
-	   (php-mode . lsp)
-	   ;; (java-mode . lsp)
-	   (html-mode .lsp)
-	   (js-mode . lsp)
-	   ;; (js2-mode . lsp)
-	   (web-mode . lsp)
-	   (css-mode . lsp)
-	   ;; (crystal-mode . lsp)
-	   (python-mode  . lsp)
-	   (rust-mode . lsp)
-	   ;; (go-mode . lsp)
-	   (c-mode . lsp)
-	   (c++-mode .lsp)
-	   ;; (lua-mode . lsp)
-	   (bash . lsp)
-	   )
+           (enh-ruby-mode . lsp)
+           (php-mode . lsp)
+           ;; (java-mode . lsp)
+           (html-mode .lsp)
+           (js-mode . lsp)
+           ;; (js2-mode . lsp)
+           (web-mode . lsp)
+           (css-mode . lsp)
+           ;; (crystal-mode . lsp)
+           (python-mode  . lsp)
+           (rust-mode . lsp)
+           ;; (go-mode . lsp)
+           (c-mode . lsp)
+           (c++-mode .lsp)
+           ;; (lua-mode . lsp)
+           (bash . lsp)
+           )
     :config
     (setq lsp-keymap-prefix "γ l")
     ;; change nil to 't to enable logging of packets between emacs and the LS
@@ -2111,16 +2247,16 @@
     :hook (lsp-mode . lsp-ui-mode)
     :config
     (setq lsp-ui-doc-enable t
-	  lsp-ui-doc-use-childframe t
-	  lsp-ui-doc-position 'top
-	  lsp-ui-doc-include-signature t
-	  lsp-ui-sideline-enable t
-	  ;; lsp-ui-flycheck-enable 
-	  ;; lsp-ui-flycheck-list-position 'right
-	  ;; lsp-ui-flycheck-live-reporting t
-	  lsp-ui-peek-enable t
-	  lsp-ui-peek-list-width 60
-	  lsp-ui-peek-peek-height 25)
+          lsp-ui-doc-use-childframe t
+          lsp-ui-doc-position 'top
+          lsp-ui-doc-include-signature t
+          lsp-ui-sideline-enable t
+          ;; lsp-ui-flycheck-enable 
+          ;; lsp-ui-flycheck-list-position 'right
+          ;; lsp-ui-flycheck-live-reporting t
+          lsp-ui-peek-enable t
+          lsp-ui-peek-list-width 60
+          lsp-ui-peek-peek-height 25)
     (setq lsp-ui-sideline-ignore-duplicate t)
     ;; (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 
