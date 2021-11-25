@@ -81,7 +81,7 @@
   - [[#multiple-cursors][multiple-cursors]]
   - [[#phi-search][phi-search]]
   - [[#rainbow-delimiters][rainbow-delimiters]]
-  - [[#god-mode][god-mode]]
+  - [[#objed][objed]]
   - [[#restclient][restclient]]
   - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#novel][nov.el]]
@@ -1288,13 +1288,13 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** COMMENT objed
+** objed
 
 #+begin_src emacs-lisp
 
 
 (use-package objed
-  :ensure t
+  :straight t
   :defer t
   ;; :defer 0.7
   ;; :hook (after-init . objed-mode)
@@ -1322,23 +1322,23 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 	("<SPC>" . 'objed-object-map)
 	("c" . 'objed-user-map)
 	("r" . 'objed-toggle-side)
-	;; ("l" . 'objed-next-specialized)
-	;; ("h" . 'objed-previous-specialized)
-	("l" . 'objed-next)
-	("h" . 'objed-previous)
+	("l" . 'objed-next-specialized)
+	("h" . 'objed-previous-specialized)
+	;; ("l" . 'objed-next)
+	;; ("h" . 'objed-previous)
 	("L" . 'objed-move-object-forward)
 	("H" . 'objed-move-object-backward)
 
-	;; ("f" . 'objed-next-specialized)
-	;; ("s" . 'objed-previous-specialized)
-	("f" . 'objed-next)
-	("s" . 'objed-previous)
+	("f" . 'objed-next-specialized)
+	("s" . 'objed-previous-specialized)
+	;; ("f" . 'objed-next)
+	;; ("s" . 'objed-previous)
 	("F" . 'objed-move-object-forward)
 	("S" . 'objed-move-object-backward)
 
 	("J" . 'objed-move-line-forward)
 	("i" . 'objed-kill)
-	("I" . 'objed-kill)
+	("I" . 'objed-del-insert)
 	("K" . 'objed-move-line-backward)
 	;; ("K" . nil)
 	("j" . 'objed-next-line)
@@ -1428,7 +1428,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-** god-mode
+** COMMENT god-mode
 
 #+begin_src emacs-lisp
 
@@ -1444,8 +1444,7 @@ With postitive prefix argument ARG move to the nth previous object."
 	)
   :config
   (setq god-mod-alist '((nil . "C-") ("g" . "M-") ("G" . "C-M-") ("h" . "M-") ("H" . "C-M-")))
-
-  )
+ )
 
 #+end_src
 
