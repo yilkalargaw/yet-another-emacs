@@ -1437,12 +1437,14 @@ With postitive prefix argument ARG move to the nth previous object."
   :defer t
   :bind
   ("M-o" . god-local-mode)
+  (:map god-local-mode-map
+        ("z" . repeat)
+        ("i" . god-local-mode)
+	("." . repeat)
+	)
   :config
   (setq god-mod-alist '((nil . "C-") ("g" . "M-") ("G" . "C-M-") ("h" . "M-") ("H" . "C-M-")))
-  (bind-keys :map god-local-mode-map
-             ("z" . repeat)
-             ("i" . god-local-mode)
-	     )
+
   )
 
 #+end_src
