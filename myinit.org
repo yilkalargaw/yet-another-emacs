@@ -81,6 +81,7 @@
   - [[#multiple-cursors][multiple-cursors]]
   - [[#phi-search][phi-search]]
   - [[#rainbow-delimiters][rainbow-delimiters]]
+  - [[#god-mode][god-mode]]
   - [[#restclient][restclient]]
   - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#novel][nov.el]]
@@ -1424,6 +1425,23 @@
   ;; (add-hook 'after-init-time-hook (progn (require 'objed) (objed-mode)))
 
   #+END_SRC
+
+** god-mode
+
+#+begin_src emacs-lisp
+
+(use-package god-mode
+  :straight t
+  :defer t
+  :bind
+  ("M-o" . god-local-mode)
+  ;; :config
+  ;; (bind-keys :map god-local-mode-map
+  ;;            ("z" . repeat)
+  ;;            ("i" . god-local-mode))
+  )
+
+#+end_src
 
 ** restclient
 
