@@ -135,6 +135,12 @@ float between 0 and 1)"
    ;;             :background ,(face-background 'highlight) :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face) ;; font-lock-comment-face
    ;;                                                                       )))))
 
+   `(highlight ((t (:inherit 'highlight :box nil)))) ;; font-lock-comment-face
+   `(hl-line ((t (:inherit 'nil
+               :background ,(face-background 'default) :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))))))
+   `(objed-hl ((t (:inherit 'nil
+                :background ,(face-background 'default) :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))))))
+
    `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
 
 
@@ -203,13 +209,23 @@ float between 0 and 1)"
    ;;                         :inherit ivy-current-match :background ,(face-foreground 'link) ;; :foreground ,(face-background 'link)
    ;;                         :box (:line-width 1 :color ,(face-foreground 'default;; font-lock-comment-face
    ;;                                                                      ))))))
-   `(ivy-current-match ((t (:inherit bold))))
-   `(ivy-minibuffer-match-face-1 ((t (:inherit bold))))
-   `(ivy-minibuffer-match-face-2 ((t (:underline t))))
-   `(ivy-minibuffer-match-face-3 ((t (:underline t))))
-   `(ivy-minibuffer-match-face-4 ((t (:underline t))))
-   `(ivy-virtual ((t (:foreground ,(face-foreground font-lock-comment-face) :slant italic))))
 
+   ;; `(ivy-current-match ((t (:inherit bold))))
+   ;; `(ivy-minibuffer-match-face-1 ((t (:inherit bold))))
+   ;; `(ivy-minibuffer-match-face-2 ((t (:underline t))))
+   ;; `(ivy-minibuffer-match-face-3 ((t (:underline t))))
+   ;; `(ivy-minibuffer-match-face-4 ((t (:underline t))))
+   ;; `(ivy-virtual ((t (:foreground ,(face-foreground font-lock-comment-face) :slant italic))))
+
+   ;; ;; icomplete
+   ;; ;; `(icompletep-determined ((t (:box (:line-width 1 :color ,(face-foreground 'default))))))
+   ;; ;; ;; ido
+   ;; ;; `(ido-first-match ((t (:box (:line-width 1 :color ,(face-foreground 'default))))))
+   ;; ;; `(ido-only-match ((t (((t (:box (:line-width 1 :color ,(face-foreground 'default)))))))))
+   ;; ;; `(ido-subdir ((t (:inherit bold))))
+   ;; ;; `(ido-virtual ((t (:inherit bold))))
+   ;; ;; `(ido-incomplete-regexp ((t (:inherit bold))))
+   ;; ;; `(ido-indicator ((t (:box t))))
 
    ;; ;;;;; swiper
    ;; `(swiper-line-face ((t (;; :underline t
@@ -220,6 +236,10 @@ float between 0 and 1)"
    ;; `(swiper-match-face-2 ((t (:underline t))))
    ;; `(swiper-match-face-3 ((t (:underline t))))
    ;; `(swiper-match-face-4 ((t (:underline t))))
+
+
+   ;;selectrum
+   `(selectrum-current-candidate ((t (:box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face)) :background ,(face-background 'default)))))
 
 
    ;; ;;;;; dired-subtree
