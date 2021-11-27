@@ -94,6 +94,7 @@
   - [[#default-text-scale][default text-scale]]
   - [[#minions][minions]]
   - [[#projectile][projectile]]
+  - [[#ctrlf][ctrlf]]
 - [[#org][org]]
   - [[#basic-org][basic org]]
   - [[#org-bullets][org-bullets]]
@@ -1667,6 +1668,16 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
+** ctrlf
+
+#+begin_src emacs-lisp
+
+  (use-package ctrlf
+    :straight t
+    :init (ctrlf-mode +1))
+
+#+end_src
+
 
 * org
 
@@ -1724,7 +1735,7 @@ With postitive prefix argument ARG move to the nth previous object."
   :config
   (require 'dired-aux)
   (require 'dired-x)
-  (require 'dired-narrow)
+  ;; (require 'dired-narrow)
   (require 'dired-subtree)
   (setq dired-listing-switches "--group-directories-first -lah")
   (put 'dired-find-alternate-file 'disabled nil)
@@ -1933,6 +1944,10 @@ With postitive prefix argument ARG move to the nth previous object."
   )
 
 (use-package vscode-dark-plus-theme
+  :straight t
+  :defer t)
+
+(use-package kaolin-themes
   :straight t
   :defer t)
 
@@ -2668,6 +2683,59 @@ With postitive prefix argument ARG move to the nth previous object."
   ;; (global-set-key (kbd "<f8>") 'dap-next)
   ;; (global-set-key (kbd "<f9>") 'dap-continue)
   )
+
+#+end_src
+
+
+* COMMENT eaf
+
+#+begin_src emacs-lisp
+
+(use-package eaf
+  :if (eq system-type 'gnu/linux)
+  :load-path "~/.emacs.d/site-lisp/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
+  :custom
+  (eaf-find-alternate-file-in-dired t)
+  :config
+  (require 'eaf-browser)
+  (require 'eaf-pdf-viewer)
+
+  ;; (require 'eaf-airshare)
+  ;; ;; (require 'eaf-browser)
+  ;; (require 'eaf-camera)
+  ;; (require 'eaf-demo)
+  ;; (require 'eaf-file-browser)
+  ;; (require 'eaf-file-manager)
+  ;; (require 'eaf-file-sender)
+  ;; (require 'eaf-image-viewer)
+  ;; (require 'eaf-jupyter)
+  ;; (require 'eaf-markdown-previewer)
+  ;; (require 'eaf-mermaid)
+  ;; (require 'eaf-mindmap)
+  ;; (require 'eaf-music-player)
+  ;; (require 'eaf-org-previewer)
+  ;; ;; (require 'eaf-pdf-viewer)
+  ;; (require 'eaf-system-monitor)
+  ;; (require 'eaf-terminal)
+  ;; (require 'eaf-video-player)
+  ;; (require 'eaf-vue-demo)
+  ;; (require 'eaf-netease-cloud-music)
+  ;; (require 'eaf-rss-reader)
+  
+  ;; (add-hook! 'eaf-mode-hook 'xah-fly-keys-off)
+
+  ;; (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
+  ;; (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
+
+  (defun eaf-open-google ()
+    "Open Google using EAF."
+    (interactive)
+    (eaf-open-browser "https://www.google.com"))
+  
+   (defun eaf-open-ddg ()
+    "Open Google using EAF."
+    (interactive)
+    (eaf-open-browser "https://www.duckduckgo.com")))
 
 #+end_src
 
