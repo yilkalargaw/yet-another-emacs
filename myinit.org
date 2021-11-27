@@ -1302,61 +1302,61 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :bind
   ("M-o" . objed-local-mode)
   (:map objed-map
-	;; ("<SPC>" . 'objed-char-object)
-	("C-f" . 'objed-right-char)
-	("C-b" . 'objed-left-char)
-	("," . 'objed-identifier-object)
-	("." . 'objed-sentence-object)
-	("b" . 'objed-word-object)
+        ;; ("<SPC>" . 'objed-char-object)
+        ("C-f" . 'objed-right-char)
+        ("C-b" . 'objed-left-char)
+        ("," . 'objed-identifier-object)
+        ("." . 'objed-sentence-object)
+        ("b" . 'objed-word-object)
 
-	("F" . nil)
-	("B" . nil)
-	("S" . nil)
-	("R" . nil)
-	("L" . nil)
-	("." . nil)
-	;; ("N" . nil)
-	;; ("P" . nil)
-	;; ("b" . nil)
-	("B" . nil)
+        ("F" . nil)
+        ("B" . nil)
+        ("S" . nil)
+        ("R" . nil)
+        ("L" . nil)
+        ("." . nil)
+        ;; ("N" . nil)
+        ;; ("P" . nil)
+        ;; ("b" . nil)
+        ("B" . nil)
 
-	("<SPC>" . 'objed-object-map)
-	("c" . 'objed-user-map)
-	("r" . 'objed-toggle-side)
-	("l" . 'objed-next-specialized)
-	("h" . 'objed-previous-specialized)
-	;; ("l" . 'objed-next)
-	;; ("h" . 'objed-previous)
-	("L" . 'objed-move-object-forward)
-	("H" . 'objed-move-object-backward)
+        ("<SPC>" . 'objed-object-map)
+        ("c" . 'objed-user-map)
+        ("r" . 'objed-toggle-side)
+        ("l" . 'objed-next-specialized)
+        ("h" . 'objed-previous-specialized)
+        ;; ("l" . 'objed-next)
+        ;; ("h" . 'objed-previous)
+        ("L" . 'objed-move-object-forward)
+        ("H" . 'objed-move-object-backward)
 
-	("f" . 'objed-next-specialized)
-	("s" . 'objed-previous-specialized)
-	;; ("f" . 'objed-next)
-	;; ("s" . 'objed-previous)
-	("F" . 'objed-move-object-forward)
-	("S" . 'objed-move-object-backward)
+        ("f" . 'objed-next-specialized)
+        ("s" . 'objed-previous-specialized)
+        ;; ("f" . 'objed-next)
+        ;; ("s" . 'objed-previous)
+        ("F" . 'objed-move-object-forward)
+        ("S" . 'objed-move-object-backward)
 
-	("J" . 'objed-move-line-forward)
-	("i" . 'objed-kill)
-	("I" . 'objed-del-insert)
-	("K" . 'objed-move-line-backward)
-	;; ("K" . nil)
-	("j" . 'objed-next-line)
-	("k" . 'objed-previous-line)
-	("G" . 'objed-del-insert)
-	("<H-SPC>" . 'objed-quit)
+        ("J" . 'objed-move-line-forward)
+        ("i" . 'objed-kill)
+        ("I" . 'objed-del-insert)
+        ("K" . 'objed-move-line-backward)
+        ;; ("K" . nil)
+        ("j" . 'objed-next-line)
+        ("k" . 'objed-previous-line)
+        ("G" . 'objed-del-insert)
+        ("<H-SPC>" . 'objed-quit)
 
-	;; :map objed-user-map
-	;; ("f" . 'move-to-char)
-	;; ("g" . 'move-upto-char)
+        ;; :map objed-user-map
+        ;; ("f" . 'move-to-char)
+        ;; ("g" . 'move-upto-char)
 
-	;;        :map objed-object-map
-	;;        ("," . 'objed-identifier-object)
+        ;;        :map objed-object-map
+        ;;        ("," . 'objed-identifier-object)
 
-	;;        ;; :map objed-mode-map
-	;;        ;; ("<M-SPC>" . 'my-objed-activate)
-	)
+        ;;        ;; :map objed-mode-map
+        ;;        ;; ("<M-SPC>" . 'my-objed-activate)
+        )
 
   :config
   ;; (setq objed--which-key-avail-p t
@@ -1369,29 +1369,29 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 With postitive prefix argument ARG move to the nth next object."
     (let ((arg (or arg 1))
-	  (obj nil))
+          (obj nil))
       (if (equal objed--object 'line)
-	  (objed-next-line)
-	(progn
-	  (dotimes (_ arg obj)
-	    (when (setq obj  (objed--get-next))
-	      (objed--update-current-object obj)
-	      (cond ((or (equal objed--object 'word)
-			 (equal objed--object 'sexp))
-		     (goto-char (objed--end obj)))
-		    (t (objed--goto-char (objed--beg obj))))))))))
+          (objed-next-line)
+        (progn
+          (dotimes (_ arg obj)
+            (when (setq obj  (objed--get-next))
+              (objed--update-current-object obj)
+              (cond ((or (equal objed--object 'word)
+                         (equal objed--object 'sexp))
+                     (goto-char (objed--end obj)))
+                    (t (objed--goto-char (objed--beg obj))))))))))
 
   (defun objed-next-specialized (&optional arg)
     "Move to ARG next object of current type."
     (interactive "p")
     ;; on init skip current
     (when (and (region-active-p)
-	       (eq last-command 'objed-extend))
+               (eq last-command 'objed-extend))
       (exchange-point-and-mark))
     (let ((pos (point)))
       (objed--goto-next-specialized (or arg 1))
       (when (eq pos (point))
-	(error "No next %s" objed--object))))
+        (error "No next %s" objed--object))))
 
 
   (defun objed--goto-previous-specialized (&optional arg)
@@ -1399,26 +1399,26 @@ With postitive prefix argument ARG move to the nth next object."
 
 With postitive prefix argument ARG move to the nth previous object."
     (let ((arg (or arg 1))
-	  (obj nil))
+          (obj nil))
       (if (equal objed--object 'line)
-	  (objed-previous-line)
-	(progn
-	  (dotimes (_ arg obj)
-	    (when (setq obj (objed--get-prev))
-	      (objed--update-current-object obj)
-	      (objed--goto-char (objed--beg obj))))))))
+          (objed-previous-line)
+        (progn
+          (dotimes (_ arg obj)
+            (when (setq obj (objed--get-prev))
+              (objed--update-current-object obj)
+              (objed--goto-char (objed--beg obj))))))))
 
   (defun objed-previous-specialized (&optional arg)
     "Move to ARG previous object of current type."
     (interactive "p")
     ;; on init skip current
     (when (and (region-active-p)
-	       (eq last-command 'objed-extend))
+               (eq last-command 'objed-extend))
       (exchange-point-and-mark))
     (let ((pos (point)))
       (objed--goto-previous-specialized (or arg 1))
       (when (eq pos (point))
-	(error "No next %s" objed--object))))
+        (error "No next %s" objed--object))))
 
   ;; ;;   ;; :config
   ;; ;; (load (concat user-emacs-directory "lisp/objed-goto-next-specialized.el"))
@@ -1441,8 +1441,8 @@ With postitive prefix argument ARG move to the nth previous object."
   (:map god-local-mode-map
         ("z" . repeat)
         ("i" . god-local-mode)
-	("." . repeat)
-	)
+        ("." . repeat)
+        )
   :config
   (setq god-mod-alist '((nil . "C-") ("g" . "M-") ("G" . "C-M-") ("h" . "M-") ("H" . "C-M-")))
  )
@@ -1761,10 +1761,10 @@ With postitive prefix argument ARG move to the nth previous object."
                (set (make-local-variable 'dired-dotfiles-show-p) t)))))
 
   (define-key dired-mode-map (kbd "H-l")
-	      (lambda () (interactive) (dired-dotfiles-toggle)))
+              (lambda () (interactive) (dired-dotfiles-toggle)))
 
   (define-key dired-mode-map (kbd "^")
-	      (lambda () (interactive) (find-alternate-file "..")))
+              (lambda () (interactive) (find-alternate-file "..")))
 
   (setq wdired-allow-to-change-permissions t)
 
