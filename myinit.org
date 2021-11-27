@@ -586,8 +586,8 @@
 (use-package hl-line
   ;; Highlights the current line
   :hook ((prog-mode text-mode conf-mode special-mode org-mode lisp-interaction) . (lambda () (hl-line-mode t)))
-  :after (init)
-  :defer t
+  ;; :after (init)
+  :defer 0.5
   :straight (:type built-in)
   :config
   ;; Not having to render the hl-line overlay in multiple buffers offers a tiny
@@ -2043,7 +2043,7 @@ With postitive prefix argument ARG move to the nth previous object."
             (setq base16-theme-256-color-source 'base16-shell)
             (setq base16-distinct-fringe-background nil)
             ;; (setq base16-highlight-mode-line 'box)
-            (load-theme 'kaolin-dark t)
+            (load-theme 'kaolin-ocean t)
             ;; (load-file (concat user-emacs-directory "custom_faces.el"))
             ))
 
