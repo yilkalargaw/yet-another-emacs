@@ -1460,11 +1460,11 @@ With postitive prefix argument ARG move to the nth previous object."
   :defer t)
 
 
-(use-package company-restclient
-  :straight t
-  :after (restclient)
-  :config
-  (add-to-list 'company-backends 'company-restclient))
+;; (use-package company-restclient
+;;   :straight t
+;;   :after (restclient)
+;;   :config
+;;   (add-to-list 'company-backends 'company-restclient))
 
 #+end_src
 
@@ -1558,13 +1558,67 @@ With postitive prefix argument ARG move to the nth previous object."
   ;; :hook (prog-mode . global-company-mode)
   :bind
   ("C-i" . company-indent-or-complete-common)
-  ("C-M-i" . counsel-company)
+  ;; ("C-M-i" . counsel-company)
   :config ;; (require 'company)
   (global-company-mode 1)
-
   )
 
 #+end_src
+
+** COMMENT corfu & cape & kind-icons
+
+#+begin_src emacs-lisp
+;; Enable Corfu completion UI
+;; See the Corfu README for more configuration tips.
+(use-package corfu
+  :defer 0.8
+  :straight t
+  :bind
+  (:map corfu-map
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous))
+  :init
+  (corfu-global-mode))
+
+;; Add extensions
+(use-package cape
+  :straight t
+  ;; Bind dedicated completion commands
+  :bind (("C-i" . completion-at-point) ;; capf
+         ;; ("C-c p t" . complete-tag)        ;; etags
+         ;; ("C-c p d" . cape-dabbrev)        ;; or dabbrev-completion
+         ;; ("C-c p f" . cape-file)
+         ;; ("C-c p k" . cape-keyword)
+         ;; ("C-c p s" . cape-symbol)
+         ;; ("C-c p a" . cape-abbrev)
+         ;; ("C-c p i" . cape-ispell)
+         ;; ("C-c p l" . cape-line)
+         ;; ("C-c p w" . cape-dict)
+	 )
+  :init
+  ;; Add `completion-at-point-functions', used by `completion-at-point'.
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;;(add-to-list 'completion-at-point-functions #'cape-ispell)
+  ;;(add-to-list 'completion-at-point-functions #'cape-dict)
+  ;;(add-to-list 'completion-at-point-functions #'cape-symbol)
+  ;;(add-to-list 'completion-at-point-functions #'cape-line)
+)
+
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+#+end_src
+
 
 ** highligt number literals
 
@@ -1736,7 +1790,7 @@ With postitive prefix argument ARG move to the nth previous object."
   (require 'dired-aux)
   (require 'dired-x)
   ;; (require 'dired-narrow)
-  (require 'dired-subtree)
+  ;; (require 'dired-subtree)
   (setq dired-listing-switches "--group-directories-first -lah")
   (put 'dired-find-alternate-file 'disabled nil)
   (define-key dired-mode-map (kbd "C-<return>") 'dired-find-file)
@@ -1989,7 +2043,7 @@ With postitive prefix argument ARG move to the nth previous object."
             (setq base16-theme-256-color-source 'base16-shell)
             (setq base16-distinct-fringe-background nil)
             ;; (setq base16-highlight-mode-line 'box)
-            (load-theme 'base16-brewer t)
+            (load-theme 'kaolin-dark t)
             ;; (load-file (concat user-emacs-directory "custom_faces.el"))
             ))
 
@@ -2210,7 +2264,6 @@ With postitive prefix argument ARG move to the nth previous object."
   (moody-replace-eldoc-minibuffer-message-function))  
 #+end_src
 
-
 ** all-the-icons
 
 #+begin_src emacs-lisp
@@ -2232,6 +2285,17 @@ With postitive prefix argument ARG move to the nth previous object."
   :straight t
   :defer t
   :hook (dired-mode . all-the-icons-dired-mode))
+#+end_src
+
+** COMMENT emacs-mini-frame
+
+#+begin_src emacs-lisp
+
+(use-package emacs-mini-frame
+  :straight (emacs-mini-frame :type git :host github :repo "muffinmad/emacs-mini-frame")
+  :defer t
+  :after selectrum)
+
 #+end_src
 
 
