@@ -137,36 +137,36 @@ float between 0 and 1)"
 
    ;; `(highlight ((t (:inherit 'highlight :box nil :underline nil :overline nil)))) ;; font-lock-comment-face
    ;; `(hl-line ((t (:inherit 'highlight
-   ;; 			   ;; :background ,(face-background 'default)
-   ;; 			    :underline nil :overline nil
-   ;; 			   ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
-   ;; 			   ))))
+   ;;                      ;; :background ,(face-background 'default)
+   ;;                       :underline nil :overline nil
+   ;;                      ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
+   ;;                      ))))
    ;; `(objed-hl ((t (:inherit 'highlight
-   ;; 			    ;; :background ,(face-background 'default)
-   ;; 			     :underline nil :overline nil
-   ;; 			    ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
-   ;; 			    ))))
+   ;;                       ;; :background ,(face-background 'default)
+   ;;                        :underline nil :overline nil
+   ;;                       ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
+   ;;                       ))))
 
    ;; `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
 
 
    `(region ((t (:inherit 'region ;; :background ,(face-background 'region)
-			  :foreground nil))))
+                          :foreground nil))))
    `(secondary-selection ((t (:inherit 'secondary-selection :foreground nil))))
 
-   `(highlight ((t (:inherit 'highlight ;; :box nil 
-			     ;; :underline nil :overline nil
-			     )))) ;; font-lock-comment-face
+   `(highlight ((t (:inherit 'highlight ;; :box nil
+                             ;; :underline nil :overline nil
+                             )))) ;; font-lock-comment-face
    `(hl-line ((t (:inherit 'hl-line
-			   ;; :background ,(face-background 'default)
-			    ;; :underline nil :overline nil
-			   ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
-			   ))))
+                           ;; :background ,(face-background 'default)
+                            ;; :underline nil :overline nil
+                           ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
+                           ))))
    `(objed-hl ((t (:inherit 'region :inherit 'secondary-selection
-			    ;; :background ,(face-background 'default)
-			     ;; :underline nil :overline nil
-			    ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
-			    ))))
+                            ;; :background ,(face-background 'default)
+                             ;; :underline nil :overline nil
+                            ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
+                            ))))
 
    `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
 
@@ -265,7 +265,7 @@ float between 0 and 1)"
 
    ;;selectrum
    `(selectrum-current-candidate ((t (:background ,(face-background 'hl-line) :foreground ,(face-foreground 'hl-line) :bold t :underline nil :overline nil
-						  :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))))))
+                                                  :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))))))
 
 
    ;; ;;;;; dired-subtree
