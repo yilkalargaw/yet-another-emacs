@@ -95,6 +95,7 @@
   - [[#minions][minions]]
   - [[#projectile][projectile]]
   - [[#ctrlf][ctrlf]]
+  - [[#elpher][elpher]]
 - [[#org][org]]
   - [[#basic-org][basic org]]
   - [[#org-bullets][org-bullets]]
@@ -1618,7 +1619,6 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-
 ** highligt number literals
 
 #+begin_src emacs-lisp
@@ -1731,6 +1731,13 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
+** elpher
+
+#+begin_src emacs-lisp
+  (use-package elpher
+    :straight t
+    :defer t)  
+#+end_src
 
 * org
 
