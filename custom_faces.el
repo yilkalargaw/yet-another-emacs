@@ -191,8 +191,17 @@ float between 0 and 1)"
                                 :box (:color ,(face-foreground 'default) :line-width 1) :underline nil :overline nil :height 1.0))))
    `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default)
                                          :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1) :height 1.0))))
-   `(mode-line-buffer-id ((t (:box (:color ,(face-foreground 'link) :line-width 2) :foreground ,(face-foreground 'link)
-                                   :background nil :bold t :height 1.0))))
+
+   `(mode-line-buffer-id ((t ( :box (:color ,(face-foreground 'default) :line-width 1)
+                                :foreground ,(face-foreground 'link)
+                                :background nil :bold t :height 1.0)
+                                :distant-foreground ,(face-foreground 'font-lock-comment-face))))
+
+   ;; `(mode-line-buffer-id-inactive ((t ( :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1)
+   ;;                                  :box nil
+   ;;                                       :foreground ,(face-foreground 'link)
+   ;;                                 :background nil :bold t :height 1.0))))
+
    ;; ;; '(mode-line ((t (:background "#002b36"  :foreground "white" :box "dark cyan"))))
    ;; ;; '(mode-line-inactive ((t (:background "#002b36" :foreground "white" :box nil))))
    ;; `(spaceline-highlight-face ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :inherit 'mode-line))))
