@@ -102,7 +102,6 @@
 - [[#dired][dired]]
 - [[#themes-and-theming][themes and theming]]
   - [[#mode-line][mode-line]]
-    - [[#mood-line][mood-line]]
   - [[#all-the-icons][all-the-icons]]
 - [[#programming-and-typesetting][programming and typesetting]]
   - [[#lsp-mode][lsp-mode]]
@@ -352,7 +351,7 @@
 ;; (global-set-key (kbd "C-c m b") 'menu-bar-mode)
 (column-number-mode 1)
 (setq initial-scratch-message nil)
-;; (display-battery-mode t)
+(display-battery-mode t)
 (display-time-mode t)
 (setq frame-resize-pixelwise t)
 (setq redisplay-skip-fontification-on-input t)
@@ -2043,7 +2042,7 @@ With postitive prefix argument ARG move to the nth previous object."
             (setq base16-theme-256-color-source 'base16-shell)
             (setq base16-distinct-fringe-background nil)
             ;; (setq base16-highlight-mode-line 'box)
-            (load-theme 'kaolin-ocean t)
+            (load-theme 'kaolin-bubblegum t)
             ;; (load-file (concat user-emacs-directory "custom_faces.el"))
             ))
 
@@ -2236,7 +2235,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-*** mood-line
+*** COMMENT mood-line
 
 #+begin_src emacs-lisp
 (use-package mood-line
