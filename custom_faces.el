@@ -150,13 +150,13 @@ float between 0 and 1)"
    ;; `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
 
 
-   `(region ((t (:inherit 'region ;; :background ,(face-background 'region)
-                          :foreground nil))))
-   `(secondary-selection ((t (:inherit 'secondary-selection :foreground nil))))
+   ;; `(region ((t (;; :inherit 'region :background ,(face-background 'region)
+   ;;                        :foreground nil))))
+   ;; ;; `(secondary-selection ((t (:inherit 'secondary-selection :foreground nil))))
 
-   `(highlight ((t (:inherit 'highlight ;; :box nil
-                             ;; :underline nil :overline nil
-                             )))) ;; font-lock-comment-face
+   ;; `(highlight ((t (:inherit 'highlight ;; :box nil
+   ;;                           ;; :underline nil :overline nil
+   ;;                           )))) ;; font-lock-comment-face
    `(hl-line ((t (:inherit 'hl-line
                            ;; :background ,(face-background 'default)
                             ;; :underline nil :overline nil
