@@ -2049,7 +2049,7 @@ With postitive prefix argument ARG move to the nth previous object."
             (setq base16-theme-256-color-source 'base16-shell)
             (setq base16-distinct-fringe-background nil)
             ;; (setq base16-highlight-mode-line 'box)
-            (load-theme 'kaolin-bubblegum t)
+            (load-theme 'doom-dracula t)
             ;; (load-file (concat user-emacs-directory "custom_faces.el"))
             ))
 
