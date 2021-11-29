@@ -135,15 +135,33 @@ float between 0 and 1)"
    ;;             :background ,(face-background 'highlight) :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face) ;; font-lock-comment-face
    ;;                                                                       )))))
 
-   `(highlight ((t (:inherit 'highlight :box nil)))) ;; font-lock-comment-face
-   `(hl-line ((t (:inherit 'nil
-               :background ,(face-background 'default) :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))))))
-   `(objed-hl ((t (:inherit 'nil
-                :background ,(face-background 'default) :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))))))
+   ;; `(highlight ((t (:inherit 'highlight :box nil :underline nil :overline nil)))) ;; font-lock-comment-face
+   ;; `(hl-line ((t (:inherit 'highlight
+   ;; 			   ;; :background ,(face-background 'default)
+   ;; 			    :underline nil :overline nil
+   ;; 			   ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
+   ;; 			   ))))
+   ;; `(objed-hl ((t (:inherit 'highlight
+   ;; 			    ;; :background ,(face-background 'default)
+   ;; 			     :underline nil :overline nil
+   ;; 			    ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
+   ;; 			    ))))
+
+   ;; `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
+
+   `(highlight ((t (:inherit 'highlight :box nil :underline nil :overline nil)))) ;; font-lock-comment-face
+   `(hl-line ((t (:inherit 'hl-line
+			   ;; :background ,(face-background 'default)
+			    :underline nil :overline nil
+			   ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
+			   ))))
+   `(objed-hl ((t (:inherit 'highlight
+			    ;; :background ,(face-background 'default)
+			     :underline nil :overline nil
+			    ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
+			    ))))
 
    `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
-
-
 
 
    ;; `(tab-bar ((t (:inherit variable-pitch :background "SlateGray4" :foreground "white"))))
@@ -239,7 +257,8 @@ float between 0 and 1)"
 
 
    ;;selectrum
-   `(selectrum-current-candidate ((t (:box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face)) :background ,(face-background 'default)))))
+   `(selectrum-current-candidate ((t (:background ,(face-background 'hl-line) :foreground ,(face-foreground 'hl-line) :bold t :underline nil :overline nil
+						  :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))))))
 
 
    ;; ;;;;; dired-subtree
