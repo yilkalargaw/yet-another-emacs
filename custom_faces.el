@@ -157,12 +157,12 @@ float between 0 and 1)"
    ;; `(highlight ((t (:inherit 'highlight ;; :box nil
    ;;                           ;; :underline nil :overline nil
    ;;                           )))) ;; font-lock-comment-face
-   `(hl-line ((t (:inherit 'hl-line
-                           ;; :background ,(face-background 'default)
-                            ;; :underline nil :overline nil
-                           ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
-                           ))))
-   `(objed-hl ((t (:inherit 'region :inherit 'secondary-selection
+   ;; `(hl-line ((t (:inherit 'hl-line
+   ;;                         ;; :background ,(face-background 'default)
+   ;;                          ;; :underline nil :overline nil
+   ;;                         ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
+   ;;                         ))))
+   `(objed-hl ((t (:inherit 'region ;; :inherit 'secondary-selection
                             ;; :background ,(face-background 'default)
                              ;; :underline nil :overline nil
                             ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
@@ -188,14 +188,16 @@ float between 0 and 1)"
 
       ;;;;; modeline
    `(mode-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default)
-                                :box (:color ,(face-foreground 'default) :line-width 1) :underline nil :overline nil :height 1.0))))
-   `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default)
-                                         :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1) :height 1.0))))
+                                :box (:color ,(face-foreground 'default) :line-width -2) :underline nil :overline nil :height 1.0))))
 
-   `(mode-line-buffer-id ((t ( :box (:color ,(face-foreground 'default) :line-width 1)
+   `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default)
+                                         :box (:color ,(face-background 'region) :line-width -1) :height 1.0))))
+
+   `(mode-line-buffer-id ((t (:box (:color ,(face-foreground 'default) :line-width -1)
                                 :foreground ,(face-foreground 'link)
-                                :background nil :bold t :height 1.0)
-                                :distant-foreground ,(face-foreground 'font-lock-comment-face))))
+                                :background nil :bold t :height 1.0
+				)
+                                :distant-foreground ,(face-background 'region))))
 
    ;; `(mode-line-buffer-id-inactive ((t ( :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1)
    ;;                                  :box nil
