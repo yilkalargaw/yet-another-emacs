@@ -58,6 +58,7 @@
   - [[#flyspell][flyspell]]
   - [[#ediff][ediff]]
   - [[#tramp][tramp]]
+  - [[#white-space-mode][white-space-mode]]
 - [[#minibuffer-completion-frameworks][minibuffer completion frameworks]]
   - [[#selectrum-consult-marginelia-embark][selectrum, consult, marginelia, embark]]
 - [[#packages-i-use][packages I use]]
@@ -938,6 +939,27 @@ This is the same as using \\[set-mark-command] with the prefix argument."
               tramp-file-name-regexp))
 (setq tramp-verbose 1)
 
+#+end_src
+
+** white-space-mode
+#+begin_src emacs-lisp
+(use-package whitespace
+  :defer t
+  :straight (:type built-in)
+  :config
+   ;; Make whitespace-mode with very basic background coloring for whitespaces.
+  ;; http://xahlee.info/emacs/emacs/whitespace-mode.html
+  (setq whitespace-style (quote (face spaces tabs newline space-mark tab-mark newline-mark )))
+
+  ;; Make whitespace-mode and whitespace-newline-mode use “¶” for end of line char and “▷” for tab.
+  (setq whitespace-display-mappings
+        ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
+        '(
+          (space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
+          (newline-mark 10 [182 10]) ; LINE FEED,
+          (tab-mark 9 [9655 9] [92 9]) ; tab
+          )))
+  
 #+end_src
 
 
