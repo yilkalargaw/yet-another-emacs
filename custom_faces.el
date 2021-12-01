@@ -275,7 +275,7 @@ float between 0 and 1)"
 
 
    ;;selectrum
-   `(selectrum-current-candidate ((t (:background ,(face-background 'hl-line) :foreground ,(face-foreground 'hl-line) :bold t :underline nil :overline nil
+   `(selectrum-current-candidate ((t (:inherit 'hl-line ;; :background ,(face-background 'hl-line) :foreground ,(face-foreground 'hl-line) :bold t :underline nil :overline nil
                                                   :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))))))
 
 
