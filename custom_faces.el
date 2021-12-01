@@ -136,11 +136,11 @@ float between 0 and 1)"
    ;;                                                                       )))))
 
    ;; `(highlight ((t (:inherit 'highlight :box nil :underline nil :overline nil)))) ;; font-lock-comment-face
-   ;; `(hl-line ((t (:inherit 'highlight
-   ;;                      ;; :background ,(face-background 'default)
-   ;;                       :underline nil :overline nil
-   ;;                      ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
-   ;;                      ))))
+   `(hl-line ((t (:inherit 'highlight
+                        :background ,(face-background 'default)
+                         ;; :underline nil :overline nil
+                        :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
+                        ))))
    ;; `(objed-hl ((t (:inherit 'highlight
    ;;                       ;; :background ,(face-background 'default)
    ;;                        :underline nil :overline nil
@@ -196,7 +196,7 @@ float between 0 and 1)"
    `(mode-line-buffer-id ((t (:box (:color ,(face-foreground 'default) :line-width -1)
                                 :foreground ,(face-foreground 'link)
                                 :background nil :bold t :height 1.0
-				)
+                                )
                                 :distant-foreground ,(face-background 'region))))
 
    ;; `(mode-line-buffer-id-inactive ((t ( :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1)
@@ -217,13 +217,13 @@ float between 0 and 1)"
    ;; `(trailing-whitespace ((t nil)))
    `(whitespace-empty ((t nil)))
    `(whitespace-line ((t nil)))
-   `(whitespace-newline ((t (:inherit nil :foreground ,(face-background 'default) :background nil))))
-   `(whitespace-newline-mark ((t (:inherit nil :foreground ,(face-background 'default) :background nil))))
-   `(whitespace-space ((t (:inherit nil :foreground ,(face-background 'default) :background nil))))
-   `(whitespace-spaces ((t (:inherit nil :foreground ,(face-background 'default) :background nil))))
-   `(whitespace-space-mark ((t (:inherit nil :foreground ,(face-background 'default) :background nil))))
-   `(whitespace-tabs ((t (:inherit nil :foreground ,(face-background 'default) :background nil))))
-   `(whitespace-tab ((t (:inherit nil :foreground ,(face-background 'default) :background nil))))
+   `(whitespace-newline ((t (:foreground ,(face-background 'default) :background nil))))
+   `(whitespace-newline-mark ((t (:foreground ,(face-background 'default) :background nil))))
+   `(whitespace-space ((t (:foreground ,(face-background 'default) :background nil))))
+   `(whitespace-spaces ((t (:foreground ,(face-background 'default) :background nil))))
+   `(whitespace-space-mark ((t (:foreground ,(face-background 'default) :background nil))))
+   `(whitespace-tabs ((t (:foreground ,(face-background 'default) :background nil))))
+   `(whitespace-tab ((t (:foreground ,(face-background 'default) :background nil))))
    `(whitespace-trailing ((t nil)))
    ;; `(whitespace-space-after-tab ((t nil)))
    ;; `(whitespace-space-before-tab ((t nil)))
