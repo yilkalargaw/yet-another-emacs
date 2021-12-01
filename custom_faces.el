@@ -136,11 +136,11 @@ float between 0 and 1)"
    ;;                                                                       )))))
 
    ;; `(highlight ((t (:inherit 'highlight :box nil :underline nil :overline nil)))) ;; font-lock-comment-face
-   `(hl-line ((t (:inherit 'highlight
-                        :background ,(face-background 'default)
-                         ;; :underline nil :overline nil
-                        :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
-                        ))))
+   ;; `(hl-line ((t (:inherit 'highlight
+   ;;                      :background ,(face-background 'default)
+   ;;                       ;; :underline nil :overline nil
+   ;;                      :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
+   ;;                      ))))
    ;; `(objed-hl ((t (:inherit 'highlight
    ;;                       ;; :background ,(face-background 'default)
    ;;                        :underline nil :overline nil
