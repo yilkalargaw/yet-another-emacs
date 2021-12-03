@@ -97,6 +97,9 @@
   - [[#projectile][projectile]]
   - [[#ctrlf][ctrlf]]
   - [[#elpher][elpher]]
+  - [[#typing][typing]]
+    - [[#speed-type][speed-type]]
+    - [[#typing-of-emacs][typing-of-emacs]]
 - [[#org][org]]
   - [[#basic-org][basic org]]
   - [[#org-bullets][org-bullets]]
@@ -942,7 +945,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+end_src
 
 ** whitespace-mode
-
 #+begin_src emacs-lisp
 (use-package whitespace
   :defer t
@@ -1760,6 +1762,27 @@ With postitive prefix argument ARG move to the nth previous object."
   (use-package elpher
     :straight t
     :defer t)  
+#+end_src
+
+** typing
+*** speed-type
+
+#+begin_src emacs-lisp
+
+(use-package speed-type
+  :straight t
+  :defer t)
+
+#+end_src
+
+*** typing-of-emacs
+
+#+begin_src emacs-lisp
+
+(use-package typing
+  :straight t
+  :defer t)
+
 #+end_src
 
 * org
