@@ -186,11 +186,13 @@ float between 0 and 1)"
    ;; ;;;;; linum-relative
    ;; `(linum-relative-current-face ((,class (:foreground ,comp))))
 
-      ;;;;; modeline
-   `(mode-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default)
+   ;;;;; modeline
+   `(mode-line ((t (:inherit mode-line
+                             :background ,(face-background 'default) ;; :foreground ,(face-foreground 'default)
                                 :box (:color ,(face-foreground 'default) :line-width -2) :underline nil :overline nil :height 1.0))))
 
-   `(mode-line-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default)
+   `(mode-line-inactive ((t (:inherit mode-line-inactive
+                                      :background ,(face-background 'default) ;; :foreground ,(face-foreground 'font-lock-comment-face)
                                          :box (:color ,(face-background 'region) :line-width -1) :height 1.0))))
 
    `(mode-line-buffer-id ((t (:box (:color ,(face-foreground 'default) :line-width -1)
@@ -275,8 +277,9 @@ float between 0 and 1)"
 
 
    ;;selectrum
-   `(selectrum-current-candidate ((t (:inherit 'hl-line ;; :background ,(face-background 'hl-line) :foreground ,(face-foreground 'hl-line) :bold t :underline nil :overline nil
-                                                  :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))))))
+   `(selectrum-current-candidate ((t (:inherit 'hl-line ;; :background ,(face-background 'hl-line) :foreground ,(face-foreground 'hl-line) :bold t
+                                               ;; :underline nil :overline nil
+                                               :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))))))
 
 
    ;; ;;;;; dired-subtree
