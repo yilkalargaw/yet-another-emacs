@@ -82,7 +82,6 @@
   - [[#multiple-cursors][multiple-cursors]]
   - [[#phi-search][phi-search]]
   - [[#rainbow-delimiters][rainbow-delimiters]]
-  - [[#objed][objed]]
   - [[#restclient][restclient]]
   - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#novel][nov.el]]
@@ -1314,7 +1313,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** objed
+** COMMENT objed
 
 #+begin_src emacs-lisp
 
@@ -1472,6 +1471,14 @@ With postitive prefix argument ARG move to the nth previous object."
   (setq god-mod-alist '((nil . "C-") ("g" . "M-") ("G" . "C-M-") ("h" . "M-") ("H" . "C-M-")))
  )
 
+#+end_src
+
+** COMMENT meow
+
+#+begin_src emacs-lisp
+(use-package meow
+  :straight t
+  :defer t)
 #+end_src
 
 ** restclient
