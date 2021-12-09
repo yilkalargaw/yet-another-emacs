@@ -355,6 +355,7 @@
 ;; (global-set-key (kbd "C-c m b") 'menu-bar-mode)
 (column-number-mode 1)
 (setq initial-scratch-message nil)
+(setq battery-mode-line-format " [ %b%p%% } ")
 (display-battery-mode t)
 (display-time-mode t)
 (setq frame-resize-pixelwise t)
