@@ -44,6 +44,7 @@
     - [[#horizontal-scrolling][horizontal scrolling]]
     - [[#smooth-scrolling][smooth-scrolling]]
   - [[#marking][marking]]
+  - [[#isearch][isearch]]
 - [[#exec-path-form-shell][exec path form shell]]
 - [[#hydra][hydra]]
 - [[#emacs-built-in-packages][emacs built in packages]]
@@ -82,6 +83,8 @@
   - [[#multiple-cursors][multiple-cursors]]
   - [[#phi-search][phi-search]]
   - [[#rainbow-delimiters][rainbow-delimiters]]
+  - [[#modal-editing-modes][modal editing modes]]
+    - [[#objed][objed]]
   - [[#restclient][restclient]]
   - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#novel][nov.el]]
@@ -106,6 +109,7 @@
 - [[#dired][dired]]
 - [[#themes-and-theming][themes and theming]]
   - [[#mode-line][mode-line]]
+    - [[#mood-line][mood-line]]
   - [[#all-the-icons][all-the-icons]]
 - [[#programming-and-typesetting][programming and typesetting]]
   - [[#lsp-mode][lsp-mode]]
@@ -685,6 +689,36 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (interactive)
   (exchange-point-and-mark)
   (deactivate-mark nil))
+
+#+end_src
+
+** isearch
+
+#+begin_src emacs-lisp
+
+(setq-default
+ ;; Match count next to the minibuffer prompt
+ isearch-lazy-count t
+ ;; Don't be stingy with history; default is to keep just 16 entries
+ search-ring-max 200
+ regexp-search-ring-max 200)
+
+;; swiper like fuzzy search
+;; (setq-default
+;;  isearch-regexp-lax-whitespace t
+;;  search-whitespace-regexp ".*?")
+
+;; (defun move-end-of-line-maybe-ending-isearch (arg)
+;; "End search and move to end of line, but only if already at the end of the minibuffer."
+;;   (interactive "p")
+;;   (if (eobp)
+;;       (isearch-mb--after-exit
+;;        (lambda ()
+;;          (move-end-of-line arg)
+;;          (isearch-done)))
+;;     (move-end-of-line arg)))
+
+;; (define-key isearch-mb-minibuffer-map (kbd "C-e") 'move-end-of-line-maybe-ending-isearch)
 
 #+end_src
 
@@ -1322,173 +1356,219 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** COMMENT objed
+** modal editing modes
+*** objed
 
-#+begin_src emacs-lisp
+ #+begin_src emacs-lisp
+
+ (use-package objed
+   :straight t
+   ;; :defer t
+   :defer 0.5
+   ;; :hook (after-init . objed-mode)
+   :bind
+   ("M-o" . objed-local-mode)
+   (:map objed-map
+         ;; ("<SPC>" . 'objed-char-object)
+         ("C-f" . 'objed-right-char)
+         ("C-b" . 'objed-left-char)
+         ("," . 'objed-identifier-object)
+         ("." . 'objed-sentence-object)
+         ("b" . 'objed-word-object)
+
+         ("F" . nil)
+         ("B" . nil)
+         ("S" . nil)
+         ("R" . nil)
+         ("L" . nil)
+         ("." . nil)
+         ;; ("N" . nil)
+         ;; ("P" . nil)
+         ;; ("b" . nil)
+         ("B" . nil)
+
+         ("<SPC>" . 'objed-object-map)
+         ("c" . 'objed-user-map)
+         ("r" . 'objed-toggle-side)
+         ("l" . 'objed-next-specialized)
+         ("h" . 'objed-previous-specialized)
+         ;; ("l" . 'objed-next)
+         ;; ("h" . 'objed-previous)
+         ("L" . 'objed-move-object-forward)
+         ("H" . 'objed-move-object-backward)
+
+         ("f" . 'objed-next-specialized)
+         ("s" . 'objed-previous-specialized)
+         ;; ("f" . 'objed-next)
+         ;; ("s" . 'objed-previous)
+         ("F" . 'objed-move-object-forward)
+         ("S" . 'objed-move-object-backward)
+
+         ("J" . 'objed-move-line-forward)
+         ("i" . 'objed-kill)
+         ("I" . 'objed-del-insert)
+         ("K" . 'objed-move-line-backward)
+         ;; ("K" . nil)
+         ("j" . 'objed-next-line)
+         ("k" . 'objed-previous-line)
+         ("G" . 'objed-del-insert)
+         ("<H-SPC>" . 'objed-quit)
+
+         ;; :map objed-user-map
+         ;; ("f" . 'move-to-char)
+         ;; ("g" . 'move-upto-char)
+
+         ;;        :map objed-object-map
+         ;;        ("," . 'objed-identifier-object)
+
+         ;;        ;; :map objed-mode-map
+         ;;        ;; ("<M-SPC>" . 'my-objed-activate)
+         )
+
+   ;; :init (objed-mode)
+
+   :config
+   ;; (objed-mode)
+   ;; (setq objed--which-key-avail-p t
+   ;;       objed--avy-avail-p t)
+   ;; (setq objed-use-avy-if-available 1)
+   ;; (define-key objed-mode-map (kbd "M-SPC") (objed-activate 'char))
+
+   (defun objed--goto-next-specialized (&optional arg)
+     "Move to the next object.
+
+ With postitive prefix argument ARG move to the nth next object."
+     (let ((arg (or arg 1))
+           (obj nil))
+       (if (equal objed--object 'line)
+           (objed-next-line)
+         (progn
+           (dotimes (_ arg obj)
+             (when (setq obj  (objed--get-next))
+               (objed--update-current-object obj)
+               (cond ((or (equal objed--object 'word)
+                          (equal objed--object 'sexp))
+                      (goto-char (objed--end obj)))
+                     (t (objed--goto-char (objed--beg obj))))))))))
+
+   (defun objed-next-specialized (&optional arg)
+     "Move to ARG next object of current type."
+     (interactive "p")
+     ;; on init skip current
+     (when (and (region-active-p)
+                (eq last-command 'objed-extend))
+       (exchange-point-and-mark))
+     (let ((pos (point)))
+       (objed--goto-next-specialized (or arg 1))
+       (when (eq pos (point))
+         (error "No next %s" objed--object))))
 
 
-(use-package objed
-  :straight t
-  :defer t
-  ;; :defer 0.7
-  ;; :hook (after-init . objed-mode)
-  :bind
-  ("M-o" . objed-local-mode)
-  (:map objed-map
-        ;; ("<SPC>" . 'objed-char-object)
-        ("C-f" . 'objed-right-char)
-        ("C-b" . 'objed-left-char)
-        ("," . 'objed-identifier-object)
-        ("." . 'objed-sentence-object)
-        ("b" . 'objed-word-object)
+   (defun objed--goto-previous-specialized (&optional arg)
+     "Move to the previous object.
 
-        ("F" . nil)
-        ("B" . nil)
-        ("S" . nil)
-        ("R" . nil)
-        ("L" . nil)
-        ("." . nil)
-        ;; ("N" . nil)
-        ;; ("P" . nil)
-        ;; ("b" . nil)
-        ("B" . nil)
+ With postitive prefix argument ARG move to the nth previous object."
+     (let ((arg (or arg 1))
+           (obj nil))
+       (if (equal objed--object 'line)
+           (objed-previous-line)
+         (progn
+           (dotimes (_ arg obj)
+             (when (setq obj (objed--get-prev))
+               (objed--update-current-object obj)
+               (objed--goto-char (objed--beg obj))))))))
 
-        ("<SPC>" . 'objed-object-map)
-        ("c" . 'objed-user-map)
-        ("r" . 'objed-toggle-side)
-        ("l" . 'objed-next-specialized)
-        ("h" . 'objed-previous-specialized)
-        ;; ("l" . 'objed-next)
-        ;; ("h" . 'objed-previous)
-        ("L" . 'objed-move-object-forward)
-        ("H" . 'objed-move-object-backward)
+   (defun objed-previous-specialized (&optional arg)
+     "Move to ARG previous object of current type."
+     (interactive "p")
+     ;; on init skip current
+     (when (and (region-active-p)
+                (eq last-command 'objed-extend))
+       (exchange-point-and-mark))
+     (let ((pos (point)))
+       (objed--goto-previous-specialized (or arg 1))
+       (when (eq pos (point))
+         (error "No next %s" objed--object))))
 
-        ("f" . 'objed-next-specialized)
-        ("s" . 'objed-previous-specialized)
-        ;; ("f" . 'objed-next)
-        ;; ("s" . 'objed-previous)
-        ("F" . 'objed-move-object-forward)
-        ("S" . 'objed-move-object-backward)
+   ;; ;;   ;; :config
+   ;; ;; (load (concat user-emacs-directory "lisp/objed-goto-next-specialized.el"))
 
-        ("J" . 'objed-move-line-forward)
-        ("i" . 'objed-kill)
-        ("I" . 'objed-del-insert)
-        ("K" . 'objed-move-line-backward)
-        ;; ("K" . nil)
-        ("j" . 'objed-next-line)
-        ("k" . 'objed-previous-line)
-        ("G" . 'objed-del-insert)
-        ("<H-SPC>" . 'objed-quit)
+   )
 
-        ;; :map objed-user-map
-        ;; ("f" . 'move-to-char)
-        ;; ("g" . 'move-upto-char)
+ ;; (add-hook 'after-init-time-hook (progn (require 'objed) (objed-mode)))
 
-        ;;        :map objed-object-map
-        ;;        ("," . 'objed-identifier-object)
+ #+end_src
 
-        ;;        ;; :map objed-mode-map
-        ;;        ;; ("<M-SPC>" . 'my-objed-activate)
-        )
+*** COMMENT god-mode
 
-  :config
-  ;; (setq objed--which-key-avail-p t
-  ;;       objed--avy-avail-p t)
-  ;; (setq objed-use-avy-if-available 1)
-  ;; (define-key objed-mode-map (kbd "M-SPC") (objed-activate 'char))
+ #+begin_src emacs-lisp
 
-  (defun objed--goto-next-specialized (&optional arg)
-    "Move to the next object.
-
-With postitive prefix argument ARG move to the nth next object."
-    (let ((arg (or arg 1))
-          (obj nil))
-      (if (equal objed--object 'line)
-          (objed-next-line)
-        (progn
-          (dotimes (_ arg obj)
-            (when (setq obj  (objed--get-next))
-              (objed--update-current-object obj)
-              (cond ((or (equal objed--object 'word)
-                         (equal objed--object 'sexp))
-                     (goto-char (objed--end obj)))
-                    (t (objed--goto-char (objed--beg obj))))))))))
-
-  (defun objed-next-specialized (&optional arg)
-    "Move to ARG next object of current type."
-    (interactive "p")
-    ;; on init skip current
-    (when (and (region-active-p)
-               (eq last-command 'objed-extend))
-      (exchange-point-and-mark))
-    (let ((pos (point)))
-      (objed--goto-next-specialized (or arg 1))
-      (when (eq pos (point))
-        (error "No next %s" objed--object))))
-
-
-  (defun objed--goto-previous-specialized (&optional arg)
-    "Move to the previous object.
-
-With postitive prefix argument ARG move to the nth previous object."
-    (let ((arg (or arg 1))
-          (obj nil))
-      (if (equal objed--object 'line)
-          (objed-previous-line)
-        (progn
-          (dotimes (_ arg obj)
-            (when (setq obj (objed--get-prev))
-              (objed--update-current-object obj)
-              (objed--goto-char (objed--beg obj))))))))
-
-  (defun objed-previous-specialized (&optional arg)
-    "Move to ARG previous object of current type."
-    (interactive "p")
-    ;; on init skip current
-    (when (and (region-active-p)
-               (eq last-command 'objed-extend))
-      (exchange-point-and-mark))
-    (let ((pos (point)))
-      (objed--goto-previous-specialized (or arg 1))
-      (when (eq pos (point))
-        (error "No next %s" objed--object))))
-
-  ;; ;;   ;; :config
-  ;; ;; (load (concat user-emacs-directory "lisp/objed-goto-next-specialized.el"))
-
+ (use-package god-mode
+   :straight t
+   :defer t
+   :bind
+   ("M-o" . god-local-mode)
+   (:map god-local-mode-map
+         ("z" . repeat)
+         ("i" . god-local-mode)
+         ("." . repeat)
+         )
+   :config
+   (setq god-mod-alist '((nil . "C-") ("g" . "M-") ("G" . "C-M-") ("h" . "M-") ("H" . "C-M-")))
   )
 
-;; (add-hook 'after-init-time-hook (progn (require 'objed) (objed-mode)))
+ #+end_src
 
-#+end_src
+*** COMMENT meow
 
-** COMMENT god-mode
+ #+begin_src emacs-lisp
+ (use-package meow
+   :straight t
+   :defer t)
+ #+end_src
 
-#+begin_src emacs-lisp
+*** COMMENT kakoune
 
-(use-package god-mode
-  :straight t
-  :defer t
-  :bind
-  ("M-o" . god-local-mode)
-  (:map god-local-mode-map
-        ("z" . repeat)
-        ("i" . god-local-mode)
-        ("." . repeat)
-        )
-  :config
-  (setq god-mod-alist '((nil . "C-") ("g" . "M-") ("G" . "C-M-") ("h" . "M-") ("H" . "C-M-")))
- )
+ #+begin_src emacs-lisp
 
-#+end_src
+ (use-package kakoune
+   ;; Having a non-chord way to escape is important, since key-chords don't work in macros
+   :straight t
+   :bind ("C-z" . ryo-modal-mode)
+   :hook (after-init . my/kakoune-setup)
+   :config
+   (defun ryo-enter () "Enter normal mode" (interactive) (ryo-modal-mode 1))
+   (defun my/kakoune-setup ()
+       "Call kakoune-setup-keybinds and then add some personal config."
+       (kakoune-setup-keybinds)
+       (setq ryo-modal-cursor-type 'box)
+       (add-hook 'prog-mode-hook #'ryo-enter)
+       (define-key ryo-modal-mode-map (kbd "SPC h") 'help-command)
+       ;; Access all C-x bindings easily
+       (define-key ryo-modal-mode-map (kbd "z") ctl-x-map)
+       (ryo-modal-keys
+        ("," save-buffer)
+        ("P" counsel-yank-pop)
+        ("m" mc/mark-next-like-this)
+        ("M" mc/skip-to-next-like-this)
+        ("n" mc/mark-previous-like-this)
+        ("N" mc/skip-to-previous-like-this)
+        ("M-m" mc/edit-lines)
+        ("*" mc/mark-all-like-this)
+        ("v" er/expand-region)
+        ("C-v" set-rectangular-region-anchor)
+        ("M-s" mc/split-region)
+        (";" (("q" delete-window)
+              ("v" split-window-horizontally)
+              ("s" split-window-vertically)))
+        ("C-h" windmove-left)
+        ("C-j" windmove-down)
+        ("C-k" windmove-up)
+        ("C-l" windmove-right)
+        ("C-u" scroll-down-command :first '(deactivate-mark))
+        ("C-d" scroll-up-command :first '(deactivate-mark)))))
 
-** COMMENT meow
-
-#+begin_src emacs-lisp
-(use-package meow
-  :straight t
-  :defer t)
-#+end_src
+ #+end_src
 
 ** restclient
 
@@ -1651,7 +1731,7 @@ With postitive prefix argument ARG move to the nth previous object."
 )
 
 (use-package kind-icon
-  :ensure t
+  :straight t
   :after corfu
   :custom
   (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
@@ -1769,6 +1849,17 @@ With postitive prefix argument ARG move to the nth previous object."
   (use-package ctrlf
     :straight t
     :init (ctrlf-mode +1))
+
+#+end_src
+
+** COMMENT isearch-mb
+
+#+begin_src emacs-lisp
+
+(use-package isearch-mb
+  :straight t
+  :defer 0.5
+  :config (isearch-mb-mode))
 
 #+end_src
 
@@ -2304,7 +2395,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-*** COMMENT mood-line
+*** mood-line
 
 #+begin_src emacs-lisp
 (use-package mood-line
