@@ -376,6 +376,8 @@ Git gutter:
    ("p" previous-line)
    ("f" forward-char)
    ("b" backward-char)
+   ("F" forward-word)
+   ("B" backward-word)
    ("a" beginning-of-line)
    ("e" move-end-of-line)
    ("v" scroll-up-command)
