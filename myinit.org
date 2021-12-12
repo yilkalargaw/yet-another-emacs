@@ -109,7 +109,7 @@
 - [[#dired][dired]]
 - [[#themes-and-theming][themes and theming]]
   - [[#mode-line][mode-line]]
-    - [[#mood-line][mood-line]]
+    - [[#telephone-line][telephone-line]]
   - [[#all-the-icons][all-the-icons]]
 - [[#programming-and-typesetting][programming and typesetting]]
   - [[#lsp-mode][lsp-mode]]
@@ -2395,7 +2395,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-*** mood-line
+*** COMMENT mood-line
 
 #+begin_src emacs-lisp
 (use-package mood-line
@@ -2408,6 +2408,38 @@ This is the same as using \\[set-mark-command] with the prefix argument."
     (concat (format-mode-line minions-mode-line-modes 'mood-line-major-mode) "  "))
   (mood-line-mode)
   )
+#+end_src
+
+*** telephone-line
+
+#+begin_src emacs-lisp
+(use-package telephone-line
+  :straight t
+  :defer 0.1
+  :config
+  (telephone-line-defsegment telephone-line-minions-mode-segment ()
+    (propertize "[+]"
+                'display '(raise 0.0)
+                'help-echo "Minor-modes"
+                'mouse-face '(:box 1)
+                'local-map (make-mode-line-mouse-map
+                            'mouse-1 (lambda ()
+                                       (interactive)
+                                       (minions-minor-modes-menu)))))
+  (setq
+   telephone-line-rhs
+   '((nil . (telephone-line-misc-info-segment))
+     (accent . (telephone-line-major-mode-segment))
+     (nil . (telephone-line-minions-mode-segment))
+     (evil . (telephone-line-airline-position-segment))))
+
+  (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
+        telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
+        telephone-line-primary-right-separator 'telephone-line-cubed-left
+        telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-left)
+  (setq telephone-line-height 24
+        telephone-line-evil-use-short-tag t)
+  (telephone-line-mode 1))
 #+end_src
 
 *** COMMENT moody
