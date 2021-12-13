@@ -565,8 +565,8 @@
 
 #+begin_src emacs-lisp
 
-(setq-default line-spacing 0.2)
-(add-hook 'minibuffer-setup-hook (lambda () (setq line-spacing nil)))
+;; (setq-default line-spacing 0.2)
+;; (add-hook 'minibuffer-setup-hook (lambda () (setq line-spacing nil)))
 
 #+end_src
 
@@ -1418,8 +1418,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
          ;; ("f" . 'move-to-char)
          ;; ("g" . 'move-upto-char)
 
-         ;;        :map objed-object-map
-         ;;        ("," . 'objed-identifier-object)
+         :map objed-object-map
+         ("," . 'objed-identifier-object)
 
          ;;        ;; :map objed-mode-map
          ;;        ;; ("<M-SPC>" . 'my-objed-activate)
@@ -2426,6 +2426,15 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                             'mouse-1 (lambda ()
                                        (interactive)
                                        (minions-minor-modes-menu)))))
+  ;; (setq
+  ;;  telephone-line-lhs
+  ;;  '((accent . (telephone-line-vc-segment
+  ;;               telephone-line-erc-modified-channels-segment
+  ;;               telephone-line-process-segment))
+  ;;    (evil . (telephone-line-evil-tag-segment))
+  ;;    (nil . (;; telephone-line-minor-mode-segment
+  ;;            telephone-line-buffer-segment))))
+
   (setq
    telephone-line-rhs
    '((nil . (telephone-line-misc-info-segment))
