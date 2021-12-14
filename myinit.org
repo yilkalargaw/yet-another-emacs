@@ -2413,6 +2413,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 *** telephone-line
 
 #+begin_src emacs-lisp
+
 (use-package telephone-line
   :straight t
   :defer 0.1
@@ -2448,7 +2449,10 @@ This is the same as using \\[set-mark-command] with the prefix argument."
         telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-left)
   (setq telephone-line-height 24
         telephone-line-evil-use-short-tag t)
-  (telephone-line-mode 1))
+  (telephone-line-mode 1)
+  (setq telephone-line-height 20)
+)
+
 #+end_src
 
 *** COMMENT moody
