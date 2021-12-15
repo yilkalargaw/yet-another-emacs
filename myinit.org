@@ -107,6 +107,7 @@
   - [[#basic-org][basic org]]
   - [[#org-bullets][org-bullets]]
   - [[#ox-pandoc][ox-pandoc]]
+  - [[#htmlize][htmlize]]
 - [[#dired][dired]]
 - [[#themes-and-theming][themes and theming]]
   - [[#mode-line][mode-line]]
@@ -1945,6 +1946,16 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
+** htmlize
+
+#+begin_src emacs-lisp
+
+(use-package htmlize
+  :straight t
+  :defer t
+  :hook (org))
+  
+#+end_src
 
 * dired
 
