@@ -3007,7 +3007,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (use-package tree-sitter-langs
   :straight t
-  :defer t)
+  :defer t
+  :when (bound-and-true-p module-file-suffix)
+)
 
 #+end_src
 
