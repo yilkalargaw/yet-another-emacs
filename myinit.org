@@ -45,6 +45,7 @@
     - [[#smooth-scrolling][smooth-scrolling]]
   - [[#marking][marking]]
   - [[#isearch][isearch]]
+  - [[#explicitly-set-shell][explicitly set shell]]
 - [[#exec-path-form-shell][exec path form shell]]
 - [[#hydra][hydra]]
 - [[#emacs-built-in-packages][emacs built in packages]]
@@ -719,6 +720,14 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ;;     (move-end-of-line arg)))
 
 ;; (define-key isearch-mb-minibuffer-map (kbd "C-e") 'move-end-of-line-maybe-ending-isearch)
+
+#+end_src
+
+** explicitly set shell
+
+#+begin_src emacs-lisp
+
+(setq explicit-shell-file-name "/bin/bash")
 
 #+end_src
 
