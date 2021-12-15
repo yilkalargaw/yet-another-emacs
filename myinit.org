@@ -134,6 +134,7 @@
   - [[#web][web]]
     - [[#html-css][html, css]]
     - [[#javascript][javascript]]
+  - [[#tree-sitter][tree-sitter]]
 - [[#start-server][start server]]
 - [[#scratch-page-settings][scratch-page settings]]
 - [[#set-custom-variables][set custom variables]]
@@ -2457,12 +2458,12 @@ This is the same as using \\[set-mark-command] with the prefix argument."
      ))
   
   (setq telephone-line-lhs
-	'((evil   . (telephone-line-evil-tag-segment))
-	  (accent . (telephone-line-vc-segment
-		     telephone-line-erc-modified-channels-segment
-		     telephone-line-process-segment))
-	  (nil    . (telephone-line-projectile-segment
-		     telephone-line-buffer-segment))))
+        '((evil   . (telephone-line-evil-tag-segment))
+          (accent . (telephone-line-vc-segment
+                     telephone-line-erc-modified-channels-segment
+                     telephone-line-process-segment))
+          (nil    . (telephone-line-projectile-segment
+                     telephone-line-buffer-segment))))
   
   (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
         telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
@@ -2975,6 +2976,39 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
+** tree-sitter
+
+#+begin_src emacs-lisp
+
+(use-package tree-sitter
+  :straight t
+  :defer 0.3
+  :when (bound-and-true-p module-file-suffix)
+  :hook ;; (prog-mode . tree-sitter-mode)
+        (lisp-interaction-mode . (lambda () (tree-sitter-mode -1)))
+  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+  ;; (defadvice! doom-tree-sitter-fail-gracefully-a (orig-fn &rest args)
+  ;;   "Don't break with errors when current major mode lacks tree-sitter support."
+  ;;   :around #'tree-sitter-mode
+  ;;   (condition-case e
+  ;;       (apply orig-fn args)
+  ;;     (error
+  ;;      (unless (string-match-p (concat "^Cannot find shared library\\|"
+  ;;                                      "^No language registered\\|"
+  ;;                                      "cannot open shared object file")
+  ;;                              (error-message-string e))
+  ;;        (signal (car e) (cadr e))))))
+  )
+
+(use-package tree-sitter-langs
+  :straight t
+  :defer t)
+
+#+end_src
 
 * COMMENT eaf
 
