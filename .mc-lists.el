@@ -84,6 +84,7 @@
 	sgml-delete-tag
 	sgml-slash
 	smart-hungry-delete-backward-char
+	smart-hungry-delete-forward-char
 	subword-left
 	subword-right
 	transpose-chars
