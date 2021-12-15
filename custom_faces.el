@@ -187,15 +187,16 @@ float between 0 and 1)"
    ;; `(linum-relative-current-face ((,class (:foreground ,comp))))
 
    ;;;;; modeline
-   `(mode-line ((t (:inherit mode-line
+   `(mode-line ((t (:inherit variable-pitch
                              :background ,(face-background 'default) ;; :foreground ,(face-foreground 'default)
-                                :box (:color ,(face-foreground 'default) :line-width -2) :underline nil :overline nil :height 1.0))))
+                             :box (:color ,(face-foreground 'default) :line-width -2) :underline nil :overline nil :height 1.0))))
 
-   `(mode-line-inactive ((t (:inherit mode-line-inactive
+   `(mode-line-inactive ((t (:inherit variable-pitch
                                       :background ,(face-background 'default) ;; :foreground ,(face-foreground 'font-lock-comment-face)
-                                         :box (:color ,(face-background 'region) :line-width -1) :height 1.0))))
+                                      :box (:color ,(face-background 'region) :line-width -1) :height 1.0))))
 
-   `(mode-line-buffer-id ((t (:box (:color ,(face-foreground 'default) :line-width -1)
+   `(mode-line-buffer-id ((t (:inherit variable-pitch
+                                :box (:color ,(face-foreground 'default) :line-width -1)
                                 :foreground ,(face-foreground 'link)
                                 :background nil :bold t :height 1.0
                                 )
