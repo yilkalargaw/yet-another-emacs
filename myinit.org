@@ -1771,6 +1771,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (use-package vterm
   :straight t
   :defer t
+  :when (bound-and-true-p module-file-suffix)
   :hook ((vterm-mode . (lambda () (global-hl-line-mode -1)))
          (vterm-mode . (lambda () (display-line-numbers-mode -1)))
          ;; (vterm-mode . (lambda () (nlinum-mode -1)))
