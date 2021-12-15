@@ -2447,14 +2447,14 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                             'mouse-1 (lambda ()
                                        (interactive)
                                        (minions-minor-modes-menu)))))
-  ;; (setq
-  ;;  telephone-line-lhs
-  ;;  '((accent . (telephone-line-vc-segment
-  ;;               telephone-line-erc-modified-channels-segment
-  ;;               telephone-line-process-segment))
-  ;;    (evil . (telephone-line-evil-tag-segment))
-  ;;    (nil . (;; telephone-line-minor-mode-segment
-  ;;            telephone-line-buffer-segment))))
+  (setq telephone-line-lhs
+  '((evil   . (telephone-line-evil-tag-segment))
+    (accent . (telephone-line-vc-segment
+               telephone-line-erc-modified-channels-segment
+               telephone-line-process-segment))
+    (nil    . (telephone-line-projectile-segment
+               telephone-line-buffer-segment))))
+
 
   (setq
    telephone-line-rhs
@@ -2472,7 +2472,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
         telephone-line-evil-use-short-tag t)
   (telephone-line-mode 1)
   (setq telephone-line-height 20)
-)
+  )
 
 #+end_src
 
