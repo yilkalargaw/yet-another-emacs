@@ -40,6 +40,7 @@
   - [[#line-spacing][line-spacing]]
   - [[#line-number][line-number]]
   - [[#line-highlight][line-highlight]]
+  - [[#show-parens][show-parens]]
   - [[#scrolling][scrolling]]
     - [[#horizontal-scrolling][horizontal scrolling]]
     - [[#smooth-scrolling][smooth-scrolling]]
@@ -99,6 +100,7 @@
   - [[#minions][minions]]
   - [[#projectile][projectile]]
   - [[#ctrlf][ctrlf]]
+  - [[#smartparens][smartparens]]
   - [[#elpher][elpher]]
   - [[#typing][typing]]
     - [[#speed-type][speed-type]]
@@ -613,6 +615,14 @@
   ;; performance boost. I also don't need to see it in other buffers.
   (setq hl-line-sticky-flag nil
         global-hl-line-sticky-flag nil))
+
+#+end_src
+
+** show-parens
+
+#+begin_src emacs-lisp
+
+(show-paren-mode t)
 
 #+end_src
 
@@ -1863,6 +1873,19 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (use-package ctrlf
     :straight t
     :init (ctrlf-mode +1))
+
+#+end_src
+
+** smartparens
+
+#+begin_src emacs-lisp
+
+(use-package smartparens
+  :straight t
+  :defer 0.6
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode t))
 
 #+end_src
 
