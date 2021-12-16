@@ -5,6 +5,7 @@
       '(
 	back-to-indentation-or-beginning
 	backward-kill-sexp
+	backward-sentence
 	backward-sexp
 	delete-blank-lines
 	delete-indentation
