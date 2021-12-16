@@ -768,6 +768,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;; (add-hook 'projectile-mode-hook (lambda () (define-key projectile-mode-map (kbd "η p") 'hydra-projectile/body)))
   ;; :general
   ;; ("C-c C-m" 'hydra-global-zoom/body)
+  :bind ("C-c h" . hydra-map)
   )
 
 #+end_src
@@ -1049,6 +1050,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;;                :items    ,projectile-known-projects))
   ;; (add-to-list 'consult-buffer-sources my/consult-source-projectile-projects 'append)
   :bind ("M-s s" . consult-line)
+        ("M-s <SPC>" . consult-imenu)
   )
 
 (use-package marginalia
@@ -2034,7 +2036,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :bind (:map dired-mode-map
               ("C-c C-n" .'dired-narrow)
               ("C-c C-f" .'dired-narrow-fuzzy)
-              ("C-x C-N" .'dired-narrow-regexp)
+              ("C-c M-n" .'dired-narrow-regexp)
               )
   )
 
