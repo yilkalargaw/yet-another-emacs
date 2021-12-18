@@ -2249,7 +2249,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
             (setq base16-theme-256-color-source 'base16-shell)
             (setq base16-distinct-fringe-background nil)
             ;; (setq base16-highlight-mode-line 'box)
-            (load-theme 'doom-dracula t)
+            (load-theme 'base16-brewer t)
             ;; (load-file (concat user-emacs-directory "custom_faces.el"))
             ))
 
