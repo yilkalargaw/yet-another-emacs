@@ -1029,6 +1029,26 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   
 #+end_src
 
+** COMMENT outline
+
+#+begin_src emacs-lisp
+
+(use-package outline-mode
+  :straight (:type built-in)
+  :hook (prog-mode . outline-minor-mode))
+
+#+end_src
+
+** COMMENT hideshow
+
+#+begin_src emacs-lisp
+
+(use-package hideshow
+  :straight (:type built-in)
+  :hook (prog-mode . hs-minor-mode))
+
+#+end_src
+
 
 * minibuffer completion frameworks
 ** selectrum, consult, marginelia, embark
