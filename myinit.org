@@ -33,6 +33,7 @@
   - [[#backup-and-auto-save-list][backup and auto-save-list]]
   - [[#clipboard][clipboard]]
   - [[#yesno][yes,no]]
+  - [[#minibuffer][minibuffer]]
   - [[#enable-some-disabled-commands][enable some disabled commands]]
   - [[#input-method][input method]]
   - [[#indentation-stuff][indentation stuff]]
@@ -512,6 +513,15 @@
 ;;yes,no
 
 (fset 'yes-or-no-p 'y-or-n-p)
+
+#+end_src
+
+** minibuffer
+
+#+begin_src emacs-lisp
+
+(minibuffer-electric-default-mode  t)
+(minibuffer-eldef-shorten-default t)
 
 #+end_src
 
