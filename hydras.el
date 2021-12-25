@@ -182,7 +182,7 @@ Git gutter:
   ("w" transpose-words "words")
   ("o" org-transpose-words "Org mode words")
   ("l" transpose-lines "lines")
-  ("l" transpose-sexps "sexps")
+  ("x" transpose-sexps "sexps")
   ("s" transpose-sentences "sentences")
   ("e" org-transpose-elements "Org mode elements")
   ("p" transpose-paragraphs "paragraphs")
@@ -386,18 +386,6 @@ Git gutter:
    ("V" scroll-down-command)
    ("l" recenter-top-bottom)
    ("q" nil "exit"))
-
-(defhydra hydra-transpose (:color red :quit-key ("q" "C-g"))
-  "Transpose"
-  ("c" transpose-chars "characters")
-  ("w" transpose-words "words")
-  ("o" org-transpose-words "Org mode words")
-  ("l" transpose-lines "lines")
-  ("s" transpose-sentences "sentences")
-  ("e" org-transpose-elements "Org mode elements")
-  ("p" transpose-paragraphs "paragraphs")
-  ("t" org-table-transpose-table-at-point "Org mode table")
-  ("q" nil "cancel" :color blue))
 
 (defun toggle-transparency ()
   (interactive)
