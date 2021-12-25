@@ -84,6 +84,7 @@
 	org-self-insert-command
 	org-shiftleft
 	org-shiftright
+	org-transpose-words
 	org-yank
 	orgtbl-self-insert-command
 	quoted-insert
@@ -95,7 +96,8 @@
 	subword-left
 	subword-right
 	transpose-chars
-	transpose-params
+	transpose-lines
+	transpose-sentences
 	transpose-sexps
 	transpose-words
 	yas-expand
