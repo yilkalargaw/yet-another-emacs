@@ -20,6 +20,12 @@
 	hippie-expand-no-case-fold
 	html-paragraph
 	html-wrap-in-tag
+	hydra-transpose/org-transpose-words
+	hydra-transpose/transpose-chars
+	hydra-transpose/transpose-lines
+	hydra-transpose/transpose-sentences
+	hydra-transpose/transpose-sexps
+	hydra-transpose/transpose-words
 	indent-for-tab-command
 	insert-parentheses
 	markdown-cycle
@@ -103,6 +109,7 @@
 	eshell
 	hydra-multiple-cursors/mc/mark-next-like-this
 	hydra-multiple-cursors/mc/mark-previous-like-this
+	hydra-transpose/body
 	kill-this-buffer
 	magit-status
 	shell
