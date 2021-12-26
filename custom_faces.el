@@ -15,6 +15,14 @@
 
        )
 
+  (defun doomish-name-to-rgb (color)
+  "Retrieves the hexidecimal string repesented the named COLOR (e.g. \"red\")
+for FRAME (defaults to the current frame)."
+  (cl-loop with div = (float (car (tty-color-standard-values "#ffffff")))
+           for x in (tty-color-standard-values (downcase color))
+           collect (/ x div)))
+
+  
   (defun doomish-blend (color1 color2 alpha)
     "Blend two colors (hexidecimal strings) together by a coefficient ALPHA (a
 float between 0 and 1)"
@@ -29,8 +37,8 @@ float between 0 and 1)"
 
             ((and (string-prefix-p "#" color1) (string-prefix-p "#" color2))
              (apply (lambda (r g b) (format "#%02x%02x%02x" (* r 255) (* g 255) (* b 255)))
-                    (cl-loop for it    in (doom-name-to-rgb color1)
-                             for other in (doom-name-to-rgb color2)
+                    (cl-loop for it    in (doomish-name-to-rgb color1)
+                             for other in (doomish-name-to-rgb color2)
                              collect (+ (* alpha it) (* other (- 1 alpha))))))
 
             (color1))))
@@ -176,15 +184,15 @@ float between 0 and 1)"
    ;; `(tab-bar-tab-inactive ((t (:inherit tab-bar-tab :background "gray5"))))
 
 
-      ;;;;; display-line-number-mode
-   `(line-number ((t (:weight thin :underline nil :height 0.9))))
-      ;;;;; linum-mode
-   `(linum ((t (:weight thin :height ,(face-attribute 'default :height) :underline nil :font ,(face-font 'default)))))
-   `(linum-relative-current-face ((t (:inherit linum))))
-   `(line-number-current-line ((t (:inherit line-number  scale: 1.0))))
+   ;;    ;;;;; display-line-number-mode
+   ;; `(line-number ((t (:inherit linum :weight thin :inherit line-number :weight thin :underline nil :height 0.8 :italic t))))
+   ;;    ;;;;; linum-mode
+   ;; `(linum ((t (:inherit linum :weight thin :height 0.8 :underline nil :font ,(face-font 'default) :italic t))))
+   ;; `(linum-relative-current-face ((t (:inherit linum :height 1.0 :weight extra-bold :italic nil))))
+   ;; `(line-number-current-line ((t (:inherit line-number  :height 1.0 :weight extra-bold :italic nil))))
 
-   ;; ;;;;; linum-relative
-   ;; `(linum-relative-current-face ((,class (:foreground ,comp))))
+   ;; ;; ;;;;; linum-relative
+   ;; ;; `(linum-relative-current-face ((,class (:foreground ,comp))))
 
    ;;;;; modeline
    `(mode-line ((t (:inherit variable-pitch
