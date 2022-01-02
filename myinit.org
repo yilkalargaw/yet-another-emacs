@@ -551,10 +551,16 @@
 
 #+begin_src emacs-lisp
 
-;; to setup tabs
-(setq c-basic-indent 2)
-(setq tab-width 4)
+;; ;; to setup tabs
+;; (setq c-basic-indent 2)
+;; (setq tab-width 4)
+;; (setq indent-tabs-mode nil)
+
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'c-basic-indent 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
 (setq indent-tabs-mode nil)
+(setq-default tab-width 2)
 
 #+end_src
 
