@@ -105,6 +105,7 @@
   - [[#typing][typing]]
     - [[#speed-type][speed-type]]
     - [[#typing-of-emacs][typing-of-emacs]]
+  - [[#devdocs-browser][devdocs browser]]
 - [[#org][org]]
   - [[#basic-org][basic org]]
   - [[#org-bullets][org-bullets]]
@@ -1956,6 +1957,16 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :straight t
   :defer t)
 
+#+end_src
+
+** devdocs browser
+
+#+begin_src emacs-lisp
+
+(use-package devdocs-browser
+  :straight t
+  :defer t)
+  
 #+end_src
 
 
