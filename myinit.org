@@ -99,13 +99,13 @@
   - [[#default-text-scale][default text-scale]]
   - [[#minions][minions]]
   - [[#projectile][projectile]]
-  - [[#ctrlf][ctrlf]]
   - [[#smartparens][smartparens]]
   - [[#elpher][elpher]]
   - [[#typing][typing]]
     - [[#speed-type][speed-type]]
     - [[#typing-of-emacs][typing-of-emacs]]
   - [[#devdocs-browser][devdocs browser]]
+  - [[#pdf-tools][pdf-tools]]
 - [[#org][org]]
   - [[#basic-org][basic org]]
   - [[#org-bullets][org-bullets]]
@@ -1896,7 +1896,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** ctrlf
+** COMMENT ctrlf
 
 #+begin_src emacs-lisp
 
@@ -1969,6 +1969,26 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   
 #+end_src
 
+** pdf-tools
+
+#+begin_src emacs-lisp
+
+(use-package pdf-tools
+  :straight t
+  :defer t
+  :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
+  :if (display-graphic-p)
+  :config
+  ;; (pdf-tools-install :no-query)
+  (pdf-loader-install)
+  (require 'pdf-occur)
+  :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1)))
+  (pdf-view-mode . (lambda () (setq pdf-view-midnight-colors `(,(face-foreground 'default) . ,(face-background 'default)))
+        			 (pdf-view-midnight-minor-mode 1)))
+
+  )
+
+#+end_src
 
 * org
 
