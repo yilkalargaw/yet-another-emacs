@@ -1984,7 +1984,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (require 'pdf-occur)
   :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1)))
   (pdf-view-mode . (lambda () (setq pdf-view-midnight-colors `(,(face-foreground 'default) . ,(face-background 'default)))
-        			 (pdf-view-midnight-minor-mode 1)))
+                     (pdf-view-midnight-minor-mode 1)))
 
   )
 
