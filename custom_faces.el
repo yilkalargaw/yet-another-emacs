@@ -367,7 +367,8 @@ float between 0 and 1)"
    `(diredfl-symlink                ((t (:background nil :foreground ,(face-foreground 'trailing-whitespace)))))
    `(diredfl-tagged-autofile-name   ((t (:background nil :foreground ,(face-foreground 'region)))))
    `(diredfl-write-priv             ((t (:background nil :foreground ,(face-foreground 'font-lock-variable-name-face)))))
-
    ))
 
 (setq warning-minimum-level :warning)
+
+(setq pdf-view-midnight-colors `(,(face-foreground 'default) . ,(face-background 'default)))
