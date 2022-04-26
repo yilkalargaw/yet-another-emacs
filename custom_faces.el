@@ -203,11 +203,12 @@ float between 0 and 1)"
                                       :background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)
                                       :box (:color ,(face-background 'region) :line-width -1) :height 1.0))))
 
-   `(mode-line-buffer-id ((t (:inherit variable-pitch
+    `(mode-line-buffer-id ((t (:inherit variable-pitch
                                 ;; :box (:color ,(face-foreground 'default) :line-width -1)
                                 :foreground ,(face-foreground 'link)
                                 :background nil :bold t :height 1.0
-                                :distant-foreground ,(face-background 'region)))))
+                                :distant-foreground ,(face-background 'region))))
+
 
    ;; `(mode-line-buffer-id-inactive ((t ( :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1)
    ;;                                  :box nil
