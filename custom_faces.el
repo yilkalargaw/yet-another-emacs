@@ -207,7 +207,7 @@ float between 0 and 1)"
                                 ;; :box (:color ,(face-foreground 'default) :line-width -1)
                                 :foreground ,(face-foreground 'link)
                                 :background nil :bold t :height 1.0
-                                :distant-foreground ,(face-background 'region))))
+                                :distant-foreground ,(face-background 'region)))))
 
 
    ;; `(mode-line-buffer-id-inactive ((t ( :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1)
