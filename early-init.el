@@ -18,7 +18,7 @@
 (setq frame-inhibit-implied-resize nil)
 
 (push '(vertical-scroll-bars . nil) default-frame-alist)
-(push '(internal-border-width . 14) default-frame-alist)
+(push '(internal-border-width . 8) default-frame-alist)
 (push '(left-fringe    . 4) default-frame-alist)
 (push '(right-fringe   . 8) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
