@@ -114,7 +114,6 @@
 - [[#dired][dired]]
 - [[#themes-and-theming][themes and theming]]
   - [[#mode-line][mode-line]]
-    - [[#telephone-line][telephone-line]]
   - [[#all-the-icons][all-the-icons]]
 - [[#programming-and-typesetting][programming and typesetting]]
   - [[#lsp-mode][lsp-mode]]
@@ -266,6 +265,7 @@
 (defconst EMACS26+   (> emacs-major-version 25))
 (defconst EMACS27+   (> emacs-major-version 26))
 (defconst EMACS28+   (> emacs-major-version 27))
+(defconst EMACS29+   (> emacs-major-version 28))
 (defconst IS-MAC     (eq system-type 'darwin))
 (defconst IS-LINUX   (eq system-type 'gnu/linux))
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
@@ -365,9 +365,10 @@
 ;; (global-set-key (kbd "C-c m b") 'menu-bar-mode)
 (column-number-mode 1)
 (setq initial-scratch-message nil)
-(setq battery-mode-line-format " [%b%p%% } ")
-(display-battery-mode t)
-(display-time-mode t)
+;; (setq battery-mode-line-format "   [%b%p%% }   ") ;;"   🔋[%b%p%% }   "
+
+;; (display-battery-mode t)
+;; (display-time-mode t)
 (setq frame-resize-pixelwise t)
 (setq redisplay-skip-fontification-on-input t)
 (setq idle-update-delay 1.0)
@@ -683,6 +684,8 @@
 ;;       )
 
 (setq fast-but-imprecise-scrolling t)
+
+(when EMACS29+ (pixel-scroll-precision-mode t))
 
 #+end_src
 
@@ -1065,16 +1068,25 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-(use-package orderless
-  :straight t
-  :custom (completion-styles '(orderless))
-  :config (setq-local orderless-matching-styles '(orderless-literal)
-                      orderless-style-dispatchers nil))
+;; (use-package orderless
+;;   :straight t
+;;   :custom (completion-styles '(orderless))
+;;   :config (setq-local orderless-matching-styles '(orderless-literal)
+;;                       orderless-style-dispatchers nil))
 
-(use-package selectrum
-  :straight t
-  :config
-  (selectrum-mode +1))
+
+
+;; (use-package selectrum
+;;   :straight t
+;;   :config
+;;   (selectrum-mode +1))
+
+(when (not EMACS26+) (ido-mode))
+(when EMACS26+ (icomplete-mode))
+;; (when EMACS27+ (icomplete-vertical-mode))
+(when EMACS27+ (fido-mode))
+(when EMACS27+ (fido-vertical-mode))
+
 
 (use-package consult
   :straight t
@@ -1090,7 +1102,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;;                :items    ,projectile-known-projects))
   ;; (add-to-list 'consult-buffer-sources my/consult-source-projectile-projects 'append)
   :bind ("M-s s" . consult-line)
-        ("M-s <SPC>" . consult-imenu)
+  ("M-s <SPC>" . consult-imenu)
   )
 
 (use-package marginalia
@@ -1990,6 +2002,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
+
 * org
 
 ** basic org
@@ -2258,6 +2271,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (use-package base16-theme
   :straight t
   :defer t
+  :config
+   (setq base16-theme-256-color-source 'colors)
   )
 
 (use-package gotham-theme
@@ -2324,6 +2339,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+end_src
 
 ** mode-line
+
+#+begin_src emacs-lisp
 
 *** COMMENT doom-modeline
 #+begin_src emacs-lisp
@@ -2519,7 +2536,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   )
 #+end_src
 
-*** telephone-line
+*** COMMENT telephone-line
 
 #+begin_src emacs-lisp
 
