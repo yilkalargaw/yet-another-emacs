@@ -2340,8 +2340,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 ** mode-line
 
-#+begin_src emacs-lisp
-
 *** COMMENT doom-modeline
 #+begin_src emacs-lisp
 
