@@ -492,11 +492,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 			)
 
   (add-hook 'after-init-time-hook
-			(progn
-			  (load-theme 'deeper-blue t)
-			  ))
-
-  (add-hook 'after-init-time-hook
 			(load-file (concat user-emacs-directory "custom_faces.el")))
 
 #+end_src
