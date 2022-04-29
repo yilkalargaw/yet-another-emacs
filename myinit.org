@@ -7,6 +7,7 @@
 #+auto_tangle: t
 
 * table of contents                                          :noexport:TOC_3:
+- [[#starting-headers][starting headers]]
 - [[#mostly-related-to-initialization-process][mostly related to initialization process]]
   - [[#earlyinits][earlyinits]]
   - [[#initial-setup-straight-and-use-package][initial setup straight and use-package]]
@@ -140,11 +141,9 @@
 - [[#start-server][start server]]
 - [[#scratch-page-settings][scratch-page settings]]
 - [[#set-custom-variables][set custom variables]]
-- [[#provide-init][provide init]]
+- [[#provide-init-and-finish][provide init and finish]]
 
-* mostly related to initialization process
-** earlyinits
-
+* starting headers
 #+begin_src emacs-lisp
 ;;; package --- Summary
 ;;; Commentary:
@@ -154,6 +153,12 @@
 
 (let ((file-name-handler-alist nil))
   (require 'package)
+
+#+end_src
+
+* mostly related to initialization process
+** earlyinits
+#+begin_src emacs-lisp
 
   (when (version< emacs-version "27.0")
     (load-file (concat user-emacs-directory "early-init.el")))
@@ -3240,7 +3245,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+end_src
 
 
-* provide init
+* provide init and finish
 
 #+begin_src emacs-lisp
 
