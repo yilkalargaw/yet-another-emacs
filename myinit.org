@@ -868,7 +868,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+end_src
 
 
-* exec path form shell
+* external packages I use
+** exec path form shell
 
 #+begin_src emacs-lisp
 
@@ -881,8 +882,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-
-* hydra
+** hydra
 
 #+begin_src emacs-lisp
 
@@ -906,8 +906,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-
-* packages I use
 ** undo-tree
 
 #+begin_src emacs-lisp
@@ -2902,59 +2900,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :defer t
   :when (bound-and-true-p module-file-suffix)
 )
-
-#+end_src
-
-
-* COMMENT eaf
-
-#+begin_src emacs-lisp
-
-(use-package eaf
-  :if (eq system-type 'gnu/linux)
-  :load-path "~/.emacs.d/site-lisp/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
-  :custom
-  (eaf-find-alternate-file-in-dired t)
-  :config
-  (require 'eaf-browser)
-  (require 'eaf-pdf-viewer)
-
-  ;; (require 'eaf-airshare)
-  ;; ;; (require 'eaf-browser)
-  ;; (require 'eaf-camera)
-  ;; (require 'eaf-demo)
-  ;; (require 'eaf-file-browser)
-  ;; (require 'eaf-file-manager)
-  ;; (require 'eaf-file-sender)
-  ;; (require 'eaf-image-viewer)
-  ;; (require 'eaf-jupyter)
-  ;; (require 'eaf-markdown-previewer)
-  ;; (require 'eaf-mermaid)
-  ;; (require 'eaf-mindmap)
-  ;; (require 'eaf-music-player)
-  ;; (require 'eaf-org-previewer)
-  ;; ;; (require 'eaf-pdf-viewer)
-  ;; (require 'eaf-system-monitor)
-  ;; (require 'eaf-terminal)
-  ;; (require 'eaf-video-player)
-  ;; (require 'eaf-vue-demo)
-  ;; (require 'eaf-netease-cloud-music)
-  ;; (require 'eaf-rss-reader)
-
-  ;; (add-hook! 'eaf-mode-hook 'xah-fly-keys-off)
-
-  ;; (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
-  ;; (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
-
-  (defun eaf-open-google ()
-    "Open Google using EAF."
-    (interactive)
-    (eaf-open-browser "https://www.google.com"))
-
-   (defun eaf-open-ddg ()
-    "Open Google using EAF."
-    (interactive)
-    (eaf-open-browser "https://www.duckduckgo.com")))
 
 #+end_src
 
