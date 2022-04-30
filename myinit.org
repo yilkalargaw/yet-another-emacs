@@ -2904,7 +2904,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (run-with-idle-timer 0.6 nil '(unless (server-running-p)
-								(server-start)))
+                                (server-start)))
 
 
 ;; (require 'server)
