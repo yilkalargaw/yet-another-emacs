@@ -787,7 +787,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (add-hook 'dired-mode-hook 'dired-hide-details-mode t)
 
-(when-eval-after-load 'dired
+(with-eval-after-load 'dired
                       (require 'dired-aux)
                       (require 'dired-x)
                       ;; (require 'dired-narrow)
@@ -836,6 +836,21 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                       )
 
 
+
+#+end_src
+
+*** org
+
+#+begin_src emacs-lisp
+
+;; :mode (("\\.org\\'" . org-mode)
+;;        ("\\.org$" . org-mode))
+
+(with-eval-after-load 'org
+ (setq org-src-fontify-natively t
+       org-src-tab-acts-natively t
+       org-confirm-babel-evaluate nil
+       org-edit-src-content-indentation 0))
 
 #+end_src
 
@@ -899,17 +914,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+end_src
 
 
-* more garbage collection optimization with gmch
-
-#+begin_src emacs-lisp
-
-(use-package gcmh
-  :straight (gmch :type git :host gitlab :repo "koral/gcmh")
-  :config (gcmh-mode t))
-
-#+end_src
-
-
 * external libraries
 
 #+begin_src emacs-lisp
@@ -927,6 +931,18 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 * external packages I use
+** additional garbage collection optimization with gmch
+
+#+begin_src emacs-lisp
+
+(use-package gcmh
+  :straight (gmch :type git :host gitlab :repo "koral/gcmh")
+  :config (gcmh-mode t))
+
+#+end_src
+
+
+
 ** exec path form shell
 
 #+begin_src emacs-lisp
@@ -2303,7 +2319,6 @@ With postitive prefix argument ARG move to the nth previous object."
 #+end_src
 
 
-
 ** programming and typesetting
 *** lsp-mode
 
@@ -2791,7 +2806,6 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-
 ** dired related
 
 #+begin_src emacs-lisp
@@ -2848,28 +2862,8 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-
-* org
-
-** basic org
-#+begin_src emacs-lisp
-
-(use-package org
-  :straight (:type built-in)
-  ;; :straight t
-  :defer t
-  :mode (("\\.org\\'" . org-mode)
-         ("\\.org$" . org-mode))
-  :config
-  (setq org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-confirm-babel-evaluate nil
-        org-edit-src-content-indentation 0)
-  )
-
-#+end_src
-
-** org-bullets
+** org related
+*** org-bullets
 
 #+begin_src emacs-lisp
 
@@ -2881,7 +2875,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-** ox-pandoc
+*** ox-pandoc
 
 #+begin_src emacs-lisp
 
@@ -2893,7 +2887,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-** htmlize
+*** htmlize
 
 #+begin_src emacs-lisp
 
@@ -2909,12 +2903,8 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+begin_src emacs-lisp
 
-(use-package server
-  :straight (:type built-in)
-  :defer 0.6
-  :config ;; (after-init . (lambda ()
-  (unless (server-running-p)
-    (server-start))) ;; ))
+(run-with-idle-timer 0.6 nil '(unless (server-running-p)
+								(server-start)))
 
 
 ;; (require 'server)
