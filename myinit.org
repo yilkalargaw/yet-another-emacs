@@ -161,8 +161,8 @@
 
 #+begin_src emacs-lisp
 
-  (when (version< emacs-version "27.0")
-    (load-file (concat user-emacs-directory "early-init.el")))
+(when (version< emacs-version "27.0")
+  (load-file (concat user-emacs-directory "early-init.el")))
 
 #+end_src
 
@@ -339,7 +339,7 @@
 
 #+begin_src emacs-lisp
 
-  (add-hook 'after-init-hook  #'global-auto-revert-mode)
+(add-hook 'after-init-hook  #'global-auto-revert-mode)
 
 #+end_src
 
@@ -459,13 +459,13 @@
 
 ;;line-numbers
 
-  (setq display-line-numbers-type 'relative
-        display-line-numbers-grow-only t
-        display-line-numbers-width-start t
-        ;; display-line-numbers-width 3
-        )
+(setq display-line-numbers-type 'relative
+      display-line-numbers-grow-only t
+      display-line-numbers-width-start t
+      ;; display-line-numbers-width 3
+      )
 
-  (global-display-line-numbers-mode t)
+(global-display-line-numbers-mode t)
 
 #+end_src
 
@@ -602,35 +602,35 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (add-hook 'after-init-time-hook
-            (progn
-              (defadvice load-theme (after custom-faces-after-load-theme())
-                "Insert an empty line when moving up from the top line."
-                (let ((dafile (concat user-emacs-directory "custom_faces.el")))
-                  (if (file-exists-p dafile) (load-file dafile))
-                  ;; (save-excursion
-                  ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-                  ))
+(add-hook 'after-init-time-hook
+          (progn
+            (defadvice load-theme (after custom-faces-after-load-theme())
+              "Insert an empty line when moving up from the top line."
+              (let ((dafile (concat user-emacs-directory "custom_faces.el")))
+                (if (file-exists-p dafile) (load-file dafile))
+                ;; (save-excursion
+                ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+                ))
 
 
-              (ad-activate 'load-theme)
+            (ad-activate 'load-theme)
 
-              (defadvice disable-theme (after custom-faces-after-disable-theme())
-                "Insert an empty line when moving up from the top line."
-                (let ((dafile (concat user-emacs-directory "custom_faces.el")))
-                  (if (file-exists-p dafile) (load-file dafile))
-                  ;; (save-excursion
-                  ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-                  ))
+            (defadvice disable-theme (after custom-faces-after-disable-theme())
+              "Insert an empty line when moving up from the top line."
+              (let ((dafile (concat user-emacs-directory "custom_faces.el")))
+                (if (file-exists-p dafile) (load-file dafile))
+                ;; (save-excursion
+                ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+                ))
 
 
-              (ad-activate 'disable-theme)
+            (ad-activate 'disable-theme)
 
-              )
             )
+          )
 
-  (add-hook 'after-init-time-hook
-            (load-file (concat user-emacs-directory "custom_faces.el")))
+(add-hook 'after-init-time-hook
+          (load-file (concat user-emacs-directory "custom_faces.el")))
 
 #+end_src
 
@@ -639,10 +639,10 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (when (not EMACS26+) (ido-mode))
-  (when EMACS26+ (icomplete-mode))
-  (when EMACS27+ (fido-mode))
-  (when EMACS27+ (fido-vertical-mode))
+(when (not EMACS26+) (ido-mode))
+(when EMACS26+ (icomplete-mode))
+(when EMACS27+ (fido-mode))
+(when EMACS27+ (fido-vertical-mode))
 
 #+end_src
 
@@ -653,7 +653,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (with-eval-after-load 'imenu (set-default 'imenu-auto-rescan t))
+(with-eval-after-load 'imenu (set-default 'imenu-auto-rescan t))
 
 #+end_src
 
@@ -661,7 +661,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 #+end_src
 
@@ -669,12 +669,12 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  ;;conmint-mode
-  (with-eval-after-load 'comint
-      (setq comint-scroll-show-maximum-output nil)
-      (setq comint-scroll-to-bottom-on-input nil)
-      (setq comint-scroll-to-bottom-on-output nil)
-      (add-hook 'comint-mode-hook 'display-line-numbers-mode -1))
+;;conmint-mode
+(with-eval-after-load 'comint
+  (setq comint-scroll-show-maximum-output nil)
+  (setq comint-scroll-to-bottom-on-input nil)
+  (setq comint-scroll-to-bottom-on-output nil)
+  (add-hook 'comint-mode-hook 'display-line-numbers-mode -1))
 
 #+end_src
 
@@ -682,11 +682,11 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  ;;shell-mode
+;;shell-mode
 
-  (with-eval-after-load 'shell
-    (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)
-    (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point))
+(with-eval-after-load 'shell
+  (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)
+  (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point))
 
 #+end_src
 
@@ -694,11 +694,11 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (with-eval-after-load 'eshell
-      (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
-                                     "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
-                                     "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
-                                     "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger")))
+(with-eval-after-load 'eshell
+  (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
+                                 "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
+                                 "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
+                                 "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger")))
 
 #+end_src
 
@@ -706,8 +706,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (with-eval-after-load 'term
-      (define-key term-raw-map (kbd "C-c C-y") 'term-paste))
+(with-eval-after-load 'term
+  (define-key term-raw-map (kbd "C-c C-y") 'term-paste))
 
 #+end_src
 
@@ -715,7 +715,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (add-hook 'eww-mode-hook 'display-line-numbers-mode -1)
+(add-hook 'eww-mode-hook 'display-line-numbers-mode -1)
 
 #+end_src
 
@@ -724,14 +724,14 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
 
-  (with-eval-after-load 'flymake
-        (setq flymake-fringe-indicator-position 'right-fringe)
-        (setq flymake-suppress-zero-counters t)
-        (remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake))
+(with-eval-after-load 'flymake
+  (setq flymake-fringe-indicator-position 'right-fringe)
+  (setq flymake-suppress-zero-counters t)
+  (remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake))
 
-  (add-hook 'prog-mode-hook 'flymake-mode t)
+(add-hook 'prog-mode-hook 'flymake-mode t)
 
-  ;; (run-with-idle-timer 0.2 flymake-mode t)
+;; (run-with-idle-timer 0.2 flymake-mode t)
 
 #+end_src
 
@@ -739,17 +739,17 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (with-eval-after-load 'flyspell
-    (cond
-     ((executable-find "aspell")
-      (setq ispell-program-name "aspell")
-      (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US")))
-     ((executable-find "hunspell")
-      (setq ispell-program-name "hunspell")
-      (setq ispell-extra-args '("-d en_US")))))
+(with-eval-after-load 'flyspell
+  (cond
+   ((executable-find "aspell")
+    (setq ispell-program-name "aspell")
+    (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US")))
+   ((executable-find "hunspell")
+    (setq ispell-program-name "hunspell")
+    (setq ispell-extra-args '("-d en_US")))))
 
-  (add-hook 'prog-mode-hook (lambda () (when (or (executable-find "aspell") (executable-find "hunspell") (flyspell-prog-mode t)))))
-  (add-hook 'text-mode-hook (lambda () (when (or (executable-find "aspell") (executable-find "hunspell") (flyspell-mode t)))))
+(add-hook 'prog-mode-hook (lambda () (when (or (executable-find "aspell") (executable-find "hunspell") (flyspell-prog-mode t)))))
+(add-hook 'text-mode-hook (lambda () (when (or (executable-find "aspell") (executable-find "hunspell") (flyspell-mode t)))))
 
 #+end_src
 
@@ -757,13 +757,13 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (add-hook 'ediff-prepare-buffer-hook 'outline-show-all)
-  (add-hook 'ediff-quit-hook 'winner-undo)
+(add-hook 'ediff-prepare-buffer-hook 'outline-show-all)
+(add-hook 'ediff-quit-hook 'winner-undo)
 
-  (with-eval-after-load 'ediff
-    (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-    (setq ediff-split-window-function 'split-window-horizontally)
-    (setq ediff-merge-split-window-function 'split-window-horizontally))
+(with-eval-after-load 'ediff
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (setq ediff-merge-split-window-function 'split-window-horizontally))
 
 #+end_src
 
@@ -771,13 +771,71 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (with-eval-after-load 'tramp
-    (setq remote-file-name-inhibit-cache nil)
-    (setq vc-ignore-dir-regexp
-          (format "%s\\|%s"
-                  vc-ignore-dir-regexp
-                  tramp-file-name-regexp))
-    (setq tramp-verbose 1))
+(with-eval-after-load 'tramp
+  (setq remote-file-name-inhibit-cache nil)
+  (setq vc-ignore-dir-regexp
+        (format "%s\\|%s"
+                vc-ignore-dir-regexp
+                tramp-file-name-regexp))
+  (setq tramp-verbose 1))
+
+#+end_src
+
+*** COMMENT dired
+
+#+begin_src emacs-lisp
+
+(add-hook 'dired-mode-hook 'dired-hide-details-mode t)
+
+(when-eval-after-load 'dired
+                      (require 'dired-aux)
+                      (require 'dired-x)
+                      ;; (require 'dired-narrow)
+                      ;; (require 'dired-subtree)
+                      (setq dired-listing-switches "--group-directories-first -lah")
+                      (put 'dired-find-alternate-file 'disabled nil)
+                      (define-key dired-mode-map (kbd "C-<return>") 'dired-find-file)
+                      (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+                      (define-key dired-mode-map (kbd "M-<return>") 'dired-find-file-other-window)
+                      ;; allow dired to delete or copy dir
+                      (setq dired-recursive-copies (quote always)) ; “always” means no asking
+                      (setq dired-recursive-deletes (quote top)) ; “top” means ask once
+                      (setq dired-dwim-target t)
+
+                      (defun dired-dotfiles-toggle ()
+                        "Show/hide dot-files"
+                        (interactive)
+                        (when (equal major-mode 'dired-mode)
+                          (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
+                              (progn
+                                (set (make-local-variable 'dired-dotfiles-show-p) nil)
+                                (message "h")
+                                (dired-mark-files-regexp "^\\\.")
+                                (dired-do-kill-lines))
+                            (progn (revert-buffer) ; otherwise just revert to re-show
+                                   (set (make-local-variable 'dired-dotfiles-show-p) t)))))
+
+                      (define-key dired-mode-map (kbd "H-l")
+                                  (lambda () (interactive) (dired-dotfiles-toggle)))
+
+                      (define-key dired-mode-map (kbd "^")
+                                  (lambda () (interactive) (find-alternate-file "..")))
+
+                      (setq wdired-allow-to-change-permissions t)
+                      ;; (defadvice dired-subtree-toggle (after dired-icons-refreash ())
+                      ;;   "Insert an empty line when moving up from the top line."
+                      ;;   (revert-buffer))
+
+                      ;; (ad-activate 'dired-subtree-toggle)
+
+                      ;; (defadvice dired-subtree-cycle (after dired-icons-refreash ())
+                      ;;   "Insert an empty line when moving up from the top line."
+                      ;;   (revert-buffer))
+
+                      ;; (ad-activate 'dired-subtree-cycle)
+                      )
+
+
 
 #+end_src
 
@@ -785,19 +843,19 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (with-eval-after-load 'whitespace
-    ;; Make whitespace-mode with very basic background coloring for whitespaces.
-    ;; http://xahlee.info/emacs/emacs/whitespace-mode.html
-    (setq whitespace-style (quote (face spaces tabs newline space-mark tab-mark newline-mark )))
+(with-eval-after-load 'whitespace
+  ;; Make whitespace-mode with very basic background coloring for whitespaces.
+  ;; http://xahlee.info/emacs/emacs/whitespace-mode.html
+  (setq whitespace-style (quote (face spaces tabs newline space-mark tab-mark newline-mark )))
 
-    ;; Make whitespace-mode and whitespace-newline-mode use “¶” for end of line char and “▷” for tab.
-    (setq whitespace-display-mappings
-          ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
-          '(
-            (space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
-            (newline-mark 10 [182 10]) ; LINE FEED,
-            (tab-mark 9 [9655 9] [92 9]) ; tab
-            )))
+  ;; Make whitespace-mode and whitespace-newline-mode use “¶” for end of line char and “▷” for tab.
+  (setq whitespace-display-mappings
+        ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
+        '(
+          (space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
+          (newline-mark 10 [182 10]) ; LINE FEED,
+          (tab-mark 9 [9655 9] [92 9]) ; tab
+          )))
 
 #+end_src
 
@@ -1205,216 +1263,216 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ** modal editing modes
 *** objed
 
- #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 
- (use-package objed
-   :straight t
-   ;; :defer t
-   :defer 0.5
-   ;; :hook (after-init . objed-mode)
-   :bind
-   ("M-o" . objed-local-mode)
-   (:map objed-map
-         ;; ("<SPC>" . 'objed-char-object)
-         ("C-f" . 'objed-right-char)
-         ("C-b" . 'objed-left-char)
-         ("," . 'objed-identifier-object)
-         ("." . 'objed-sentence-object)
-         ("b" . 'objed-word-object)
+(use-package objed
+  :straight t
+  ;; :defer t
+  :defer 0.5
+  ;; :hook (after-init . objed-mode)
+  :bind
+  ("M-o" . objed-local-mode)
+  (:map objed-map
+        ;; ("<SPC>" . 'objed-char-object)
+        ("C-f" . 'objed-right-char)
+        ("C-b" . 'objed-left-char)
+        ("," . 'objed-identifier-object)
+        ("." . 'objed-sentence-object)
+        ("b" . 'objed-word-object)
 
-         ("F" . nil)
-         ("B" . nil)
-         ("S" . nil)
-         ("R" . nil)
-         ("L" . nil)
-         ("." . nil)
-         ;; ("N" . nil)
-         ;; ("P" . nil)
-         ;; ("b" . nil)
-         ("B" . nil)
+        ("F" . nil)
+        ("B" . nil)
+        ("S" . nil)
+        ("R" . nil)
+        ("L" . nil)
+        ("." . nil)
+        ;; ("N" . nil)
+        ;; ("P" . nil)
+        ;; ("b" . nil)
+        ("B" . nil)
 
-         ("<SPC>" . 'objed-object-map)
-         ("c" . 'objed-user-map)
-         ("r" . 'objed-toggle-side)
-         ("l" . 'objed-next-specialized)
-         ("h" . 'objed-previous-specialized)
-         ;; ("l" . 'objed-next)
-         ;; ("h" . 'objed-previous)
-         ("L" . 'objed-move-object-forward)
-         ("H" . 'objed-move-object-backward)
+        ("<SPC>" . 'objed-object-map)
+        ("c" . 'objed-user-map)
+        ("r" . 'objed-toggle-side)
+        ("l" . 'objed-next-specialized)
+        ("h" . 'objed-previous-specialized)
+        ;; ("l" . 'objed-next)
+        ;; ("h" . 'objed-previous)
+        ("L" . 'objed-move-object-forward)
+        ("H" . 'objed-move-object-backward)
 
-         ("f" . 'objed-next-specialized)
-         ("s" . 'objed-previous-specialized)
-         ;; ("f" . 'objed-next)
-         ;; ("s" . 'objed-previous)
-         ("F" . 'objed-move-object-forward)
-         ("S" . 'objed-move-object-backward)
+        ("f" . 'objed-next-specialized)
+        ("s" . 'objed-previous-specialized)
+        ;; ("f" . 'objed-next)
+        ;; ("s" . 'objed-previous)
+        ("F" . 'objed-move-object-forward)
+        ("S" . 'objed-move-object-backward)
 
-         ("J" . 'objed-move-line-forward)
-         ("i" . 'objed-kill)
-         ("I" . 'objed-del-insert)
-         ("K" . 'objed-move-line-backward)
-         ;; ("K" . nil)
-         ("j" . 'objed-next-line)
-         ("k" . 'objed-previous-line)
-         ("G" . 'objed-del-insert)
-         ("<H-SPC>" . 'objed-quit)
+        ("J" . 'objed-move-line-forward)
+        ("i" . 'objed-kill)
+        ("I" . 'objed-del-insert)
+        ("K" . 'objed-move-line-backward)
+        ;; ("K" . nil)
+        ("j" . 'objed-next-line)
+        ("k" . 'objed-previous-line)
+        ("G" . 'objed-del-insert)
+        ("<H-SPC>" . 'objed-quit)
 
-         ;; :map objed-user-map
-         ;; ("f" . 'move-to-char)
-         ;; ("g" . 'move-upto-char)
+        ;; :map objed-user-map
+        ;; ("f" . 'move-to-char)
+        ;; ("g" . 'move-upto-char)
 
-         :map objed-object-map
-         ("," . 'objed-identifier-object)
+        :map objed-object-map
+        ("," . 'objed-identifier-object)
 
-         ;;        ;; :map objed-mode-map
-         ;;        ;; ("<M-SPC>" . 'my-objed-activate)
-         )
+        ;;        ;; :map objed-mode-map
+        ;;        ;; ("<M-SPC>" . 'my-objed-activate)
+        )
 
-   ;; :init (objed-mode)
+  ;; :init (objed-mode)
 
-   :config
-   ;; (objed-mode)
-   ;; (setq objed--which-key-avail-p t
-   ;;       objed--avy-avail-p t)
-   ;; (setq objed-use-avy-if-available 1)
-   ;; (define-key objed-mode-map (kbd "M-SPC") (objed-activate 'char))
+  :config
+  ;; (objed-mode)
+  ;; (setq objed--which-key-avail-p t
+  ;;       objed--avy-avail-p t)
+  ;; (setq objed-use-avy-if-available 1)
+  ;; (define-key objed-mode-map (kbd "M-SPC") (objed-activate 'char))
 
-   (defun objed--goto-next-specialized (&optional arg)
-     "Move to the next object.
+  (defun objed--goto-next-specialized (&optional arg)
+    "Move to the next object.
 
- With postitive prefix argument ARG move to the nth next object."
-     (let ((arg (or arg 1))
-           (obj nil))
-       (if (equal objed--object 'line)
-           (objed-next-line)
-         (progn
-           (dotimes (_ arg obj)
-             (when (setq obj  (objed--get-next))
-               (objed--update-current-object obj)
-               (cond ((or (equal objed--object 'word)
-                          (equal objed--object 'sexp))
-                      (goto-char (objed--end obj)))
-                     (t (objed--goto-char (objed--beg obj))))))))))
+With postitive prefix argument ARG move to the nth next object."
+    (let ((arg (or arg 1))
+          (obj nil))
+      (if (equal objed--object 'line)
+          (objed-next-line)
+        (progn
+          (dotimes (_ arg obj)
+            (when (setq obj  (objed--get-next))
+              (objed--update-current-object obj)
+              (cond ((or (equal objed--object 'word)
+                         (equal objed--object 'sexp))
+                     (goto-char (objed--end obj)))
+                    (t (objed--goto-char (objed--beg obj))))))))))
 
-   (defun objed-next-specialized (&optional arg)
-     "Move to ARG next object of current type."
-     (interactive "p")
-     ;; on init skip current
-     (when (and (region-active-p)
-                (eq last-command 'objed-extend))
-       (exchange-point-and-mark))
-     (let ((pos (point)))
-       (objed--goto-next-specialized (or arg 1))
-       (when (eq pos (point))
-         (error "No next %s" objed--object))))
+  (defun objed-next-specialized (&optional arg)
+    "Move to ARG next object of current type."
+    (interactive "p")
+    ;; on init skip current
+    (when (and (region-active-p)
+               (eq last-command 'objed-extend))
+      (exchange-point-and-mark))
+    (let ((pos (point)))
+      (objed--goto-next-specialized (or arg 1))
+      (when (eq pos (point))
+        (error "No next %s" objed--object))))
 
 
-   (defun objed--goto-previous-specialized (&optional arg)
-     "Move to the previous object.
+  (defun objed--goto-previous-specialized (&optional arg)
+    "Move to the previous object.
 
- With postitive prefix argument ARG move to the nth previous object."
-     (let ((arg (or arg 1))
-           (obj nil))
-       (if (equal objed--object 'line)
-           (objed-previous-line)
-         (progn
-           (dotimes (_ arg obj)
-             (when (setq obj (objed--get-prev))
-               (objed--update-current-object obj)
-               (objed--goto-char (objed--beg obj))))))))
+With postitive prefix argument ARG move to the nth previous object."
+    (let ((arg (or arg 1))
+          (obj nil))
+      (if (equal objed--object 'line)
+          (objed-previous-line)
+        (progn
+          (dotimes (_ arg obj)
+            (when (setq obj (objed--get-prev))
+              (objed--update-current-object obj)
+              (objed--goto-char (objed--beg obj))))))))
 
-   (defun objed-previous-specialized (&optional arg)
-     "Move to ARG previous object of current type."
-     (interactive "p")
-     ;; on init skip current
-     (when (and (region-active-p)
-                (eq last-command 'objed-extend))
-       (exchange-point-and-mark))
-     (let ((pos (point)))
-       (objed--goto-previous-specialized (or arg 1))
-       (when (eq pos (point))
-         (error "No next %s" objed--object))))
+  (defun objed-previous-specialized (&optional arg)
+    "Move to ARG previous object of current type."
+    (interactive "p")
+    ;; on init skip current
+    (when (and (region-active-p)
+               (eq last-command 'objed-extend))
+      (exchange-point-and-mark))
+    (let ((pos (point)))
+      (objed--goto-previous-specialized (or arg 1))
+      (when (eq pos (point))
+        (error "No next %s" objed--object))))
 
-   ;; ;;   ;; :config
-   ;; ;; (load (concat user-emacs-directory "lisp/objed-goto-next-specialized.el"))
+  ;; ;;   ;; :config
+  ;; ;; (load (concat user-emacs-directory "lisp/objed-goto-next-specialized.el"))
 
-   )
+  )
 
- ;; (add-hook 'after-init-time-hook (progn (require 'objed) (objed-mode)))
+;; (add-hook 'after-init-time-hook (progn (require 'objed) (objed-mode)))
 
- #+end_src
+#+end_src
 
 *** COMMENT god-mode
 
- #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 
- (use-package god-mode
-   :straight t
-   :defer t
-   :bind
-   ("M-o" . god-local-mode)
-   (:map god-local-mode-map
-         ("z" . repeat)
-         ("i" . god-local-mode)
-         ("." . repeat)
-         )
-   :config
-   (setq god-mod-alist '((nil . "C-") ("g" . "M-") ("G" . "C-M-") ("h" . "M-") ("H" . "C-M-")))
+(use-package god-mode
+  :straight t
+  :defer t
+  :bind
+  ("M-o" . god-local-mode)
+  (:map god-local-mode-map
+        ("z" . repeat)
+        ("i" . god-local-mode)
+        ("." . repeat)
+        )
+  :config
+  (setq god-mod-alist '((nil . "C-") ("g" . "M-") ("G" . "C-M-") ("h" . "M-") ("H" . "C-M-")))
   )
 
- #+end_src
+#+end_src
 
 *** COMMENT meow
 
- #+begin_src emacs-lisp
- (use-package meow
-   :straight t
-   :defer t)
- #+end_src
+#+begin_src emacs-lisp
+(use-package meow
+  :straight t
+  :defer t)
+#+end_src
 
 *** COMMENT kakoune
 
- #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 
- (use-package kakoune
-   ;; Having a non-chord way to escape is important, since key-chords don't work in macros
-   :straight t
-   :bind ("C-z" . ryo-modal-mode)
-   :hook (after-init . my/kakoune-setup)
-   :config
-   (defun ryo-enter () "Enter normal mode" (interactive) (ryo-modal-mode 1))
-   (defun my/kakoune-setup ()
-       "Call kakoune-setup-keybinds and then add some personal config."
-       (kakoune-setup-keybinds)
-       (setq ryo-modal-cursor-type 'box)
-       (add-hook 'prog-mode-hook #'ryo-enter)
-       (define-key ryo-modal-mode-map (kbd "SPC h") 'help-command)
-       ;; Access all C-x bindings easily
-       (define-key ryo-modal-mode-map (kbd "z") ctl-x-map)
-       (ryo-modal-keys
-        ("," save-buffer)
-        ("P" counsel-yank-pop)
-        ("m" mc/mark-next-like-this)
-        ("M" mc/skip-to-next-like-this)
-        ("n" mc/mark-previous-like-this)
-        ("N" mc/skip-to-previous-like-this)
-        ("M-m" mc/edit-lines)
-        ("*" mc/mark-all-like-this)
-        ("v" er/expand-region)
-        ("C-v" set-rectangular-region-anchor)
-        ("M-s" mc/split-region)
-        (";" (("q" delete-window)
-              ("v" split-window-horizontally)
-              ("s" split-window-vertically)))
-        ("C-h" windmove-left)
-        ("C-j" windmove-down)
-        ("C-k" windmove-up)
-        ("C-l" windmove-right)
-        ("C-u" scroll-down-command :first '(deactivate-mark))
-        ("C-d" scroll-up-command :first '(deactivate-mark)))))
+(use-package kakoune
+  ;; Having a non-chord way to escape is important, since key-chords don't work in macros
+  :straight t
+  :bind ("C-z" . ryo-modal-mode)
+  :hook (after-init . my/kakoune-setup)
+  :config
+  (defun ryo-enter () "Enter normal mode" (interactive) (ryo-modal-mode 1))
+  (defun my/kakoune-setup ()
+    "Call kakoune-setup-keybinds and then add some personal config."
+    (kakoune-setup-keybinds)
+    (setq ryo-modal-cursor-type 'box)
+    (add-hook 'prog-mode-hook #'ryo-enter)
+    (define-key ryo-modal-mode-map (kbd "SPC h") 'help-command)
+    ;; Access all C-x bindings easily
+    (define-key ryo-modal-mode-map (kbd "z") ctl-x-map)
+    (ryo-modal-keys
+     ("," save-buffer)
+     ("P" counsel-yank-pop)
+     ("m" mc/mark-next-like-this)
+     ("M" mc/skip-to-next-like-this)
+     ("n" mc/mark-previous-like-this)
+     ("N" mc/skip-to-previous-like-this)
+     ("M-m" mc/edit-lines)
+     ("*" mc/mark-all-like-this)
+     ("v" er/expand-region)
+     ("C-v" set-rectangular-region-anchor)
+     ("M-s" mc/split-region)
+     (";" (("q" delete-window)
+           ("v" split-window-horizontally)
+           ("s" split-window-vertically)))
+     ("C-h" windmove-left)
+     ("C-j" windmove-down)
+     ("C-k" windmove-up)
+     ("C-l" windmove-right)
+     ("C-u" scroll-down-command :first '(deactivate-mark))
+     ("C-d" scroll-up-command :first '(deactivate-mark)))))
 
- #+end_src
+#+end_src
 
 ** restclient
 
@@ -1574,7 +1632,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;;(add-to-list 'completion-at-point-functions #'cape-dict)
   ;;(add-to-list 'completion-at-point-functions #'cape-symbol)
   ;;(add-to-list 'completion-at-point-functions #'cape-line)
-)
+  )
 
 (use-package kind-icon
   :straight t
@@ -1693,9 +1751,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (use-package ctrlf
-    :straight t
-    :init (ctrlf-mode +1))
+(use-package ctrlf
+  :straight t
+  :init (ctrlf-mode +1))
 
 #+end_src
 
@@ -1726,9 +1784,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ** elpher
 
 #+begin_src emacs-lisp
-  (use-package elpher
-    :straight t
-    :defer t)
+(use-package elpher
+  :straight t
+  :defer t)
 #+end_src
 
 ** typing
@@ -1798,119 +1856,119 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  ;;themes
+;;themes
 
-  (use-package doom-themes
-    :straight t
-    :defer t)
+(use-package doom-themes
+  :straight t
+  :defer t)
 
-  (use-package nord-theme
-    :straight t
-    :defer t)
+(use-package nord-theme
+  :straight t
+  :defer t)
 
-  (use-package ample-theme
-    :straight t
-    :defer t)
+(use-package ample-theme
+  :straight t
+  :defer t)
 
-  (use-package dracula-theme
-    :straight t
-    :defer t)
+(use-package dracula-theme
+  :straight t
+  :defer t)
 
-  (use-package color-theme-sanityinc-tomorrow
-    :straight t
-    :defer t)
+(use-package color-theme-sanityinc-tomorrow
+  :straight t
+  :defer t)
 
-  (use-package color-theme-sanityinc-solarized
-    :straight t
-    :defer t)
+(use-package color-theme-sanityinc-solarized
+  :straight t
+  :defer t)
 
-  (use-package soothe-theme
-    :straight t
-    :defer t)
+(use-package soothe-theme
+  :straight t
+  :defer t)
 
-  (use-package seti-theme
-    :straight t
-    :defer t)
+(use-package seti-theme
+  :straight t
+  :defer t)
 
-  (use-package spacemacs-theme
-    :straight t
-    :defer t)
+(use-package spacemacs-theme
+  :straight t
+  :defer t)
 
-  (use-package solarized-theme
-    :straight t
-    :defer t)
+(use-package solarized-theme
+  :straight t
+  :defer t)
 
-  (use-package zenburn-theme
-    :straight t
-    :defer t)
+(use-package zenburn-theme
+  :straight t
+  :defer t)
 
-  (use-package cyberpunk-theme
-    :straight t
-    :defer t)
+(use-package cyberpunk-theme
+  :straight t
+  :defer t)
 
-  (use-package sublime-themes
-    :straight t
-    :defer t)
+(use-package sublime-themes
+  :straight t
+  :defer t)
 
-  (use-package flatland-theme
-    :straight t
-    :defer t)
+(use-package flatland-theme
+  :straight t
+  :defer t)
 
-  (use-package flatui-dark-theme
-    :straight t
-    :defer t)
+(use-package flatui-dark-theme
+  :straight t
+  :defer t)
 
-  (use-package blackboard-theme
-    :straight t
-    :defer t)
+(use-package blackboard-theme
+  :straight t
+  :defer t)
 
-  (use-package material-theme
-    :straight t
-    :defer t)
+(use-package material-theme
+  :straight t
+  :defer t)
 
-  (use-package moe-theme
-    :straight t
-    :defer t)
+(use-package moe-theme
+  :straight t
+  :defer t)
 
-  (use-package darktooth-theme
-    :straight t
-    :defer t)
+(use-package darktooth-theme
+  :straight t
+  :defer t)
 
-  (use-package danneskjold-theme
-    :straight t
-    :defer t)
+(use-package danneskjold-theme
+  :straight t
+  :defer t)
 
-  (use-package acme-theme
-    :straight t
-    :defer t)
+(use-package acme-theme
+  :straight t
+  :defer t)
 
-  (use-package modus-themes
-    :straight t
-    :defer t
-    )
+(use-package modus-themes
+  :straight t
+  :defer t
+  )
 
-  (use-package base16-theme
-    :straight t
-    :defer t
-    :config
-     (setq base16-theme-256-color-source 'colors)
-     ;; (setq base16-theme-256-color-source 'base16-shell)
-     (setq base16-distinct-fringe-background nil)
-     ;; (setq base16-highlight-mode-line 'box)
-    )
+(use-package base16-theme
+  :straight t
+  :defer t
+  :config
+  (setq base16-theme-256-color-source 'colors)
+  ;; (setq base16-theme-256-color-source 'base16-shell)
+  (setq base16-distinct-fringe-background nil)
+  ;; (setq base16-highlight-mode-line 'box)
+  )
 
-  (use-package gotham-theme
-    :straight t
-    :defer t
-    )
+(use-package gotham-theme
+  :straight t
+  :defer t
+  )
 
-  (use-package vscode-dark-plus-theme
-    :straight t
-    :defer t)
+(use-package vscode-dark-plus-theme
+  :straight t
+  :defer t)
 
-  (use-package kaolin-themes
-    :straight t
-    :defer t)
+(use-package kaolin-themes
+  :straight t
+  :defer t)
 
 #+end_src
 
@@ -2246,178 +2304,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
 
-* org
-
-** basic org
-#+begin_src emacs-lisp
-
-(use-package org
-  :straight (:type built-in)
-  ;; :straight t
-  :defer t
-  :mode (("\\.org\\'" . org-mode)
-         ("\\.org$" . org-mode))
-  :config
-  (setq org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-confirm-babel-evaluate nil
-        org-edit-src-content-indentation 0)
-  )
-
-#+end_src
-
-** org-bullets
-
-#+begin_src emacs-lisp
-
-;; org-bullets
-(use-package org-bullets
-  :straight t
-  :defer t
-  :hook (org-mode . org-bullets-mode))
-
-#+end_src
-
-** ox-pandoc
-
-#+begin_src emacs-lisp
-
-;;ox-pandoc
-(use-package ox-pandoc
-  :straight t
-  :defer t
-  :hook (org-mode . (lambda () (when (executable-find "pandoc") (require 'ox-pandoc)))))
-
-#+end_src
-
-** htmlize
-
-#+begin_src emacs-lisp
-
-(use-package htmlize
-  :straight t
-  :defer t
-  :hook (org))
-
-#+end_src
-
-
-* dired
-
-#+begin_src emacs-lisp
-
-(use-package dired
-  :straight (:type built-in)
-  :defer t
-  :hook (dired-mode . (lambda () (dired-hide-details-mode t)))
-  :config
-  (require 'dired-aux)
-  (require 'dired-x)
-  ;; (require 'dired-narrow)
-  ;; (require 'dired-subtree)
-  (setq dired-listing-switches "--group-directories-first -lah")
-  (put 'dired-find-alternate-file 'disabled nil)
-  (define-key dired-mode-map (kbd "C-<return>") 'dired-find-file)
-  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-  (define-key dired-mode-map (kbd "M-<return>") 'dired-find-file-other-window)
-  ;; allow dired to delete or copy dir
-  (setq dired-recursive-copies (quote always)) ; “always” means no asking
-  (setq dired-recursive-deletes (quote top)) ; “top” means ask once
-  (setq dired-dwim-target t)
-
-  (defun dired-dotfiles-toggle ()
-    "Show/hide dot-files"
-    (interactive)
-    (when (equal major-mode 'dired-mode)
-      (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
-          (progn
-            (set (make-local-variable 'dired-dotfiles-show-p) nil)
-            (message "h")
-            (dired-mark-files-regexp "^\\\.")
-            (dired-do-kill-lines))
-        (progn (revert-buffer) ; otherwise just revert to re-show
-               (set (make-local-variable 'dired-dotfiles-show-p) t)))))
-
-  (define-key dired-mode-map (kbd "H-l")
-              (lambda () (interactive) (dired-dotfiles-toggle)))
-
-  (define-key dired-mode-map (kbd "^")
-              (lambda () (interactive) (find-alternate-file "..")))
-
-  (setq wdired-allow-to-change-permissions t)
-
-
-  ;; (use-package peep-dired
-  ;;   :straight t
-  ;;   :defer t
-  ;;   :after dired
-  ;;   :bind (:map dired-mode-map
-  ;;               ("E" . peep-dired)))
-
-  ;; (defadvice dired-subtree-toggle (after dired-icons-refreash ())
-  ;;   "Insert an empty line when moving up from the top line."
-  ;;   (revert-buffer))
-
-  ;; (ad-activate 'dired-subtree-toggle)
-
-  ;; (defadvice dired-subtree-cycle (after dired-icons-refreash ())
-  ;;   "Insert an empty line when moving up from the top line."
-  ;;   (revert-buffer))
-
-  ;; (ad-activate 'dired-subtree-cycle)
-
-
-  )
-
-
-(use-package dired-narrow
-  :straight t
-  :defer t
-  :after dired
-  :bind (:map dired-mode-map
-              ("C-c C-n" .'dired-narrow)
-              ("C-c C-f" .'dired-narrow-fuzzy)
-              ("C-c M-n" .'dired-narrow-regexp)
-              )
-  )
-
-(use-package dired-subtree
-  :defer t
-  :straight t
-  :after dired ;; treemacs-icons-dired
-  :bind (:map dired-mode-map
-              ("<tab>" . dired-subtree-toggle)
-              ("<backtab>" . dired-subtree-cycle)
-              )
-  )
-
-(use-package dired-quick-sort
-  :straight t
-  :defer t
-  :hook (dired-mode)
-  :config
-  (dired-quick-sort-setup)
-  ;; (all-the-icons-dired-mode t)
-  )
-
-(use-package diredfl
-  :straight t
-  :defer t
-  :hook
-  (dired-mode . diredfl-mode))
-
-(use-package dired-rsync
-  :straight t
-  :defer t
-  :after dired
-  :bind (:map dired-mode-map
-              ("C-c C-r" . #'dired-rsync)))
-
-#+end_src
-
-
-* programming and typesetting
-** lsp-mode
+** programming and typesetting
+*** lsp-mode
 
 #+begin_src emacs-lisp
 
@@ -2505,7 +2393,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** C/C++
+*** C/C++
 
 #+begin_src emacs-lisp
 
@@ -2519,7 +2407,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** rust
+*** rust
 
 #+begin_src emacs-lisp
 
@@ -2542,7 +2430,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** ruby
+*** ruby
 
 #+begin_src emacs-lisp
 
@@ -2566,7 +2454,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** php
+*** php
 
 #+begin_src emacs-lisp
 
@@ -2581,7 +2469,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** lua
+*** lua
 
 #+begin_src emacs-lisp
 
@@ -2600,7 +2488,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** ocaml
+*** ocaml
 
 #+begin_src emacs-lisp
 
@@ -2610,7 +2498,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :defer t)
 
 #+end_src
-** crystal
+*** crystal
 
 #+begin_src emacs-lisp
 
@@ -2621,7 +2509,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** clojure
+*** clojure
 
 #+begin_src emacs-lisp
 
@@ -2631,7 +2519,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** zig
+*** zig
 
 #+begin_src emacs-lisp
 
@@ -2641,7 +2529,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** d
+*** d
 
 #+begin_src emacs-lisp
 
@@ -2651,7 +2539,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** nim
+*** nim
 
 #+begin_src emacs-lisp
 
@@ -2661,7 +2549,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** raku
+*** raku
 
 #+begin_src emacs-lisp
 
@@ -2671,7 +2559,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** csv
+*** csv
 
 #+begin_src emacs-lisp
 
@@ -2683,7 +2571,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** yaml,toml and json
+*** yaml,toml and json
 
 #+begin_src emacs-lisp
 
@@ -2701,7 +2589,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** rfc-mode
+*** rfc-mode
 
 #+begin_src emacs-lisp
 
@@ -2711,7 +2599,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** go
+*** go
 
 #+begin_src emacs-lisp
 
@@ -2734,8 +2622,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** web
-*** html, css
+*** web
+**** html, css
 
 #+begin_src emacs-lisp
 
@@ -2782,7 +2670,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-*** javascript
+**** javascript
 
 #+begin_src emacs-lisp
 ;;javascript
@@ -2808,7 +2696,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** COMMENT java
+*** COMMENT java
 
 #+begin_src emacs-lisp
 
@@ -2867,7 +2755,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** tree-sitter
+*** tree-sitter
 
 #+begin_src emacs-lisp
 
@@ -2900,6 +2788,119 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :defer t
   :when (bound-and-true-p module-file-suffix)
 )
+
+#+end_src
+
+
+** dired related
+
+#+begin_src emacs-lisp
+
+  ;; (use-package peep-dired
+  ;;   :straight t
+  ;;   :defer t
+  ;;   :after dired
+  ;;   :bind (:map dired-mode-map
+  ;;               ("E" . peep-dired)))
+
+(use-package dired-narrow
+  :straight t
+  :defer t
+  :after dired
+  :bind (:map dired-mode-map
+              ("C-c C-n" .'dired-narrow)
+              ("C-c C-f" .'dired-narrow-fuzzy)
+              ("C-c M-n" .'dired-narrow-regexp)
+              )
+  )
+
+(use-package dired-subtree
+  :defer t
+  :straight t
+  :after dired ;; treemacs-icons-dired
+  :bind (:map dired-mode-map
+              ("<tab>" . dired-subtree-toggle)
+              ("<backtab>" . dired-subtree-cycle)
+              )
+  )
+
+(use-package dired-quick-sort
+  :straight t
+  :defer t
+  :hook (dired-mode)
+  :config
+  (dired-quick-sort-setup)
+  ;; (all-the-icons-dired-mode t)
+  )
+
+(use-package diredfl
+  :straight t
+  :defer t
+  :hook
+  (dired-mode . diredfl-mode))
+
+(use-package dired-rsync
+  :straight t
+  :defer t
+  :after dired
+  :bind (:map dired-mode-map
+              ("C-c C-r" . #'dired-rsync)))
+
+#+end_src
+
+
+* org
+
+** basic org
+#+begin_src emacs-lisp
+
+(use-package org
+  :straight (:type built-in)
+  ;; :straight t
+  :defer t
+  :mode (("\\.org\\'" . org-mode)
+         ("\\.org$" . org-mode))
+  :config
+  (setq org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-confirm-babel-evaluate nil
+        org-edit-src-content-indentation 0)
+  )
+
+#+end_src
+
+** org-bullets
+
+#+begin_src emacs-lisp
+
+;; org-bullets
+(use-package org-bullets
+  :straight t
+  :defer t
+  :hook (org-mode . org-bullets-mode))
+
+#+end_src
+
+** ox-pandoc
+
+#+begin_src emacs-lisp
+
+;;ox-pandoc
+(use-package ox-pandoc
+  :straight t
+  :defer t
+  :hook (org-mode . (lambda () (when (executable-find "pandoc") (require 'ox-pandoc)))))
+
+#+end_src
+
+** htmlize
+
+#+begin_src emacs-lisp
+
+(use-package htmlize
+  :straight t
+  :defer t
+  :hook (org))
 
 #+end_src
 
