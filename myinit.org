@@ -781,7 +781,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-*** COMMENT dired
+*** dired
 
 #+begin_src emacs-lisp
 
