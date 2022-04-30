@@ -162,7 +162,7 @@
 #+begin_src emacs-lisp
 
   (when (version< emacs-version "27.0")
-	(load-file (concat user-emacs-directory "early-init.el")))
+    (load-file (concat user-emacs-directory "early-init.el")))
 
 #+end_src
 
@@ -597,40 +597,40 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+end_src
 
 
- 
+
 ** theming
 
 #+begin_src emacs-lisp
 
   (add-hook 'after-init-time-hook
-			(progn
-			  (defadvice load-theme (after custom-faces-after-load-theme())
-				"Insert an empty line when moving up from the top line."
-				(let ((dafile (concat user-emacs-directory "custom_faces.el")))
-				  (if (file-exists-p dafile) (load-file dafile))
-				  ;; (save-excursion
-				  ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-				  ))
+            (progn
+              (defadvice load-theme (after custom-faces-after-load-theme())
+                "Insert an empty line when moving up from the top line."
+                (let ((dafile (concat user-emacs-directory "custom_faces.el")))
+                  (if (file-exists-p dafile) (load-file dafile))
+                  ;; (save-excursion
+                  ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+                  ))
 
 
-			  (ad-activate 'load-theme)
+              (ad-activate 'load-theme)
 
-			  (defadvice disable-theme (after custom-faces-after-disable-theme())
-				"Insert an empty line when moving up from the top line."
-				(let ((dafile (concat user-emacs-directory "custom_faces.el")))
-				  (if (file-exists-p dafile) (load-file dafile))
-				  ;; (save-excursion
-				  ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-				  ))
+              (defadvice disable-theme (after custom-faces-after-disable-theme())
+                "Insert an empty line when moving up from the top line."
+                (let ((dafile (concat user-emacs-directory "custom_faces.el")))
+                  (if (file-exists-p dafile) (load-file dafile))
+                  ;; (save-excursion
+                  ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+                  ))
 
 
-			  (ad-activate 'disable-theme)
+              (ad-activate 'disable-theme)
 
-			  )
-			)
+              )
+            )
 
   (add-hook 'after-init-time-hook
-			(load-file (concat user-emacs-directory "custom_faces.el")))
+            (load-file (concat user-emacs-directory "custom_faces.el")))
 
 #+end_src
 
@@ -643,7 +643,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (when EMACS26+ (icomplete-mode))
   (when EMACS27+ (fido-mode))
   (when EMACS27+ (fido-vertical-mode))
-  
+
 #+end_src
 
 
@@ -671,10 +671,10 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
   ;;conmint-mode
   (with-eval-after-load 'comint
-	  (setq comint-scroll-show-maximum-output nil)
-	  (setq comint-scroll-to-bottom-on-input nil)
-	  (setq comint-scroll-to-bottom-on-output nil)
-	  (add-hook 'comint-mode-hook 'display-line-numbers-mode -1))
+      (setq comint-scroll-show-maximum-output nil)
+      (setq comint-scroll-to-bottom-on-input nil)
+      (setq comint-scroll-to-bottom-on-output nil)
+      (add-hook 'comint-mode-hook 'display-line-numbers-mode -1))
 
 #+end_src
 
@@ -685,8 +685,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;;shell-mode
 
   (with-eval-after-load 'shell
-	(define-key shell-mode-map (kbd "<tab>") 'completion-at-point)
-	(define-key shell-mode-map (kbd "<backtab>") 'completion-at-point))
+    (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)
+    (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point))
 
 #+end_src
 
@@ -695,20 +695,20 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
   (with-eval-after-load 'eshell
-	  (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
-									 "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
-									 "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
-									 "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger")))
- 
+      (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
+                                     "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
+                                     "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
+                                     "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger")))
+
 #+end_src
- 
+
 *** term-mode
 
 #+begin_src emacs-lisp
 
   (with-eval-after-load 'term
-	  (define-key term-raw-map (kbd "C-c C-y") 'term-paste))
-  
+      (define-key term-raw-map (kbd "C-c C-y") 'term-paste))
+
 #+end_src
 
 *** eww & shr
@@ -725,9 +725,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 
   (with-eval-after-load 'flymake
-		(setq flymake-fringe-indicator-position 'right-fringe)
-		(setq flymake-suppress-zero-counters t)
-		(remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake))
+        (setq flymake-fringe-indicator-position 'right-fringe)
+        (setq flymake-suppress-zero-counters t)
+        (remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake))
 
   (add-hook 'prog-mode-hook 'flymake-mode t)
 
@@ -740,13 +740,13 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
   (with-eval-after-load 'flyspell
-	(cond
-	 ((executable-find "aspell")
-	  (setq ispell-program-name "aspell")
-	  (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US")))
-	 ((executable-find "hunspell")
-	  (setq ispell-program-name "hunspell")
-	  (setq ispell-extra-args '("-d en_US")))))
+    (cond
+     ((executable-find "aspell")
+      (setq ispell-program-name "aspell")
+      (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US")))
+     ((executable-find "hunspell")
+      (setq ispell-program-name "hunspell")
+      (setq ispell-extra-args '("-d en_US")))))
 
   (add-hook 'prog-mode-hook (lambda () (when (or (executable-find "aspell") (executable-find "hunspell") (flyspell-prog-mode t)))))
   (add-hook 'text-mode-hook (lambda () (when (or (executable-find "aspell") (executable-find "hunspell") (flyspell-mode t)))))
@@ -761,9 +761,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (add-hook 'ediff-quit-hook 'winner-undo)
 
   (with-eval-after-load 'ediff
-	(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-	(setq ediff-split-window-function 'split-window-horizontally)
-	(setq ediff-merge-split-window-function 'split-window-horizontally))
+    (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+    (setq ediff-split-window-function 'split-window-horizontally)
+    (setq ediff-merge-split-window-function 'split-window-horizontally))
 
 #+end_src
 
@@ -772,12 +772,12 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
   (with-eval-after-load 'tramp
-	(setq remote-file-name-inhibit-cache nil)
-	(setq vc-ignore-dir-regexp
-		  (format "%s\\|%s"
-				  vc-ignore-dir-regexp
-				  tramp-file-name-regexp))
-	(setq tramp-verbose 1))
+    (setq remote-file-name-inhibit-cache nil)
+    (setq vc-ignore-dir-regexp
+          (format "%s\\|%s"
+                  vc-ignore-dir-regexp
+                  tramp-file-name-regexp))
+    (setq tramp-verbose 1))
 
 #+end_src
 
@@ -786,18 +786,18 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
   (with-eval-after-load 'whitespace
-	;; Make whitespace-mode with very basic background coloring for whitespaces.
-	;; http://xahlee.info/emacs/emacs/whitespace-mode.html
-	(setq whitespace-style (quote (face spaces tabs newline space-mark tab-mark newline-mark )))
+    ;; Make whitespace-mode with very basic background coloring for whitespaces.
+    ;; http://xahlee.info/emacs/emacs/whitespace-mode.html
+    (setq whitespace-style (quote (face spaces tabs newline space-mark tab-mark newline-mark )))
 
-	;; Make whitespace-mode and whitespace-newline-mode use “¶” for end of line char and “▷” for tab.
-	(setq whitespace-display-mappings
-		  ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
-		  '(
-			(space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
-			(newline-mark 10 [182 10]) ; LINE FEED,
-			(tab-mark 9 [9655 9] [92 9]) ; tab
-			)))
+    ;; Make whitespace-mode and whitespace-newline-mode use “¶” for end of line char and “▷” for tab.
+    (setq whitespace-display-mappings
+          ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
+          '(
+            (space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
+            (newline-mark 10 [182 10]) ; LINE FEED,
+            (tab-mark 9 [9655 9] [92 9]) ; tab
+            )))
 
 #+end_src
 
@@ -1730,7 +1730,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
   (use-package elpher
     :straight t
-    :defer t)  
+    :defer t)
 #+end_src
 
 ** typing
@@ -1761,7 +1761,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (use-package devdocs-browser
   :straight t
   :defer t)
-  
+
 #+end_src
 
 ** pdf-tools
@@ -1803,116 +1803,116 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;;themes
 
   (use-package doom-themes
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package nord-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package ample-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package dracula-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package color-theme-sanityinc-tomorrow
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package color-theme-sanityinc-solarized
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package soothe-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package seti-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package spacemacs-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package solarized-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package zenburn-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package cyberpunk-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package sublime-themes
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package flatland-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package flatui-dark-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package blackboard-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package material-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package moe-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package darktooth-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package danneskjold-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package acme-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package modus-themes
-	:straight t
-	:defer t
-	)
+    :straight t
+    :defer t
+    )
 
   (use-package base16-theme
-	:straight t
-	:defer t
-	:config
-	 (setq base16-theme-256-color-source 'colors)
-	 ;; (setq base16-theme-256-color-source 'base16-shell)
-	 (setq base16-distinct-fringe-background nil)
-	 ;; (setq base16-highlight-mode-line 'box)
-	)
+    :straight t
+    :defer t
+    :config
+     (setq base16-theme-256-color-source 'colors)
+     ;; (setq base16-theme-256-color-source 'base16-shell)
+     (setq base16-distinct-fringe-background nil)
+     ;; (setq base16-highlight-mode-line 'box)
+    )
 
   (use-package gotham-theme
-	:straight t
-	:defer t
-	)
+    :straight t
+    :defer t
+    )
 
   (use-package vscode-dark-plus-theme
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
   (use-package kaolin-themes
-	:straight t
-	:defer t)
+    :straight t
+    :defer t)
 
 #+end_src
 
@@ -2137,7 +2137,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
      (nil . (telephone-line-minions-mode-segment))
      (evil . (telephone-line-airline-position-segment))
      ))
-  
+
   (setq telephone-line-lhs
         '((evil   . (telephone-line-evil-tag-segment))
           (accent . (telephone-line-vc-segment
@@ -2145,7 +2145,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                      telephone-line-process-segment))
           (nil    . (telephone-line-projectile-segment
                      telephone-line-buffer-segment))))
-  
+
   (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
         telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
         telephone-line-primary-right-separator 'telephone-line-cubed-left
@@ -2168,7 +2168,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (setq x-underline-at-descent-line t)
   (moody-replace-mode-line-buffer-identification)
   (moody-replace-vc-mode)
-  (moody-replace-eldoc-minibuffer-message-function))  
+  (moody-replace-eldoc-minibuffer-message-function))
 #+end_src
 
 ** all-the-icons
@@ -2300,7 +2300,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   :straight t
   :defer t
   :hook (org))
-  
+
 #+end_src
 
 
@@ -2472,7 +2472,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
         lsp-ui-doc-position 'top
         lsp-ui-doc-include-signature t
         lsp-ui-sideline-enable t
-        ;; lsp-ui-flycheck-enable 
+        ;; lsp-ui-flycheck-enable
         ;; lsp-ui-flycheck-list-position 'right
         ;; lsp-ui-flycheck-live-reporting t
         lsp-ui-peek-enable t
@@ -2940,7 +2940,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;; (require 'eaf-vue-demo)
   ;; (require 'eaf-netease-cloud-music)
   ;; (require 'eaf-rss-reader)
-  
+
   ;; (add-hook! 'eaf-mode-hook 'xah-fly-keys-off)
 
   ;; (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
@@ -2950,7 +2950,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
     "Open Google using EAF."
     (interactive)
     (eaf-open-browser "https://www.google.com"))
-  
+
    (defun eaf-open-ddg ()
     "Open Google using EAF."
     (interactive)
@@ -2983,9 +2983,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
   (add-hook 'after-init-time-hook
-			(if (require 'base16-theme nil 'noerror)
-				(load-theme 'base16-brewer t)
-			  (load-theme 'deeper-blue t)))
+            (if (require 'base16-theme nil 'noerror)
+                (load-theme 'base16-brewer t)
+              (load-theme 'deeper-blue t)))
 
 #+end_src
 
@@ -2995,8 +2995,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
 (add-hook 'after-init-time-hook (progn
-				 (switch-to-buffer "*scratch*")
-				 (lisp-interaction-mode)))
+                 (switch-to-buffer "*scratch*")
+                 (lisp-interaction-mode)))
 
 #+end_src
 
