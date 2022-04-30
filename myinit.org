@@ -674,7 +674,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (setq comint-scroll-show-maximum-output nil)
   (setq comint-scroll-to-bottom-on-input nil)
   (setq comint-scroll-to-bottom-on-output nil)
-  (add-hook 'comint-mode-hook 'display-line-numbers-mode -1))
+  (add-hook 'comint-mode-hook 'display-line-numbers-mode -1)
+  )
 
 #+end_src
 
@@ -686,7 +687,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (with-eval-after-load 'shell
   (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)
-  (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point))
+  (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)
+  (add-hook 'comint-mode-hook (lambda () (display-line-numbers-mode -1))))
 
 #+end_src
 
@@ -698,8 +700,11 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
                                  "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
                                  "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
-                                 "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger")))
+                                 "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger"))
+  (add-hook 'eshell-mode-hook (lambda () (display-line-numbers-mode -1)))
+  )
 
+			  
 #+end_src
 
 *** term-mode
@@ -707,7 +712,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
 (with-eval-after-load 'term
-  (define-key term-raw-map (kbd "C-c C-y") 'term-paste))
+  (define-key term-raw-map (kbd "C-c C-y") 'term-paste)
+  (add-hook 'term-mode-hook 'display-line-numbers-mode -1)
+  (add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1))))
 
 #+end_src
 
@@ -715,7 +722,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-(add-hook 'eww-mode-hook 'display-line-numbers-mode -1)
+(add-hook 'eww-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 #+end_src
 
@@ -741,15 +748,18 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (with-eval-after-load 'flyspell
   (cond
-   ((executable-find "aspell")
-    (setq ispell-program-name "aspell")
-    (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US")))
    ((executable-find "hunspell")
     (setq ispell-program-name "hunspell")
-    (setq ispell-extra-args '("-d en_US")))))
+    (setq ispell-extra-args '("-d en_US")))
+   
+   ((executable-find "aspell")
+    (setq ispell-program-name "aspell")
+    (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US")))))
 
-(add-hook 'prog-mode-hook (lambda () (when (or (executable-find "aspell") (executable-find "hunspell") (flyspell-prog-mode t)))))
-(add-hook 'text-mode-hook (lambda () (when (or (executable-find "aspell") (executable-find "hunspell") (flyspell-mode t)))))
+(when (or (executable-find "hunspell") (executable-find "aspell"))
+  (progn
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode t)
+  (add-hook 'text-mode-hook 'flyspell-mode t)))
 
 #+end_src
 
@@ -879,7 +889,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
 
-(add-hook 'prog-mode-hook 'outline-minor-mode)
+(add-hook 'prog-mode-hook 'outline-minor-mode t)
 
 #+end_src
 
@@ -887,7 +897,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-(add-hook 'prog-mode-hook 'hs-minor-mode)
+(add-hook 'prog-mode-hook 'hs-minor-mode t)
 
 #+end_src
 
