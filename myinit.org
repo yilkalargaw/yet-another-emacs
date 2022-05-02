@@ -8,7 +8,7 @@
 
 * table of contents                                          :noexport:TOC_3:
 - [[#starting-headers][starting headers]]
-- [[#include-settings-that-do-not-need-netowrk][include settings that do not need netowrk]]
+- [[#vanilla-emacs-settings][vanilla emacs settings]]
   - [[#mostly-related-to-initialization-process][mostly related to initialization process]]
     - [[#earlyinits][earlyinits]]
     - [[#deferred-compilation][deferred compilation]]
@@ -40,28 +40,31 @@
     - [[#explicitly-set-shell][explicitly set shell]]
   - [[#theming][theming]]
   - [[#completion][completion]]
-- [[#basic-settings][basic settings]]
-  - [[#initial-setup-straight-and-use-package][initial setup straight and use-package]]
-  - [[#even-more-garbage-collection-optimization-with-gmch][even more garbage collection optimization with gmch]]
-  - [[#external-libraries][external libraries]]
-- [[#exec-path-form-shell][exec path form shell]]
-- [[#hydra][hydra]]
-- [[#emacs-built-in-packages][emacs built in packages]]
-  - [[#imenu][imenu]]
-  - [[#ibuffer][ibuffer]]
-  - [[#comint-mode][comint-mode]]
-  - [[#shell-mode][shell-mode]]
-  - [[#eshell][eshell]]
-  - [[#term-mode][term-mode]]
-  - [[#eww--shr][eww & shr]]
-  - [[#flymake][flymake]]
-  - [[#flyspell][flyspell]]
-  - [[#ediff][ediff]]
-  - [[#tramp][tramp]]
-  - [[#whitespace-mode][whitespace-mode]]
-- [[#minibuffer-completion-frameworks][minibuffer completion frameworks]]
-  - [[#selectrum-consult-marginelia-embark][selectrum, consult, marginelia, embark]]
-- [[#packages-i-use][packages I use]]
+  - [[#emacs-built-in-packages][emacs built in packages]]
+    - [[#imenu][imenu]]
+    - [[#ibuffer][ibuffer]]
+    - [[#comint-mode][comint-mode]]
+    - [[#shell-mode][shell-mode]]
+    - [[#eshell][eshell]]
+    - [[#term-mode][term-mode]]
+    - [[#eww--shr][eww & shr]]
+    - [[#flymake][flymake]]
+    - [[#flyspell][flyspell]]
+    - [[#ediff][ediff]]
+    - [[#tramp][tramp]]
+    - [[#dired][dired]]
+    - [[#org][org]]
+    - [[#whitespace-mode][whitespace-mode]]
+- [[#initialize-package-managers-straight-and-use-package][initialize package managers straight and use-package]]
+- [[#external-libraries][external libraries]]
+- [[#external-packages-i-use][external packages I use]]
+  - [[#additional-garbage-collection-optimization-with-gmch][additional garbage collection optimization with gmch]]
+  - [[#auto-tangle][auto-tangle]]
+  - [[#keychords][keychords]]
+  - [[#toc-org][toc-org]]
+  - [[#diminish-and-delight][diminish and delight]]
+  - [[#exec-path-form-shell][exec path form shell]]
+  - [[#hydra][hydra]]
   - [[#undo-tree][undo-tree]]
   - [[#git][git]]
     - [[#git-gutter][git-gutter]]
@@ -103,42 +106,42 @@
     - [[#typing-of-emacs][typing-of-emacs]]
   - [[#devdocs-browser][devdocs browser]]
   - [[#pdf-tools][pdf-tools]]
-- [[#org][org]]
-  - [[#basic-org][basic org]]
-  - [[#org-bullets][org-bullets]]
-  - [[#ox-pandoc][ox-pandoc]]
-  - [[#htmlize][htmlize]]
-- [[#dired][dired]]
-- [[#themes-and-theming][themes and theming]]
-  - [[#mode-line][mode-line]]
+  - [[#scratch][scratch]]
+  - [[#install-themes][install themes]]
+  - [[#alternate-mode-lines][alternate mode-lines]]
   - [[#all-the-icons][all-the-icons]]
-- [[#programming-and-typesetting][programming and typesetting]]
-  - [[#lsp-mode][lsp-mode]]
-  - [[#cc][C/C++]]
-  - [[#rust][rust]]
-  - [[#ruby][ruby]]
-  - [[#php][php]]
-  - [[#lua][lua]]
-  - [[#ocaml][ocaml]]
-  - [[#crystal][crystal]]
-  - [[#clojure][clojure]]
-  - [[#zig][zig]]
-  - [[#d][d]]
-  - [[#nim][nim]]
-  - [[#raku][raku]]
-  - [[#csv][csv]]
-  - [[#yamltoml-and-json][yaml,toml and json]]
-  - [[#rfc-mode][rfc-mode]]
-  - [[#go][go]]
-  - [[#web][web]]
-    - [[#html-css][html, css]]
-    - [[#javascript][javascript]]
-  - [[#tree-sitter][tree-sitter]]
+  - [[#minibuffer-completion-frameworks][minibuffer completion frameworks]]
+    - [[#selectrum-consult-marginelia-embark][selectrum, consult, marginelia, embark]]
+  - [[#programming-and-typesetting][programming and typesetting]]
+    - [[#lsp-mode][lsp-mode]]
+    - [[#cc][C/C++]]
+    - [[#rust][rust]]
+    - [[#ruby][ruby]]
+    - [[#php][php]]
+    - [[#lua][lua]]
+    - [[#ocaml][ocaml]]
+    - [[#crystal][crystal]]
+    - [[#clojure][clojure]]
+    - [[#zig][zig]]
+    - [[#d][d]]
+    - [[#nim][nim]]
+    - [[#raku][raku]]
+    - [[#csv][csv]]
+    - [[#yamltoml-and-json][yaml,toml and json]]
+    - [[#rfc-mode][rfc-mode]]
+    - [[#go][go]]
+    - [[#web][web]]
+    - [[#tree-sitter][tree-sitter]]
+  - [[#dired-related][dired related]]
+  - [[#org-related][org related]]
+    - [[#org-bullets][org-bullets]]
+    - [[#ox-pandoc][ox-pandoc]]
+    - [[#htmlize][htmlize]]
 - [[#start-server][start server]]
-- [[#scratch-page-settings][scratch-page settings]]
+- [[#load-theme][load-theme]]
+- [[#initial-scratch-buffer-settings][initial scratch-buffer settings]]
 - [[#set-custom-variables][set custom variables]]
 - [[#provide-init-and-finish][provide init and finish]]
-
 
 * starting headers
 #+begin_src emacs-lisp
@@ -951,6 +954,70 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
+** auto-tangle
+
+#+begin_src emacs-lisp
+
+(use-package org-auto-tangle
+  ;; :straight (org-auto-tangle :type git :host github :repo "yilkalargaw/org-auto-tangle" :build (:not native-compile))
+  :straight t
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode))
+
+#+end_src
+
+** keychords
+
+#+begin_src emacs-lisp
+
+(use-package key-chord
+  :straight t
+  :defer t
+  :after use-package)
+
+(use-package use-package-chords
+  :straight t
+  :defer t              ;; remove the defer when I actually use it.
+  :after use-package
+  :config (key-chord-mode 1))
+
+#+end_src
+
+** toc-org
+
+#+begin_src emacs-lisp
+
+(use-package toc-org
+  :straight t
+  :defer t
+  :hook (org-mode . toc-org-mode))
+
+#+end_src
+
+** diminish and delight
+
+#+begin_src emacs-lisp
+
+(use-package diminish
+  :straight t
+  :after use-package)
+
+(use-package delight
+  :after use-package
+  :straight t)
+
+#+end_src
+
+** COMMENT general.el
+
+#+begin_src emacs-lisp
+
+(use-package general :straight t
+  :config
+  (general-define-key
+   "C-h" nil ))
+
+#+end_src
 
 
 ** exec path form shell
@@ -2194,7 +2261,7 @@ With postitive prefix argument ARG move to the nth previous object."
   )
 #+end_src
 
-*** telephone-line
+*** COMMENT telephone-line
 
 #+begin_src emacs-lisp
 
@@ -2929,10 +2996,12 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+begin_src emacs-lisp
 
-  (add-hook 'after-init-time-hook
-            (if (require 'base16-theme nil 'noerror)
-                (load-theme 'base16-brewer t)
-              (load-theme 'deeper-blue t)))
+(add-hook 'after-init-time-hook
+          (if (require 'base16-theme nil 'noerror)
+              (load-theme 'base16-brewer t)
+			(load-theme 'manoj-dark t)
+            ;; (load-theme 'modus-vivendi t)
+			))
 
 #+end_src
 
