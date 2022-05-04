@@ -1,6 +1,8 @@
 #+TITLE: Init File
 #+AUTHOR: Yilkal Argaw , StackOverflow, Github, Emacs-wiki and The Internet in General
-#+OPTIONS: toc:1          (only include two levels in TOC)
+#+OPTIONS: toc:3          (only include two levels in TOC)
+# #+HTML_HEAD:  <link rel="stylesheet" type="text/css" href="http://a-dma.github.io/gruvbox-css/gruvbox-dark-medium.min.css" />
+#+INFOJS_OPT: view:overview toc:3 ltoc:3 mouse:underline buttons:0 path:https://orgmode.org/worg/code/org-info-js/org-info-src.js
 #+PROPERTY: header-args:emacs-lisp    :tangle (concat user-emacs-directory "init.el")
 #+OPTIONS: ^:nil
 #+OPTIONS: _:nil
@@ -55,88 +57,6 @@
     - [[#dired][dired]]
     - [[#org][org]]
     - [[#whitespace-mode][whitespace-mode]]
-- [[#initialize-package-managers-straight-and-use-package][initialize package managers straight and use-package]]
-- [[#external-libraries][external libraries]]
-- [[#external-packages-i-use][external packages I use]]
-  - [[#additional-garbage-collection-optimization-with-gmch][additional garbage collection optimization with gmch]]
-  - [[#auto-tangle][auto-tangle]]
-  - [[#keychords][keychords]]
-  - [[#toc-org][toc-org]]
-  - [[#diminish-and-delight][diminish and delight]]
-  - [[#exec-path-form-shell][exec path form shell]]
-  - [[#hydra][hydra]]
-  - [[#undo-tree][undo-tree]]
-  - [[#git][git]]
-    - [[#git-gutter][git-gutter]]
-    - [[#git-timemachine][git-timemachine]]
-    - [[#magit--forge][magit & forge]]
-    - [[#monky][monky]]
-  - [[#yasnippet][yasnippet]]
-  - [[#helpful][helpful]]
-  - [[#which-key][which-key]]
-  - [[#avy][avy]]
-  - [[#ace-link][ace-link]]
-  - [[#ace-window][ace-window]]
-  - [[#expand-region][expand-region]]
-  - [[#ag][ag]]
-  - [[#rg][rg]]
-  - [[#smart-hungry-delete][smart-hungry delete]]
-  - [[#ws-butler][ws-butler]]
-  - [[#multiple-cursors][multiple-cursors]]
-  - [[#phi-search][phi-search]]
-  - [[#rainbow-delimiters][rainbow-delimiters]]
-  - [[#modal-editing-modes][modal editing modes]]
-    - [[#objed][objed]]
-  - [[#restclient][restclient]]
-  - [[#highlight-indent-guides][highlight-indent-guides]]
-  - [[#novel][nov.el]]
-  - [[#pomidor][pomidor]]
-  - [[#keyfreq][keyfreq]]
-  - [[#company][company]]
-  - [[#highligt-number-literals][highligt number literals]]
-  - [[#vterm][vterm]]
-  - [[#highlight-indent-guides-1][highlight-indent-guides]]
-  - [[#default-text-scale][default text-scale]]
-  - [[#minions][minions]]
-  - [[#projectile][projectile]]
-  - [[#smartparens][smartparens]]
-  - [[#elpher][elpher]]
-  - [[#typing][typing]]
-    - [[#speed-type][speed-type]]
-    - [[#typing-of-emacs][typing-of-emacs]]
-  - [[#devdocs-browser][devdocs browser]]
-  - [[#pdf-tools][pdf-tools]]
-  - [[#scratch][scratch]]
-  - [[#install-themes][install themes]]
-  - [[#alternate-mode-lines][alternate mode-lines]]
-  - [[#all-the-icons][all-the-icons]]
-  - [[#minibuffer-completion-frameworks][minibuffer completion frameworks]]
-    - [[#selectrum-consult-marginelia-embark][selectrum, consult, marginelia, embark]]
-  - [[#programming-and-typesetting][programming and typesetting]]
-    - [[#lsp-mode][lsp-mode]]
-    - [[#cc][C/C++]]
-    - [[#rust][rust]]
-    - [[#ruby][ruby]]
-    - [[#php][php]]
-    - [[#lua][lua]]
-    - [[#ocaml][ocaml]]
-    - [[#crystal][crystal]]
-    - [[#clojure][clojure]]
-    - [[#zig][zig]]
-    - [[#d][d]]
-    - [[#nim][nim]]
-    - [[#raku][raku]]
-    - [[#csv][csv]]
-    - [[#yamltoml-and-json][yaml,toml and json]]
-    - [[#rfc-mode][rfc-mode]]
-    - [[#go][go]]
-    - [[#web][web]]
-    - [[#tree-sitter][tree-sitter]]
-  - [[#dired-related][dired related]]
-  - [[#org-related][org related]]
-    - [[#org-bullets][org-bullets]]
-    - [[#ox-pandoc][ox-pandoc]]
-    - [[#htmlize][htmlize]]
 - [[#start-server][start server]]
 - [[#load-theme][load-theme]]
 - [[#initial-scratch-buffer-settings][initial scratch-buffer settings]]
@@ -990,7 +910,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (use-package toc-org
   :straight t
   :defer t
-  :hook (org-mode . toc-org-mode))
+  :hook ((org-mode . toc-org-mode)
+		 (markdown-mode . toc-org-mode)))
 
 #+end_src
 
@@ -1070,8 +991,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ;; :hook (after-init . global-undo-tree-mode)
   :config
   (global-undo-tree-mode t)
-  (setq undo-tree-visualizer-timestamps t)
-  (setq undo-tree-visualizer-diff t))
+  (setq undo-tree-visualizer-timestamps t
+		undo-tree-visualizer-diff t
+		undo-tree-auto-save-history t))
 
 #+end_src
 
