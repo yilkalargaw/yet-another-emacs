@@ -74,7 +74,6 @@
     - [[#magit--forge][magit & forge]]
     - [[#monky][monky]]
   - [[#yasnippet][yasnippet]]
-  - [[#helpful][helpful]]
   - [[#which-key][which-key]]
   - [[#avy][avy]]
   - [[#ace-link][ace-link]]
@@ -1167,7 +1166,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-** helpful
+** COMMENT helpful
 
 #+begin_src emacs-lisp
 
