@@ -168,8 +168,8 @@
 #+begin_src emacs-lisp
 
 (when (version< emacs-version "27.0")
-  (load-file (concat user-emacs-directory "early-init.el")))
-
+  (let ((dafile (concat user-emacs-directory "early-init.el")))
+				  (when (file-exists-p dafile) (load-file dafile))))
 #+end_src
 
 *** deferred compilation
@@ -608,35 +608,37 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-(add-hook 'after-init-time-hook
-          (progn
-            (defadvice load-theme (after custom-faces-after-load-theme())
-              "Insert an empty line when moving up from the top line."
-              (let ((dafile (concat user-emacs-directory "custom_faces.el")))
-                (if (file-exists-p dafile) (load-file dafile))
-                ;; (save-excursion
-                ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-                ))
+  (add-hook 'after-init-time-hook
+			(progn
+			  (defadvice load-theme (after custom-faces-after-load-theme())
+				"Insert an empty line when moving up from the top line."
+				(let ((dafile (concat user-emacs-directory "custom_faces.el")))
+				  (when (file-exists-p dafile) (load-file dafile))
+				  ;; (save-excursion
+				  ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+				  ))
 
 
-            (ad-activate 'load-theme)
+			  (ad-activate 'load-theme)
 
-            (defadvice disable-theme (after custom-faces-after-disable-theme())
-              "Insert an empty line when moving up from the top line."
-              (let ((dafile (concat user-emacs-directory "custom_faces.el")))
-                (if (file-exists-p dafile) (load-file dafile))
-                ;; (save-excursion
-                ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-                ))
+			  (defadvice disable-theme (after custom-faces-after-disable-theme())
+				"Insert an empty line when moving up from the top line."
+				(let ((dafile (concat user-emacs-directory "custom_faces.el")))
+				  (when (file-exists-p dafile) (load-file dafile))
+				  ;; (save-excursion
+				  ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+				  ))
 
 
-            (ad-activate 'disable-theme)
+			  (ad-activate 'disable-theme)
 
-            )
-          )
+			  )
+			)
 
-(add-hook 'after-init-time-hook
-          (load-file (concat user-emacs-directory "custom_faces.el")))
+  (add-hook 'after-init-time-hook
+			(let ((dafile (concat user-emacs-directory "custom_faces.el")))
+				  (when (file-exists-p dafile) (load-file dafile))))
+
 
 #+end_src
 
@@ -3033,7 +3035,8 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+begin_src emacs-lisp
 
-;; (load-file (concat user-emacs-directory "custom_faces.el"))
+;; (let ((dafile (concat user-emacs-directory "custom_faces.el")))
+;; 				  (when (file-exists-p dafile) (load-file dafile)))
 
 #+end_src
 
