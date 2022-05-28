@@ -23,6 +23,9 @@
     - [[#encryption-related-additional][encryption related additional]]
     - [[#lexical-binding][lexical binding]]
   - [[#windowframe-look-and-feel-setting][window(frame) look and feel setting]]
+    - [[#general-frame-and-window-settings][general frame and window settings]]
+    - [[#minor-modes-menu-based-on-minions][minor-modes-menu-based-on-minions]]
+    - [[#mode-line-modify][mode-line-modify]]
   - [[#basic-emacs-editor-preferences][basic emacs editor preferences]]
     - [[#set-utf-8-as-default-coding-system][set utf-8 as default coding system]]
     - [[#autorevert][autorevert]]
@@ -89,14 +92,13 @@
   - [[#modal-editing-modes][modal editing modes]]
     - [[#objed][objed]]
   - [[#restclient][restclient]]
-  - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#novel][nov.el]]
   - [[#pomidor][pomidor]]
   - [[#keyfreq][keyfreq]]
   - [[#company][company]]
   - [[#highligt-number-literals][highligt number literals]]
   - [[#vterm][vterm]]
-  - [[#highlight-indent-guides-1][highlight-indent-guides]]
+  - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#default-text-scale][default text-scale]]
   - [[#minions][minions]]
   - [[#projectile][projectile]]
@@ -110,7 +112,7 @@
   - [[#scratch][scratch]]
   - [[#install-themes][install themes]]
   - [[#alternate-mode-lines][alternate mode-lines]]
-    - [[#telephone-line][telephone-line]]
+    - [[#mood-line][mood-line]]
   - [[#all-the-icons][all-the-icons]]
   - [[#minibuffer-completion-frameworks][minibuffer completion frameworks]]
     - [[#selectrum-consult-marginelia-embark][selectrum, consult, marginelia, embark]]
@@ -301,7 +303,7 @@
 
 
 ** window(frame) look and feel setting
-
+*** general frame and window settings
 #+begin_src emacs-lisp
 
 (set-window-margins nil 2)
@@ -327,6 +329,123 @@
 ;; (setq w32-enable-synthesized-fonts t) ;;The w32-enable-synthesized-fonts variable is obsolete starting from Emacs 24.4, as Emacs no longer has this limitation.
 ;; (set-face-font 'italic "-*-Courier New-normal-i-*-*-11-*-*-*-c-*-iso8859-1")
 ;; (set-face-font 'bold-italic "-*-Courier New-bold-i-*-*-11-*-*-*-c-*-iso8859-1")
+
+#+end_src
+
+*** minor-modes-menu-based-on-minions
+
+#+begin_src emacs-lisp
+
+(defun yae-minions--modes ()
+  (let (local global)
+    (dolist (mode (cl-mapcan (pcase-lambda (`(,mode ,_))
+                                          (and (boundp mode)
+                                               (symbol-value mode)
+                                               (list mode)))
+                                        minor-mode-alist))
+      (when (local-variable-if-set-p mode)
+        (push mode local)
+        (push mode global)))
+    (list (sort local  #'string<)
+          (sort global #'string<))))
+
+(defun yae-minions-minor-modes-menu ()
+  (interactive)
+  (pcase-let ((map (make-sparse-keymap))
+              (`(,local ,global) (yae-minions--modes)
+			   ))
+    (define-key-after map [--local] (list 'menu-item "Local Modes"))
+    (dolist (mode local)
+      (if-let (menu (and (symbol-value mode)
+                         (yae-minions--mode-menu mode)
+						 ))
+          (define-key-after map (vector mode) menu)
+        (yae-minions--define-toggle map mode)
+		))
+    (define-key-after map [--line2]  (list 'menu-item "--double-line"))
+    (define-key-after map [--global] (list 'menu-item "Global Modes"))
+    (dolist (mode global)
+      (if-let (menu (and (symbol-value mode)
+                         (yae-minions--mode-menu mode)
+						 ))
+          (define-key-after map (vector mode) menu)
+        (yae-minions--define-toggle map mode)))
+    (define-key-after map [--line1] (list 'menu-item "--double-line"))
+    (define-key-after map [describe-mode]
+      (list 'menu-item "Describe modes" 'describe-mode))
+    (condition-case nil
+        (popup-menu map)
+      (quit nil))))
+
+(defun yae-minions--mode-menu (mode)
+  (let* ((map  (or (cdr (assq mode minor-mode-map-alist))
+                   (cdr (assq mode minor-mode-overriding-map-alist))))
+         (menu (and (keymapp map)
+                    (lookup-key map [menu-bar])))
+         (menu (and menu
+                    (mouse-menu-non-singleton menu))))
+    (and menu
+         (let ((wrap (make-sparse-keymap)))
+           (set-keymap-parent wrap menu)
+           (yae-minions--define-toggle wrap mode)
+           (define-key-after wrap [yae-minions] (list 'menu-item "--double-line"))
+           (list 'menu-item (symbol-name mode) wrap)))))
+
+(defun yae-minions--define-toggle (map mode)
+  (let ((fn (or (get mode :minor-mode-function) mode)))
+    (when (functionp fn)
+      (define-key-after map (vector mode)
+        (list 'menu-item (symbol-name mode) fn
+              :button (cons :toggle mode))))))
+
+#+end_src
+
+*** mode-line-modify
+
+#+begin_src emacs-lisp
+
+(defun mode-line-split--format (left right)
+  "Return a string of `window-width' length containing LEFT and RIGHT, aligned respectively."
+  (let ((reserve (length right)))
+    (concat left
+            " "
+            (propertize " "
+                        'display `((space :align-to (- right (- 0 right-margin) ,reserve))))
+            right)))
+
+;; Set the new mode-line-format
+(setq-default mode-line-format
+              '((:eval
+                 (mode-line-split--format
+                  ;; Left
+                  (format-mode-line
+                   '("%e" mode-line-front-space
+					 (:propertize
+					  ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
+					  display
+					  (min-width
+					   (5.0)))
+					 mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
+				  ;; Right
+				  (format-mode-line
+				   '((vc-mode vc-mode)
+					 "   "
+					 mode-name " ";; "%m"
+					 (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu)))
+					 " "
+					 "  " mode-line-misc-info mode-line-end-spaces
+					 )
+				   )))))
+
+#+end_src
+
+*** COMMENT mode-line-trial
+
+#+begin_src emacs-lisp
+
+(setq-default mode-line-format
+      '((:eval (format-mode-line (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu))))
+        (column-number-mode "  %c")))
 
 #+end_src
 
@@ -1594,16 +1713,24 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-** highlight-indent-guides
+** COMMENT highlight-indent-guides
 
 #+begin_src emacs-lisp
 
 (use-package highlight-indent-guides
   :straight t
   :defer t
-  :config (setq highlight-indent-guides-responsive 'top)
-  (setq highlight-indent-guides-delay 0.1)
-  (setq highlight-indent-guides-method 'column)
+  :config
+  (setq highlight-indent-guides-delay 0.1
+		highlight-indent-guides-auto-odd-face-perc 20
+		highlight-indent-guides-auto-even-face-perc 30
+		highlight-indent-guides-auto-character-face-perc 40
+		highlight-indent-guides-auto-stack-odd-face-perc 20
+		highlight-indent-guides-auto-stack-even-face-perc 30
+		highlight-indent-guides-auto-top-odd-face-perc 50
+		highlight-indent-guides-auto-top-even-face-perc 60
+		highlight-indent-guides-responsive 'stack
+		highlight-indent-guides-method 'column)
   )
 
 #+end_src
@@ -2254,7 +2381,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-*** COMMENT mood-line
+*** mood-line
 
 #+begin_src emacs-lisp
 (use-package mood-line
@@ -2269,7 +2396,7 @@ With postitive prefix argument ARG move to the nth previous object."
   )
 #+end_src
 
-*** telephone-line
+*** COMMENT telephone-line
 
 #+begin_src emacs-lisp
 
