@@ -321,7 +321,10 @@
 
 ;; (set-default-font "JetBrains Mono-9") ;;; set default font
 ;; (setq default-frame-alist '((font . "Jetbrains Mono 9"))) ;;; set default font for emacs --daemon / emacsclient
-(setq default-frame-alist '((font . "JetBrainsMono Nerd Font 9"))) ;;; set default font for emacs --daemon / emacsclient
+(defvar my-default-font "JetBrainsMono Nerd Font 9")
+
+;; (setq default-frame-alist '((font . "JetBrainsMono Nerd Font 9"))) ;;; set default font for emacs --daemon / emacsclient
+(add-to-list 'default-frame-alist (cons 'font  my-default-font))
 (set-fontset-font t nil "Dejavu Sans Mono" nil 'append)
 (set-fontset-font t 'ethiopic "Noto Sans Ethiopic")
 ;; (set-fontset-font t 'thai "Leelawadee UI" nil 'append)
@@ -329,6 +332,46 @@
 ;; (setq w32-enable-synthesized-fonts t) ;;The w32-enable-synthesized-fonts variable is obsolete starting from Emacs 24.4, as Emacs no longer has this limitation.
 ;; (set-face-font 'italic "-*-Courier New-normal-i-*-*-11-*-*-*-c-*-iso8859-1")
 ;; (set-face-font 'bold-italic "-*-Courier New-bold-i-*-*-11-*-*-*-c-*-iso8859-1")
+
+(defvar my-default-font-height (face-attribute 'default :height))
+
+(defun my-set-to-default-font-height ()
+  (interactive)
+  ;; (set-face-attribute 'default nil :height my-default-font-height)
+  (set-face-font 'default my-default-font)
+  (message (number-to-string (face-attribute 'default :height)))
+  )
+
+
+(defun my-increase-default-font-height ()
+  (interactive)
+  (let* ((default-face-height (face-attribute 'default :height)))
+    (set-face-attribute 'default nil :height (+ default-face-height 5))
+	(message (number-to-string (face-attribute 'default :height)))
+	))
+
+
+(defun my-decrease-default-font-height ()
+  (interactive)
+  (let* ((default-face-height (face-attribute 'default :height)))
+    (set-face-attribute 'default nil :height (- default-face-height 5))
+	(message (number-to-string (face-attribute 'default :height)))
+	))
+
+(global-set-key (kbd "C-M-=") 'my-increase-default-font-height)
+(global-set-key (kbd "C-M--") 'my-decrease-default-font-height)
+(global-set-key (kbd "C-M-0") 'my-set-to-default-font-height)
+
+
+;; (defadvice text-scale-increase (around all-buffers (arg) activate)
+;;   (dolist (buffer (buffer-list))
+;;     (with-current-buffer buffer
+;;       ad-do-it)))
+
+;; (defadvice text-scale-decrease (around all-buffers (arg) activate)
+;;   (dolist (buffer (buffer-list))
+;;     (with-current-buffer buffer
+;;       ad-do-it)))
 
 #+end_src
 
@@ -583,10 +626,10 @@
 
 ;;line-numbers
 
-(setq display-line-numbers-type 'relative
+(setq-default display-line-numbers-type 'relative
       display-line-numbers-grow-only t
       display-line-numbers-width-start t
-      ;; display-line-numbers-width 3
+      display-line-numbers-width 4
       )
 
 (global-display-line-numbers-mode t)
@@ -1027,6 +1070,13 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
+*** tab-bar & tabline
+
+#+begin_src emacs-lisp
+
+(setq tab-line-tab-name-truncated-max 10)
+
+#+end_src
 
 * initialize package managers straight and use-package
 
