@@ -60,6 +60,7 @@
     - [[#dired][dired]]
     - [[#org][org]]
     - [[#whitespace-mode][whitespace-mode]]
+    - [[#tab-bar--tabline][tab-bar & tabline]]
 - [[#initialize-package-managers-straight-and-use-package][initialize package managers straight and use-package]]
 - [[#external-libraries][external libraries]]
 - [[#external-packages-i-use][external packages I use]]
