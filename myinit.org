@@ -100,7 +100,6 @@
   - [[#highligt-number-literals][highligt number literals]]
   - [[#vterm][vterm]]
   - [[#highlight-indent-guides][highlight-indent-guides]]
-  - [[#default-text-scale][default text-scale]]
   - [[#minions][minions]]
   - [[#projectile][projectile]]
   - [[#smartparens][smartparens]]
@@ -145,6 +144,7 @@
 - [[#start-server][start server]]
 - [[#load-theme][load-theme]]
 - [[#initial-scratch-buffer-settings][initial scratch-buffer settings]]
+- [[#load-custom-faces][load custom faces]]
 - [[#set-custom-variables][set custom variables]]
 - [[#provide-init-and-finish][provide init and finish]]
 
@@ -1079,6 +1079,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
+
 * initialize package managers straight and use-package
 
 #+begin_src emacs-lisp
@@ -1979,7 +1980,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-** default text-scale
+** COMMENT default text-scale
 
 #+begin_src emacs-lisp
 
@@ -2246,6 +2247,10 @@ With postitive prefix argument ARG move to the nth previous object."
   :defer t)
 
 (use-package kaolin-themes
+  :straight t
+  :defer t)
+
+(use-package xresources-theme
   :straight t
   :defer t)
 
@@ -2583,7 +2588,6 @@ With postitive prefix argument ARG move to the nth previous object."
 ;; prescient for frequency based completion (thinking about trying it)
 
 #+end_src
-
 
 ** programming and typesetting
 *** lsp-mode
@@ -3186,12 +3190,26 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+begin_src emacs-lisp
 
+(add-to-list 'custom-theme-load-path
+			 (concat user-emacs-directory "themes"))
+
+
+(let ((basedir (concat user-emacs-directory "themes")))
+  (dolist (f (directory-files basedir))
+    (if (and (not (or (equal f ".") (equal f "..")))
+             (file-directory-p (concat basedir f)))
+        (add-to-list 'custom-theme-load-path (concat basedir f)))))
+
+
 (add-hook 'after-init-time-hook
           (if (require 'base16-theme nil 'noerror)
               (load-theme 'base16-brewer t)
             (load-theme 'manoj-dark t)
             ;; (load-theme 'modus-vivendi t)
             ))
+
+;; (add-hook 'after-init-hook (lambda () (load-theme 'xresources t)))
+;; (add-hook 'emacs-startup-hook (lambda () (load-theme 'xresources t)))
 
 #+end_src
 
@@ -3207,12 +3225,12 @@ With postitive prefix argument ARG move to the nth previous object."
 #+end_src
 
 
-* COMMENT load custom faces
+* load custom faces
 
 #+begin_src emacs-lisp
 
-;; (let ((dafile (concat user-emacs-directory "custom_faces.el")))
-;;                (when (file-exists-p dafile) (load-file dafile)))
+(let ((dafile (concat user-emacs-directory "custom_faces.el")))
+               (when (file-exists-p dafile) (load-file dafile)))
 
 #+end_src
 
