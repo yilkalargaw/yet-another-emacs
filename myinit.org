@@ -60,6 +60,7 @@
     - [[#dired][dired]]
     - [[#org][org]]
     - [[#whitespace-mode][whitespace-mode]]
+    - [[#outline][outline]]
     - [[#tab-bar--tabline][tab-bar & tabline]]
 - [[#initialize-package-managers-straight-and-use-package][initialize package managers straight and use-package]]
 - [[#external-libraries][external libraries]]
@@ -1054,12 +1055,67 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-*** COMMENT outline
-
+*** outline
+**** folding
 #+begin_src emacs-lisp
 
-
 (add-hook 'prog-mode-hook 'outline-minor-mode t)
+(add-hook 'makdown-mode-hook 'outline-minor-mode t)
+(add-hook 'outline-minor-mode-hook (lambda () (setq outline-minor-mode-cycle t)))
+
+(defun set-outline-minor-mode-regexp ()
+  ""
+  (outline-minor-mode 1)
+  (let ((regexp-list (append outline-minor-mode-list nil))
+		(find-regexp
+		 (lambda (lst)
+		   ""
+		   (let ((innerList (car lst)))
+			 (if innerList
+				 (if (string= (car innerList) major-mode)
+					 (car (cdr innerList))
+				   (progn (pop lst)
+						  (funcall find-regexp lst))))
+			 ))))
+    (make-local-variable 'outline-regexp)
+    (setq outline-regexp (funcall find-regexp regexp-list)))
+  )
+
+(setq outline-minor-mode-list 
+      (list '(emacs-lisp-mode "(defun\\|(defvar\\|(defcustom\\|(defconst\\|(defgroup\\|(defmacro")
+			'(shell-mode "^dove@zsh.*[#%\$] ")
+			'(sh-mode "function .*[{(]")
+			'(perl-mode "sub ")
+			'(eshell-mode "^[^#$\n]* [#$] ")
+            ;; '(ruby-mode "[ ]+def \\|cloud_pattern\\|[ ]+cloud_node")
+			;; '(ruby-mode "class \\|[ ]+class \\|module \\|[ ]+module \\|def \\|[ ]+def \\|begin \\|[ ]+begin ")
+			;; '(ruby-mode "class \\|[ ]+class \\|module \\|[ ]+module \\|def \\|[ ]+def \\|begin \\|[ ]+begin ")
+			;; '(ruby-mode "^\\([ \t]*\\)class \\|^\\([ \t]*\\)module \\|^\\([ \t]*\\)def \\|^\\([ \t]*\\)begin ")
+			;; ([:space:]*)
+            '(Man-mode "^[A-Z]+")
+			'(woman-mode "^[A-Z]+")
+            ))
+
+(mapc (lambda (mode-name) 
+        (add-hook mode-name  'set-outline-minor-mode-regexp t))
+      '(shell-mode-hook
+        sh-mode-hook
+        emacs-lisp-mode-hook
+        eshell-mode-hook
+        ;; ruby-mode-hook
+        Man-mode-hook
+		woman-mode
+        ))
+
+;; ;; (setq outline-regexp "^\\([ \t]*\\)class \\|^\\([ \t]*\\)module \\|^\\([ \t]*\\)def \\|^\\([ \t]*\\)begin ")
+;; ;; (setq-local outline-heading-end-regexp "\\_<end\\_>")
+;; ;; (setq-local outline-level
+;; ;;             (lambda ()
+;; ;;               "`outline-level' function for Python mode."
+;; ;;               (1+ (/ (current-indentation) python-indent-offset))))
+
+;; ;; (setq outline-regexp ruby-indent-beg-re)
+;; ;; (setq outline-regexp "^[[:upper]]+")
 
 #+end_src
 
