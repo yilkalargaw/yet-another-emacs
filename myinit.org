@@ -692,7 +692,7 @@
 ;;       ;; scroll-preserve-screen-position 1
 ;;       )
 
-(setq fast-but-imprecise-scrolling t)
+;; (setq fast-but-imprecise-scrolling t)
 
 (when EMACS29+ (pixel-scroll-precision-mode t))
 
