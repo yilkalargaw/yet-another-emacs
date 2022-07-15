@@ -574,7 +574,59 @@ _h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
 
     ;; ("q" nil "exit")
 
-  )
+	)
+
+(defhydra hydra-macro (:hint nil :color pink :pre
+                             (when defining-kbd-macro
+                                 (kmacro-end-macro 1)))
+  "
+  ^Create-Cycle^   ^Basic^           ^Insert^        ^Save^         ^Edit^
+╭─────────────────────────────────────────────────────────────────────────╯
+     ^_i_^           [_e_] execute    [_n_] insert    [_b_] name      [_'_] previous
+     ^^↑^^           [_d_] delete     [_t_] set       [_K_] key       [_,_] last
+ _j_ ←   → _l_       [_o_] edit       [_a_] add       [_x_] register
+     ^^↓^^           [_r_] region     [_f_] format    [_B_] defun
+     ^_k_^           [_m_] step
+    ^^   ^^          [_s_] swap
+"
+  ("j" kmacro-start-macro :color blue)
+  ("l" kmacro-end-or-call-macro-repeat)
+  ("i" kmacro-cycle-ring-previous)
+  ("k" kmacro-cycle-ring-next)
+  ("r" apply-macro-to-region-lines)
+  ("d" kmacro-delete-ring-head)
+  ("e" kmacro-end-or-call-macro-repeat)
+  ("o" kmacro-edit-macro-repeat)
+  ("m" kmacro-step-edit-macro)
+  ("s" kmacro-swap-ring)
+  ("n" kmacro-insert-counter)
+  ("t" kmacro-set-counter)
+  ("a" kmacro-add-counter)
+  ("f" kmacro-set-format)
+  ("b" kmacro-name-last-macro)
+  ("K" kmacro-bind-to-key)
+  ("B" insert-kbd-macro)
+  ("x" kmacro-to-register)
+  ("'" kmacro-edit-macro)
+  ("," edit-kbd-macro)
+  ("q" nil :color blue))
+
+(defhydra hydra-toggle (:columns 2 :exit t)
+  "toggle:"
+  ("a" abbrev-mode "abbrev")
+  ("d" toggle-debug-on-error "debug")
+  ("f" auto-fill-mode "fill")
+  ("t" toggle-truncate-lines "truncate")
+  ("w" whitespace-mode "whitespace")
+  ("q" nil "quit"))
+
+(defhydra hydra-hide-show (:columns 2 :exit t)
+  "hide-show:"
+  ("s" hs-show-block "hs show block")
+  ("h" hs-hide-block "hs hide block")
+  ("H" hs-hide-all "hs hide all")
+  ("S" hs-show-all "hs show all")
+  ("q" nil "quit menu"))
 
 (define-prefix-command 'hydra-map)
 ;; (global-set-key (kbd "C-c h") 'hydra-map)
@@ -587,6 +639,7 @@ _h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
 (define-key hydra-map (kbd "w") 'hydra-window/body)
 (define-key hydra-map (kbd "p") 'hydra-projectile/body)
 (define-key hydra-map (kbd "s") 'hydra-learn-sp/body)
+(define-key hydra-map (kbd "h") 'hydra-hide-show/body)
 (define-key hydra-map (kbd "t") 'hydra-transpose/body)
 (define-key hydra-map (kbd "l") 'hydra-launcher/body)
 ;; (define-key hydra-map (kbd "<f4>") 'hydra-transparency/body)
