@@ -3225,7 +3225,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-** COMMENT hyperbole
+*** COMMENT hyperbole
 
 #+begin_src emacs-lisp
 
