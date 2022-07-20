@@ -16,13 +16,13 @@
        )
 
   (defun doomish-name-to-rgb (color)
-  "Retrieves the hexidecimal string repesented the named COLOR (e.g. \"red\")
+    "Retrieves the hexidecimal string repesented the named COLOR (e.g. \"red\")
 for FRAME (defaults to the current frame)."
-  (cl-loop with div = (float (car (tty-color-standard-values "#ffffff")))
-           for x in (tty-color-standard-values (downcase color))
-           collect (/ x div)))
+    (cl-loop with div = (float (car (tty-color-standard-values "#ffffff")))
+             for x in (tty-color-standard-values (downcase color))
+             collect (/ x div)))
 
-  
+
   (defun doomish-blend (color1 color2 alpha)
     "Blend two colors (hexidecimal strings) together by a coefficient ALPHA (a
 float between 0 and 1)"
@@ -108,8 +108,8 @@ float between 0 and 1)"
                                :background nil
                                :foreground ,(face-foreground 'shadow) :underline nil :overline nil :italic t))))
    `(org-block-end-line ((t (;; :background ,(face-background 'highlight)
-                               :background nil
-                               :foreground ,(face-foreground 'shadow) :overline nil :underline nil :italic t))))
+                             :background nil
+                             :foreground ,(face-foreground 'shadow) :overline nil :underline nil :italic t))))
 
 
    `(org-checkbox ((t (:foreground "#000000", :background "#93a1a1" :box (:line-width -3 :color "#93a1a1" :style "released-button")))))
@@ -159,24 +159,26 @@ float between 0 and 1)"
 
 
    ;; `(region ((t (;; :inherit 'region :background ,(face-background 'region)
-   ;;                        :foreground nil))))
-   ;; ;; `(secondary-selection ((t (:inherit 'secondary-selection :foreground nil))))
+   ;;                :background nil :foreground nil))))
+   ;; `(secondary-selection ((t (:inherit 'secondary-selection :foreground nil))))
 
    ;; `(highlight ((t (:inherit 'highlight ;; :box nil
    ;;                           ;; :underline nil :overline nil
    ;;                           )))) ;; font-lock-comment-face
-   ;; `(hl-line ((t (:inherit 'hl-line
+   ;; `(hl-line ((t (;; :inherit 'hl-line
    ;;                         ;; :background ,(face-background 'default)
    ;;                          ;; :underline nil :overline nil
-   ;;                         ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
-   ;;                         ))))
-   `(objed-hl ((t (:inherit 'region ;; :inherit 'secondary-selection
-                            ;; :background ,(face-background 'default)
-                             ;; :underline nil :overline nil
-                            ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
-                            ))))
+   ;;                         :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))
+   ;;                               ))))
 
-   `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
+   ;; `(objed-hl ((t (;; :inherit 'region
+   ;;                           ;; :inherit 'secondary-selection
+   ;;                          ;; :background ,(face-background 'default)
+   ;;                           ;; :underline nil :overline nil
+   ;;                          :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
+   ;;                          ))))
+
+   ;; `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
 
 
    ;; `(tab-bar ((t (:inherit variable-pitch :background "SlateGray4" :foreground "white"))))
@@ -197,23 +199,23 @@ float between 0 and 1)"
    ;;;;; modeline
    `(mode-line ((t (:inherit variable-pitch
                              ;; :background ,(face-background 'default)
-							 :background nil
-							 :foreground ,(face-foreground 'default)
+                             :background nil
+                             :foreground ,(face-foreground 'default)
                              :box (:color ,(face-foreground 'default) :line-width 1) :underline nil :overline nil :height 1.0))))
 
    `(mode-line-inactive ((t (:inherit variable-pitch
                                       ;; :background ,(face-background 'default)
-									  :background nil
-									  :foreground ,(face-foreground 'font-lock-comment-face)
+                                      :background nil
+                                      :foreground ,(face-foreground 'font-lock-comment-face)
                                       :box (:color ,(face-background 'region) :line-width 1) :height 1.0))))
 
-    `(mode-line-buffer-id ((t (:inherit variable-pitch
-                                ;; :box (:color ,(face-foreground 'default) :line-width -1)
-										;; :background ,(face-background 'default)
-										:background nil
-										:foreground ,(face-foreground 'link)
-										:bold t :height 1.0
-										:distant-foreground ,(face-background 'region)))))
+   `(mode-line-buffer-id ((t (:inherit variable-pitch
+                                       ;; :box (:color ,(face-foreground 'default) :line-width -1)
+                                       ;; :background ,(face-background 'default)
+                                       :background nil
+                                       :foreground ,(face-foreground 'link)
+                                       :bold t :height 1.0
+                                       :distant-foreground ,(face-background 'region)))))
 
 
    ;; `(mode-line-buffer-id-inactive ((t ( :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1)
@@ -279,6 +281,7 @@ float between 0 and 1)"
    ;; ;; `(ido-virtual ((t (:inherit bold))))
    ;; ;; `(ido-incomplete-regexp ((t (:inherit bold))))
    ;; ;; `(ido-indicator ((t (:box t))))
+   `(icomplete-selected-match ((t (:inherit nil :box (:line-width 1 :color ,(face-foreground 'default))))))
 
    ;; ;;;;; swiper
    ;; `(swiper-line-face ((t (;; :underline t
@@ -292,9 +295,9 @@ float between 0 and 1)"
 
 
    ;;selectrum
-   `(selectrum-current-candidate ((t (:inherit 'hl-line ;; :background ,(face-background 'hl-line) :foreground ,(face-foreground 'hl-line) :bold t
-                                               ;; :underline nil :overline nil
-                                               :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))))))
+   ;; `(selectrum-current-candidate ((t (:inherit 'hl-line ;; :background ,(face-background 'hl-line) :foreground ,(face-foreground 'hl-line) :bold t
+   ;;                                             ;; :underline nil :overline nil
+   ;;                                             :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face))))))
 
 
    ;; ;;;;; dired-subtree
@@ -326,13 +329,13 @@ float between 0 and 1)"
 
 
    `(tab-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
-                              ;; :box (:color ,(face-foreground 'default) :line-width 1)
-                              ))))
+                               ;; :box (:color ,(face-foreground 'default) :line-width 1)
+                               ))))
    `(tab-line-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
-                                  ;; :box (:color ,(face-foreground 'default) :line-width 1)
+                                   ;; :box (:color ,(face-foreground 'default) :line-width 1)
                                    ))))
    `(tab-line-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
-                                           :box (:color ,(face-foreground 'default) :line-width 2)))))
+                                            :box (:color ,(face-foreground 'default) :line-width 2)))))
 
    `(tab-line-tab-current ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
                                            ;; :box (:color ,(face-foreground 'default) :line-width 1)
