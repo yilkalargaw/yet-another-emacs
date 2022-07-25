@@ -281,7 +281,7 @@ float between 0 and 1)"
    ;; ;; `(ido-virtual ((t (:inherit bold))))
    ;; ;; `(ido-incomplete-regexp ((t (:inherit bold))))
    ;; ;; `(ido-indicator ((t (:box t))))
-   `(icomplete-selected-match ((t (:inherit nil :box (:line-width 1 :color ,(face-foreground 'default))))))
+   ;; `(icomplete-selected-match ((t (:inherit nil :box (:line-width 1 :color ,(face-foreground 'default))))))
 
    ;; ;;;;; swiper
    ;; `(swiper-line-face ((t (;; :underline t
