@@ -676,15 +676,15 @@
 ;; Make scrolling less stuttered
 (when EMACS29+
   (pixel-scroll-precision-mode t)
-  (customize-set-variable 'pixel-scroll-precision-large-scroll-height 40.0)
-  (customize-set-variable 'pixel-scroll-precision-interpolation-factor 30))
+  (setq-default 'pixel-scroll-precision-large-scroll-height 40.0
+  'pixel-scroll-precision-interpolation-factor 30))
 
 (customize-set-variable 'auto-window-vscroll nil)
 (customize-set-variable 'fast-but-imprecise-scrolling t)
 (customize-set-variable 'scroll-conservatively 101)
 (customize-set-variable 'scroll-margin 0)
 (customize-set-variable 'scroll-preserve-screen-position t)
-(customize-set-variable 'mouse-wheel-progressive-speed t)
+;; (customize-set-variable 'mouse-wheel-progressive-speed t)
 
 #+end_src
 
