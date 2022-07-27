@@ -43,6 +43,7 @@
     - [[#marking][marking]]
     - [[#isearch][isearch]]
     - [[#explicitly-set-shell][explicitly set shell]]
+    - [[#better-support-for-long-lines][better support for long lines]]
   - [[#theming][theming]]
   - [[#completion][completion]]
   - [[#emacs-built-in-packages][emacs built in packages]]
@@ -62,6 +63,7 @@
     - [[#whitespace-mode][whitespace-mode]]
     - [[#outline][outline]]
     - [[#tab-bar--tabline][tab-bar & tabline]]
+    - [[#recentf][recentf]]
 - [[#initialize-package-managers-straight-and-use-package][initialize package managers straight and use-package]]
 - [[#external-libraries][external libraries]]
 - [[#external-packages-i-use][external packages I use]]
@@ -756,6 +758,16 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+end_src
 
 
+*** better support for long lines
+
+#+begin_src emacs-lisp
+
+;; Better support for files with long lines
+(setq-default bidi-paragraph-direction 'left-to-right)
+(setq-default bidi-inhibit-bpa t)
+(global-so-long-mode 1)
+
+#+end_src
 
 ** theming
 
@@ -1123,6 +1135,17 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
 (setq tab-line-tab-name-truncated-max 10)
+
+#+end_src
+
+*** recentf
+
+#+begin_src emacs-lisp
+
+;; Turn on recentf mode
+(add-hook 'after-init-hook #'recentf-mode)
+(customize-set-variable 'recentf-save-file
+                        (concat user-emacs-directory "recentf"))
 
 #+end_src
 
