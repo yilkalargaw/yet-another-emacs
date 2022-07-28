@@ -101,6 +101,7 @@ emojis/
 /straight/
 /var/
 /eln-cache/
+/.cache/
 
 #backups
 backups/
@@ -118,3 +119,4 @@ tutorial/
 straight/
 var/
 eln-cache/
+.cache/
