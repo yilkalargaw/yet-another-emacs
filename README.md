@@ -5,9 +5,7 @@ Is my personal emacs config and it is based on the earlier yet-another-emacs. I 
 
 # It Uses
 
-  + selectrum, consult, marginelia for completion
-
-  + doom-line
+  + fido, consult, marginelia for completion
 
   + hydra
 
