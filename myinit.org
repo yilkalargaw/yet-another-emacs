@@ -27,6 +27,7 @@
     - [[#minor-modes-menu-based-on-minions][minor-modes-menu-based-on-minions]]
     - [[#mode-line-modify][mode-line-modify]]
   - [[#basic-emacs-editor-preferences][basic emacs editor preferences]]
+    - [[#set-load-path][set load path]]
     - [[#set-utf-8-as-default-coding-system][set utf-8 as default coding system]]
     - [[#autorevert][autorevert]]
     - [[#backup-and-auto-save-list][backup and auto-save-list]]
@@ -64,7 +65,6 @@
     - [[#outline][outline]]
     - [[#tab-bar--tabline][tab-bar & tabline]]
     - [[#recentf][recentf]]
-    - [[#tempo][tempo]]
     - [[#hippie_expand][hippie_expand]]
 - [[#initialize-package-managers-straight-and-use-package][initialize package managers straight and use-package]]
 - [[#external-libraries][external libraries]]
@@ -499,6 +499,18 @@
 
 
 ** basic emacs editor preferences
+*** set load path
+
+#+begin_src emacs-lisp
+
+(let ((default-directory  (concat user-emacs-directory "lisp")))
+  (progn
+	(unless (file-directory-p default-directory)
+	  (make-directory default-directory))
+	(normal-top-level-add-subdirs-to-load-path)))
+
+#+end_src
+
 *** set utf-8 as default coding system
 
 #+begin_src emacs-lisp
@@ -520,6 +532,14 @@
 #+begin_src emacs-lisp
 
 ;;backups
+
+(let ((thedir  (concat user-emacs-directory "auto-save-list")))
+	(unless (file-directory-p thedir)
+	  (make-directory thedir)))
+
+(let ((thedir  (concat user-emacs-directory "backups")))
+	(unless (file-directory-p thedir)
+	  (make-directory thedir)))
 
 (setq ;; backup-directory-alist '(((concat user-emacs-directory "backups")))
  backup-by-copying t    ; Don't delink hardlinks
@@ -758,7 +778,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+end_src
 
-
 *** better support for long lines
 
 #+begin_src emacs-lisp
@@ -769,6 +788,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (global-so-long-mode 1)
 
 #+end_src
+
 
 ** theming
 
@@ -1195,8 +1215,8 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
   (define-prefix-command 'tempo-map)
   (local-set-key (kbd "C-c t") 'tempo-map)
   (define-key tempo-map (kbd "c") 'tempo-complete-tag)  ;; define keys for complete-tag and movement through stops
-  (define-key tempo-map (kbd "f") 'tempo-forward-mark)
-  (define-key tempo-map (kbd "b") 'tempo-backward-mark)
+  (define-key tempo-map (kbd "n") 'tempo-forward-mark)
+  (define-key tempo-map (kbd "p") 'tempo-backward-mark)
 
   (local-set-key " " 'tempo-space))
 
@@ -4047,11 +4067,16 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+begin_src emacs-lisp
 
+(defconst theme-directory (expand-file-name "themes" user-emacs-directory))
+
+(unless (file-directory-p theme-directory)
+  (make-directory theme-directory))
+
 (add-to-list 'custom-theme-load-path
 			 (concat user-emacs-directory "themes"))
 
 
-(let ((basedir (concat user-emacs-directory "themes")))
+(let ((basedir theme-directory))
   (dolist (f (directory-files basedir))
     (if (and (not (or (equal f ".") (equal f "..")))
              (file-directory-p (concat basedir f)))
@@ -4061,7 +4086,8 @@ With postitive prefix argument ARG move to the nth previous object."
 (add-hook 'after-init-time-hook
           (if (require 'base16-theme nil 'noerror)
               (load-theme 'base16-brewer t)
-            (load-theme 'manoj-dark t)
+			(load-theme 'wombat t)
+            ;; (load-theme 'manoj-dark t)
             ;; (load-theme 'modus-vivendi t)
             ))
 
