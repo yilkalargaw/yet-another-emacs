@@ -117,7 +117,6 @@
   - [[#scratch][scratch]]
   - [[#install-themes][install themes]]
   - [[#alternate-mode-lines][alternate mode-lines]]
-    - [[#mood-line][mood-line]]
   - [[#all-the-icons][all-the-icons]]
   - [[#minibuffer-completion-frameworks][minibuffer completion frameworks]]
     - [[#selectrum-consult-marginelia-embark][selectrum, consult, marginelia, embark]]
@@ -480,6 +479,8 @@
 					 "   "
 					 mode-name " ";; "%m"
 					 (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu)))
+					 "   "
+					 (:eval (propertize "[☰]" 'local-map (make-mode-line-mouse-map 'mouse-1 'menu-bar-open)))
 					 " "
 					 "  " mode-line-misc-info mode-line-end-spaces
 					 )
@@ -3303,7 +3304,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-*** mood-line
+*** COMMENT mood-line
 
 #+begin_src emacs-lisp
 (use-package mood-line
