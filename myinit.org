@@ -1098,7 +1098,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (add-hook 'prog-mode-hook 'outline-minor-mode t)
 (add-hook 'makdown-mode-hook 'outline-minor-mode t)
-(add-hook 'outline-minor-mode-hook (lambda () (setq outline-minor-mode-cycle t)))
+;; (add-hook 'outline-minor-mode-hook (lambda () (setq outline-minor-mode-cycle t)))
 
 (defun set-outline-minor-mode-regexp ()
   ""
