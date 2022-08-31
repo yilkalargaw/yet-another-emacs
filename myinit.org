@@ -2868,7 +2868,35 @@ With postitive prefix argument ARG move to the nth previous object."
   :defer 0.1
   :config
   (setq minions-mode-line-lighter "[+]")
-  (minions-mode 1))
+  (minions-mode 1)
+  ;; Set the new mode-line-format
+  (setq-default mode-line-format
+				'((:eval
+                   (mode-line-split--format
+					;; Left
+					(format-mode-line
+					 '("%e" mode-line-front-space
+					   (:propertize
+						("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
+						display
+						(min-width
+						 (5.0)))
+					   mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
+					;; Right
+					(format-mode-line
+					 '((vc-mode vc-mode)
+					   "   "
+					   mode-name " ";; "%m"
+					   ;; (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu)))
+					   ;; (concat (format-mode-line minions-mode-line-modes 'mood-line-major-mode) "  ")
+					   (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'minions-minor-modes-menu)))
+					   "   "
+					   (:eval (propertize "[☰]" 'local-map (make-mode-line-mouse-map 'mouse-1 'menu-bar-open)))
+					   " "
+					   "  " mode-line-misc-info mode-line-end-spaces
+					   )
+					 )))))
+  )
 
 #+end_src
 
