@@ -912,6 +912,12 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (add-hook 'term-mode-hook 'display-line-numbers-mode -1)
   (add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1))))
 
+(defun my-term-handle-exit (&optional process-name msg)
+  (message "%s | %s" process-name msg)
+  (kill-buffer (current-buffer)))
+
+(advice-add 'term-handle-exit :after 'my-term-handle-exit)
+
 #+end_src
 
 *** eww & shr
