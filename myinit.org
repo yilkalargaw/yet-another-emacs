@@ -1000,54 +1000,78 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (add-hook 'dired-mode-hook 'dired-hide-details-mode t)
 
 (with-eval-after-load 'dired
-                      (require 'dired-aux)
-                      (require 'dired-x)
-                      ;; (require 'dired-narrow)
-                      ;; (require 'dired-subtree)
-                      (setq dired-listing-switches "--group-directories-first -lah")
-                      (put 'dired-find-alternate-file 'disabled nil)
-                      (define-key dired-mode-map (kbd "C-<return>") 'dired-find-file)
-                      (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-                      (define-key dired-mode-map (kbd "M-<return>") 'dired-find-file-other-window)
-                      ;; allow dired to delete or copy dir
-                      (setq dired-recursive-copies (quote always)) ; “always” means no asking
-                      (setq dired-recursive-deletes (quote top)) ; “top” means ask once
-                      (setq dired-dwim-target t)
+  (require 'dired-aux)
+  (require 'dired-x)
+  ;; (require 'dired-narrow)
+  ;; (require 'dired-subtree)
+  (setq dired-listing-switches "--group-directories-first -lah")
+  (put 'dired-find-alternate-file 'disabled nil)
+  (define-key dired-mode-map (kbd "C-<return>") 'dired-find-file)
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+  (define-key dired-mode-map (kbd "M-<return>") 'dired-find-file-other-window)
+  ;; allow dired to delete or copy dir
+  (setq dired-recursive-copies (quote always)) ; “always” means no asking
+  (setq dired-recursive-deletes (quote top)) ; “top” means ask once
+  (setq dired-dwim-target t)
 
-                      (defun dired-dotfiles-toggle ()
-                        "Show/hide dot-files"
-                        (interactive)
-                        (when (equal major-mode 'dired-mode)
-                          (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
-                              (progn
-                                (set (make-local-variable 'dired-dotfiles-show-p) nil)
-                                (message "h")
-                                (dired-mark-files-regexp "^\\\.")
-                                (dired-do-kill-lines))
-                            (progn (revert-buffer) ; otherwise just revert to re-show
-                                   (set (make-local-variable 'dired-dotfiles-show-p) t)))))
+  (defun dired-dotfiles-toggle ()
+    "Show/hide dot-files"
+    (interactive)
+    (when (equal major-mode 'dired-mode)
+      (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
+          (progn
+            (set (make-local-variable 'dired-dotfiles-show-p) nil)
+            (message "h")
+            (dired-mark-files-regexp "^\\\.")
+            (dired-do-kill-lines))
+        (progn (revert-buffer) ; otherwise just revert to re-show
+               (set (make-local-variable 'dired-dotfiles-show-p) t)))))
 
-                      (define-key dired-mode-map (kbd "H-l")
-                                  (lambda () (interactive) (dired-dotfiles-toggle)))
+  (define-key dired-mode-map (kbd "H-l")
+              (lambda () (interactive) (dired-dotfiles-toggle)))
 
-                      (define-key dired-mode-map (kbd "^")
-                                  (lambda () (interactive) (find-alternate-file "..")))
+  (define-key dired-mode-map (kbd "^")
+              (lambda () (interactive) (find-alternate-file "..")))
 
-                      (setq wdired-allow-to-change-permissions t)
-                      ;; (defadvice dired-subtree-toggle (after dired-icons-refreash ())
-                      ;;   "Insert an empty line when moving up from the top line."
-                      ;;   (revert-buffer))
+  (setq wdired-allow-to-change-permissions t)
+  ;; (defadvice dired-subtree-toggle (after dired-icons-refreash ())
+  ;;   "Insert an empty line when moving up from the top line."
+  ;;   (revert-buffer))
 
-                      ;; (ad-activate 'dired-subtree-toggle)
+  ;; (ad-activate 'dired-subtree-toggle)
 
-                      ;; (defadvice dired-subtree-cycle (after dired-icons-refreash ())
-                      ;;   "Insert an empty line when moving up from the top line."
-                      ;;   (revert-buffer))
+  ;; (defadvice dired-subtree-cycle (after dired-icons-refreash ())
+  ;;   "Insert an empty line when moving up from the top line."
+  ;;   (revert-buffer))
 
-                      ;; (ad-activate 'dired-subtree-cycle)
-                      )
-
-
+  ;; (ad-activate 'dired-subtree-cycle)
+  (setq dired-omit-verbose nil
+        dired-omit-files
+        (concat dired-omit-files
+                "\\|^\\.DS_Store\\'"
+                "\\|^\\.project\\(?:ile\\)?\\'"
+                "\\|^\\.\\(?:svn\\|git\\)\\'"
+                "\\|^\\.ccls-cache\\'"
+                "\\|\\(?:\\.js\\)?\\.meta\\'"
+                "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"))
+  ;; Disable the prompt about whether I want to kill the Dired buffer for a
+  ;; deleted directory. Of course I do!
+  (setq dired-clean-confirm-killing-deleted-buffers nil)
+  ;; Let OS decide how to open certain files
+  (when-let (cmd (cond (IS-MAC "open")
+                       (IS-LINUX "xdg-open")
+                       (IS-WINDOWS "start")))
+    (setq dired-guess-shell-alist-user
+          `(("\\.\\(?:docx\\|pdf\\|djvu\\|eps\\)\\'" ,cmd)
+            ("\\.\\(?:jpe?g\\|png\\|gif\\|xpm\\)\\'" ,cmd)
+            ("\\.\\(?:xcf\\)\\'" ,cmd)
+            ("\\.csv\\'" ,cmd)
+            ("\\.tex\\'" ,cmd)
+            ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'" ,cmd)
+            ("\\.\\(?:mp3\\|flac\\)\\'" ,cmd)
+            ("\\.html?\\'" ,cmd)
+            ("\\.md\\'" ,cmd))))
+  )
 
 #+end_src
 
