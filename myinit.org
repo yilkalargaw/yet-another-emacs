@@ -121,6 +121,7 @@
   - [[#minibuffer-completion-frameworks][minibuffer completion frameworks]]
     - [[#selectrum-consult-marginelia-embark][selectrum, consult, marginelia, embark]]
   - [[#programming-and-typesetting][programming and typesetting]]
+    - [[#eglot][eglot]]
     - [[#cc][C/C++]]
     - [[#rust][rust]]
     - [[#ruby][ruby]]
@@ -912,12 +913,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (add-hook 'term-mode-hook 'display-line-numbers-mode -1)
   (add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1))))
 
-(defun my-term-handle-exit (&optional process-name msg)
-  (message "%s | %s" process-name msg)
-  (kill-buffer (current-buffer)))
-
-(advice-add 'term-handle-exit :after 'my-term-handle-exit)
-
 #+end_src
 
 *** eww & shr
@@ -1000,78 +995,54 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (add-hook 'dired-mode-hook 'dired-hide-details-mode t)
 
 (with-eval-after-load 'dired
-  (require 'dired-aux)
-  (require 'dired-x)
-  ;; (require 'dired-narrow)
-  ;; (require 'dired-subtree)
-  (setq dired-listing-switches "--group-directories-first -lah")
-  (put 'dired-find-alternate-file 'disabled nil)
-  (define-key dired-mode-map (kbd "C-<return>") 'dired-find-file)
-  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-  (define-key dired-mode-map (kbd "M-<return>") 'dired-find-file-other-window)
-  ;; allow dired to delete or copy dir
-  (setq dired-recursive-copies (quote always)) ; “always” means no asking
-  (setq dired-recursive-deletes (quote top)) ; “top” means ask once
-  (setq dired-dwim-target t)
+                      (require 'dired-aux)
+                      (require 'dired-x)
+                      ;; (require 'dired-narrow)
+                      ;; (require 'dired-subtree)
+                      (setq dired-listing-switches "--group-directories-first -lah")
+                      (put 'dired-find-alternate-file 'disabled nil)
+                      (define-key dired-mode-map (kbd "C-<return>") 'dired-find-file)
+                      (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+                      (define-key dired-mode-map (kbd "M-<return>") 'dired-find-file-other-window)
+                      ;; allow dired to delete or copy dir
+                      (setq dired-recursive-copies (quote always)) ; “always” means no asking
+                      (setq dired-recursive-deletes (quote top)) ; “top” means ask once
+                      (setq dired-dwim-target t)
 
-  (defun dired-dotfiles-toggle ()
-    "Show/hide dot-files"
-    (interactive)
-    (when (equal major-mode 'dired-mode)
-      (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
-          (progn
-            (set (make-local-variable 'dired-dotfiles-show-p) nil)
-            (message "h")
-            (dired-mark-files-regexp "^\\\.")
-            (dired-do-kill-lines))
-        (progn (revert-buffer) ; otherwise just revert to re-show
-               (set (make-local-variable 'dired-dotfiles-show-p) t)))))
+                      (defun dired-dotfiles-toggle ()
+                        "Show/hide dot-files"
+                        (interactive)
+                        (when (equal major-mode 'dired-mode)
+                          (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
+                              (progn
+                                (set (make-local-variable 'dired-dotfiles-show-p) nil)
+                                (message "h")
+                                (dired-mark-files-regexp "^\\\.")
+                                (dired-do-kill-lines))
+                            (progn (revert-buffer) ; otherwise just revert to re-show
+                                   (set (make-local-variable 'dired-dotfiles-show-p) t)))))
 
-  (define-key dired-mode-map (kbd "H-l")
-              (lambda () (interactive) (dired-dotfiles-toggle)))
+                      (define-key dired-mode-map (kbd "H-l")
+                                  (lambda () (interactive) (dired-dotfiles-toggle)))
 
-  (define-key dired-mode-map (kbd "^")
-              (lambda () (interactive) (find-alternate-file "..")))
+                      (define-key dired-mode-map (kbd "^")
+                                  (lambda () (interactive) (find-alternate-file "..")))
 
-  (setq wdired-allow-to-change-permissions t)
-  ;; (defadvice dired-subtree-toggle (after dired-icons-refreash ())
-  ;;   "Insert an empty line when moving up from the top line."
-  ;;   (revert-buffer))
+                      (setq wdired-allow-to-change-permissions t)
+                      ;; (defadvice dired-subtree-toggle (after dired-icons-refreash ())
+                      ;;   "Insert an empty line when moving up from the top line."
+                      ;;   (revert-buffer))
 
-  ;; (ad-activate 'dired-subtree-toggle)
+                      ;; (ad-activate 'dired-subtree-toggle)
 
-  ;; (defadvice dired-subtree-cycle (after dired-icons-refreash ())
-  ;;   "Insert an empty line when moving up from the top line."
-  ;;   (revert-buffer))
+                      ;; (defadvice dired-subtree-cycle (after dired-icons-refreash ())
+                      ;;   "Insert an empty line when moving up from the top line."
+                      ;;   (revert-buffer))
 
-  ;; (ad-activate 'dired-subtree-cycle)
-  (setq dired-omit-verbose nil
-        dired-omit-files
-        (concat dired-omit-files
-                "\\|^\\.DS_Store\\'"
-                "\\|^\\.project\\(?:ile\\)?\\'"
-                "\\|^\\.\\(?:svn\\|git\\)\\'"
-                "\\|^\\.ccls-cache\\'"
-                "\\|\\(?:\\.js\\)?\\.meta\\'"
-                "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"))
-  ;; Disable the prompt about whether I want to kill the Dired buffer for a
-  ;; deleted directory. Of course I do!
-  (setq dired-clean-confirm-killing-deleted-buffers nil)
-  ;; Let OS decide how to open certain files
-  (when-let (cmd (cond (IS-MAC "open")
-                       (IS-LINUX "xdg-open")
-                       (IS-WINDOWS "start")))
-    (setq dired-guess-shell-alist-user
-          `(("\\.\\(?:docx\\|pdf\\|djvu\\|eps\\)\\'" ,cmd)
-            ("\\.\\(?:jpe?g\\|png\\|gif\\|xpm\\)\\'" ,cmd)
-            ("\\.\\(?:xcf\\)\\'" ,cmd)
-            ("\\.csv\\'" ,cmd)
-            ("\\.tex\\'" ,cmd)
-            ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'" ,cmd)
-            ("\\.\\(?:mp3\\|flac\\)\\'" ,cmd)
-            ("\\.html?\\'" ,cmd)
-            ("\\.md\\'" ,cmd))))
-  )
+                      ;; (ad-activate 'dired-subtree-cycle)
+                      )
+
+
 
 #+end_src
 
@@ -1699,6 +1670,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 
 #+begin_src emacs-lisp
 
+;;; html tempo templates
 (add-hook 'html-mode-hook (lambda () (progn 
                                        (defvar html-tempo-tags nil)
 
@@ -1754,7 +1726,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                                               'html-tempo-tags)
 
                                        (tempo-define-template "abbr"
-                                                              '("abbr title=\"" > p "\">" p "</abbr>" >)
+                                                              '("abbr title=\"" > p "\">" p "</abbr>">)
                                                               "abbr"
                                                               "insert html abbr tag"
                                                               'html-tempo-tags)
@@ -1762,9 +1734,9 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                        (tempo-define-template "html"
                                                               '("!DOCTYPE html>" n> "<html>" n>"<head>" n>
                                                                 "<title> " > p " </title>" p n>
-                                                                "</head>" > n>
-                                                                "<body>" > n>  p
-                                                                "\n</body>" > n "</html>" > n>)
+                                                                "</head>" n>
+                                                                "<body>" n>  p
+                                                                "\n</body>" > n "</html>" n>)
                                                               "html"
                                                               "insert a html template"
                                                               'html-tempo-tags)
@@ -1775,7 +1747,6 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                        )))
 
 #+end_src
-
 *** COMMENT expand
 
 Expand is a package that extends the functionality of abbrev to enable code templating functionality. It uses a similar definition to abbrevs with an added list to indicate stops inside the template. It has default keys "C-x a n" and "C-x a p" for moving forward and backward within stops
@@ -3603,6 +3574,17 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
+*** eglot
+
+#+begin_src emacs-lisp
+
+(when (not (locate-library "eglot"))
+  (use-package eglot
+	:straight t
+	:after company))
+
+#+end_src
+
 *** C/C++
 
 #+begin_src emacs-lisp
@@ -4035,14 +4017,14 @@ With postitive prefix argument ARG move to the nth previous object."
               )
   )
 
-(use-package dired-quick-sort
-  :straight t
-  :defer t
-  :hook (dired-mode)
-  :config
-  (dired-quick-sort-setup)
-  ;; (all-the-icons-dired-mode t)
-  )
+;; (use-package dired-quick-sort
+;;   :straight t
+;;   :defer t
+;;   :hook (dired-mode)
+;;   :config
+;;   (dired-quick-sort-setup)
+;;   ;; (all-the-icons-dired-mode t)
+;;   )
 
 (use-package diredfl
   :straight t
