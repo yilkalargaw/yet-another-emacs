@@ -539,7 +539,7 @@
 	(unless (file-directory-p thedir)
 	  (make-directory thedir)))
 
-(let ((thedir  (expand-file-name user-emacs-directory "backups")))
+(let ((thedir  (expand-file-name "backups" user-emacs-directory)))
 	(unless (file-directory-p thedir)
 	  (make-directory thedir)))
 
@@ -551,9 +551,9 @@
  kept-old-versions 5    ; and how many of the old
  ;;auto-save-file-name-transforms `((expand-file-name user-emacs-directory "backups") t)
  auto-save-file-name-transforms
- `((".*" ,(expand-file-name user-emacs-directory "auto-save-list/") t))
+ `((".*" ,(expand-file-name  "auto-save-list" user-emacs-directory) t))
  backup-directory-alist
- `((".*" . ,(expand-file-name user-emacs-directory "backups")))
+ `((".*" . ,(expand-file-name  "backups" user-emacs-directory)))
  )
 
 #+end_src
