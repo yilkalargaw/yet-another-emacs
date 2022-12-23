@@ -232,12 +232,17 @@
 
 #+begin_src emacs-lisp
 
-(defconst EMACS24+   (> emacs-major-version 23))
-(defconst EMACS25+   (> emacs-major-version 24))
-(defconst EMACS26+   (> emacs-major-version 25))
-(defconst EMACS27+   (> emacs-major-version 26))
-(defconst EMACS28+   (> emacs-major-version 27))
-(defconst EMACS29+   (> emacs-major-version 28))
+;; define  variables by using a macro that generates and evaluates as below
+;; (defconst EMACS24+   (> emacs-major-version 23)) using macros
+
+(defmacro yae-gen-ver-consts (var)
+  (list 'defconst
+		(intern (string-join (list "EMACS" (int-to-string var) "+" )))
+		(> emacs-major-version (- var 1))))
+
+;;evaluate the macro for the number range we want
+(seq-do (lambda (x) (eval (list 'yae-gen-ver-consts x))) (number-sequence 24 35))
+
 (defconst IS-MAC     (eq system-type 'darwin))
 (defconst IS-LINUX   (eq system-type 'gnu/linux))
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
