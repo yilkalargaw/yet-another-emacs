@@ -1099,7 +1099,14 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (add-hook 'prog-mode-hook 'outline-minor-mode t)
 (add-hook 'makdown-mode-hook 'outline-minor-mode t)
-;; (add-hook 'outline-minor-mode-hook (lambda () (setq outline-minor-mode-cycle t)))
+(add-hook 'Man-mode-hook 'outline-minor-mode t)
+(add-hook 'outline-minor-mode-hook
+          (lambda ()
+            (setq outline-minor-mode-use-buttons 'in-margins ;;you can use 'in-margins for buttons on margin
+                  outline-minor-mode-cycle t
+                  outline-minor-mode-cycle-filter 'bolp)
+            (define-key outline-minor-mode-map (kbd "<f6>") 'outline-cycle)
+            (define-key outline-minor-mode-map (kbd "<S-f6>") 'outline-cycle-buffer)))
 
 (defun set-outline-minor-mode-regexp ()
   ""
