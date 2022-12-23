@@ -3703,8 +3703,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 (use-package crystal-mode
   :mode ("\\.cr$" . crystal-mode)
-  :straight (emacs-crystal-mode :type git :host github :repo "yilkalargaw/emacs-crystal-mode")
-  ;; :straight t
+  :straight t
   :defer t)
 
 #+end_src
