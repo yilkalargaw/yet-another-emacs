@@ -343,34 +343,34 @@
 ;; (set-face-font 'italic "-*-Courier New-normal-i-*-*-11-*-*-*-c-*-iso8859-1")
 ;; (set-face-font 'bold-italic "-*-Courier New-bold-i-*-*-11-*-*-*-c-*-iso8859-1")
 
-(defvar my-default-font-height (face-attribute 'default :height))
-
-(defun my-set-to-default-font-height ()
-  (interactive)
-  ;; (set-face-attribute 'default nil :height my-default-font-height)
-  (set-face-font 'default my-default-font)
-  (message (number-to-string (face-attribute 'default :height)))
-  )
-
-
-(defun my-increase-default-font-height ()
-  (interactive)
-  (let* ((default-face-height (face-attribute 'default :height)))
-    (set-face-attribute 'default nil :height (+ default-face-height 5))
-	(message (number-to-string (face-attribute 'default :height)))
-	))
+(when (not EMACS29+)
+  (progn
+	(defvar my-default-font-height (face-attribute 'default :height))
+	(defun my-set-to-default-font-height ()
+	  (interactive)
+	  ;; (set-face-attribute 'default nil :height my-default-font-height)
+	  (set-face-font 'default my-default-font)
+	  (message (number-to-string (face-attribute 'default :height))))
 
 
-(defun my-decrease-default-font-height ()
-  (interactive)
-  (let* ((default-face-height (face-attribute 'default :height)))
-    (set-face-attribute 'default nil :height (- default-face-height 5))
-	(message (number-to-string (face-attribute 'default :height)))
-	))
+	(defun my-increase-default-font-height ()
+	  (interactive)
+	  (let* ((default-face-height (face-attribute 'default :height)))
+		(set-face-attribute 'default nil :height (+ default-face-height 5))
+		(message (number-to-string (face-attribute 'default :height)))
+		))
 
-(global-set-key (kbd "C-M-=") 'my-increase-default-font-height)
-(global-set-key (kbd "C-M--") 'my-decrease-default-font-height)
-(global-set-key (kbd "C-M-0") 'my-set-to-default-font-height)
+
+	(defun my-decrease-default-font-height ()
+	  (interactive)
+	  (let* ((default-face-height (face-attribute 'default :height)))
+		(set-face-attribute 'default nil :height (- default-face-height 5))
+		(message (number-to-string (face-attribute 'default :height)))
+		))
+
+	(global-set-key (kbd "C-M-=") 'my-increase-default-font-height)
+	(global-set-key (kbd "C-M--") 'my-decrease-default-font-height)
+	(global-set-key (kbd "C-M-0") 'my-set-to-default-font-height)
 
 
 ;; (defadvice text-scale-increase (around all-buffers (arg) activate)
@@ -382,6 +382,8 @@
 ;;   (dolist (buffer (buffer-list))
 ;;     (with-current-buffer buffer
 ;;       ad-do-it)))
+
+))
 
 #+end_src
 
