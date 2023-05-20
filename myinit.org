@@ -66,10 +66,10 @@
     - [[#tab-bar--tabline][tab-bar & tabline]]
     - [[#recentf][recentf]]
     - [[#hippie_expand][hippie_expand]]
-- [[#initialize-package-managers-straight-and-use-package][initialize package managers straight and use-package]]
+- [[#initialize-package-managers][initialize package managers]]
+  - [[#packageel][package.el]]
 - [[#external-libraries][external libraries]]
 - [[#external-packages-i-use][external packages I use]]
-  - [[#additional-garbage-collection-optimization-with-gmch][additional garbage collection optimization with gmch]]
   - [[#auto-tangle][auto-tangle]]
   - [[#keychords][keychords]]
   - [[#toc-org][toc-org]]
@@ -90,18 +90,17 @@
   - [[#expand-region][expand-region]]
   - [[#ag][ag]]
   - [[#rg][rg]]
-  - [[#smart-hungry-delete][smart-hungry delete]]
   - [[#ws-butler][ws-butler]]
   - [[#multiple-cursors][multiple-cursors]]
   - [[#phi-search][phi-search]]
   - [[#rainbow-delimiters][rainbow-delimiters]]
   - [[#modal-editing-modes][modal editing modes]]
-    - [[#objed][objed]]
+    - [[#god-mode][god-mode]]
   - [[#restclient][restclient]]
   - [[#novel][nov.el]]
   - [[#pomidor][pomidor]]
   - [[#keyfreq][keyfreq]]
-  - [[#company][company]]
+  - [[#corfu--cape--kind-icons][corfu & cape & kind-icons]]
   - [[#highligt-number-literals][highligt number literals]]
   - [[#vterm][vterm]]
   - [[#highlight-indent-guides][highlight-indent-guides]]
@@ -118,8 +117,6 @@
   - [[#install-themes][install themes]]
   - [[#alternate-mode-lines][alternate mode-lines]]
   - [[#all-the-icons][all-the-icons]]
-  - [[#minibuffer-completion-frameworks][minibuffer completion frameworks]]
-    - [[#selectrum-consult-marginelia-embark][selectrum, consult, marginelia, embark]]
   - [[#programming-and-typesetting][programming and typesetting]]
     - [[#eglot][eglot]]
     - [[#cc][C/C++]]
@@ -139,13 +136,12 @@
     - [[#rfc-mode][rfc-mode]]
     - [[#go][go]]
     - [[#web][web]]
-    - [[#tree-sitter][tree-sitter]]
+    - [[#tree-sitter-native][tree-sitter native]]
   - [[#dired-related][dired related]]
   - [[#org-related][org related]]
     - [[#org-bullets][org-bullets]]
     - [[#ox-pandoc][ox-pandoc]]
     - [[#htmlize][htmlize]]
-- [[#start-server][start server]]
 - [[#load-theme][load-theme]]
 - [[#initial-scratch-buffer-settings][initial scratch-buffer settings]]
 - [[#load-custom-faces][load custom faces]]
@@ -803,36 +799,31 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-  (add-hook 'after-init-time-hook
-            (progn
-              (defadvice load-theme (after custom-faces-after-load-theme())
-                "Insert an empty line when moving up from the top line."
-                (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-                  (when (file-exists-p dafile) (load-file dafile))
-                  ;; (save-excursion
-                  ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-                  ))
+(defadvice load-theme (after custom-faces-after-load-theme())
+  "Insert an empty line when moving up from the top line."
+  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+    (when (file-exists-p dafile) (load-file dafile))
+    ;; (save-excursion
+    ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+    ))
 
 
-              (ad-activate 'load-theme)
+(ad-activate 'load-theme)
 
-              (defadvice disable-theme (after custom-faces-after-disable-theme())
-                "Insert an empty line when moving up from the top line."
-                (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-                  (when (file-exists-p dafile) (load-file dafile))
-                  ;; (save-excursion
-                  ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-                  ))
+(defadvice disable-theme (after custom-faces-after-disable-theme())
+  "Insert an empty line when moving up from the top line."
+  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+    (when (file-exists-p dafile) (load-file dafile))
+    ;; (save-excursion
+    ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+    ))
 
 
-              (ad-activate 'disable-theme)
+(ad-activate 'disable-theme)
 
-              )
-            )
 
-  (add-hook 'after-init-time-hook
-            (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-                  (when (file-exists-p dafile) (load-file dafile))))
+(let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+  (when (file-exists-p dafile) (load-file dafile)))
 
 
 #+end_src
@@ -1098,6 +1089,21 @@ This is the same as using \\[set-mark-command] with the prefix argument."
           (tab-mark 9 [9655 9] [92 9]) ; tab
           )))
 
+;; Don't enable whitespace for.
+(setq-default whitespace-global-modes
+              '(not shell-mode
+                    eshell-mode
+                    term-mode
+                    comint-mode
+                    vterm-mode
+                    help-mode
+                    magit-mode
+                    magit-diff-mode
+                    ibuffer-mode
+                    dired-mode
+                    occur-mode))
+
+(global-whitespace-mode)
 #+end_src
 
 *** outline
@@ -1961,11 +1967,14 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+end_src
 
 
+* initialize package managers
 
-* initialize package managers straight and use-package
-
+** COMMENT straight
 #+begin_src emacs-lisp
 
+(require 'use-package-core)
+
+(setq straight-repository-branch "develop")
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -1979,7 +1988,38 @@ Expand is a package that extends the functionality of abbrev to enable code temp
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(straight-use-package 'use-package)
+;; (use-package doct :ensure t)
+;; (straight-use-package 'use-package)
+
+(straight-use-package-mode t)
+;; (straight-use-package-mode)
+
+
+#+end_src
+
+** package.el
+
+#+begin_src emacs-lisp
+
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+						 ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("gnu"   . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+						 ("org" . "https://orgmode.org/elpa/")))
+
+
+
+;; (setq gnutls-algorithm-priority  "NORMAL:-VERS-TLS1.3" ;; bug fix for gnu
+;; 	  package-enable-at-startup nil
+;; 	  package-archive-priorities '(("melpa"        . 10)
+;; 								   ("elpa"         . 30)
+;; 								   ("org"          . 25)
+;; 								   ("nongnu"       . 65)
+;; 								   ("gnu"          . 50))  ;; Higher values are searched first.
+;; 	  )
+
+(package-initialize)
+(require 'use-package)
 
 #+end_src
 
@@ -1989,19 +2029,19 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package dash
-  :straight t)
+  :ensure t)
 
 (use-package f
-  :straight t)
+  :ensure t)
 
 (use-package async ;; :defer t
-  :straight t)
+  :ensure t)
 
 #+end_src
 
 
 * external packages I use
-** additional garbage collection optimization with gmch
+** COMMENT additional garbage collection optimization with gmch
 
 #+begin_src emacs-lisp
 
@@ -2017,7 +2057,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 (use-package org-auto-tangle
   ;; :straight (org-auto-tangle :type git :host github :repo "yilkalargaw/org-auto-tangle" :build (:not native-compile))
-  :straight t
+  :ensure t
   :defer t
   :hook (org-mode . org-auto-tangle-mode))
 
@@ -2028,12 +2068,12 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package key-chord
-  :straight t
+  :ensure t
   :defer t
   :after use-package)
 
 (use-package use-package-chords
-  :straight t
+  :ensure t
   :defer t              ;; remove the defer when I actually use it.
   :after use-package
   :config (key-chord-mode 1))
@@ -2045,7 +2085,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package toc-org
-  :straight t
+  :ensure t
   :defer t
   :hook ((org-mode . toc-org-mode)
          (markdown-mode . toc-org-mode)))
@@ -2057,12 +2097,12 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package diminish
-  :straight t
+  :ensure t
   :after use-package)
 
 (use-package delight
   :after use-package
-  :straight t)
+  :ensure t)
 
 #+end_src
 
@@ -2070,7 +2110,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 #+begin_src emacs-lisp
 
-(use-package general :straight t
+(use-package general :ensure t
   :config
   (general-define-key
    "C-h" nil ))
@@ -2084,7 +2124,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;;exec-path-from-shell
 
 (use-package exec-path-from-shell
-  :straight t
+  :ensure t
   :config
   (exec-path-from-shell-initialize))
 
@@ -2099,7 +2139,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
   :defer 0.4
   ;; :hook (after-init . (lambda () (require 'hydra)))
   ;; :init (add-hook 'after-init-time-hook (require 'hydra))
-  :straight t
+  :ensure t
   ;; :defines (ibuffer-mode-map dired-mode-map projectile-mode-map smartparens-mode-map)
   :config
   (load-file (expand-file-name "hydras.el" user-emacs-directory))
@@ -2121,7 +2161,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;;undo-tree
 
 (use-package undo-tree
-  :straight t
+  :ensure t
   :defer 0.2
   :diminish undo-tree-mode
   ;; :hook (after-init . global-undo-tree-mode)
@@ -2140,7 +2180,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package git-gutter
-  :straight t
+  :ensure t
   :defer t
   :hook ((org-mode . git-gutter-mode)
          (prog-mode . git-gutter-mode)
@@ -2154,7 +2194,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package git-timemachine
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -2166,7 +2206,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;;magit
 
 (use-package magit
-  :straight t
+  :ensure t
   :config (setq auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
   :defer t
   :after projectile)
@@ -2176,7 +2216,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 
 (use-package forge
-  :straight t
+  :ensure t
   :defer t
   :after magit)
 
@@ -2190,7 +2230,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;;monky
 
 (use-package monky
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -2202,7 +2242,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;;yasnippet
 
 (use-package yasnippet
-  :straight t
+  :ensure t
   :defer 0.4
   ;; :hook (yae-first-input .  yas-global-mode)
   ;; :init (add-hook 'after-init-time-hook  (yas-global-mode))
@@ -2212,7 +2252,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 (use-package yasnippet-snippets
   ;; :straight (yasnippet-snippets :build (:not native-compile))
-  :straight t
+  :ensure t
   :defer t
   :after (yasnippet))
 
@@ -2223,7 +2263,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package helpful
-  :straight t
+  :ensure t
   :defer t
   :bind
   ([remap describe-function] . helpful-callable)
@@ -2240,7 +2280,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;;which mode
 
 (use-package which-key
-  :straight t
+  :ensure t
   ;; :defer t
   ;; :after init
   :config ;; (which-key-enable-god-mode-support)
@@ -2270,7 +2310,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;;avy
 
 (use-package avy
-  :straight t
+  :ensure t
   :defer t
   :bind (
          ;; ("γ a c" . avy-goto-char)
@@ -2288,7 +2328,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package ace-link
-  :straight t
+  :ensure t
   :defer t
   :functions ace-link-setup-default
   :after (:any elbank helpful info eww man woman)
@@ -2307,7 +2347,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;;ace-window
 
 (use-package ace-window
-  :straight t
+  :ensure t
   :defer t
   ;; :bind ("γ w" . ace-window)
   ;;       ;; ("C-c <f12>" . ace-window)
@@ -2320,7 +2360,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package expand-region
-  :straight t
+  :ensure t
   :defer t
   :bind ("C-=" . er/expand-region))
 
@@ -2333,7 +2373,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;;ag
 
 (use-package ag
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -2343,12 +2383,12 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package rg
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
 
-** smart-hungry delete
+** COMMENT smart-hungry delete
 
 #+begin_src emacs-lisp
 
@@ -2357,7 +2397,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
               ("<backspace>" . smart-hungry-delete-backward-char)
               ("C-d" . smart-hungry-delete-forward-char))
   :defer t
-  :straight t
+  :ensure t
   :after init
   ;;  :config (smart-hungry-delete-add-default-hooks)
   )
@@ -2369,7 +2409,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package ws-butler
-  :straight t
+  :ensure t
   :defer t
   :hook (prog-mode . ws-butler-mode))
 
@@ -2382,7 +2422,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;;multiple-cursors
 
 (use-package multiple-cursors
-  :straight t
+  :ensure t
   :defer t
   :config (define-key mc/keymap (kbd "<return>") nil)
   :bind ;;("H-\\" . mc/mark-all-like-this)
@@ -2395,7 +2435,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package phi-search
-  :straight t
+  :ensure t
   :defer t
   :bind (:map mc/keymap
               ("C-s" . phi-search)
@@ -2408,19 +2448,19 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (use-package rainbow-delimiters
-  :straight t
+  :ensure t
   :defer t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 #+end_src
 
 ** modal editing modes
-*** objed
+*** COMMENT objed
 
 #+begin_src emacs-lisp
 
 (use-package objed
-  :straight t
+  :ensure t
   ;; :defer t
   :defer 0.5
   ;; :hook (after-init . objed-mode)
@@ -2557,12 +2597,12 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-*** COMMENT god-mode
+*** god-mode
 
 #+begin_src emacs-lisp
 
 (use-package god-mode
-  :straight t
+  :ensure t
   :defer t
   :bind
   ("M-o" . god-local-mode)
@@ -2581,7 +2621,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+begin_src emacs-lisp
 (use-package meow
-  :straight t
+  :ensure t
   :defer t)
 #+end_src
 
@@ -2591,7 +2631,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 (use-package kakoune
   ;; Having a non-chord way to escape is important, since key-chords don't work in macros
-  :straight t
+  :ensure t
   :bind ("C-z" . ryo-modal-mode)
   :hook (after-init . my/kakoune-setup)
   :config
@@ -2635,12 +2675,12 @@ With postitive prefix argument ARG move to the nth previous object."
 ;;restclient
 
 (use-package restclient
-  :straight t
+  :ensure t
   :defer t)
 
 
 ;; (use-package company-restclient
-;;   :straight t
+;;   :ensure t
 ;;   :after (restclient)
 ;;   :config
 ;;   (add-to-list 'company-backends 'company-restclient))
@@ -2652,7 +2692,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package highlight-indent-guides
-  :straight t
+  :ensure t
   :defer t
   :config
   (setq highlight-indent-guides-delay 0.1
@@ -2674,7 +2714,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package nov
-  :straight t
+  :ensure t
   :defer t
   :mode ("\\.epub\\'" . nov-mode))
 
@@ -2689,7 +2729,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package origami
-  :straight t
+  :ensure t
   :defer t
   :hook (prog-mode . origami-mode)
   )
@@ -2701,7 +2741,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package pomidor
-  :straight t
+  :ensure t
   :defer t
   :bind (("<S-f6>" . pomidor))
   :config (setq pomidor-sound-tick nil
@@ -2725,7 +2765,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package keyfreq
-  :straight t
+  :ensure t
   :defer t
   :after init
   :config (keyfreq-mode 1)
@@ -2733,14 +2773,14 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-** company
+** COMMENT company
 
 #+begin_src emacs-lisp
 
 ;;company
 
 (use-package company
-  :straight t
+  :ensure t
   :defer 0.8
   ;; :hook (prog-mode . global-company-mode)
   :bind
@@ -2752,14 +2792,14 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-** COMMENT corfu & cape & kind-icons
+** corfu & cape & kind-icons
 
 #+begin_src emacs-lisp
 ;; Enable Corfu completion UI
 ;; See the Corfu README for more configuration tips.
 (use-package corfu
   :defer 0.8
-  :straight t
+  :ensure t
   :bind
   (:map corfu-map
         ("TAB" . corfu-next)
@@ -2767,11 +2807,11 @@ With postitive prefix argument ARG move to the nth previous object."
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous))
   :init
-  (corfu-global-mode))
+  (global-corfu-mode))
 
 ;; Add extensions
 (use-package cape
-  :straight t
+  :ensure t
   ;; Bind dedicated completion commands
   :bind (("C-i" . completion-at-point) ;; capf
          ;; ("C-c p t" . complete-tag)        ;; etags
@@ -2797,7 +2837,7 @@ With postitive prefix argument ARG move to the nth previous object."
   )
 
 (use-package kind-icon
-  :straight t
+  :ensure t
   :after corfu
   :custom
   (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
@@ -2812,7 +2852,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 ;; Many major modes do no highlighting of number literals, so we do it for them
 (use-package highlight-numbers
-  :straight t
+  :ensure t
   :defer t
   :hook ((prog-mode conf-mode) . highlight-numbers-mode)
   :config (setq highlight-numbers-generic-regexp "\\_<[[:digit:]]+\\(?:\\.[0-9]*\\)?\\_>"))
@@ -2824,7 +2864,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package vterm
-  :straight t
+  :ensure t
   :defer t
   :when (bound-and-true-p module-file-suffix)
   :hook ((vterm-mode . (lambda () (global-hl-line-mode -1)))
@@ -2838,7 +2878,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 ;; (use-package vterm
 ;;   :commands (vterm)
-;;   :straight t
+;;   :ensure t
 ;;   :init
 ;;   (unless (file-exists-p (concat (file-name-directory (locate-library "vterm"))
 ;;                                  "vterm-module.so"))
@@ -2853,7 +2893,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package highlight-indent-guides
-  :straight t
+  :ensure t
   :defer t
   :config (setq highlight-indent-guides-responsive 'top)
   (setq highlight-indent-guides-delay 0.1)
@@ -2868,7 +2908,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 (use-package default-text-scale
   :defer 1
-  :straight t
+  :ensure t
   :config
   (default-text-scale-mode))
 
@@ -2879,7 +2919,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package minions
-  :straight t
+  :ensure t
   :defer 0.1
   :config
   (setq minions-mode-line-lighter "[+]")
@@ -2922,7 +2962,7 @@ With postitive prefix argument ARG move to the nth previous object."
 ;; projectile
 
 (use-package projectile
-  :straight t
+  :ensure t
   ;; :defer t
   :defer 0.3
   :after init ;; hydra
@@ -2942,7 +2982,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package ctrlf
-  :straight t
+  :ensure t
   :init (ctrlf-mode +1))
 
 #+end_src
@@ -2952,7 +2992,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package smartparens
-  :straight t
+  :ensure t
   :defer 0.6
   :config
   (require 'smartparens-config)
@@ -2965,7 +3005,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package isearch-mb
-  :straight t
+  :ensure t
   :defer 0.5
   :config (isearch-mb-mode))
 
@@ -2975,7 +3015,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+begin_src emacs-lisp
 (use-package elpher
-  :straight t
+  :ensure t
   :defer t)
 #+end_src
 
@@ -2985,7 +3025,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package speed-type
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -2995,7 +3035,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package typing
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3005,7 +3045,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package devdocs-browser
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3015,7 +3055,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package pdf-tools
-  :straight t
+  :ensure t
   :defer t
   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
   :if (display-graphic-p)
@@ -3037,7 +3077,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 (use-package scratch
   ;; :ensure t
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3048,97 +3088,97 @@ With postitive prefix argument ARG move to the nth previous object."
 
 ;;themes
 
-(use-package doom-themes
-  :straight t
-  :defer t)
+;; (use-package doom-themes
+;;   :ensure t
+;;   :defer t)
 
-(use-package nord-theme
-  :straight t
-  :defer t)
+;; (use-package nord-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package ample-theme
-  :straight t
-  :defer t)
+;; (use-package ample-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package dracula-theme
-  :straight t
-  :defer t)
+;; (use-package dracula-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package color-theme-sanityinc-tomorrow
-  :straight t
-  :defer t)
+;; (use-package color-theme-sanityinc-tomorrow
+;;   :ensure t
+;;   :defer t)
 
-(use-package color-theme-sanityinc-solarized
-  :straight t
-  :defer t)
+;; (use-package color-theme-sanityinc-solarized
+;;   :ensure t
+;;   :defer t)
 
-(use-package soothe-theme
-  :straight t
-  :defer t)
+;; (use-package soothe-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package seti-theme
-  :straight t
-  :defer t)
+;; (use-package seti-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package spacemacs-theme
-  :straight t
-  :defer t)
+;; (use-package spacemacs-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package solarized-theme
-  :straight t
-  :defer t)
+;; (use-package solarized-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package zenburn-theme
-  :straight t
-  :defer t)
+;; (use-package zenburn-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package cyberpunk-theme
-  :straight t
-  :defer t)
+;; (use-package cyberpunk-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package sublime-themes
-  :straight t
-  :defer t)
+;; (use-package sublime-themes
+;;   :ensure t
+;;   :defer t)
 
-(use-package flatland-theme
-  :straight t
-  :defer t)
+;; (use-package flatland-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package flatui-dark-theme
-  :straight t
-  :defer t)
+;; (use-package flatui-dark-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package blackboard-theme
-  :straight t
-  :defer t)
+;; (use-package blackboard-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package material-theme
-  :straight t
-  :defer t)
+;; (use-package material-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package moe-theme
-  :straight t
-  :defer t)
+;; (use-package moe-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package darktooth-theme
-  :straight t
-  :defer t)
+;; (use-package darktooth-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package danneskjold-theme
-  :straight t
-  :defer t)
+;; (use-package danneskjold-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package acme-theme
-  :straight t
-  :defer t)
+;; (use-package acme-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package modus-themes
-  :straight t
-  :defer t
-  )
+;; (use-package modus-themes
+;;   :ensure t
+;;   :defer t
+;;   )
 
 (use-package base16-theme
-  :straight t
+  :ensure t
   :defer t
   :config
   (setq base16-theme-256-color-source 'colors)
@@ -3147,22 +3187,22 @@ With postitive prefix argument ARG move to the nth previous object."
   ;; (setq base16-highlight-mode-line 'box)
   )
 
-(use-package gotham-theme
-  :straight t
-  :defer t
-  )
+;; (use-package gotham-theme
+;;   :ensure t
+;;   :defer t
+;;   )
 
-(use-package vscode-dark-plus-theme
-  :straight t
-  :defer t)
+;; (use-package vscode-dark-plus-theme
+;;   :ensure t
+;;   :defer t)
 
-(use-package kaolin-themes
-  :straight t
-  :defer t)
+;; (use-package kaolin-themes
+;;   :ensure t
+;;   :defer t)
 
-(use-package xresources-theme
-  :straight t
-  :defer t)
+;; (use-package xresources-theme
+;;   :ensure t
+;;   :defer t)
 
 #+end_src
 
@@ -3172,7 +3212,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package doom-modeline
-  :straight t
+  :ensure t
   :defer 0.1
   ;; :hook (after-init . doom-modeline-mode)
   :config
@@ -3326,7 +3366,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package smart-mode-line
-  :straight t
+  :ensure t
   :defer 0.1
   :config (sml/setup)
   (setq sml/theme 'respectful))
@@ -3338,7 +3378,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package spaceline
-  :straight t
+  :ensure t
   :defer 0.1
   :config
   (require 'spaceline-config)
@@ -3351,7 +3391,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+begin_src emacs-lisp
 (use-package mood-line
-  :straight t
+  :ensure t
   :defer 0.1
   :after minions
   :config
@@ -3367,7 +3407,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package telephone-line
-  :straight t
+  :ensure t
   :defer 0.1
   :config
   (telephone-line-defsegment telephone-line-minions-mode-segment ()
@@ -3412,7 +3452,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+begin_src emacs-lisp
 (use-package moody
-  :straight t
+  :ensure t
   :defer 0.1
   :config
   (setq x-underline-at-descent-line t)
@@ -3426,43 +3466,43 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package all-the-icons
-  :straight t
+  :ensure t
   :defer t
   ;; :init (unless (font-installed-p "all-the-icons")
   ;;       (all-the-icons-install-fonts t))
   )
 
 (use-package all-the-icons-completion
-  :straight t
+  :ensure t
   :defer 0.1
   :config (all-the-icons-completion-mode)
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
 
 (use-package all-the-icons-dired
-  :straight t
+  :ensure t
   :defer t
   :hook (dired-mode . all-the-icons-dired-mode))
 #+end_src
 
-** minibuffer completion frameworks
-*** selectrum, consult, marginelia, embark
+** COMMENT minibuffer completion frameworks
+*** COMMENT selectrum, consult, marginelia, embark
 
 #+begin_src emacs-lisp
 
 ;; (use-package orderless
-;;   :straight t
+;;   :ensure t
 ;;   :custom (completion-styles '(orderless))
 ;;   :config (setq-local orderless-matching-styles '(orderless-literal)
 ;;                       orderless-style-dispatchers nil))
 
 ;; (use-package selectrum
-;;   :straight t
+;;   :ensure t
 ;;   :config
 ;;   (selectrum-mode +1))
 
 
 (use-package consult
-  :straight t
+  :ensure t
   :defer 0.1
   ;; :after selectrum ;; projectile
   ;; :defines consult-buffer-sources
@@ -3484,7 +3524,7 @@ With postitive prefix argument ARG move to the nth previous object."
   :bind (("M-A" . marginalia-cycle)
          :map minibuffer-local-map
          ("M-A" . marginalia-cycle))
-  :straight t
+  :ensure t
   :defer 0.1
   :functions marginalia-mode
 
@@ -3505,7 +3545,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package lsp-mode
-  :straight t
+  :ensure t
   :defer 2
   ;; :init (setq lsp-keymap-prefix "γ l")
   :hook ((ruby-mode . lsp)
@@ -3545,7 +3585,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 ;; lsp-ui gives us the blue documentation boxes and the sidebar info
 (use-package lsp-ui
-  :straight t
+  :ensure t
   :hook (lsp-mode . lsp-ui-mode)
   :config
   (setq lsp-ui-doc-enable t
@@ -3567,7 +3607,7 @@ With postitive prefix argument ARG move to the nth previous object."
   )
 
 (use-package dap-mode
-  :straight t ;;:after lsp-mode
+  :ensure t ;;:after lsp-mode
   :defer t
   :hook (lsp-mode . dap-mode)
   :config
@@ -3583,8 +3623,8 @@ With postitive prefix argument ARG move to the nth previous object."
 
   )
 
-;; (use-package lsp-ivy :straight t :defer t :after lsp)
-;; (use-package lsp-treemacs :straight t :defer t :after lsp)
+;; (use-package lsp-ivy :ensure t :defer t :after lsp)
+;; (use-package lsp-treemacs :ensure t :defer t :after lsp)
 
 #+end_src
 
@@ -3594,7 +3634,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 (when (not (locate-library "eglot"))
   (use-package eglot
-	:straight t
+	:ensure t
 	:after company))
 
 #+end_src
@@ -3608,7 +3648,7 @@ With postitive prefix argument ARG move to the nth previous object."
 (use-package company-c-headers
   :after company
   :defer t
-  :straight t
+  :ensure t
   )
 
 #+end_src
@@ -3618,7 +3658,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package rust-mode
-  :straight t
+  :ensure t
   :defer t
   ;; :hook (rust-mode . racer-mode)
   ;;       (racer-mode . eldoc-mode)
@@ -3627,7 +3667,7 @@ With postitive prefix argument ARG move to the nth previous object."
   (setq rust-format-on-save t))
 
 (use-package cargo
-  :straight t
+  :ensure t
   :defer t
   ;; :after rust-mode
   :hook (rust-mode . cargo-minor-mode)
@@ -3643,12 +3683,12 @@ With postitive prefix argument ARG move to the nth previous object."
 ;;ruby
 
 (use-package inf-ruby
-  :straight t
+  :ensure t
   ;; :init  (setq inf-ruby-default-implementation "pry")
   :defer t)
 
 ;; (use-package seeing-is-believing
-;;   :straight t
+;;   :ensure t
 ;;   :defer t
 ;;   :hook ((ruby-mode . seeing-is-believing)
 ;;          (enh-ruby-mode . seeing-is-believing))
@@ -3667,7 +3707,7 @@ With postitive prefix argument ARG move to the nth previous object."
 ;;php
 
 (use-package php-mode
-  :straight t
+  :ensure t
   :defer t
   :mode "\\.php\\'"
   ;;:config (require 'php-extras)
@@ -3682,11 +3722,11 @@ With postitive prefix argument ARG move to the nth previous object."
 ;;lua
 
 (use-package lua-mode
-  :straight t
+  :ensure t
   :defer t)
 
 ;; (use-package company-lua
-;;   :straight t
+;;   :ensure t
 ;;   :defer t
 ;;   :after init company-mode
 ;;   :hook
@@ -3700,7 +3740,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 (use-package tuareg
   :mode ("\\.ml[ily]?$" . tuareg-mode)
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3710,7 +3750,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 (use-package crystal-mode
   :mode ("\\.cr$" . crystal-mode)
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3720,7 +3760,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package cider
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3730,7 +3770,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package zig-mode
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3740,7 +3780,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package d-mode
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3750,7 +3790,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package nim-mode
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3760,7 +3800,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package raku-mode
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3772,7 +3812,7 @@ With postitive prefix argument ARG move to the nth previous object."
 ;;csv
 
 (use-package csv-mode
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3784,13 +3824,13 @@ With postitive prefix argument ARG move to the nth previous object."
 ;;yaml,toml and json
 
 (use-package yaml-mode
-  :straight t
+  :ensure t
   :defer t)
 (use-package toml-mode
-  :straight t
+  :ensure t
   :defer t)
 ;; (use-package json-mode
-;;   :straight t
+;;   :ensure t
 ;;   :defer t)
 
 #+end_src
@@ -3800,7 +3840,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package rfc-mode
-  :straight t
+  :ensure t
   :defer t)
 
 #+end_src
@@ -3812,18 +3852,18 @@ With postitive prefix argument ARG move to the nth previous object."
 ;;go
 
 (use-package go-mode
-  :straight t
+  :ensure t
   :defer t)
 
 ;; (use-package company-go
-;;   :straight t
+;;   :ensure t
 ;;   :defer t
 ;;   :hook (go-mode . (lambda ()
 ;;                      (set (make-local-variable 'company-backends) '(company-go))
 ;;                      (company-mode))))
 
 ;; (use-package go-dlv
-;;   :straight t
+;;   :ensure t
 ;;   :defer t)
 
 #+end_src
@@ -3834,32 +3874,32 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package emmet-mode
-  :straight t
+  :ensure t
   :hook (sgml-mode css-mode web-mode))
 
 
-(use-package web-mode
-  :straight t
-  :defer t
-  :after init
-  :mode ("\\.html\\'"
-         "\\.css?\\'"
-         "\\.phtml\\'"
-         "\\.erb\\'"
-         "\\.html?\\'"
-         "\\.djhtml\\'"
-         "\\.jinja\\'"
-         )
-  :config
-  (setq web-mode-markup-indent-offset 2)
-                                        ;  (setq web-mode-engines-alist
-                                        ;        '(("django" . "focus/.*\\.html\\'")
-                                        ;          ("ctemplate" . "realtimecrm/.*\\.html\\'")))
-  (setq web-mode-enable-auto-pairing nil)
-  )
+;; (use-package web-mode
+;;   :ensure t
+;;   :defer t
+;;   :after init
+;;   :mode ("\\.html\\'"
+;;          "\\.css?\\'"
+;;          "\\.phtml\\'"
+;;          "\\.erb\\'"
+;;          "\\.html?\\'"
+;;          "\\.djhtml\\'"
+;;          "\\.jinja\\'"
+;;          )
+;;   :config
+;;   (setq web-mode-markup-indent-offset 2)
+;;                                         ;  (setq web-mode-engines-alist
+;;                                         ;        '(("django" . "focus/.*\\.html\\'")
+;;                                         ;          ("ctemplate" . "realtimecrm/.*\\.html\\'")))
+;;   (setq web-mode-enable-auto-pairing nil)
+;;   )
 
 ;; (use-package impatient-mode
-;;   :straight t
+;;   :ensure t
 ;;   :defer t
 ;;   :hook ((web-mode . impatient-mode)
 ;;          (sgml-mode . impatient-mode)))
@@ -3868,7 +3908,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 ;; (use-package company-web
 ;;   :defer t
-;;   :straight t
+;;   :ensure t
 ;;   ;; :hook (('web-mode . (lambda () (add-to-list 'company-backends 'company-web-html)))
 ;;   ;;     ('mhtml-mode . (lambda () (add-to-list 'company-backends 'company-web-html)))
 ;;   ;;     ('html-mode . (lambda () (add-to-list 'company-backends 'company-web-html))))
@@ -3882,13 +3922,13 @@ With postitive prefix argument ARG move to the nth previous object."
 ;;javascript
 
 ;; (use-package js2-mode
-;;   :straight t
+;;   :ensure t
 ;;   :defer t
 ;;   :mode "\\.js\\'"
 ;;   :interpreter "node")
 
 (use-package js2-mode
-  :straight t
+  :ensure t
   :interpreter (("node" . js2-mode))
   :mode "\\.\\(js\\|json\\)$"
   :config
@@ -3908,7 +3948,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 (use-package lsp-java
   :mode ("\\.java$")
-  :straight t
+  :ensure t
   :config
   ;; Enable dap-java
   (require 'dap-java)
@@ -3941,32 +3981,32 @@ With postitive prefix argument ARG move to the nth previous object."
   :defer t
   :after (lsp lsp-mode dap-mode))
 
-(use-package dap-java
-  :ensure nil
-  :defer t
-  :after (lsp-java)
+;; (use-package dap-java
+;;   :ensure nil
+;;   :defer t
+;;   :after (lsp-java)
 
-  ;; The :bind here makes use-package fail to lead the dap-java block!
-  ;; :bind
-  ;; (("C-c R" . dap-java-run-test-class)
-  ;;  ("C-c d" . dap-java-debug-test-method)
-  ;;  ("C-c r" . dap-java-run-test-method)
-  ;;  )
+;;   ;; The :bind here makes use-package fail to lead the dap-java block!
+;;   ;; :bind
+;;   ;; (("C-c R" . dap-java-run-test-class)
+;;   ;;  ("C-c d" . dap-java-debug-test-method)
+;;   ;;  ("C-c r" . dap-java-run-test-method)
+;;   ;;  )
 
-  :config
-  ;; (global-set-key (kbd "<f7>") 'dap-step-in)
-  ;; (global-set-key (kbd "<f8>") 'dap-next)
-  ;; (global-set-key (kbd "<f9>") 'dap-continue)
-  )
+;;   :config
+;;   ;; (global-set-key (kbd "<f7>") 'dap-step-in)
+;;   ;; (global-set-key (kbd "<f8>") 'dap-next)
+;;   ;; (global-set-key (kbd "<f9>") 'dap-continue)
+;;   )
 
 #+end_src
 
-*** tree-sitter
+*** COMMENT tree-sitter
 
 #+begin_src emacs-lisp
 
 (use-package tree-sitter
-  :straight t
+  :ensure t
   :defer 0.3
   :when (bound-and-true-p module-file-suffix)
   :hook ;; (prog-mode . tree-sitter-mode)
@@ -3990,11 +4030,50 @@ With postitive prefix argument ARG move to the nth previous object."
   )
 
 (use-package tree-sitter-langs
-  :straight t
+  :ensure t
   :defer t
   :when (bound-and-true-p module-file-suffix)
   :after tree-sitter
 )
+
+#+end_src
+
+*** tree-sitter native
+
+#+begin_src emacs-lisp
+
+(use-package treesit
+  :commands (treesit-install-language-grammar nf/treesit-install-all-languages)
+  :init
+  (setq treesit-language-source-alist
+   '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
+     (c . ("https://github.com/tree-sitter/tree-sitter-c"))
+     (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+     (css . ("https://github.com/tree-sitter/tree-sitter-css"))
+     (go . ("https://github.com/tree-sitter/tree-sitter-go"))
+     (html . ("https://github.com/tree-sitter/tree-sitter-html"))
+     (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
+     (json . ("https://github.com/tree-sitter/tree-sitter-json"))
+     (lua . ("https://github.com/Azganoth/tree-sitter-lua"))
+     (make . ("https://github.com/alemuller/tree-sitter-make"))
+     (ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml" "ocaml/src" "ocaml"))
+     (python . ("https://github.com/tree-sitter/tree-sitter-python"))
+     (php . ("https://github.com/tree-sitter/tree-sitter-php"))
+     (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "typescript/src" "typescript"))
+     (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby"))
+     (rust . ("https://github.com/tree-sitter/tree-sitter-rust"))
+     (sql . ("https://github.com/m-novikov/tree-sitter-sql"))
+     (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
+     (zig . ("https://github.com/GrayJack/tree-sitter-zig"))))
+  :config
+  (defun nf/treesit-install-all-languages ()
+    "Install all languages specified by `treesit-language-source-alist'."
+    (interactive)
+    (let ((languages (mapcar 'car treesit-language-source-alist)))
+      (dolist (lang languages)
+	      (treesit-install-language-grammar lang)
+	      (message "`%s' parser was installed." lang)
+	      (sit-for 0.75)))))
 
 #+end_src
 
@@ -4003,14 +4082,14 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
   ;; (use-package peep-dired
-  ;;   :straight t
+  ;;   :ensure t
   ;;   :defer t
   ;;   :after dired
   ;;   :bind (:map dired-mode-map
   ;;               ("E" . peep-dired)))
 
 (use-package dired-narrow
-  :straight t
+  :ensure t
   :defer t
   :after dired
   :bind (:map dired-mode-map
@@ -4022,7 +4101,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 (use-package dired-subtree
   :defer t
-  :straight t
+  :ensure t
   :after dired ;; treemacs-icons-dired
   :bind (:map dired-mode-map
               ("<tab>" . dired-subtree-toggle)
@@ -4031,7 +4110,7 @@ With postitive prefix argument ARG move to the nth previous object."
   )
 
 ;; (use-package dired-quick-sort
-;;   :straight t
+;;   :ensure t
 ;;   :defer t
 ;;   :hook (dired-mode)
 ;;   :config
@@ -4040,13 +4119,13 @@ With postitive prefix argument ARG move to the nth previous object."
 ;;   )
 
 (use-package diredfl
-  :straight t
+  :ensure t
   :defer t
   :hook
   (dired-mode . diredfl-mode))
 
 (use-package dired-rsync
-  :straight t
+  :ensure t
   :defer t
   :after dired
   :bind (:map dired-mode-map
@@ -4061,7 +4140,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 ;; org-bullets
 (use-package org-bullets
-  :straight t
+  :ensure t
   :defer t
   :hook (org-mode . org-bullets-mode))
 
@@ -4073,7 +4152,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 ;;ox-pandoc
 (use-package ox-pandoc
-  :straight t
+  :ensure t
   :defer t
   :hook (org-mode . (lambda () (when (executable-find "pandoc") (require 'ox-pandoc)))))
 
@@ -4084,7 +4163,7 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package htmlize
-  :straight t
+  :ensure t
   :defer t
   :hook (org))
 
@@ -4095,13 +4174,13 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (use-package hyperbole
-  :straight t
+  :ensure t
   :defer 1)
 
 #+end_src
 
 
-* start server
+* COMMENT start server
 
 #+begin_src emacs-lisp
 
