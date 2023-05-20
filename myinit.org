@@ -1086,8 +1086,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
         '(
           (space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
           (newline-mark 10 [182 10]) ; LINE FEED,
+		  ;; (newline-mark 10 [36 10]) ; LINE FEED,
           (tab-mark 9 [9655 9] [92 9]) ; tab
-          )))
+          ))
 
 ;; Don't enable whitespace for.
 (setq-default whitespace-global-modes
@@ -1101,9 +1102,10 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                     magit-diff-mode
                     ibuffer-mode
                     dired-mode
-                    occur-mode))
+                    occur-mode)))
 
-(global-whitespace-mode)
+(add-hook 'after-init-hook (global-whitespace-mode t))
+
 #+end_src
 
 *** outline
