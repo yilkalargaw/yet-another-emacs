@@ -26,6 +26,7 @@
     - [[#general-frame-and-window-settings][general frame and window settings]]
     - [[#minor-modes-menu-based-on-minions][minor-modes-menu-based-on-minions]]
     - [[#mode-line-modify][mode-line-modify]]
+  - [[#require-some-libraries][require some libraries]]
   - [[#basic-emacs-editor-preferences][basic emacs editor preferences]]
     - [[#set-load-path][set load path]]
     - [[#set-utf-8-as-default-coding-system][set utf-8 as default coding system]]
@@ -503,6 +504,17 @@
 #+end_src
 
 
+** require some libraries
+
+#+begin_src emacs-lisp
+
+(if EMACS26+ (require 'cl-lib)
+  (require 'cl))
+
+(require 'color)
+
+#+end_src
+
 ** basic emacs editor preferences
 *** set load path
 
@@ -799,32 +811,31 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-(defadvice load-theme (after custom-faces-after-load-theme())
-  "Insert an empty line when moving up from the top line."
-  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-    (when (file-exists-p dafile) (load-file dafile))
-    ;; (save-excursion
-    ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-    ))
+(add-hook 'after-init-time-hook
+		  (progn
+			(defadvice load-theme (after custom-faces-after-load-theme())
+			  "Insert an empty line when moving up from the top line."
+			  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+				(when (file-exists-p dafile) (load-file dafile))
+				;; (save-excursion
+				;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+				))
 
 
-(ad-activate 'load-theme)
+			(ad-activate 'load-theme)
 
-(defadvice disable-theme (after custom-faces-after-disable-theme())
-  "Insert an empty line when moving up from the top line."
-  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-    (when (file-exists-p dafile) (load-file dafile))
-    ;; (save-excursion
-    ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-    ))
+			(defadvice disable-theme (after custom-faces-after-disable-theme())
+			  "Insert an empty line when moving up from the top line."
+			  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+				(when (file-exists-p dafile) (load-file dafile))
+				;; (save-excursion
+				;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+				))
+			(ad-activate 'disable-theme)))
 
-
-(ad-activate 'disable-theme)
-
-
-(let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-  (when (file-exists-p dafile) (load-file dafile)))
-
+(add-hook 'after-init-time-hook
+		  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+			(when (file-exists-p dafile) (load-file dafile))))
 
 #+end_src
 
