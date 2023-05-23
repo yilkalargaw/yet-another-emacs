@@ -377,6 +377,10 @@ float between 0 and 1)"
    `(diredfl-tagged-autofile-name   ((t (:background nil :foreground ,(face-foreground 'region)))))
    `(diredfl-write-priv             ((t (:background nil :foreground ,(face-foreground 'font-lock-variable-name-face)))))
 
+   `(highlight-indent-guides-odd-face       ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'region)))))
+   `(highlight-indent-guides-even-face      ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)))))
+   `(highlight-indent-guides-character-face ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)))))
+
    ))
 
 (setq warning-minimum-level :warning)

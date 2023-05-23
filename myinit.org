@@ -84,7 +84,6 @@
     - [[#magit--forge][magit & forge]]
     - [[#monky][monky]]
   - [[#yasnippet][yasnippet]]
-  - [[#which-key][which-key]]
   - [[#avy][avy]]
   - [[#ace-link][ace-link]]
   - [[#ace-window][ace-window]]
@@ -1097,6 +1096,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
         ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
         '(
           (space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
+		  ;; (space-mark 32 [168] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
           (newline-mark 10 [182 10]) ; LINE FEED,
 		  ;; (newline-mark 10 [36 10]) ; LINE FEED,
           (tab-mark 9 [9655 9] [92 9]) ; tab
@@ -1114,7 +1114,10 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                     magit-diff-mode
                     ibuffer-mode
                     dired-mode
-                    occur-mode)))
+                    occur-mode
+					org-mode
+					pdf-view-mode
+					nov-mode)))
 
 (add-hook 'after-init-hook (global-whitespace-mode t))
 
@@ -2287,7 +2290,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 #+end_src
 
-** which-key
+p** which-key
 
 #+begin_src emacs-lisp
 
@@ -2701,28 +2704,6 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-** COMMENT highlight-indent-guides
-
-#+begin_src emacs-lisp
-
-(use-package highlight-indent-guides
-  :ensure t
-  :defer t
-  :config
-  (setq highlight-indent-guides-delay 0.1
-		highlight-indent-guides-auto-odd-face-perc 20
-		highlight-indent-guides-auto-even-face-perc 30
-		highlight-indent-guides-auto-character-face-perc 40
-		highlight-indent-guides-auto-stack-odd-face-perc 20
-		highlight-indent-guides-auto-stack-even-face-perc 30
-		highlight-indent-guides-auto-top-odd-face-perc 50
-		highlight-indent-guides-auto-top-even-face-perc 60
-		highlight-indent-guides-responsive 'stack
-		highlight-indent-guides-method 'column)
-  )
-
-#+end_src
-
 ** nov.el
 
 #+begin_src emacs-lisp
@@ -2911,8 +2892,45 @@ With postitive prefix argument ARG move to the nth previous object."
   :defer t
   :config (setq highlight-indent-guides-responsive 'top)
   (setq highlight-indent-guides-delay 0.1)
-  (setq highlight-indent-guides-method 'column)
+  (setq highlight-indent-guides-method 'character)
+  (setq highlight-indent-guides-auto-enabled nil)
   )
+
+;; (use-package highlight-indent-guides
+;;   :ensure t
+;;   :defer t
+;;   :config
+;;   ;; (setq highlight-indent-guides-delay 0.1
+;;   ;; 		highlight-indent-guides-auto-odd-face-perc 20
+;;   ;; 		highlight-indent-guides-auto-even-face-perc 30
+;;   ;; 		highlight-indent-guides-auto-character-face-perc 40
+;;   ;; 		highlight-indent-guides-auto-stack-odd-face-perc 20
+;;   ;; 		highlight-indent-guides-auto-stack-even-face-perc 30
+;;   ;; 		highlight-indent-guides-auto-top-odd-face-perc 50
+;;   ;; 		highlight-indent-guides-auto-top-even-face-perc 60
+;;   ;; 		highlight-indent-guides-responsive 'stack
+;;   ;; 		highlight-indent-guides-method 'column)
+
+;;   ;; (setq highlight-indent-guides-responsive 'stack
+;;   ;; 		highlight-indent-guides-method 'character
+;;   ;; 		;; highlight-indent-guides-character ?|
+;;   ;; 		;;colors
+;;   ;; 		highlight-indent-guides-auto-odd-face-perc 15
+;;   ;; 		highlight-indent-guides-auto-even-face-perc 15
+;;   ;; 		highlight-indent-guides-auto-character-face-perc 20)
+
+;;   ;; (setq highlight-indent-guides-auto-enabled nil)
+
+;;   ;; (set-face-background 'highlight-indent-guides-odd-face "color")
+;;   ;; (set-face-background 'highlight-indent-guides-even-face "color")
+;;   ;; (set-face-foreground 'highlight-indent-guides-character-face "color")
+
+
+;;   )
+
+#+end_src
+
+
 
 #+end_src
 
@@ -3076,12 +3094,10 @@ With postitive prefix argument ARG move to the nth previous object."
   :config
   ;; (pdf-tools-install :no-query)
   (pdf-loader-install)
+  (pdf-view-themed-minor-mode 1)
   (require 'pdf-occur)
   :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1)))
-  (pdf-view-mode . (lambda () (setq pdf-view-midnight-colors `(,(face-foreground 'default) . ,(face-background 'default)))
-                     (pdf-view-midnight-minor-mode 1)))
-
-  )
+		(pdf-view-mode . (lambda () (pdf-view-themed-minor-mode 1))))
 
 #+end_src
 
@@ -4258,10 +4274,10 @@ With postitive prefix argument ARG move to the nth previous object."
 * load custom faces
 
 #+begin_src emacs-lisp
-
-(let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-               (when (file-exists-p dafile) (load-file dafile)))
-
+(add-hook 'after-init-hook
+		  (lambda ()
+			(let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+			  (when (file-exists-p dafile) (load-file dafile)))))
 #+end_src
 
 
