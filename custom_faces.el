@@ -384,7 +384,7 @@ float between 0 and 1)"
 
    ;; 	;;;;; display-line-number-mode
    ;; `(line-number ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)))))
-   ;; `(line-number-current-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)))))
+   ;; `(line-number-current-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face) :weight extra-bold ))))
    ;;  ;; `(line-number ((t (:inherit linum :weight thin :inherit line-number :weight thin :underline nil :height 0.8 :italic t))))
    ;;  ;;;;; linum-mode
    ;; `(linum ((t (:inherit line-number :weight thin :height 0.8 :underline nil :font ,(face-font 'highlight) :italic t))))
