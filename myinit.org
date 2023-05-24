@@ -2890,6 +2890,7 @@ With postitive prefix argument ARG move to the nth previous object."
 (use-package highlight-indent-guides
   :ensure t
   :defer t
+  :bind ("<f8>" . highlight-indent-guides-mode)
   :config (setq highlight-indent-guides-responsive 'top)
   (setq highlight-indent-guides-delay 0.1)
   (setq highlight-indent-guides-method 'character)
