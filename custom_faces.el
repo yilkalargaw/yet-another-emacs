@@ -1,3 +1,12 @@
+;;; custom-faces.el --- contains custom faces I set to have more uniform themes.
+
+;;; Commentary:
+
+
+;;; Usage:
+
+;;; Code:
+
 ;; (setq warning-minimum-level :emergency)
 
 ;; (defcustom modified-org-beautify-theme-use-box-hack 't
@@ -186,16 +195,6 @@ float between 0 and 1)"
    ;; `(tab-bar-tab-inactive ((t (:inherit tab-bar-tab :background "gray5"))))
 
 
-   ;;    ;;;;; display-line-number-mode
-   ;; `(line-number ((t (:inherit linum :weight thin :inherit line-number :weight thin :underline nil :height 0.8 :italic t))))
-   ;;    ;;;;; linum-mode
-   ;; `(linum ((t (:inherit linum :weight thin :height 0.8 :underline nil :font ,(face-font 'default) :italic t))))
-   ;; `(linum-relative-current-face ((t (:inherit linum :height 1.0 :weight extra-bold :italic nil))))
-   ;; `(line-number-current-line ((t (:inherit line-number  :height 1.0 :weight extra-bold :italic nil))))
-
-   ;; ;; ;;;;; linum-relative
-   ;; ;; `(linum-relative-current-face ((,class (:foreground ,comp))))
-
    ;;;;; modeline
    `(mode-line ((t (:inherit variable-pitch
                              ;; :background ,(face-background 'default)
@@ -381,6 +380,19 @@ float between 0 and 1)"
    `(highlight-indent-guides-even-face      ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)))))
    `(highlight-indent-guides-character-face ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)))))
 
+   `(fringe ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)))))
+
+   ;; 	;;;;; display-line-number-mode
+   ;; `(line-number ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)))))
+   ;; `(line-number-current-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)))))
+   ;;  ;; `(line-number ((t (:inherit linum :weight thin :inherit line-number :weight thin :underline nil :height 0.8 :italic t))))
+   ;;  ;;;;; linum-mode
+   ;; `(linum ((t (:inherit line-number :weight thin :height 0.8 :underline nil :font ,(face-font 'highlight) :italic t))))
+   ;; `(linum-relative-current-face ((t (:inherit line-number :height 1.0 :weight extra-bold :italic nil))))
+
    ))
 
 (setq warning-minimum-level :warning)
+
+(provide 'custom-faces)
+;;; custom_faces.el ends here
