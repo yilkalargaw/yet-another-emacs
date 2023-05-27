@@ -84,6 +84,7 @@
     - [[#magit--forge][magit & forge]]
     - [[#monky][monky]]
   - [[#yasnippet][yasnippet]]
+  - [[#which-key][which-key]]
   - [[#avy][avy]]
   - [[#ace-link][ace-link]]
   - [[#ace-window][ace-window]]
@@ -2290,7 +2291,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 #+end_src
 
-p** which-key
+** which-key
 
 #+begin_src emacs-lisp
 
