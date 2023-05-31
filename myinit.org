@@ -950,7 +950,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (when (not EMACS26+) (ido-mode))
 (when EMACS26+ (icomplete-mode))
 (when EMACS27+ (fido-mode))
-(when EMACS27+ (fido-vertical-mode))
+(when EMACS28+ (fido-vertical-mode))
 
 #+end_src
 
