@@ -3,10 +3,8 @@
 #+OPTIONS: toc:3          (only include two levels in TOC)
 # #+HTML_HEAD:  <link rel="stylesheet" type="text/css" href="http://a-dma.github.io/gruvbox-css/gruvbox-dark-medium.min.css" />
 #+INFOJS_OPT: view:overview toc:3 ltoc:3 mouse:underline buttons:0 path:https://orgmode.org/worg/code/org-info-js/org-info-src.js
-#+PROPERTY: header-args:emacs-lisp    :tangle "init.el"
 #+OPTIONS: ^:nil
 #+OPTIONS: _:nil
-#+auto_tangle: t
 
 * table of contents                                          :noexport:TOC_3:
 - [[#starting-headers][starting headers]]
