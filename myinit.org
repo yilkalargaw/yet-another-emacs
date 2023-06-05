@@ -1,4 +1,3 @@
-
 #+TITLE: Init File
 #+AUTHOR: Yilkal Argaw , StackOverflow, Github, Emacs-wiki and The Internet in General
 #+OPTIONS: toc:3          (only include two levels in TOC)
@@ -233,7 +232,7 @@
 
 (defmacro yae-gen-ver-consts (var)
   (list 'defconst
-		(intern (string-join (list "EMACS" (int-to-string var) "+" )))
+		(intern (concat "EMACS" (int-to-string var) "+"))
 		(> emacs-major-version (- var 1))))
 
 ;;evaluate the macro for the number range we want
@@ -917,7 +916,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ;; Better support for files with long lines
 (setq-default bidi-paragraph-direction 'left-to-right)
 (setq-default bidi-inhibit-bpa t)
-(global-so-long-mode 1)
+(when EMACS27+
+  (global-so-long-mode 1))
 
 #+end_src
 
@@ -4391,10 +4391,18 @@ With postitive prefix argument ARG move to the nth previous object."
 * load custom faces
 
 #+begin_src emacs-lisp
+
 (add-hook 'after-init-hook
 		  (lambda ()
 			(let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
 			  (when (file-exists-p dafile) (load-file dafile)))))
+
+(when EMACS27+
+  (add-hook 'server-after-make-frame-hook
+			(lambda ()
+			  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+				(when (file-exists-p dafile) (load-file dafile))))))
+
 #+end_src
 
 

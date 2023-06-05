@@ -443,8 +443,8 @@ between 0 and 1)."
 
 	 `(mode-line-inactive ((t (:inherit variable-pitch
 										:background ,(if (dark-p bg-color)
-														 (doomish-lighten bg-color 0.05)
-													   (doomish-darken bg-color 0.05))
+														 (doomish-lighten bg-color 0.07)
+													   (doomish-darken bg-color 0.07))
 										;; :background nil
 										:foreground ,(face-foreground 'font-lock-comment-face)
 										;; :box (:color ,(face-background 'font-lock-comment-face) :line-width 1)
