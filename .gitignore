@@ -95,7 +95,6 @@ irony/
 emojis/
 /nov-places
 /forge-database.sqlite
-/init.el
 /amx-items
 /tutorial/
 /straight/
@@ -113,7 +112,6 @@ irony/
 emojis/
 nov-places
 forge-database.sqlite
-init.el
 amx-items
 tutorial/
 straight/
