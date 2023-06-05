@@ -17,6 +17,10 @@
 
 
 (require 'color)
+(require 'faces)
+(defun my-format-color (color)
+  "Change color.el name format COLOR to six digit hex."
+  (concat "#" (substring color 1 3) (substring color 5 7) (substring color 9 11)))
 
 (let* (;; (base-font-color (face-foreground 'default  nil 'default))
        ;; (background-color (face-background 'default nil 'default))
@@ -24,10 +28,9 @@
        ;; ;; (primary-color (face-foreground 'mode-line nil))
        ;; (secondary-color (face-background 'secondary-selection nil 'region))
        ;; (org-highlights `(:foreground ,base-font-color :background ,secondary-color))
-
+	   (bg-color (unless (string-equal (face-background 'default) "unspecified-bg") (apply 'color-rgb-to-hex (append (color-name-to-rgb (face-background 'default)) '(2)))))
+	   (fg-color (unless (string-equal (face-background 'default) "unspecified-bg") (apply 'color-rgb-to-hex (append (color-name-to-rgb (face-background 'default)) '(2)))))
        )
-(defun my-format-color (color)
-  (concat "#" (substring color 1 3) (substring color 5 7) (substring color 9 11)))
 
 ;; (defun light-p (color)
 ;;   "Return t if COLOR is light."
@@ -44,18 +47,32 @@
 ;;           (* 0.114 (nth 2 rgb)))
 ;;        (/ 255.0 2))))
 
-  (defun light-p (color)
-	"Checks if the color is light.
-   color  The color to check.
-   Returns non-nil if the color is light, nil if it is dark."
-	(let* ((hsl (apply #'color-rgb-to-hsl
-					   (color-name-to-rgb color)))
+;;   (defun light-p (color)
+;; 	"Checks if the color is light.
+;;    color  The color to check.
+;;    Returns non-nil if the color is light, nil if it is dark."
+;; 	(let* ((hsl (apply #'color-rgb-to-hsl
+;; 					   (color-name-to-rgb color)))
+;;            (lightness (* (nth 2 hsl) 100)))
+;;       (>= lightness 50)))
+
+;; (defun dark-p (color)
+;;   "Return t if COLOR is dark."
+;;   (not (light-p color)))
+
+(defun light-p (color)
+  "Check if the COLOR is on the lighter side.  The color to check.
+Returns non-nil if the color is light, nil if it is dark."
+  (when color
+    (let* ((hsl (apply #'color-rgb-to-hsl
+                       (color-name-to-rgb color)))
            (lightness (* (nth 2 hsl) 100)))
-      (>= lightness 50)))
+      (>= lightness 50))))
 
 (defun dark-p (color)
   "Return t if COLOR is dark."
-  (not (light-p color)))
+  (when color
+    (not (light-p color))))
 
 ;; (defun light-p (color)
 ;;   "Checks if the color is light.
@@ -126,26 +143,39 @@
 ;; 				(t color)))))))
 
 
-(defun yae-lighten-or-darken-color (color percent)
-  "Lighten or darken COLOR by PERCENT."
-  (let* ((color-str (if (string-prefix-p "#" color)
-                        color
-                      (substring color 2)))
-         (color-rgb (color-name-to-rgb color-str))
-         (r (car color-rgb))
-         (g (cadr color-rgb))
-         (b (caddr color-rgb))
-         (new-r (+ r (* (/ percent 100.0) (- 255 r))))
-         (new-g (+ g (* (/ percent 100.0) (- 255 g))))
-         (new-b (+ b (* (/ percent 100.0) (- 255 b)))))
-    (if (= (length color-str) 6)
-        (apply 'color-rgb-to-hex `(,new-r ,new-g ,new-b))
-      (if (= (length color-str) 3)
-          (substring color-str 1)
-        (concat "#" (format "%02x" new-r) (format "%02x" new-g) (format "%02x" new-b))))))
+;; (defun yae-lighten-or-darken-color (color percent)
+;;   "Lighten or darken COLOR by PERCENT."
+;;   (let* ((color-str (if (string-prefix-p "#" color)
+;;                         color
+;;                       (substring color 2)))
+;;          (color-rgb (color-name-to-rgb color-str))
+;;          (r (car color-rgb))
+;;          (g (cadr color-rgb))
+;;          (b (caddr color-rgb))
+;;          (new-r (+ r (* (/ percent 100.0) (- 255 r))))
+;;          (new-g (+ g (* (/ percent 100.0) (- 255 g))))
+;;          (new-b (+ b (* (/ percent 100.0) (- 255 b)))))
+;;     (if (= (length color-str) 6)
+;;         (apply 'color-rgb-to-hex `(,new-r ,new-g ,new-b))
+;;       (if (= (length color-str) 3)
+;;           (substring color-str 1)
+;;         (concat "#" (format "%02x" new-r) (format "%02x" new-g) (format "%02x" new-b))))))
+
+;; (defun yae-lighten-or-darken-color (color percent)
+;;   "Lighten or darken COLOR by PERCENT."
+;;   (let* ((color-str (if (string-prefix-p "#" color)
+;;                         color
+;;                       (substring color 2)))
+;;          (color-rgb (color-name-to-rgb color-str))
+;;          (r (car color-rgb))
+;;          (g (cadr color-rgb))
+;;          (b (caddr color-rgb))
+;;          (new-r (+ r (* (/ percent 100.0) (- 255 r))))
+;;          (new-g (+ g (* (/ percent 100.0) (- 255 g))))
+;;          (new-b (+ b (* (/ percent 100.0) (- 255 b)))))
+;;         (apply 'color-rgb-to-hex `(,new-r ,new-g ,new-b))))
 
 
- 
   (defun doomish-name-to-rgb (color)
     "Retrieves the hexidecimal string repesented the named COLOR (e.g. \"red\")
 for FRAME (defaults to the current frame)."
@@ -307,7 +337,8 @@ between 0 and 1)."
    ;; '(mode-line ((t (:background "#002b36"  :foreground "white" :box "dark cyan"))))
    ;; '(mode-line-inactive ((t (:background "#002b36" :foreground "white" :box nil))))
 
-   ;; `(highlight ((t (:box (:line-width 1 :color ,(face-foreground 'default )))))) ;; font-lock-comment-face
+   ;; `(highlight ((t (:background ,(doomish-blend (face-background 'default) (face-background 'region) 0.1) ;; :box (:line-width 1 :color ,(face-foreground 'default ))
+   ;; 								)))) ;; font-lock-comment-face
 
 
    ;; `(hl-line ((t (:inherit 'nil
@@ -398,8 +429,6 @@ between 0 and 1)."
    ;;                                     :bold t :height 1.0
    ;;                                     :distant-foreground ,(face-background 'region)))))
 
-   (let ((bg-color (my-format-color (apply 'color-rgb-to-hex (color-name-to-rgb (face-background 'default)))))
-		 (fg-color (my-format-color (apply 'color-rgb-to-hex (color-name-to-rgb (face-foreground 'default))))))
 	 `(mode-line ((t (:inherit variable-pitch
 							   :background ,(if (dark-p bg-color)
 												(doomish-lighten bg-color 0.15)
@@ -410,10 +439,8 @@ between 0 and 1)."
 							   :box nil
 							   ;; :underline nil :overline nil :height 1.0
 							   :bold t
-							   )))))
+							   ))))
 
-   (let ((bg-color (my-format-color (apply 'color-rgb-to-hex (color-name-to-rgb (face-background 'default)))))
-		 (fg-color (my-format-color (apply 'color-rgb-to-hex (color-name-to-rgb (face-foreground 'default))))))
 	 `(mode-line-inactive ((t (:inherit variable-pitch
 										:background ,(if (dark-p bg-color)
 														 (doomish-lighten bg-color 0.05)
@@ -424,7 +451,7 @@ between 0 and 1)."
 										:box nil
 										;; :height 1.0
 										:italic t
-										)))))
+										))))
  
 
    ;; ;;;;; modeline
