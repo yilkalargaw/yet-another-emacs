@@ -15,6 +15,9 @@
 ;;   really bad under some circumstances."
 ;;   :type 'boolean)
 
+
+(require 'color)
+
 (let* (;; (base-font-color (face-foreground 'default  nil 'default))
        ;; (background-color (face-background 'default nil 'default))
        ;; (headline `(:inherit default :foreground ,base-font-color))
@@ -23,7 +26,126 @@
        ;; (org-highlights `(:foreground ,base-font-color :background ,secondary-color))
 
        )
+(defun my-format-color (color)
+  (concat "#" (substring color 1 3) (substring color 5 7) (substring color 9 11)))
 
+;; (defun light-p (color)
+;;   "Return t if COLOR is light."
+;;   (>= (/ (- (apply #'max color)
+;;              (apply #'min color))
+;;           (apply #'max color))
+;;       0.5))
+
+;; (defun light-p (color)
+;;   "Return t if COLOR is light, nil otherwise."
+;;   (let ((rgb (color-values color)))
+;;     (> (+ (* 0.299 (nth 0 rgb))
+;;           (* 0.587 (nth 1 rgb))
+;;           (* 0.114 (nth 2 rgb)))
+;;        (/ 255.0 2))))
+
+  (defun light-p (color)
+	"Checks if the color is light.
+   color  The color to check.
+   Returns non-nil if the color is light, nil if it is dark."
+	(let* ((hsl (apply #'color-rgb-to-hsl
+					   (color-name-to-rgb color)))
+           (lightness (* (nth 2 hsl) 100)))
+      (>= lightness 50)))
+
+(defun dark-p (color)
+  "Return t if COLOR is dark."
+  (not (light-p color)))
+
+;; (defun light-p (color)
+;;   "Checks if the color is light.
+;;    color  The color to check.
+;;    Returns non-nil if the color is light, nil if it is dark."
+;;   (let ((components (color-name-to-rgb color)))
+;;     (>= (/ (- (apply #'max components) (apply #'min components)) (apply #'max components)) 0.5)))
+
+;; (defun dark-p (color)
+;;   "Checks if the color is dark.
+;;    color  The color to check.
+;;    Returns non-nil if the color is light, nil if it is dark."
+;;   (not light-p))
+
+
+;; (defun yae-lighten-or-darken-color (color percent)
+;;   "Lighten or darken COLOR by PERCENT."
+;;   (let* ((color-rgb (color-name-to-rgb color))
+;;          (r (car color-rgb))
+;;          (g (cadr color-rgb))
+;;          (b (caddr color-rgb))
+;;          (new-r (+ r (* (/ percent 100.0) (- 255 r))))
+;;          (new-g (+ g (* (/ percent 100.0) (- 255 g))))
+;;          (new-b (+ b (* (/ percent 100.0) (- 255 b)))))
+;;     (apply 'color-rgb-to-hex `(,new-r ,new-g ,new-b))))
+
+;; (defun yae-lighten-or-darken-color (color percent)
+;;   "Lighten or darken COLOR by PERCENT."
+;;   (let* ((color-str (if (string-prefix-p "#" color)
+;;                         color
+;;                       (substring color 2)))
+;;          (color-rgb (color-name-to-rgb color-str))
+;;          (r (car color-rgb))
+;;          (g (cadr color-rgb))
+;;          (b (caddr color-rgb))
+;;          (new-r (+ r (* (/ percent 100.0) (- 255 r))))
+;;          (new-g (+ g (* (/ percent 100.0) (- 255 g))))
+;;          (new-b (+ b (* (/ percent 100.0) (- 255 b)))))
+;;     (if (= (length color-str) 6)
+;;         (apply 'color-rgb-to-hex `(,new-r ,new-g ,new-b))
+;;       (if (= (length color-str) 3)
+;;           (substring color-str 1)
+;;         (concat "#" (format "%02x" new-r) (format "%02x" new-g) (format "%02x" new-b))))))
+
+;; (defun yae-lighten-or-darken-color (color percent)
+;;   "Lighten or darken COLOR by PERCENT.
+;; If the color is light and the percent is small, do not darken it to black."
+;;   (let* ((color-str (if (string-prefix-p "#" color)
+;; 						color
+;; 					  (substring color 2)))
+;; 		 (color-rgb (color-name-to-rgb color-str))
+;; 		 (r (car color-rgb))
+;; 		 (g (cadr color-rgb))
+;; 		 (b (caddr color-rgb))
+;; 		 (new-r (+ r (* (/ percent 100.0) (- 255 r))))
+;; 		 (new-g (+ g (* (/ percent 100.0) (- 255 g))))
+;; 		 (new-b (+ b (* (/ percent 100.0) (- 255 b)))))
+;; 	(if (= (length color-str) 6)
+;; 		(apply 'color-rgb-to-hex `(,new-r ,new-g ,new-b))
+;; 	  (if (= (length color-str) 3)
+;; 		  (substring color-str 1)
+;; 		(let ((min-r 128)
+;; 			  (min-g 128)
+;; 			  (min-b 128))
+;; 		  (cond ((>= r min-r) (concat "#" (format "%02x" new-r) (format "%02x" new-g) (format "%02x" new-b)))
+;; 				((>= g min-g) (concat "#" (format "%02x" r) (format "%02x" new-g) (format "%02x" new-b)))
+;; 				((>= b min-b) (concat "#" (format "%02x" r) (format "%02x" g) (format "%02x" new-b)))
+;; 				(t color)))))))
+
+
+(defun yae-lighten-or-darken-color (color percent)
+  "Lighten or darken COLOR by PERCENT."
+  (let* ((color-str (if (string-prefix-p "#" color)
+                        color
+                      (substring color 2)))
+         (color-rgb (color-name-to-rgb color-str))
+         (r (car color-rgb))
+         (g (cadr color-rgb))
+         (b (caddr color-rgb))
+         (new-r (+ r (* (/ percent 100.0) (- 255 r))))
+         (new-g (+ g (* (/ percent 100.0) (- 255 g))))
+         (new-b (+ b (* (/ percent 100.0) (- 255 b)))))
+    (if (= (length color-str) 6)
+        (apply 'color-rgb-to-hex `(,new-r ,new-g ,new-b))
+      (if (= (length color-str) 3)
+          (substring color-str 1)
+        (concat "#" (format "%02x" new-r) (format "%02x" new-g) (format "%02x" new-b))))))
+
+
+ 
   (defun doomish-name-to-rgb (color)
     "Retrieves the hexidecimal string repesented the named COLOR (e.g. \"red\")
 for FRAME (defaults to the current frame)."
@@ -32,17 +154,31 @@ for FRAME (defaults to the current frame)."
              collect (/ x div)))
 
 
+  (defun doom-color (name &optional type)
+	"Retrieve a specific color named NAME (a symbol) from the current theme."
+	(let ((colors (when (listp name)
+                      name
+					;; (cdr-safe (assq name doom-themes--colors))
+					)))
+      (and colors
+           (cond ((listp colors)
+                  (let ((i (or (plist-get '(256 1 16 2 8 3) type) 0)))
+					(if (> i (1- (length colors)))
+						(car (last colors))
+                      (nth i colors))))
+				 (t colors)))))
+  
   (defun doomish-blend (color1 color2 alpha)
     "Blend two colors (hexidecimal strings) together by a coefficient ALPHA (a
 float between 0 and 1)"
     (when (and color1 color2)
       (cond ((and color1 color2 (symbolp color1) (symbolp color2))
-             (doom-blend (doom-color color1) (doom-color color2) alpha))
+             (doomish-blend (doom-color color1) (doom-color color2) alpha))
 
             ((or (listp color1) (listp color2))
              (cl-loop for x in color1
                       when (if (listp color2) (pop color2) color2)
-                      collect (doom-blend x it alpha)))
+                      collect (doomish-blend x it alpha)))
 
             ((and (string-prefix-p "#" color1) (string-prefix-p "#" color2))
              (apply (lambda (r g b) (format "#%02x%02x%02x" (* r 255) (* g 255) (* b 255)))
@@ -51,6 +187,37 @@ float between 0 and 1)"
                              collect (+ (* alpha it) (* other (- 1 alpha))))))
 
             (color1))))
+
+  (defun doomish-darken (color alpha)
+	"Darken a COLOR (a hexidecimal string) by a coefficient ALPHA (a float between
+0 and 1)."
+	(cond ((and color (symbolp color))
+           (doomish-darken (doom-color color) alpha))
+
+          ((listp color)
+           (cl-loop for c in color collect (doomish-darken c alpha)))
+
+          ((doomish-blend color "#000000" (- 1 alpha)))))
+
+  (defun doomish-lighten (color alpha)
+	"Brighten a COLOR (a hexidecimal string) by a coefficient ALPHA (a float
+between 0 and 1)."
+	(cond ((and color (symbolp color))
+           (doomish-lighten (doom-color color) alpha))
+
+          ((listp color)
+           (cl-loop for c in color collect (doomish-lighten c alpha)))
+
+          ((doomish-blend color "#FFFFFF" (- 1 alpha)))))
+
+  ;; (unless (facep 'mode-line)
+  ;; 	(defface mode-line '((t (:inherit variable-pitch
+  ;; 									  :background ,(if (dark-p (color-name-to-rgb (face-background 'default)))
+  ;; 													   (color-lighten-name (face-background 'default) 40)
+  ;; 													 (color-darken-name (face-background 'default) 40)))))
+  ;; 	  "Face used for the mode line." :group 'basic-faces))
+
+
 
 
   (custom-set-faces
@@ -194,27 +361,97 @@ float between 0 and 1)"
    ;; `(tab-bar-tab ((t (:inherit tab-bar :box nil))))
    ;; `(tab-bar-tab-inactive ((t (:inherit tab-bar-tab :background "gray5"))))
 
+   ;; ;;;;; modeline
 
-   ;;;;; modeline
-   `(mode-line ((t (:inherit variable-pitch
-                             ;; :background ,(face-background 'default)
-                             :background nil
-                             :foreground ,(face-foreground 'default)
-                             :box (:color ,(face-foreground 'default) :line-width 1) :underline nil :overline nil :height 1.0))))
+   ;; `(mode-line ((t (:background ,(if (dark-p (color-name-to-rgb (face-background 'default)))
+   ;;                                  (color-lighten-name (face-background 'default) 50)
+   ;;                                 (color-darken-name (face-background 'default) 50))
+   ;; 								:box nil))))
 
+   ;; (let ((bg-color (doomish-blend (face-foreground 'shadow) (face-background 'default) 0)))
+   ;; 	 `(mode-line ((t (:inherit variable-pitch
+   ;;                             ;; :background ,bg-color
+   ;; 							   :background nil
+   ;; 							   ;; :foreground ,(face-foreground 'default)
+   ;; 							   :foreground ,(apply 'color-rgb-to-hex (color-complement bg-color))
+   ;;                             :box (:color ,(face-foreground 'default) :line-width 1)
+   ;; 							   ;; :box nil
+   ;; 							   :underline nil :overline nil :height 1.0)))))
+
+
+   ;; (let ((bg-color (doomish-blend (doomish-blend (face-background 'link) (face-background 'default) 0) (face-background 'default) 1)))
+   ;; 	 `(mode-line-inactive ((t (:inherit variable-pitch
+   ;; 										;; :background ,bg-color
+   ;; 										:background nil
+   ;; 										:foreground ,(face-foreground 'font-lock-comment-face)
+   ;; 										;; :foreground ,(apply 'color-rgb-to-hex (color-complement bg-color))
+   ;; 										:box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1)
+   ;; 										;; :box nil
+   ;; 										:underline nil :overline nil :height 1.0
+   ;; 										:italic t)))))
+
+   ;; `(mode-line-buffer-id ((t (:inherit variable-pitch
+   ;;                                     ;; :box (:color ,(face-foreground 'default) :line-width -1)
+   ;;                                     ;; :background ,(face-background 'default)
+   ;;                                     :background nil
+   ;;                                     :foreground ,(face-foreground 'link)
+   ;;                                     :bold t :height 1.0
+   ;;                                     :distant-foreground ,(face-background 'region)))))
+
+   (let ((bg-color (my-format-color (apply 'color-rgb-to-hex (color-name-to-rgb (face-background 'default)))))
+		 (fg-color (my-format-color (apply 'color-rgb-to-hex (color-name-to-rgb (face-foreground 'default))))))
+	 `(mode-line ((t (:inherit variable-pitch
+							   :background ,(if (dark-p bg-color)
+												(doomish-lighten bg-color 0.15)
+											  (doomish-darken bg-color 0.15))
+							   ;; :background nil
+							   :foreground ,(face-foreground 'default)
+							   ;; :box (:color ,(face-foreground 'default) :line-width 1)
+							   :box nil
+							   ;; :underline nil :overline nil :height 1.0
+							   :bold t
+							   )))))
+
+   (let ((bg-color (my-format-color (apply 'color-rgb-to-hex (color-name-to-rgb (face-background 'default)))))
+		 (fg-color (my-format-color (apply 'color-rgb-to-hex (color-name-to-rgb (face-foreground 'default))))))
+	 `(mode-line-inactive ((t (:inherit variable-pitch
+										:background ,(if (dark-p bg-color)
+														 (doomish-lighten bg-color 0.05)
+													   (doomish-darken bg-color 0.05))
+										;; :background nil
+										:foreground ,(face-foreground 'font-lock-comment-face)
+										;; :box (:color ,(face-background 'font-lock-comment-face) :line-width 1)
+										:box nil
+										;; :height 1.0
+										:italic t
+										)))))
    `(mode-line-inactive ((t (:inherit variable-pitch
                                       ;; :background ,(face-background 'default)
                                       :background nil
                                       :foreground ,(face-foreground 'font-lock-comment-face)
                                       :box (:color ,(face-background 'region) :line-width 1) :height 1.0))))
+ 
 
-   `(mode-line-buffer-id ((t (:inherit variable-pitch
-                                       ;; :box (:color ,(face-foreground 'default) :line-width -1)
-                                       ;; :background ,(face-background 'default)
-                                       :background nil
-                                       :foreground ,(face-foreground 'link)
-                                       :bold t :height 1.0
-                                       :distant-foreground ,(face-background 'region)))))
+   ;; ;;;;; modeline
+   ;; `(mode-line ((t (:inherit variable-pitch
+   ;;                           ;; :background ,(face-background 'default)
+   ;;                           :background nil
+   ;;                           :foreground ,(face-foreground 'default)
+   ;;                           :box (:color ,(face-foreground 'default) :line-width 1) :underline nil :overline nil :height 1.0))))
+
+   ;; `(mode-line-inactive ((t (:inherit variable-pitch
+   ;;                                    ;; :background ,(face-background 'default)
+   ;;                                    :background nil
+   ;;                                    :foreground ,(face-foreground 'font-lock-comment-face)
+   ;;                                    :box (:color ,(face-background 'region) :line-width 1) :height 1.0))))
+
+   ;; `(mode-line-buffer-id ((t (:inherit variable-pitch
+   ;;                                     ;; :box (:color ,(face-foreground 'default) :line-width -1)
+   ;;                                     ;; :background ,(face-background 'default)
+   ;;                                     :background nil
+   ;;                                     :foreground ,(face-foreground 'link)
+   ;;                                     :bold t :height 1.0
+   ;;                                     :distant-foreground ,(face-background 'region)))))
 
 
    ;; `(mode-line-buffer-id-inactive ((t ( :box (:color ,(face-foreground 'font-lock-comment-face) :line-width 1)
