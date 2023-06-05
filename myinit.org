@@ -1,3 +1,4 @@
+
 #+TITLE: Init File
 #+AUTHOR: Yilkal Argaw , StackOverflow, Github, Emacs-wiki and The Internet in General
 #+OPTIONS: toc:3          (only include two levels in TOC)
@@ -17,6 +18,7 @@
     - [[#more-garbage-collection-related-settings][more garbage collection related settings]]
   - [[#some-constants-and-settings-that-need-to-be-configured-initially][some constants and settings that need to be configured initially]]
     - [[#constants][constants]]
+    - [[#custom-file-settings][custom-file settings]]
     - [[#gnutls-and-security][gnutls and security]]
     - [[#encryption-related-additional][encryption related additional]]
     - [[#lexical-binding][lexical binding]]
@@ -241,6 +243,18 @@
 (defconst IS-LINUX   (eq system-type 'gnu/linux))
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
+
+#+end_src
+
+*** custom-file settings
+
+#+begin_src emacs-lisp
+
+(customize-set-variable 'custom-file
+                        (expand-file-name "custom.el" user-emacs-directory))
+
+;; (add-hook 'kill-emacs-query-functions
+;;           'custom-prompt-customize-unsaved-options)
 
 #+end_src
 
