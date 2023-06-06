@@ -435,8 +435,13 @@ between 0 and 1)."
 											  (doomish-darken bg-color 0.15))
 							   ;; :background nil
 							   :foreground ,(face-foreground 'default)
-							   ;; :box (:color ,(face-foreground 'default) :line-width 1)
 							   :box nil
+							   :box (:color ,(if (dark-p bg-color)
+														 (doomish-darken bg-color 0.20)
+														(doomish-lighten bg-color 0.20))
+													 :line-width 1)
+							   ;; :box (:color ,(face-foreground 'default) :line-width 1)
+							   ;; :box nil
 							   ;; :underline nil :overline nil :height 1.0
 							   :bold t
 							   ))))
@@ -447,8 +452,13 @@ between 0 and 1)."
 													   (doomish-darken bg-color 0.07))
 										;; :background nil
 										:foreground ,(face-foreground 'font-lock-comment-face)
-										;; :box (:color ,(face-background 'font-lock-comment-face) :line-width 1)
 										:box nil
+										:box (:color ,(if (dark-p bg-color)
+														 (doomish-darken bg-color 0.07)
+														(doomish-lighten bg-color 0.07))
+													 :line-width 1)
+										;; :box (:color ,(face-background 'font-lock-comment-face) :line-width 1)
+										;; :box nil
 										;; :height 1.0
 										:italic t
 										))))

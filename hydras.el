@@ -1,3 +1,13 @@
+;;; hydras.el --- contains a collection of hydra definitions
+
+;;; Commentary:
+
+
+;;; Usage:
+
+;;; Code:
+
+(require 'hydra)
 
 (defhydra hydra-buffer-zoom (:hint nil :quit-key ("q" "C-g"))
   "zoom"
@@ -297,8 +307,7 @@ Git gutter:
   ("b"  projectile-switch-to-buffer-other-window "buffer")
   ("q"  nil                                      "cancel" :color blue))
 
-(defhydra hydra-projectile (:color teal
-                                     :hint nil :quit-key ("q" "C-g"))
+(defhydra hydra-projectile (:color teal :hint nil :quit-key ("q" "C-g"))
     "
      PROJECTILE: %(projectile-project-root)
 
@@ -646,3 +655,5 @@ _h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
 ;; (define-key global-map (kbd "η x")  (lambda ()
 ;;                                       (interactive)
 ;;                                       (counsel-M-x "^hydra")))
+(provide 'hydras)
+;;; hydras.el ends here
