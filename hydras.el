@@ -557,6 +557,38 @@ _h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
     "
      ^Move^            ^Action^                   ^Misc^
 -----------------------------------------------------------------------
+[_b_] ← backward-char    [_w_] copy-as-kill     [_e_] exchange
+[_n_] ↓  next-line        [_y_] yank             [_N_] number-lines
+[_p_] ↑  previous-line    [_t_] string           [_u_] undo
+[_f_] → forward-char     [_d_] kill             [_r_] reset
+^ ^                       [_c_] clear
+^ ^                       [_o_] open
+"
+    ("b" backward-char)
+    ("n" next-line)
+    ("p" previous-line)
+    ("f" forward-char)
+    ("w" copy-rectangle-as-kill) ; C-x r M-w
+    ("y" yank-rectangle)         ; C-x r y
+    ("t" string-rectangle)     ; C-x r t
+    ("d" kill-rectangle)         ; C-x r d
+    ("c" clear-rectangle)       ; C-x r c
+    ("o" open-rectangle)        ; C-x r o
+    ("N" rectangle-number-lines)        ; C-x r N
+    ("e" rectangle-exchange-point-and-mark) ; C-x C-x
+    ("u" undo)
+    ("r" (if (region-active-p)
+             (deactivate-mark)
+           (rectangle-mark-mode 1)))
+
+    ;; ("q" nil "exit")
+
+	)
+
+(defhydra hydra-rectangle-vimish (:body-pre (rectangle-mark-mode) :post (deactivate-mark) :quit-key ("q" "C-g") :hint nil)
+    "
+     ^Move^            ^Action^                   ^Misc^
+-----------------------------------------------------------------------
 [_h_] ← backward-char    [_w_] copy-as-kill     [_e_] exchange
 [_j_] ↓  next-line        [_y_] yank             [_N_] number-lines
 [_k_] ↑  previous-line    [_t_] string           [_u_] undo
