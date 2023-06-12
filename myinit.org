@@ -923,26 +923,29 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+end_src
 
 *** rectangle mode
+
 #+begin_src emacs-lisp
 
-;; (define-key rectangle-mark-mode-map (kbd "f") #'rectangle-right-char)
-;; (define-key rectangle-mark-mode-map (kbd "b") #'rectangle-left-char)
-(define-key rectangle-mark-mode-map (kbd "n") #'rectangle-next-line)
-(define-key rectangle-mark-mode-map (kbd "p") #'rectangle-previous-line)
-(define-key rectangle-mark-mode-map (kbd "f") #'rectangle-forward-char)
-(define-key rectangle-mark-mode-map (kbd "b") #'rectangle-backward-char)
-(define-key rectangle-mark-mode-map (kbd "i") #'string-rectangle)
-(define-key rectangle-mark-mode-map (kbd "e") #'rectangle-exchange-point-and-mark)
-(define-key rectangle-mark-mode-map (kbd "#") #'rectangle-number-lines)
-(define-key rectangle-mark-mode-map (kbd "w") #'copy-rectangle-as-kill) ; C-x r M-w
-(define-key rectangle-mark-mode-map (kbd "y") #'yank-rectangle)         ; C-x r y
-(define-key rectangle-mark-mode-map (kbd "t") #'string-rectangle)     ; C-x r t
-(define-key rectangle-mark-mode-map (kbd "d") #'kill-rectangle)         ; C-x r d
-(define-key rectangle-mark-mode-map (kbd "c") #'clear-rectangle)       ; C-x r c
-(define-key rectangle-mark-mode-map (kbd "o") #'open-rectangle)        ; C-x r o
-(define-key rectangle-mark-mode-map (kbd "N") #'rectangle-number-lines)        ; C-x r N
-(define-key rectangle-mark-mode-map (kbd "e") #'rectangle-exchange-point-and-mark) ; C-x C-x
-(define-key rectangle-mark-mode-map (kbd "u") #'undo)
+(with-eval-after-load 'rect
+  ;; (define-key rectangle-mark-mode-map (kbd "f") #'rectangle-right-char)
+  ;; (define-key rectangle-mark-mode-map (kbd "b") #'rectangle-left-char)
+  (define-key rectangle-mark-mode-map (kbd "n") #'rectangle-next-line)
+  (define-key rectangle-mark-mode-map (kbd "p") #'rectangle-previous-line)
+  (define-key rectangle-mark-mode-map (kbd "f") #'rectangle-forward-char)
+  (define-key rectangle-mark-mode-map (kbd "b") #'rectangle-backward-char)
+  (define-key rectangle-mark-mode-map (kbd "i") #'string-rectangle)
+  (define-key rectangle-mark-mode-map (kbd "e") #'rectangle-exchange-point-and-mark)
+  (define-key rectangle-mark-mode-map (kbd "#") #'rectangle-number-lines)
+  (define-key rectangle-mark-mode-map (kbd "w") #'copy-rectangle-as-kill) ; C-x r M-w
+  (define-key rectangle-mark-mode-map (kbd "y") #'yank-rectangle)         ; C-x r y
+  (define-key rectangle-mark-mode-map (kbd "t") #'string-rectangle)     ; C-x r t
+  (define-key rectangle-mark-mode-map (kbd "d") #'kill-rectangle)         ; C-x r d
+  (define-key rectangle-mark-mode-map (kbd "c") #'clear-rectangle)       ; C-x r c
+  (define-key rectangle-mark-mode-map (kbd "o") #'open-rectangle)        ; C-x r o
+  (define-key rectangle-mark-mode-map (kbd "N") #'rectangle-number-lines)        ; C-x r N
+  (define-key rectangle-mark-mode-map (kbd "e") #'rectangle-exchange-point-and-mark) ; C-x C-x
+  (define-key rectangle-mark-mode-map (kbd "u") #'undo)
+  )
 
 #+end_src
 
