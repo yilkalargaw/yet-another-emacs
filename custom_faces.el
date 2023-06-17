@@ -362,7 +362,7 @@ between 0 and 1)."
    ;;                       ;; :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
    ;;                       ))))
 
-   ;; `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
+   `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
 
 
    ;; `(region ((t (;; :inherit 'region :background ,(face-background 'region)
@@ -384,9 +384,6 @@ between 0 and 1)."
    ;;                           ;; :underline nil :overline nil
    ;;                          :box (:line-width 1 :color ,(face-foreground 'font-lock-comment-face ))
    ;;                          ))))
-
-   ;; `(mouse ((t (:foreground ,(face-foreground 'highlight) :background ,(face-background 'default)))))
-
 
    ;; `(tab-bar ((t (:inherit variable-pitch :background "SlateGray4" :foreground "white"))))
    ;; `(tab-bar-tab ((t (:inherit tab-bar :box nil))))
