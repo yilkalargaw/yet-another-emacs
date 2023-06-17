@@ -500,6 +500,10 @@ between 0 and 1)."
    ;; `(doom-modeline-bar ((t (:background ,(face-background 'font-lock-keyword-face)))))
 
 
+   ;;header-line
+   `(header-line ((t (:background ,(face-background 'default) :box nil))))
+
+
    ;;;;; whitespace-mode
    ;; `(trailing-whitespace ((t nil)))
    `(whitespace-empty ((t nil)))
@@ -549,7 +553,17 @@ between 0 and 1)."
    ;; ;; `(ido-virtual ((t (:inherit bold))))
    ;; ;; `(ido-incomplete-regexp ((t (:inherit bold))))
    ;; ;; `(ido-indicator ((t (:box t))))
-   ;; `(icomplete-selected-match ((t (:inherit nil :box (:line-width 1 :color ,(face-foreground 'default))))))
+
+   `(icomplete-selected-match
+	 ((t (:foreground ,(doomish-blend (face-foreground 'link) (face-foreground 'default) 1.0)
+		  :underline t :overline nil :bold t :italic nil :height 1.05))))
+   `(completions-common-part
+	 ((t (:foreground ,(doomish-blend (face-foreground 'link) (face-foreground 'default) 0.7)
+		  :height 1.0 :bold nil :italic nil :bold t))))
+   `(completions-first-difference
+	 ((t (:foreground ,(doomish-blend (face-foreground 'font-lock-string-face) (face-background 'default) 0.6)
+		  :italic nil :height 1.0 :bold t :underline nil))))
+
 
    ;; ;;;;; swiper
    ;; `(swiper-line-face ((t (;; :underline t
@@ -578,36 +592,36 @@ between 0 and 1)."
    `(dired-subtree-depth-6-face ((t (:background nil)))) ;; :foreground ,(face-foreground 'default)))))
 
 
-   ;;;;; tabbar
-   `(tab-bar ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
-                              ;; :box (:color ,(face-foreground 'default) :line-width 1)
-                              ))))
-   `(tab-bar-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
-                                  ;; :box (:color ,(face-foreground 'default) :line-width 1)
-                                  ))))
-   `(tab-bar-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
-                                           :box (:color ,(face-foreground 'default) :line-width 2)))))
-   ;;;;; tabbar
-   ;; tab-line
-   ;; tab-line-tab
-   ;; tab-line-tab-inactive
-   ;; tab-line-tab-current
-   ;; tab-line-highlight
-   ;; tab-line-close-highlight
+   ;; ;;;;; tabbar
+   ;; `(tab-bar ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
+   ;;                            ;; :box (:color ,(face-foreground 'default) :line-width 1)
+   ;;                            ))))
+   ;; `(tab-bar-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
+   ;;                                ;; :box (:color ,(face-foreground 'default) :line-width 1)
+   ;;                                ))))
+   ;; `(tab-bar-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
+   ;;                                         :box (:color ,(face-foreground 'default) :line-width 2)))))
+   ;; ;;;;; tabbar
+   ;; ;; tab-line
+   ;; ;; tab-line-tab
+   ;; ;; tab-line-tab-inactive
+   ;; ;; tab-line-tab-current
+   ;; ;; tab-line-highlight
+   ;; ;; tab-line-close-highlight
 
 
-   `(tab-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
-                               ;; :box (:color ,(face-foreground 'default) :line-width 1)
-                               ))))
-   `(tab-line-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
-                                   ;; :box (:color ,(face-foreground 'default) :line-width 1)
-                                   ))))
-   `(tab-line-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
-                                            :box (:color ,(face-foreground 'default) :line-width 2)))))
+   ;; `(tab-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
+   ;;                             ;; :box (:color ,(face-foreground 'default) :line-width 1)
+   ;;                             ))))
+   ;; `(tab-line-tab ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
+   ;;                                 ;; :box (:color ,(face-foreground 'default) :line-width 1)
+   ;;                                 ))))
+   ;; `(tab-line-tab-inactive ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 ;; :overline t
+   ;;                                          :box (:color ,(face-foreground 'default) :line-width 2)))))
 
-   `(tab-line-tab-current ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
-                                           ;; :box (:color ,(face-foreground 'default) :line-width 1)
-                                           ))))
+   ;; `(tab-line-tab-current ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :height 1.0 :inverse-video t :underline t
+   ;;                                         ;; :box (:color ,(face-foreground 'default) :line-width 1)
+   ;;                                         ))))
 
    ;;;;; dashboard
    `(dashboard-items-face ((t (:underline nil :height 0.9 ))))
