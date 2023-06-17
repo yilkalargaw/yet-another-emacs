@@ -25,6 +25,7 @@
     - [[#general-frame-and-window-settings][general frame and window settings]]
     - [[#minor-modes-menu-based-on-minions][minor-modes-menu-based-on-minions]]
     - [[#mode-line-modify][mode-line-modify]]
+    - [[#headerline][headerline]]
   - [[#require-some-libraries][require some libraries]]
   - [[#basic-emacs-editor-preferences][basic emacs editor preferences]]
     - [[#set-load-path][set load path]]
@@ -617,6 +618,14 @@ increment."
 
 #+end_src
 
+*** headerline
+
+#+begin_src emacs-lisp
+
+(setq-default header-line-format '(:eval (substring ""
+													(min (length my-header)
+														 (window-hscroll)))))
+#+end_src
 
 ** require some libraries
 
