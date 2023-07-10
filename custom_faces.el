@@ -498,8 +498,11 @@ between 0 and 1)."
 
 
    ;;header-line
-   `(header-line ((t (:background ,(face-background 'default) :box nil))))
+   `(header-line ((t (:inverse-video nil :background ,(face-background 'default) :box nil :style nil))))
 
+   ;; menu & toolbar
+  `(menu ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :italic nil :height 1.0 :bold t :underline nil))))
+  `(tool-bar ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'default) :italic nil :height 1.0 :bold t :underline nil))))
 
    ;;;;; whitespace-mode
    ;; `(trailing-whitespace ((t nil)))
@@ -560,7 +563,6 @@ between 0 and 1)."
    `(completions-first-difference
 	 ((t (:foreground ,(doomish-blend (face-foreground 'font-lock-string-face) (face-background 'default) 0.6)
 		  :italic nil :height 1.0 :bold t :underline nil))))
-
 
    ;; ;;;;; swiper
    ;; `(swiper-line-face ((t (;; :underline t
