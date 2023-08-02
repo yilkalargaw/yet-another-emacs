@@ -2189,7 +2189,10 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;; 	  )
 
 (package-initialize)
-(require 'use-package)
+
+(if (not (package-installed-p 'use-package))
+	(package-install 'use-package)
+  (require 'use-package))
 
 #+end_src
 
