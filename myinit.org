@@ -1287,7 +1287,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (add-hook 'outline-minor-mode-hook
           (lambda ()
             (setq outline-minor-mode-use-buttons 'in-margins ;;you can use 'in-margins for buttons on margin
-                  outline-minor-mode-cycle t
+                  outline-minor-mode-cycle 't
                   outline-minor-mode-cycle-filter 'bolp)
             (define-key outline-minor-mode-map (kbd "<f6>") 'outline-cycle)
             (define-key outline-minor-mode-map (kbd "<S-f6>") 'outline-cycle-buffer)))
@@ -2504,11 +2504,12 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 (use-package ace-link
   :ensure t
   :defer t
-  :functions ace-link-setup-default
+  ;; :functions ace-link-setup-default
   :after (:any elbank helpful info eww man woman)
-  :hook (elbank-mode helpful-mode info-mode eww-mode woman-mode man-mode info-mode)
+  ;; :hook (elbank-mode helpful-mode info-mode eww-mode woman-mode man-mode info-mode)
   :init
   (require 'ace-link)
+  :config
   (ace-link-setup-default)
 )
 
