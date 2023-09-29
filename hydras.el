@@ -680,7 +680,7 @@ _h_ + _l_ | _c_lose node  | _p_revious fold ^|  toggle _a_ll
 (define-key hydra-map (kbd "w") 'hydra-window/body)
 (define-key hydra-map (kbd "p") 'hydra-projectile/body)
 (define-key hydra-map (kbd "s") 'hydra-learn-sp/body)
-(define-key hydra-map (kbd "h") 'hydra-hide-show/body)
+;; (define-key hydra-map (kbd "h") 'hydra-hide-show/body)
 (define-key hydra-map (kbd "t") 'hydra-transpose/body)
 (define-key hydra-map (kbd "l") 'hydra-launcher/body)
 ;; (define-key hydra-map (kbd "<f4>") 'hydra-transparency/body)
