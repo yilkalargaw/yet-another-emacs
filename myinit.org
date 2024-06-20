@@ -66,7 +66,10 @@
     - [[#outline][outline]]
     - [[#tab-bar--tabline][tab-bar & tabline]]
     - [[#recentf][recentf]]
+    - [[#tempo][tempo]]
     - [[#hippie_expand][hippie_expand]]
+- [[#psudo-native-i-prefer-to-install-these-using-the-systems-package-manager][psudo native (i prefer to install these using the system's package manager)]]
+  - [[#pdf-tools][pdf-tools]]
 - [[#initialize-package-managers][initialize package managers]]
   - [[#packageel][package.el]]
 - [[#external-libraries][external libraries]]
@@ -113,7 +116,6 @@
     - [[#speed-type][speed-type]]
     - [[#typing-of-emacs][typing-of-emacs]]
   - [[#devdocs-browser][devdocs browser]]
-  - [[#pdf-tools][pdf-tools]]
   - [[#scratch][scratch]]
   - [[#install-themes][install themes]]
   - [[#alternate-mode-lines][alternate mode-lines]]
@@ -340,7 +342,7 @@
 
 ;; (set-default-font "JetBrains Mono-9") ;;; set default font
 ;; (setq default-frame-alist '((font . "Jetbrains Mono 9"))) ;;; set default font for emacs --daemon / emacsclient
-(defvar my-default-font "JetBrainsMono Nerd Font 9")
+(defvar my-default-font "JetBrainsMono Nerd Font 11")
 
 ;; (setq default-frame-alist '((font . "JetBrainsMono Nerd Font 9"))) ;;; set default font for emacs --daemon / emacsclient
 (add-to-list 'default-frame-alist (cons 'font  my-default-font))
@@ -2138,6 +2140,34 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+end_src
 
 
+* psudo native (i prefer to install these using the system's package manager)
+** pdf-tools
+
+#+begin_src emacs-lisp
+
+(defmacro my/use-package (name &rest args)
+  "My custom use-package macro that ensures t if pdf-tools-install command exists."
+  `(use-package ,name
+     ,@(if (fboundp 'pdf-tools-install)
+           (plist-put args :ensure t)
+         args)))
+
+(my/use-package pdf-tools
+  :init (pdf-loader-install)
+  :defer t
+  :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
+  :if (display-graphic-p)
+  :config
+    ;; (pdf-tools-install :no-query)
+    ;; (pdf-loader-install)
+  :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1)))
+		(pdf-view-mode . (lambda () (pdf-view-themed-minor-mode 1)))
+		(pdf-view-mode . (lambda () (pdf-view-themed-minor-mode 1)))
+		(pdf-view-mode . (lambda () (require 'pdf-occur))))
+
+#+end_src
+
+
 * initialize package managers
 
 ** COMMENT straight
@@ -2189,7 +2219,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 ;; 								   ("gnu"          . 50))  ;; Higher values are searched first.
 ;; 	  )
 
-(package-initialize)
+;; (package-initialize)
 
 (if (not (package-installed-p 'use-package))
 	(package-install 'use-package)
@@ -3238,25 +3268,6 @@ With postitive prefix argument ARG move to the nth previous object."
 (use-package devdocs-browser
   :ensure t
   :defer t)
-
-#+end_src
-
-** pdf-tools
-
-#+begin_src emacs-lisp
-
-(use-package pdf-tools
-  :ensure t
-  :defer t
-  :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
-  :if (display-graphic-p)
-  :config
-  ;; (pdf-tools-install :no-query)
-  (pdf-loader-install)
-  (pdf-view-themed-minor-mode 1)
-  (require 'pdf-occur)
-  :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1)))
-		(pdf-view-mode . (lambda () (pdf-view-themed-minor-mode 1))))
 
 #+end_src
 
