@@ -66,7 +66,6 @@
     - [[#outline][outline]]
     - [[#tab-bar--tabline][tab-bar & tabline]]
     - [[#recentf][recentf]]
-    - [[#tempo][tempo]]
     - [[#hippie_expand][hippie_expand]]
 - [[#psudo-native-i-prefer-to-install-these-using-the-systems-package-manager][psudo native (i prefer to install these using the system's package manager)]]
   - [[#pdf-tools][pdf-tools]]
@@ -343,6 +342,7 @@
 ;; (set-default-font "JetBrains Mono-9") ;;; set default font
 ;; (setq default-frame-alist '((font . "Jetbrains Mono 9"))) ;;; set default font for emacs --daemon / emacsclient
 (defvar my-default-font "JetBrainsMono Nerd Font 11")
+(set-face-attribute 'default nil :height 110)
 
 ;; (setq default-frame-alist '((font . "JetBrainsMono Nerd Font 9"))) ;;; set default font for emacs --daemon / emacsclient
 (add-to-list 'default-frame-alist (cons 'font  my-default-font))
