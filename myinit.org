@@ -66,9 +66,12 @@
     - [[#outline][outline]]
     - [[#tab-bar--tabline][tab-bar & tabline]]
     - [[#recentf][recentf]]
+    - [[#expand][expand]]
     - [[#hippie_expand][hippie_expand]]
 - [[#psudo-native-i-prefer-to-install-these-using-the-systems-package-manager][psudo native (i prefer to install these using the system's package manager)]]
+  - [[#special-use-package-macro][special use-package macro]]
   - [[#pdf-tools][pdf-tools]]
+  - [[#vterm][vterm]]
 - [[#initialize-package-managers][initialize package managers]]
   - [[#packageel][package.el]]
 - [[#external-libraries][external libraries]]
@@ -105,7 +108,6 @@
   - [[#keyfreq][keyfreq]]
   - [[#corfu--cape--kind-icons][corfu & cape & kind-icons]]
   - [[#highligt-number-literals][highligt number literals]]
-  - [[#vterm][vterm]]
   - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#minions][minions]]
   - [[#projectile][projectile]]
@@ -573,50 +575,61 @@ increment."
 
 #+begin_src emacs-lisp
 
-(defun mode-line-split--format (left right)
-  "Return a string of `window-width' length containing LEFT and RIGHT, aligned respectively."
-  (let ((reserve (length right)))
-    (concat left
-            " "
-            (propertize " "
-                        'display `((space :align-to (- right (- 0 right-margin) ,reserve))))
-            right)))
+  (defun mode-line-split--format (left right)
+    "Return a string of `window-width' length containing LEFT and RIGHT, aligned respectively."
+    (let ((reserve (length right)))
+      (concat left
+	      " "
+	      (propertize " "
+			  'display `((space :align-to (- right (- 0 right-margin) ,reserve))))
+	      right)))
 
-;; Set the new mode-line-format
-(setq-default mode-line-format
-              '((:eval
-                 (mode-line-split--format
-                  ;; Left
-                  (format-mode-line
-                   '("%e" mode-line-front-space
-					 (:propertize
-					  ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
-					  display
-					  (min-width
-					   (5.0)))
-					 mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
-				  ;; Right
-				  (format-mode-line
-				   '((vc-mode vc-mode)
-					 "   "
-					 mode-name " ";; "%m"
-					 (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu)))
-					 "   "
-					 (:eval (propertize "[☰]" 'local-map (make-mode-line-mouse-map 'mouse-1 'menu-bar-open)))
-					 " "
-					 "  " mode-line-misc-info mode-line-end-spaces
-					 )
-				   )))))
-
-#+end_src
-
-*** COMMENT mode-line-trial
-
-#+begin_src emacs-lisp
-
-(setq-default mode-line-format
-      '((:eval (format-mode-line (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu))))
-        (column-number-mode "  %c")))
+  ;; Set the new mode-line-format
+  (if (display-graphic-p)
+    (setq-default mode-line-format
+		  '((:eval
+		     (mode-line-split--format
+		      ;; Left
+		      (format-mode-line
+		       '("%e" mode-line-front-space
+			 (:propertize
+			  ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
+			  display
+			  (min-width
+			   (5.0)))
+			 mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
+		      ;; Right
+		      (format-mode-line
+		       '((vc-mode vc-mode)
+			 "   "
+			 mode-name " ";; "%m"
+			 (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu)))
+			 "   "
+			 (:eval (propertize "[☰]" 'local-map (make-mode-line-mouse-map 'mouse-1 'menu-bar-open)))
+			 " "
+			 "  " mode-line-misc-info mode-line-end-spaces
+			 )
+		       )))))
+      (setq-default mode-line-format
+		  '((:eval
+		     (mode-line-split--format
+		      ;; Left
+		      (format-mode-line
+		       '("%e" mode-line-front-space
+			 (:propertize
+			  ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
+			  display
+			  (min-width
+			   (5.0)))
+			 mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
+		      ;; Right
+		      (format-mode-line
+		       '((vc-mode vc-mode)
+			 "   "
+			 mode-name " ";; "%m"
+			 "  " mode-line-misc-info mode-line-end-spaces
+			 )
+		       ))))))
 
 #+end_src
 
@@ -1689,12 +1702,6 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 ;;; org-mode templates
                                       (defvar org-tempo-tags nil)
 
-                                      (tempo-define-template "src_block"
-                                                             '("#+begin_src "> p n> p n> "#+end_src")
-                                                             "src"
-                                                             "Insert a source block"
-                                                             'org-tempo-tags)
-
                                       (tempo-define-template "title"
                                                              '("+TITLE: "> p)
                                                              "ti"
@@ -1772,11 +1779,11 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                                               "Insert an if clause"
                                                               'ruby-tempo-tags)
 
-                                       (tempo-define-template "ruby-ifelse"
-                                                              '("if " > p n> "else" n> p n> "end" >)
-                                                              "ifel"
-                                                              "Insert an if else clause"
-                                                              'ruby-tempo-tags)
+                                       ;; (tempo-define-template "ruby-ifelse"
+                                       ;;                        '("if " > p n >"else " n> p n> "end" >)
+                                       ;;                        "ifel"
+                                       ;;                        "Insert an if else clause"
+                                       ;;                        'ruby-tempo-tags)
 
                                        (tempo-define-template "ruby-unless"
                                                               '("unless "> p n> p n> "end" >)
@@ -1940,7 +1947,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                        )))
 
 #+end_src
-*** COMMENT expand
+*** expand
 
 Expand is a package that extends the functionality of abbrev to enable code templating functionality. It uses a similar definition to abbrevs with an added list to indicate stops inside the template. It has default keys "C-x a n" and "C-x a p" for moving forward and backward within stops
 
@@ -2063,17 +2070,25 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 #+begin_src emacs-lisp
 
+;; Define macros for single-line and multi-line HTML tags
 (defmacro html-expand-snippet-single-line (var)
   (list 'quote (list var (concat "<" var ">  </" var ">") (list (+ 4 (length var)) (+ 10 (length var))))))
 
 (defmacro html-expand-snippet-multi-line (var)
   (list 'quote (list var (concat "<" var ">\n\n</" var ">") (list (+ 4 (length var)) (+ 10 (length var))))))
 
-(defconst html-expand-list
+
+;; Manually define specific expansions
+(defconst specific-html-expand-list
+  '(("img" "<img src=\"\" alt=\"\">" (11 18 20))
+    ("abbr" "<abbr title=\"\"> </abbr>" (14 16 24))
+    ("html" "<!DOCTYPE html>\n<html>\n<head>\n<title> </title>\n</head>\n<body>\n\n</body>\n</html>" (39 63 88))))
+
+;; Define the automatically generated expansion list using the macros
+(defconst auto-html-expand-list
   (seq-concatenate 'list
                    (seq-map (lambda (x)
-                              "expand macro"
-                              (eval (list 'html-expand-snippet-single-line x)))
+                              (eval `(html-expand-snippet-single-line ,x)))
                             '("a" "b" "bdi" "bdo"
                               "button" "caption" "cite" "data"
                               "del" "dfn" "em" "figcaption"
@@ -2085,10 +2100,8 @@ Expand is a package that extends the functionality of abbrev to enable code temp
                               "s" "samp" "small" "span"
                               "strong" "sub" "summary" "sup"
                               "th" "td" "title" "time"))
-
                    (seq-map (lambda (x)
-                              "expand macro"
-                              (eval (list 'html-expand-snippet-multi-line x)))
+                              (eval `(html-expand-snippet-multi-line ,x)))
                             '("address" "article" "aside" "audio"
                               "body" "blockquote" "colgroup" "canvas"
                               "code" "datalist" "dl" "details"
@@ -2100,6 +2113,10 @@ Expand is a package that extends the functionality of abbrev to enable code temp
                               "table" "thead" "tbody" "tfoot"
                               "tr" "template" "textarea" "ul"
                               "video"))))
+
+;; Combine specific and automatic expansions
+(defconst html-expand-list
+  (append specific-html-expand-list auto-html-expand-list))
 
 (add-hook 'html-mode-hook
           (lambda ()
@@ -2141,18 +2158,25 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 
 * psudo native (i prefer to install these using the system's package manager)
+
+** special use-package macro
+
+#+begin_src emacs-lisp
+
+(defmacro my/use-package (name check-func &rest args)
+  "My custom use-package macro that ensures t if the check-func command exists."
+  `(use-package ,name
+     ,@(if (eval `(fboundp ',check-func))
+           (plist-put args :ensure t)
+         args)))
+
+#+end_src
+
 ** pdf-tools
 
 #+begin_src emacs-lisp
 
-(defmacro my/use-package (name &rest args)
-  "My custom use-package macro that ensures t if pdf-tools-install command exists."
-  `(use-package ,name
-     ,@(if (fboundp 'pdf-tools-install)
-           (plist-put args :ensure t)
-         args)))
-
-(my/use-package pdf-tools
+(my/use-package pdf-tools pdf-tools-install
   :init (pdf-loader-install)
   :defer t
   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
@@ -2166,6 +2190,35 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 		(pdf-view-mode . (lambda () (require 'pdf-occur))))
 
 #+end_src
+
+** vterm
+
+#+begin_src emacs-lisp
+
+(my/use-package vterm vterm
+  :ensure t
+  :defer t
+  :when (bound-and-true-p module-file-suffix)
+  :hook ((vterm-mode . (lambda () (global-hl-line-mode -1)))
+         (vterm-mode . (lambda () (display-line-numbers-mode -1)))
+         ;; (vterm-mode . (lambda () (nlinum-mode -1)))
+         (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
+         (vterm-mode . (lambda () (setq line-spacing 0)))
+         ;; (vterm-mode . (lambda () (objed-local-mode -1)))
+         )
+  :init (setq vterm-shell "/usr/bin/bash"))
+
+;; (use-package vterm
+;;   :commands (vterm)
+;;   :ensure t
+;;   :init
+;;   (unless (file-exists-p (concat (file-name-directory (locate-library "vterm"))
+;;                                  "vterm-module.so"))
+;;     (message "Set vterm to install.")
+;;     (setq vterm-install t)))
+
+#+end_src
+
 
 
 * initialize package managers
@@ -3040,35 +3093,6 @@ With postitive prefix argument ARG move to the nth previous object."
   :hook ((prog-mode conf-mode) . highlight-numbers-mode)
   :config (setq highlight-numbers-generic-regexp "\\_<[[:digit:]]+\\(?:\\.[0-9]*\\)?\\_>"))
 
-#+end_src
-
-** vterm
-
-#+begin_src emacs-lisp
-
-(use-package vterm
-  :ensure t
-  :defer t
-  :when (bound-and-true-p module-file-suffix)
-  :hook ((vterm-mode . (lambda () (global-hl-line-mode -1)))
-         (vterm-mode . (lambda () (display-line-numbers-mode -1)))
-         ;; (vterm-mode . (lambda () (nlinum-mode -1)))
-         (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
-         (vterm-mode . (lambda () (setq line-spacing 0)))
-         ;; (vterm-mode . (lambda () (objed-local-mode -1)))
-         )
-  :init (setq vterm-shell "/usr/bin/bash"))
-
-;; (use-package vterm
-;;   :commands (vterm)
-;;   :ensure t
-;;   :init
-;;   (unless (file-exists-p (concat (file-name-directory (locate-library "vterm"))
-;;                                  "vterm-module.so"))
-;;     (message "Set vterm to install.")
-;;     (setq vterm-install t)))
-
-                                        ;
 #+end_src
 
 ** highlight-indent-guides
