@@ -3177,6 +3177,7 @@ With postitive prefix argument ARG move to the nth previous object."
 (use-package minions
   :ensure t
   :defer 0.1
+  :when (display-graphic-p)
   :config
   (setq minions-mode-line-lighter "[+]")
   (minions-mode 1)
