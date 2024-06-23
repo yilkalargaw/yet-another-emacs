@@ -1075,8 +1075,20 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                                  "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger"))
   (add-hook 'eshell-mode-hook (lambda () (display-line-numbers-mode -1)))
   (setq eshell-scroll-show-maximum-output nil)
-  )
 
+  (defun eshell-load-bash-aliases ()
+    "Read Bash aliases and add them to the list of eshell aliases."
+    ;; Bash needs to be run - temporarily - interactively
+    ;; in order to get the list of aliases.
+      (with-temp-buffer
+        (call-process "bash" nil '(t nil) nil "-ci" "alias")
+        (goto-char (point-min))
+        (while (re-search-forward "alias \\(.+\\)='\\(.+\\)'$" nil t)
+          (eshell/alias (match-string 1) (match-string 2) "$*"))))
+  ;; We only want Bash aliases to be loaded when Eshell loads its own aliases,
+  ;; rather than every time `eshell-mode' is enabled.
+  (add-hook 'eshell-alias-load-hook 'eshell-load-bash-aliases)
+  )
               
 #+end_src
 
@@ -2154,7 +2166,6 @@ Expand is a package that extends the functionality of abbrev to enable code temp
     (quietly-read-abbrev-file))
 
 #+end_src
-
 
 * psudo native (i prefer to install these using the system's package manager)
 
