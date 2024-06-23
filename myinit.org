@@ -66,7 +66,6 @@
     - [[#outline][outline]]
     - [[#tab-bar--tabline][tab-bar & tabline]]
     - [[#recentf][recentf]]
-    - [[#expand][expand]]
     - [[#hippie_expand][hippie_expand]]
 - [[#psudo-native-i-prefer-to-install-these-using-the-systems-package-manager][psudo native (i prefer to install these using the system's package manager)]]
   - [[#special-use-package-macro][special use-package macro]]
@@ -1947,7 +1946,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
                                        )))
 
 #+end_src
-*** expand
+*** COMMENT expand
 
 Expand is a package that extends the functionality of abbrev to enable code templating functionality. It uses a similar definition to abbrevs with an added list to indicate stops inside the template. It has default keys "C-x a n" and "C-x a p" for moving forward and backward within stops
 
