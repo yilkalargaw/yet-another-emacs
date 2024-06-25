@@ -67,12 +67,12 @@
     - [[#tab-bar--tabline][tab-bar & tabline]]
     - [[#recentf][recentf]]
     - [[#hippie_expand][hippie_expand]]
+- [[#initialize-package-managers][initialize package managers]]
+  - [[#packageel][package.el]]
 - [[#psudo-native-i-prefer-to-install-these-using-the-systems-package-manager][psudo native (i prefer to install these using the system's package manager)]]
   - [[#special-use-package-macro][special use-package macro]]
   - [[#pdf-tools][pdf-tools]]
   - [[#vterm][vterm]]
-- [[#initialize-package-managers][initialize package managers]]
-  - [[#packageel][package.el]]
 - [[#external-libraries][external libraries]]
 - [[#external-packages-i-use][external packages I use]]
   - [[#auto-tangle][auto-tangle]]
@@ -1010,6 +1010,21 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 ** completion
 
 #+begin_src emacs-lisp
+
+(setq enable-recursive-minibuffers t)
+(setq completion-cycle-threshold 1)
+(setq tab-always-indent 'complete)
+(setq completion-styles '(basic intials substring))
+(setq completion-auto-help 'always)
+(when EMACS28+ (setopt completions-detailed t))
+(setq completion-auto-help 'lazy)                  ; Open completion `always'; `lazy' another option
+(when EMACS28+ (setopt completions-format 'one-column))
+(when EMACS28+ (setopt completions-group t))
+(when EMACS29+ (setopt completion-auto-select 'second-tab))
+(when EMACS29+ (setopt completions-max-height 20))
+
+;; (keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete)
+(define-key minibuffer-local-map (kbd "TAB") 'minibuffer-complete)
 
 (when (not EMACS26+) (ido-mode))
 (when EMACS26+ (icomplete-mode))
@@ -2168,6 +2183,66 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+end_src
 
 
+* initialize package managers
+
+** COMMENT straight
+#+begin_src emacs-lisp
+
+(require 'use-package-core)
+
+(setq straight-repository-branch "develop")
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+;; (use-package doct :ensure t)
+;; (straight-use-package 'use-package)
+
+(straight-use-package-mode t)
+;; (straight-use-package-mode)
+
+
+#+end_src
+
+** package.el
+
+#+begin_src emacs-lisp
+
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+						 ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("gnu"   . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+						 ("org" . "https://orgmode.org/elpa/")))
+
+
+
+;; (setq gnutls-algorithm-priority  "NORMAL:-VERS-TLS1.3" ;; bug fix for gnu
+;; 	  package-enable-at-startup nil
+;; 	  package-archive-priorities '(("melpa"        . 10)
+;; 								   ("elpa"         . 30)
+;; 								   ("org"          . 25)
+;; 								   ("nongnu"       . 65)
+;; 								   ("gnu"          . 50))  ;; Higher values are searched first.
+;; 	  )
+
+;; (package-initialize)
+
+(if (not (package-installed-p 'use-package))
+	(package-install 'use-package)
+  (require 'use-package))
+
+#+end_src
+
+
 * psudo native (i prefer to install these using the system's package manager)
 
 ** special use-package macro
@@ -2230,66 +2305,6 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 #+end_src
 
-
-
-* initialize package managers
-
-** COMMENT straight
-#+begin_src emacs-lisp
-
-(require 'use-package-core)
-
-(setq straight-repository-branch "develop")
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-;; (use-package doct :ensure t)
-;; (straight-use-package 'use-package)
-
-(straight-use-package-mode t)
-;; (straight-use-package-mode)
-
-
-#+end_src
-
-** package.el
-
-#+begin_src emacs-lisp
-
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-						 ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("gnu"   . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-						 ("org" . "https://orgmode.org/elpa/")))
-
-
-
-;; (setq gnutls-algorithm-priority  "NORMAL:-VERS-TLS1.3" ;; bug fix for gnu
-;; 	  package-enable-at-startup nil
-;; 	  package-archive-priorities '(("melpa"        . 10)
-;; 								   ("elpa"         . 30)
-;; 								   ("org"          . 25)
-;; 								   ("nongnu"       . 65)
-;; 								   ("gnu"          . 50))  ;; Higher values are searched first.
-;; 	  )
-
-;; (package-initialize)
-
-(if (not (package-installed-p 'use-package))
-	(package-install 'use-package)
-  (require 'use-package))
-
-#+end_src
 
 
 * external libraries
