@@ -1268,11 +1268,16 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 	 'org-babel-load-languages
 	 '((python . t)
 	   (perl . t)
-	   (shell . t)
 	   (ruby . t)
 	   (emacs-lisp . t)))
 	
 	'(require 'ox-md nil t)))
+
+  (if EMACS27+ (with-eval-after-load "org"
+                 (progn
+                   (org-babel-do-load-languages
+                    'org-babel-load-languages
+                    '((shell . t))))))
 
 #+end_src
 
