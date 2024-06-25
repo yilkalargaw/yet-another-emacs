@@ -236,8 +236,8 @@
 
 (defmacro yae-gen-ver-consts (var)
   (list 'defconst
-		(intern (concat "EMACS" (int-to-string var) "+"))
-		(> emacs-major-version (- var 1))))
+        (intern (concat "EMACS" (int-to-string var) "+"))
+        (> emacs-major-version (- var 1))))
 
 ;;evaluate the macro for the number range we want
 (seq-do (lambda (x) (eval (list 'yae-gen-ver-consts x))) (number-sequence 24 35))
@@ -363,31 +363,31 @@
 ;; follow the license that emacs enforces so read the emacs license
 (when (not EMACS29+)
   (progn
-	(require 'face-remap)
+    (require 'face-remap)
 
-	(defcustom global-text-scale-adjust-resizes-frames nil
-	  "Whether `global-text-scale-adjust' resizes the frames."
-	  :type '(choice (const :tag "Off" nil)
-					 (const :tag "On" t))
-	  :group 'display
-	  :version "29.1")
+    (defcustom global-text-scale-adjust-resizes-frames nil
+      "Whether `global-text-scale-adjust' resizes the frames."
+      :type '(choice (const :tag "Off" nil)
+                     (const :tag "On" t))
+      :group 'display
+      :version "29.1")
 
-	(defcustom global-text-scale-adjust-limits '(10 . 500)
-	  "Min/max values for `global-text-scale-adjust'.
+    (defcustom global-text-scale-adjust-limits '(10 . 500)
+      "Min/max values for `global-text-scale-adjust'.
 This is a cons cell where the `car' has the minimum font size and
 the `cdr' has the maximum font size, in units of 1/10 pt."
-	  :version "29.1"
-	  :group 'display
-	  :type '(cons (integer :tag "Min")
-				   (integer :tag "Max")))
+      :version "29.1"
+      :group 'display
+      :type '(cons (integer :tag "Min")
+                   (integer :tag "Max")))
 
-	(defvar global-text-scale-adjust--default-height nil)
+    (defvar global-text-scale-adjust--default-height nil)
 
-	(defvar global-text-scale-adjust--increment-factor 5)
+    (defvar global-text-scale-adjust--increment-factor 5)
 
 
-	(defun global-text-scale-adjust (increment)
-	  "Change (a.k.a. \"adjust\") the font size of all faces by INCREMENT.
+    (defun global-text-scale-adjust (increment)
+      "Change (a.k.a. \"adjust\") the font size of all faces by INCREMENT.
 
 Interactively, INCREMENT is the prefix numeric argument, and defaults
 to 1.  Positive values of INCREMENT increase the font size, negative
@@ -415,77 +415,77 @@ See also the related command `text-scale-adjust'.  Unlike that
 command, which scales the font size with a factor,
 `global-text-scale-adjust' scales the font size with an
 increment."
-	  (interactive "p")
-	  (when (display-graphic-p)
-		(unless global-text-scale-adjust--default-height
-		  (setq global-text-scale-adjust--default-height
-				(face-attribute 'default :height)))
-		(let* ((key (event-basic-type last-command-event))
-			   (echo-keystrokes nil)
-			   (cur (face-attribute 'default :height))
-			   (inc
-				(pcase key
-				  (?- (* (- increment)
-						 global-text-scale-adjust--increment-factor))
-				  (?0 (- global-text-scale-adjust--default-height cur))
-				  (_ (* increment
-						global-text-scale-adjust--increment-factor))))
-			   (new (+ cur inc)))
-		  (when (< (car global-text-scale-adjust-limits)
-				   new
-				   (cdr global-text-scale-adjust-limits))
-			(let ((frame-inhibit-implied-resize
-				   (not global-text-scale-adjust-resizes-frames)))
-			  (set-face-attribute 'default nil :height new)
-			  (redisplay 'force)
-			  (when (and (not (and (characterp key) (= key ?0)))
-						 (= cur (face-attribute 'default :height)))
-				(setq global-text-scale-adjust--increment-factor
-					  (1+ global-text-scale-adjust--increment-factor))
-				(global-text-scale-adjust increment))))
-		  (when (characterp key)
-			(set-transient-map
-			 (let ((map (make-sparse-keymap)))
-			   (dolist (mod '(() (control meta)))
-				 (dolist (key '(?+ ?= ?- ?0))
-				   (define-key map (vector (append mod (list key)))
-					 'global-text-scale-adjust)))
-			   map)
-			 nil
-			 (message "Use +, - or 0 for further adjustment"))))))
+      (interactive "p")
+      (when (display-graphic-p)
+        (unless global-text-scale-adjust--default-height
+          (setq global-text-scale-adjust--default-height
+                (face-attribute 'default :height)))
+        (let* ((key (event-basic-type last-command-event))
+               (echo-keystrokes nil)
+               (cur (face-attribute 'default :height))
+               (inc
+                (pcase key
+                  (?- (* (- increment)
+                         global-text-scale-adjust--increment-factor))
+                  (?0 (- global-text-scale-adjust--default-height cur))
+                  (_ (* increment
+                        global-text-scale-adjust--increment-factor))))
+               (new (+ cur inc)))
+          (when (< (car global-text-scale-adjust-limits)
+                   new
+                   (cdr global-text-scale-adjust-limits))
+            (let ((frame-inhibit-implied-resize
+                   (not global-text-scale-adjust-resizes-frames)))
+              (set-face-attribute 'default nil :height new)
+              (redisplay 'force)
+              (when (and (not (and (characterp key) (= key ?0)))
+                         (= cur (face-attribute 'default :height)))
+                (setq global-text-scale-adjust--increment-factor
+                      (1+ global-text-scale-adjust--increment-factor))
+                (global-text-scale-adjust increment))))
+          (when (characterp key)
+            (set-transient-map
+             (let ((map (make-sparse-keymap)))
+               (dolist (mod '(() (control meta)))
+                 (dolist (key '(?+ ?= ?- ?0))
+                   (define-key map (vector (append mod (list key)))
+                     'global-text-scale-adjust)))
+               map)
+             nil
+             (message "Use +, - or 0 for further adjustment"))))))
 
-	(define-key ctl-x-map [(control meta ?+)] 'global-text-scale-adjust)
-	(define-key ctl-x-map [(control meta ?=)] 'global-text-scale-adjust)
-	(define-key ctl-x-map [(control meta ?-)] 'global-text-scale-adjust)
-	(define-key ctl-x-map [(control meta ?0)] 'global-text-scale-adjust)
-
-
-  ;; 	(defvar my-default-font-height (face-attribute 'default :height))
-  ;; 	(defun my-set-to-default-font-height ()
-  ;; 	  (interactive)
-  ;; 	  ;; (set-face-attribute 'default nil :height my-default-font-height)
-  ;; 	  (set-face-font 'default my-default-font)
-  ;; 	  (message (number-to-string (face-attribute 'default :height))))
+    (define-key ctl-x-map [(control meta ?+)] 'global-text-scale-adjust)
+    (define-key ctl-x-map [(control meta ?=)] 'global-text-scale-adjust)
+    (define-key ctl-x-map [(control meta ?-)] 'global-text-scale-adjust)
+    (define-key ctl-x-map [(control meta ?0)] 'global-text-scale-adjust)
 
 
-  ;; 	(defun my-increase-default-font-height ()
-  ;; 	  (interactive)
-  ;; 	  (let* ((default-face-height (face-attribute 'default :height)))
-  ;; 		(set-face-attribute 'default nil :height (+ default-face-height 5))
-  ;; 		(message (number-to-string (face-attribute 'default :height)))
-  ;; 		))
+  ;;    (defvar my-default-font-height (face-attribute 'default :height))
+  ;;    (defun my-set-to-default-font-height ()
+  ;;      (interactive)
+  ;;      ;; (set-face-attribute 'default nil :height my-default-font-height)
+  ;;      (set-face-font 'default my-default-font)
+  ;;      (message (number-to-string (face-attribute 'default :height))))
 
 
-  ;; 	(defun my-decrease-default-font-height ()
-  ;; 	  (interactive)
-  ;; 	  (let* ((default-face-height (face-attribute 'default :height)))
-  ;; 		(set-face-attribute 'default nil :height (- default-face-height 5))
-  ;; 		(message (number-to-string (face-attribute 'default :height)))
-  ;; 		))
+  ;;    (defun my-increase-default-font-height ()
+  ;;      (interactive)
+  ;;      (let* ((default-face-height (face-attribute 'default :height)))
+  ;;        (set-face-attribute 'default nil :height (+ default-face-height 5))
+  ;;        (message (number-to-string (face-attribute 'default :height)))
+  ;;        ))
 
-  ;; 	(global-set-key (kbd "C-M-=") 'my-increase-default-font-height)
-  ;; 	(global-set-key (kbd "C-M--") 'my-decrease-default-font-height)
-  ;; 	(global-set-key (kbd "C-M-0") 'my-set-to-default-font-height)
+
+  ;;    (defun my-decrease-default-font-height ()
+  ;;      (interactive)
+  ;;      (let* ((default-face-height (face-attribute 'default :height)))
+  ;;        (set-face-attribute 'default nil :height (- default-face-height 5))
+  ;;        (message (number-to-string (face-attribute 'default :height)))
+  ;;        ))
+
+  ;;    (global-set-key (kbd "C-M-=") 'my-increase-default-font-height)
+  ;;    (global-set-key (kbd "C-M--") 'my-decrease-default-font-height)
+  ;;    (global-set-key (kbd "C-M-0") 'my-set-to-default-font-height)
 
 
 ;; (defadvice text-scale-increase (around all-buffers (arg) activate)
@@ -523,21 +523,21 @@ increment."
   (interactive)
   (pcase-let ((map (make-sparse-keymap))
               (`(,local ,global) (yae-minions--modes)
-			   ))
+               ))
     (define-key-after map [--local] (list 'menu-item "Local Modes"))
     (dolist (mode local)
       (if-let (menu (and (symbol-value mode)
                          (yae-minions--mode-menu mode)
-						 ))
+                         ))
           (define-key-after map (vector mode) menu)
         (yae-minions--define-toggle map mode)
-		))
+        ))
     (define-key-after map [--line2]  (list 'menu-item "--double-line"))
     (define-key-after map [--global] (list 'menu-item "Global Modes"))
     (dolist (mode global)
       (if-let (menu (and (symbol-value mode)
                          (yae-minions--mode-menu mode)
-						 ))
+                         ))
           (define-key-after map (vector mode) menu)
         (yae-minions--define-toggle map mode)))
     (define-key-after map [--line1] (list 'menu-item "--double-line"))
@@ -578,57 +578,57 @@ increment."
     "Return a string of `window-width' length containing LEFT and RIGHT, aligned respectively."
     (let ((reserve (length right)))
       (concat left
-	      " "
-	      (propertize " "
-			  'display `((space :align-to (- right (- 0 right-margin) ,reserve))))
-	      right)))
+          " "
+          (propertize " "
+              'display `((space :align-to (- right (- 0 right-margin) ,reserve))))
+          right)))
 
   ;; Set the new mode-line-format
   (if (display-graphic-p)
     (setq-default mode-line-format
-		  '((:eval
-		     (mode-line-split--format
-		      ;; Left
-		      (format-mode-line
-		       '("%e" mode-line-front-space
-			 (:propertize
-			  ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
-			  display
-			  (min-width
-			   (5.0)))
-			 mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
-		      ;; Right
-		      (format-mode-line
-		       '((vc-mode vc-mode)
-			 "   "
-			 mode-name " ";; "%m"
-			 (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu)))
-			 "   "
-			 (:eval (propertize "[☰]" 'local-map (make-mode-line-mouse-map 'mouse-1 'menu-bar-open)))
-			 " "
-			 "  " mode-line-misc-info mode-line-end-spaces
-			 )
-		       )))))
+          '((:eval
+             (mode-line-split--format
+              ;; Left
+              (format-mode-line
+               '("%e" mode-line-front-space
+             (:propertize
+              ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
+              display
+              (min-width
+               (5.0)))
+             mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
+              ;; Right
+              (format-mode-line
+               '((vc-mode vc-mode)
+             "   "
+             mode-name " ";; "%m"
+             (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu)))
+             "   "
+             (:eval (propertize "[☰]" 'local-map (make-mode-line-mouse-map 'mouse-1 'menu-bar-open)))
+             " "
+             "  " mode-line-misc-info mode-line-end-spaces
+             )
+               )))))
       (setq-default mode-line-format
-		  '((:eval
-		     (mode-line-split--format
-		      ;; Left
-		      (format-mode-line
-		       '("%e" mode-line-front-space
-			 (:propertize
-			  ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
-			  display
-			  (min-width
-			   (5.0)))
-			 mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
-		      ;; Right
-		      (format-mode-line
-		       '((vc-mode vc-mode)
-			 "   "
-			 mode-name " ";; "%m"
-			 "  " mode-line-misc-info mode-line-end-spaces
-			 )
-		       ))))))
+          '((:eval
+             (mode-line-split--format
+              ;; Left
+              (format-mode-line
+               '("%e" mode-line-front-space
+             (:propertize
+              ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
+              display
+              (min-width
+               (5.0)))
+             mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
+              ;; Right
+              (format-mode-line
+               '((vc-mode vc-mode)
+             "   "
+             mode-name " ";; "%m"
+             "  " mode-line-misc-info mode-line-end-spaces
+             )
+               ))))))
 
 #+end_src
 
@@ -637,8 +637,8 @@ increment."
 #+begin_src emacs-lisp
 
 (setq-default header-line-format '(:eval (substring ""
-													(min (length my-header)
-														 (window-hscroll)))))
+                                                    (min (length " ")
+                                                         (window-hscroll)))))
 #+end_src
 
 
@@ -661,9 +661,9 @@ increment."
 
 (let ((default-directory  (expand-file-name "lisp" user-emacs-directory)))
   (progn
-	(unless (file-directory-p default-directory)
-	  (make-directory default-directory))
-	(normal-top-level-add-subdirs-to-load-path)))
+    (unless (file-directory-p default-directory)
+      (make-directory default-directory))
+    (normal-top-level-add-subdirs-to-load-path)))
 
 #+end_src
 
@@ -690,12 +690,12 @@ increment."
 ;;backups
 
 (let ((thedir  (expand-file-name "auto-save-list" user-emacs-directory)))
-	(unless (file-directory-p thedir)
-	  (make-directory thedir)))
+    (unless (file-directory-p thedir)
+      (make-directory thedir)))
 
 (let ((thedir  (expand-file-name "backups" user-emacs-directory)))
-	(unless (file-directory-p thedir)
-	  (make-directory thedir)))
+    (unless (file-directory-p thedir)
+      (make-directory thedir)))
 
 (setq ;; backup-directory-alist '(((expand-file-name "backups" user-emacs-directory)))
  backup-by-copying t    ; Don't delink hardlinks
@@ -854,9 +854,9 @@ increment."
 #+begin_src emacs-lisp
   ;; Make scrolling less stuttered
   (when EMACS29+
-	(pixel-scroll-precision-mode t)
-	(setq-default pixel-scroll-precision-large-scroll-height 40.0
-				  pixel-scroll-precision-interpolation-factor 30))
+    (pixel-scroll-precision-mode t)
+    (setq-default pixel-scroll-precision-large-scroll-height 40.0
+                  pixel-scroll-precision-interpolation-factor 30))
 
   (customize-set-variable 'auto-window-vscroll nil)
   (customize-set-variable 'fast-but-imprecise-scrolling t)
@@ -979,30 +979,30 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 #+begin_src emacs-lisp
 
 (add-hook 'after-init-time-hook
-		  (progn
-			(defadvice load-theme (after custom-faces-after-load-theme())
-			  "Insert an empty line when moving up from the top line."
-			  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-				(when (file-exists-p dafile) (load-file dafile))
-				;; (save-excursion
-				;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-				))
+          (progn
+            (defadvice load-theme (after custom-faces-after-load-theme())
+              "Insert an empty line when moving up from the top line."
+              (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+                (when (file-exists-p dafile) (load-file dafile))
+                ;; (save-excursion
+                ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+                ))
 
 
-			(ad-activate 'load-theme)
+            (ad-activate 'load-theme)
 
-			(defadvice disable-theme (after custom-faces-after-disable-theme())
-			  "Insert an empty line when moving up from the top line."
-			  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-				(when (file-exists-p dafile) (load-file dafile))
-				;; (save-excursion
-				;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
-				))
-			(ad-activate 'disable-theme)))
+            (defadvice disable-theme (after custom-faces-after-disable-theme())
+              "Insert an empty line when moving up from the top line."
+              (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+                (when (file-exists-p dafile) (load-file dafile))
+                ;; (save-excursion
+                ;;  (if (and solaire-mode (fboundp 'dashboard-refresh-buffer)) (dashboard-refresh-buffer)))
+                ))
+            (ad-activate 'disable-theme)))
 
 (add-hook 'after-init-time-hook
-		  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-			(when (file-exists-p dafile) (load-file dafile))))
+          (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+            (when (file-exists-p dafile) (load-file dafile))))
 
 #+end_src
 
@@ -1258,20 +1258,20 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (with-eval-after-load 'org
   (setq org-src-fontify-natively t
-		org-src-tab-acts-natively t
-		org-confirm-babel-evaluate nil
-		org-edit-src-content-indentation 0))
+        org-src-tab-acts-natively t
+        org-confirm-babel-evaluate nil
+        org-edit-src-content-indentation 0))
 
 (with-eval-after-load "org"
   (progn
-	(org-babel-do-load-languages
-	 'org-babel-load-languages
-	 '((python . t)
-	   (perl . t)
-	   (ruby . t)
-	   (emacs-lisp . t)))
-	
-	'(require 'ox-md nil t)))
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((python . t)
+       (perl . t)
+       (ruby . t)
+       (emacs-lisp . t)))
+    
+    '(require 'ox-md nil t)))
 
   (if EMACS27+ (with-eval-after-load "org"
                  (progn
@@ -1295,10 +1295,10 @@ This is the same as using \\[set-mark-command] with the prefix argument."
         ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
         '(
           (space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
-		  ;; (space-mark 32 [168] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
+          ;; (space-mark 32 [168] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
           (newline-mark 10 [182 10]) ; LINE FEED,
-		  ;; (newline-mark 10 [36 10]) ; LINE FEED,
-		  ;; (newline-mark 10 [172 10]) ; LINE FEED
+          ;; (newline-mark 10 [36 10]) ; LINE FEED,
+          ;; (newline-mark 10 [172 10]) ; LINE FEED
           (tab-mark 9 [9655 9] [92 9]) ; tab
           ))
 
@@ -1315,9 +1315,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                     ibuffer-mode
                     dired-mode
                     occur-mode
-					org-mode
-					pdf-view-mode
-					nov-mode)))
+                    org-mode
+                    pdf-view-mode
+                    nov-mode)))
 
 (add-hook 'after-init-hook (global-whitespace-mode t))
 
@@ -1342,35 +1342,35 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   ""
   (outline-minor-mode 1)
   (let ((regexp-list (append outline-minor-mode-list nil))
-		(find-regexp
-		 (lambda (lst)
-		   ""
-		   (let ((innerList (car lst)))
-			 (if innerList
-				 (if (string= (car innerList) major-mode)
-					 (car (cdr innerList))
-				   (progn (pop lst)
-						  (funcall find-regexp lst))))
-			 ))))
+        (find-regexp
+         (lambda (lst)
+           ""
+           (let ((innerList (car lst)))
+             (if innerList
+                 (if (string= (car innerList) major-mode)
+                     (car (cdr innerList))
+                   (progn (pop lst)
+                          (funcall find-regexp lst))))
+             ))))
     (make-local-variable 'outline-regexp)
     (setq outline-regexp (funcall find-regexp regexp-list)))
   )
 
 (setq outline-minor-mode-list 
       (list ;; '(emacs-lisp-mode "\\(?:;;; ?\\)\\|(defun\\|(defvar\\|(defcustom\\|(defconst\\|(defgroup\\|(defmacro")
-			'(shell-mode "^dove@zsh.*[#%\$] ")
-			'(sh-mode "^\\(?:###[ \t]*\\).*\n\\|function .*[{(]")
-			'(perl-mode "sub ")
-			'(eshell-mode "^[^#$\n]* [#$] ")
+            '(shell-mode "^dove@zsh.*[#%\$] ")
+            '(sh-mode "^\\(?:###[ \t]*\\).*\n\\|function .*[{(]")
+            '(perl-mode "sub ")
+            '(eshell-mode "^[^#$\n]* [#$] ")
             ;; '(ruby-mode "[ ]+def \\|cloud_pattern\\|[ ]+cloud_node")
-			;; '(ruby-mode "class \\|[ ]+class \\|module \\|[ ]+module \\|def \\|[ ]+def \\|begin \\|[ ]+begin ")
-			;; '(ruby-mode "class \\|[ ]+class \\|module \\|[ ]+module \\|def \\|[ ]+def \\|begin \\|[ ]+begin ")
-			;; ([:space:]*)
-			'(ruby-mode "^\\(?:###[ \t]*\\).*\\|^\\([ \t]*\\)class \\|^\\([ \t]*\\)module \\|^\\([ \t]*\\)def ")
-			;; '(crystal-mode "^\\(?:###[ \t]*\\).*\\|^\\([ \t]*\\)class \\|^\\([ \t]*\\)module \\|([ \t]*\\)macro \\|([ \t]*\\)lib \\|([ \t]*\\)struct \\|([ \t]*\\)enum \\|([ \t]*\\)union \\|([ \t]*\\)annotation \\|^\\([ \t]*\\)def ")
-			;; '(crystal-mode "\\(def\\|class\\|module\\|macro\\|lib\\|struct\\|enum\\|union\\|annotation\\)"
+            ;; '(ruby-mode "class \\|[ ]+class \\|module \\|[ ]+module \\|def \\|[ ]+def \\|begin \\|[ ]+begin ")
+            ;; '(ruby-mode "class \\|[ ]+class \\|module \\|[ ]+module \\|def \\|[ ]+def \\|begin \\|[ ]+begin ")
+            ;; ([:space:]*)
+            '(ruby-mode "^\\(?:###[ \t]*\\).*\\|^\\([ \t]*\\)class \\|^\\([ \t]*\\)module \\|^\\([ \t]*\\)def ")
+            ;; '(crystal-mode "^\\(?:###[ \t]*\\).*\\|^\\([ \t]*\\)class \\|^\\([ \t]*\\)module \\|([ \t]*\\)macro \\|([ \t]*\\)lib \\|([ \t]*\\)struct \\|([ \t]*\\)enum \\|([ \t]*\\)union \\|([ \t]*\\)annotation \\|^\\([ \t]*\\)def ")
+            ;; '(crystal-mode "\\(def\\|class\\|module\\|macro\\|lib\\|struct\\|enum\\|union\\|annotation\\)"
             '(Man-mode "^[A-Z]+")
-			'(woman-mode "^[A-Z]+")
+            '(woman-mode "^[A-Z]+")
             ))
 
 (mapc (lambda (mode-name) 
@@ -1380,9 +1380,9 @@ This is the same as using \\[set-mark-command] with the prefix argument."
         ;; emacs-lisp-mode-hook
         eshell-mode-hook
         ruby-mode-hook
-		;; crystal-mode-hook
+        ;; crystal-mode-hook
         Man-mode-hook
-		woman-mode
+        woman-mode
         ))
 
 ;; ;; (setq outline-regexp "^\\([ \t]*\\)class \\|^\\([ \t]*\\)module \\|^\\([ \t]*\\)def \\|^\\([ \t]*\\)begin ")
@@ -1627,7 +1627,7 @@ sourced from https://www.lysator.liu.se/~davidk/elisp/tempo-examples.html
 ;;;C++-Mode Templates
 
 (add-hook 'c++-mode-hook
-		  (lambda () (progn 
+          (lambda () (progn 
                        (tempo-define-template "c++-class"
                                               '("class " (p "classname: " class) p n "{" n "public:" n>
 
@@ -2223,26 +2223,26 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+begin_src emacs-lisp
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-						 ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("gnu"   . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-						 ("org" . "https://orgmode.org/elpa/")))
+                         ("org" . "https://orgmode.org/elpa/")))
 
 
 
 ;; (setq gnutls-algorithm-priority  "NORMAL:-VERS-TLS1.3" ;; bug fix for gnu
-;; 	  package-enable-at-startup nil
-;; 	  package-archive-priorities '(("melpa"        . 10)
-;; 								   ("elpa"         . 30)
-;; 								   ("org"          . 25)
-;; 								   ("nongnu"       . 65)
-;; 								   ("gnu"          . 50))  ;; Higher values are searched first.
-;; 	  )
+;;    package-enable-at-startup nil
+;;    package-archive-priorities '(("melpa"        . 10)
+;;                                 ("elpa"         . 30)
+;;                                 ("org"          . 25)
+;;                                 ("nongnu"       . 65)
+;;                                 ("gnu"          . 50))  ;; Higher values are searched first.
+;;    )
 
 ;; (package-initialize)
 
 (if (not (package-installed-p 'use-package))
-	(package-install 'use-package)
+    (package-install 'use-package)
   (require 'use-package))
 
 #+end_src
@@ -2276,9 +2276,9 @@ Expand is a package that extends the functionality of abbrev to enable code temp
     ;; (pdf-tools-install :no-query)
     ;; (pdf-loader-install)
   :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1)))
-		(pdf-view-mode . (lambda () (pdf-view-themed-minor-mode 1)))
-		(pdf-view-mode . (lambda () (pdf-view-themed-minor-mode 1)))
-		(pdf-view-mode . (lambda () (require 'pdf-occur))))
+        (pdf-view-mode . (lambda () (pdf-view-themed-minor-mode 1)))
+        (pdf-view-mode . (lambda () (pdf-view-themed-minor-mode 1)))
+        (pdf-view-mode . (lambda () (require 'pdf-occur))))
 
 #+end_src
 
@@ -3145,23 +3145,23 @@ With postitive prefix argument ARG move to the nth previous object."
 ;;   :defer t
 ;;   :config
 ;;   ;; (setq highlight-indent-guides-delay 0.1
-;;   ;; 		highlight-indent-guides-auto-odd-face-perc 20
-;;   ;; 		highlight-indent-guides-auto-even-face-perc 30
-;;   ;; 		highlight-indent-guides-auto-character-face-perc 40
-;;   ;; 		highlight-indent-guides-auto-stack-odd-face-perc 20
-;;   ;; 		highlight-indent-guides-auto-stack-even-face-perc 30
-;;   ;; 		highlight-indent-guides-auto-top-odd-face-perc 50
-;;   ;; 		highlight-indent-guides-auto-top-even-face-perc 60
-;;   ;; 		highlight-indent-guides-responsive 'stack
-;;   ;; 		highlight-indent-guides-method 'column)
+;;   ;;         highlight-indent-guides-auto-odd-face-perc 20
+;;   ;;         highlight-indent-guides-auto-even-face-perc 30
+;;   ;;         highlight-indent-guides-auto-character-face-perc 40
+;;   ;;         highlight-indent-guides-auto-stack-odd-face-perc 20
+;;   ;;         highlight-indent-guides-auto-stack-even-face-perc 30
+;;   ;;         highlight-indent-guides-auto-top-odd-face-perc 50
+;;   ;;         highlight-indent-guides-auto-top-even-face-perc 60
+;;   ;;         highlight-indent-guides-responsive 'stack
+;;   ;;         highlight-indent-guides-method 'column)
 
 ;;   ;; (setq highlight-indent-guides-responsive 'stack
-;;   ;; 		highlight-indent-guides-method 'character
-;;   ;; 		;; highlight-indent-guides-character ?|
-;;   ;; 		;;colors
-;;   ;; 		highlight-indent-guides-auto-odd-face-perc 15
-;;   ;; 		highlight-indent-guides-auto-even-face-perc 15
-;;   ;; 		highlight-indent-guides-auto-character-face-perc 20)
+;;   ;;         highlight-indent-guides-method 'character
+;;   ;;         ;; highlight-indent-guides-character ?|
+;;   ;;         ;;colors
+;;   ;;         highlight-indent-guides-auto-odd-face-perc 15
+;;   ;;         highlight-indent-guides-auto-even-face-perc 15
+;;   ;;         highlight-indent-guides-auto-character-face-perc 20)
 
 ;;   ;; (setq highlight-indent-guides-auto-enabled nil)
 
@@ -3203,31 +3203,31 @@ With postitive prefix argument ARG move to the nth previous object."
   (minions-mode 1)
   ;; Set the new mode-line-format
   (setq-default mode-line-format
-				'((:eval
+                '((:eval
                    (mode-line-split--format
-					;; Left
-					(format-mode-line
-					 '("%e" mode-line-front-space
-					   (:propertize
-						("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
-						display
-						(min-width
-						 (5.0)))
-					   mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
-					;; Right
-					(format-mode-line
-					 '((vc-mode vc-mode)
-					   "   "
-					   mode-name " ";; "%m"
-					   ;; (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu)))
-					   ;; (concat (format-mode-line minions-mode-line-modes 'mood-line-major-mode) "  ")
-					   (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'minions-minor-modes-menu)))
-					   "   "
-					   (:eval (propertize "[☰]" 'local-map (make-mode-line-mouse-map 'mouse-1 'menu-bar-open)))
-					   " "
-					   "  " mode-line-misc-info mode-line-end-spaces
-					   )
-					 )))))
+                    ;; Left
+                    (format-mode-line
+                     '("%e" mode-line-front-space
+                       (:propertize
+                        ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
+                        display
+                        (min-width
+                         (5.0)))
+                       mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position))
+                    ;; Right
+                    (format-mode-line
+                     '((vc-mode vc-mode)
+                       "   "
+                       mode-name " ";; "%m"
+                       ;; (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'yae-minions-minor-modes-menu)))
+                       ;; (concat (format-mode-line minions-mode-line-modes 'mood-line-major-mode) "  ")
+                       (:eval (propertize "[+]" 'local-map (make-mode-line-mouse-map 'mouse-1 'minions-minor-modes-menu)))
+                       "   "
+                       (:eval (propertize "[☰]" 'local-map (make-mode-line-mouse-map 'mouse-1 'menu-bar-open)))
+                       " "
+                       "  " mode-line-misc-info mode-line-end-spaces
+                       )
+                     )))))
   )
 
 #+end_src
@@ -3890,8 +3890,8 @@ With postitive prefix argument ARG move to the nth previous object."
 
 (when (not (locate-library "eglot"))
   (use-package eglot
-	:ensure t
-	:after company))
+    :ensure t
+    :after company))
 
 #+end_src
 
@@ -4327,9 +4327,9 @@ With postitive prefix argument ARG move to the nth previous object."
     (interactive)
     (let ((languages (mapcar 'car treesit-language-source-alist)))
       (dolist (lang languages)
-	      (treesit-install-language-grammar lang)
-	      (message "`%s' parser was installed." lang)
-	      (sit-for 0.75)))))
+          (treesit-install-language-grammar lang)
+          (message "`%s' parser was installed." lang)
+          (sit-for 0.75)))))
 
 #+end_src
 
@@ -4462,7 +4462,7 @@ With postitive prefix argument ARG move to the nth previous object."
   (make-directory theme-directory))
 
 (add-to-list 'custom-theme-load-path
-			 (expand-file-name "themes" user-emacs-directory))
+             (expand-file-name "themes" user-emacs-directory))
 
 
 (let ((basedir theme-directory))
@@ -4475,7 +4475,7 @@ With postitive prefix argument ARG move to the nth previous object."
 (add-hook 'after-init-time-hook
           (if (require 'base16-theme nil 'noerror)
               (load-theme 'base16-brewer t)
-			(load-theme 'wombat t)
+            (load-theme 'wombat t)
             ;; (load-theme 'manoj-dark t)
             ;; (load-theme 'modus-vivendi t)
             ))
@@ -4502,15 +4502,15 @@ With postitive prefix argument ARG move to the nth previous object."
 #+begin_src emacs-lisp
 
 (add-hook 'after-init-hook
-		  (lambda ()
-			(let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-			  (when (file-exists-p dafile) (load-file dafile)))))
+          (lambda ()
+            (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+              (when (file-exists-p dafile) (load-file dafile)))))
 
 (when EMACS27+
   (add-hook 'server-after-make-frame-hook
-			(lambda ()
-			  (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
-				(when (file-exists-p dafile) (load-file dafile))))))
+            (lambda ()
+              (let ((dafile (expand-file-name "custom_faces.el" user-emacs-directory)))
+                (when (file-exists-p dafile) (load-file dafile))))))
 
 #+end_src
 
