@@ -807,13 +807,13 @@ increment."
 
 ;;line-numbers
 
-(setq-default display-line-numbers-type 'relative
-      display-line-numbers-grow-only t
-      display-line-numbers-width-start t
-      display-line-numbers-width 4
-      )
+(when EMACS26+
+  (setq-default display-line-numbers-type 'relative
+                display-line-numbers-grow-only t
+                display-line-numbers-width-start t
+                display-line-numbers-width 4 )
 
-(global-display-line-numbers-mode t)
+  (global-display-line-numbers-mode t))
 
 #+end_src
 
