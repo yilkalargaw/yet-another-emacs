@@ -203,7 +203,7 @@ for FRAME (defaults to the current frame)."
 						(car (last colors))
                       (nth i colors))))
 				 (t colors)))))
-
+  
   (defun doomish-blend (color1 color2 alpha)
     "Blend two colors (hexidecimal strings) together by a coefficient ALPHA (a
 float between 0 and 1)"
@@ -465,7 +465,7 @@ between 0 and 1)."
 										;; :height 1.0
 										:italic t
 										))))
-
+ 
 
    ;; ;;;;; modeline
    ;; `(mode-line ((t (:inherit variable-pitch
@@ -675,8 +675,9 @@ between 0 and 1)."
    `(line-number-current-line ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face) :weight extra-bold ))))
     ;; `(line-number ((t (:inherit linum :weight thin :inherit line-number :weight thin :underline nil :height 0.8 :italic t))))
     ;;;;; linum-mode
-   `(linum ((t (:inherit line-number :weight thin :height 0.8 :underline nil :font ,(face-font 'highlight) :italic t))))
-   `(linum-relative-current-face ((t (:inherit line-number :height 1.0 :weight extra-bold :italic nil))))
+   ;; `(linum ((t (:inherit line-number :weight thin :height 0.8 :underline nil :font ,(face-font 'highlight) :italic t))))
+   `(linum ((t (:background ,(face-background 'default) :foreground ,(face-foreground 'font-lock-comment-face)))))
+   `(linum-relative-current-face ((t (:inherit linum :height 1.0 :weight extra-bold :italic nil))))
 
    ))
 
