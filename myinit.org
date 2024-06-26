@@ -1061,7 +1061,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (setq comint-scroll-show-maximum-output nil)
   (setq comint-scroll-to-bottom-on-input nil)
   (setq comint-scroll-to-bottom-on-output nil)
-  (add-hook 'comint-mode-hook 'display-line-numbers-mode -1)
+  (add-hook 'comint-mode-hook (lambda () (when EMACS26+ (display-line-numbers-mode -1))))
   )
 
 #+end_src
@@ -1075,7 +1075,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (with-eval-after-load 'shell
   (define-key shell-mode-map (kbd "<tab>") 'completion-at-point)
   (define-key shell-mode-map (kbd "<backtab>") 'completion-at-point)
-  (add-hook 'comint-mode-hook (lambda () (display-line-numbers-mode -1))))
+  (add-hook 'comint-mode-hook (lambda () (when EMACS26+ (display-line-numbers-mode -1)))))
 
 #+end_src
 
@@ -1088,7 +1088,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                                  "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
                                  "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
                                  "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger"))
-  (add-hook 'eshell-mode-hook (lambda () (display-line-numbers-mode -1)))
+  (add-hook 'eshell-mode-hook (lambda () (when EMACS26+ (display-line-numbers-mode -1))))
   (setq eshell-scroll-show-maximum-output nil)
 
   (defun eshell-load-bash-aliases ()
@@ -1113,7 +1113,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 (with-eval-after-load 'term
   (define-key term-raw-map (kbd "C-c C-y") 'term-paste)
-  (add-hook 'term-mode-hook 'display-line-numbers-mode -1)
+  (add-hook 'term-mode-hook (lambda () (when EMACS26+ (display-line-numbers-mode -1))))
   (add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1))))
 
 #+end_src
@@ -1122,7 +1122,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 
 #+begin_src emacs-lisp
 
-(add-hook 'eww-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'eww-mode-hook (lambda () (when EMACS26+ (display-line-numbers-mode -1))))
 
 #+end_src
 
@@ -2275,7 +2275,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
   :config
     ;; (pdf-tools-install :no-query)
     ;; (pdf-loader-install)
-  :hook (pdf-view-mode . (lambda () (display-line-numbers-mode -1)))
+  :hook (pdf-view-mode . (lambda () (when EMACS26+ (display-line-numbers-mode -1))))
         (pdf-view-mode . (lambda () (pdf-view-themed-minor-mode 1)))
         (pdf-view-mode . (lambda () (pdf-view-themed-minor-mode 1)))
         (pdf-view-mode . (lambda () (require 'pdf-occur))))
@@ -2291,7 +2291,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
   :defer t
   :when (bound-and-true-p module-file-suffix)
   :hook ((vterm-mode . (lambda () (global-hl-line-mode -1)))
-         (vterm-mode . (lambda () (display-line-numbers-mode -1)))
+         (vterm-mode . (lambda () (when EMACS26+ (display-line-numbers-mode -1))))
          ;; (vterm-mode . (lambda () (nlinum-mode -1)))
          (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
          (vterm-mode . (lambda () (setq line-spacing 0)))
@@ -2985,7 +2985,7 @@ With postitive prefix argument ARG move to the nth previous object."
   :defer t
   :mode ("\\.epub\\'" . nov-mode))
 
-(add-hook 'nov-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'nov-mode-hook (lambda () (when EMACS26+ (display-line-numbers-mode -1))))
 ;; (add-hook 'nov-mode-hook (lambda () (nlinum-mode -1)))
 
 
@@ -3014,16 +3014,17 @@ With postitive prefix argument ARG move to the nth previous object."
   :config (setq pomidor-sound-tick nil
                 pomidor-sound-tack nil)
   :hook (pomidor-mode . (lambda ()
-                          (display-line-numbers-mode -1) ; Emacs 26.1+
-                          (setq left-fringe-width 0 right-fringe-width 0)
-                          (setq left-margin-width 2 right-margin-width 0)
-                          ;; force fringe update
-                          (set-window-buffer nil (current-buffer))
-                          ;;minutes
-                          (setq pomidor-seconds (* 25 60)) ; 25 minutes for the work period
-                          (setq pomidor-break-seconds (* 5 60)) ; 5 minutes break time
-                          ))
-  )
+						  (when EMACS26+ 
+                            (display-line-numbers-mode -1) ; Emacs 26.1+
+                            (setq left-fringe-width 0 right-fringe-width 0)
+                            (setq left-margin-width 2 right-margin-width 0)
+                            ;; force fringe update
+                            (set-window-buffer nil (current-buffer))
+                            ;;minutes
+                            (setq pomidor-seconds (* 25 60)) ; 25 minutes for the work period
+                            (setq pomidor-break-seconds (* 5 60)) ; 5 minutes break time
+							)))
+					  )
 
 #+end_src
 
