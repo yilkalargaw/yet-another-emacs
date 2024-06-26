@@ -28,8 +28,14 @@
        ;; ;; (primary-color (face-foreground 'mode-line nil))
        ;; (secondary-color (face-background 'secondary-selection nil 'region))
        ;; (org-highlights `(:foreground ,base-font-color :background ,secondary-color))
-	   (bg-color (unless (string-equal (face-background 'default) "unspecified-bg") (apply 'color-rgb-to-hex (append (color-name-to-rgb (face-background 'default)) '(2)))))
-	   (fg-color (unless (string-equal (face-background 'default) "unspecified-bg") (apply 'color-rgb-to-hex (append (color-name-to-rgb (face-background 'default)) '(2)))))
+       (bg-color (if EMACS27+
+                   (unless (string-equal (face-background 'default) "unspecified-bg")
+                     (apply 'color-rgb-to-hex (append (color-name-to-rgb (face-background 'default)) '(2))))
+				   (face-background 'default)))
+       (fg-color (if EMACS27+
+                   (unless (string-equal (face-background 'default) "unspecified-bg")
+                     (apply 'color-rgb-to-hex (append (color-name-to-rgb (face-background 'default)) '(2))))
+				   (face-foreground 'default)))
        )
 
 ;; (defun light-p (color)
@@ -197,7 +203,7 @@ for FRAME (defaults to the current frame)."
 						(car (last colors))
                       (nth i colors))))
 				 (t colors)))))
-  
+
   (defun doomish-blend (color1 color2 alpha)
     "Blend two colors (hexidecimal strings) together by a coefficient ALPHA (a
 float between 0 and 1)"
@@ -459,7 +465,7 @@ between 0 and 1)."
 										;; :height 1.0
 										:italic t
 										))))
- 
+
 
    ;; ;;;;; modeline
    ;; `(mode-line ((t (:inherit variable-pitch
