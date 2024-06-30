@@ -1369,6 +1369,11 @@ This is the same as using \\[set-mark-command] with the prefix argument."
             '(ruby-mode "^\\(?:###[ \t]*\\).*\\|^\\([ \t]*\\)class \\|^\\([ \t]*\\)module \\|^\\([ \t]*\\)def ")
             ;; '(crystal-mode "^\\(?:###[ \t]*\\).*\\|^\\([ \t]*\\)class \\|^\\([ \t]*\\)module \\|([ \t]*\\)macro \\|([ \t]*\\)lib \\|([ \t]*\\)struct \\|([ \t]*\\)enum \\|([ \t]*\\)union \\|([ \t]*\\)annotation \\|^\\([ \t]*\\)def ")
             ;; '(crystal-mode "\\(def\\|class\\|module\\|macro\\|lib\\|struct\\|enum\\|union\\|annotation\\)"
+			;; '(lua-mode "\\(function\\|if\\|for\\|while\\|repeat\\)")
+			;; '(lua-mode "^[[:space:]]*\\(function\\|if\\|for\\|while\\|repeat\\)")
+			;; '(lua-mode "^[[:space:]]*\\(function\\)"
+            ;;            "*end")
+            '(lua-mode "function \\|[ ]+function ")
             '(Man-mode "^[A-Z]+")
             '(woman-mode "^[A-Z]+")
             ))
@@ -1381,6 +1386,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
         eshell-mode-hook
         ruby-mode-hook
         ;; crystal-mode-hook
+        lua-mode-hook
         Man-mode-hook
         woman-mode
         ))
