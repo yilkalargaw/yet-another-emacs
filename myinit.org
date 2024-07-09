@@ -145,6 +145,7 @@
     - [[#org-bullets][org-bullets]]
     - [[#ox-pandoc][ox-pandoc]]
     - [[#htmlize][htmlize]]
+    - [[#hyperbole][hyperbole]]
 - [[#load-theme][load-theme]]
 - [[#initial-scratch-buffer-settings][initial scratch-buffer settings]]
 - [[#load-custom-faces][load custom faces]]
@@ -4432,13 +4433,14 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-*** COMMENT hyperbole
+*** hyperbole
 
 #+begin_src emacs-lisp
 
 (use-package hyperbole
   :ensure t
-  :defer 1)
+  ;; :defer 1
+  )
 
 #+end_src
 
