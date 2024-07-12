@@ -83,7 +83,6 @@
 - [[external packages I use]]
   - [[auto-tangle]]
   - [[keychords]]
-  - [[toc-org]]
   - [[diminish and delight]]
   - [[exec path form shell]]
   - [[hydra]]
@@ -2461,18 +2460,6 @@ Expand is a package that extends the functionality of abbrev to enable code temp
   :defer t              ;; remove the defer when I actually use it.
   :after use-package
   :config (key-chord-mode 1))
-
-#+end_src
-
-** toc-org
-
-#+begin_src emacs-lisp
-
-(use-package toc-org
-  :ensure t
-  :defer t
-  :hook ((org-mode . toc-org-mode)
-         (markdown-mode . toc-org-mode)))
 
 #+end_src
 
