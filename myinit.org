@@ -673,7 +673,7 @@ increment."
 ;;       (make-directory default-directory))
 ;;     (normal-top-level-add-subdirs-to-load-path)))
 
-;; for me site lisp is kind of where i try things out
+;; for me site lisp is kind of where i try things out, dump random lisp files
 ;; and add some of my own packages as git modules
 (let ((lisp-dir (expand-file-name "site-lisp" user-emacs-directory)))
   ;; Ensure lisp directory exists
