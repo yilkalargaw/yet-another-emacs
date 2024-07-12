@@ -7,10 +7,11 @@
 #+OPTIONS: ^:nil
 #+OPTIONS: _:nil
 #+EXCLUDE_TAGS: noexport
+#+STARTUP: overview
+#+COMMENTED_TOC: 1
 
-
-* table of contents :noexport:
-#+BEGIN_TOC
+* table of contents                                                :noexport:
+# #+BEGIN_TOC
 - [[table of contents]]
 - [[starting headers]]
 - [[vanilla emacs settings]]
@@ -156,7 +157,7 @@
 - [[load custom faces]]
 - [[set custom variables]]
 - [[provide init and finish]]
-#+END_TOC
+# #+END_TOC
 
 * starting headers
 #+begin_src emacs-lisp
@@ -1324,7 +1325,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 	  "Generate or replace a table of contents for the current Org buffer at the #+BEGIN_TOC block respecting the toc depth option."
 	  (interactive)
 	  (let ((toc-depth 3) ; Default TOC depth
-			(toc ""))
+			(toc "")
+			(commented-toc nil))
 
 		;; Determine the TOC depth from Org mode buffer options
 		(save-excursion
@@ -1332,22 +1334,30 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 		  (when (re-search-forward "^#\\+OPTIONS:.*toc:\\([0-9]+\\)" nil t)
 			(setq toc-depth (string-to-number (match-string 1)))))
 
+		(with-current-buffer (current-buffer)
+		  (let ((keywords (org-collect-keywords '("COMMENTED_TOC"))))
+			(setq commented-toc (cdr (assoc "COMMENTED_TOC" keywords)))))
+
 		;; Generate the TOC using the custom function
 		(setq toc (yae-org-generate-toc toc-depth))
 
 		;; Replace the custom block with the generated TOC
 		(save-excursion
 		  (goto-char (point-min))
-		  (while (re-search-forward "^#\\+BEGIN_TOC\\(?: +:depth +\\([0-9]+\\)\\)? *$" nil t)
+		  (while (or (re-search-forward "^#\\+BEGIN_TOC\\(?: +:depth +\\([0-9]+\\)\\)? *$" nil t)
+					 (re-search-forward "^# #\\+BEGIN_TOC\\(?: +:depth +\\([0-9]+\\)\\)? *$" nil t))
 			(let* ((depth (or (and (match-string 1) (string-to-number (match-string 1))) toc-depth))
 				   (start (match-beginning 0))
 				   (end (progn
-						  (re-search-forward "^#\\+END_TOC$" nil t)
+						  (or (re-search-forward "^#\\+END_TOC$" nil t)
+							  (re-search-forward "^# #\\+END_TOC$" nil t))
 						  (match-end 0))))
 			  (let ((toc (yae-org-generate-toc depth)))
 				(delete-region start end)
 				(goto-char start)
-				(insert "#+BEGIN_TOC\n" toc "#+END_TOC")))))))
+				(if commented-toc
+					(insert "# #+BEGIN_TOC\n" toc "# #+END_TOC")
+				  (insert "#+BEGIN_TOC\n" toc "#+END_TOC"))))))))
 
 	(defun yae-org-mode-setup ()
 	  "Custom configurations for Org mode."
