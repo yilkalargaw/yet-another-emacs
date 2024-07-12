@@ -2,155 +2,161 @@
 #+AUTHOR: Yilkal Argaw , StackOverflow, Github, Emacs-wiki and The Internet in General
 #+OPTIONS: toc:3          (only include two levels in TOC)
 # #+HTML_HEAD:  <link rel="stylesheet" type="text/css" href="http://a-dma.github.io/gruvbox-css/gruvbox-dark-medium.min.css" />
+#+HTML_HEAD: <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 #+INFOJS_OPT: view:overview toc:3 ltoc:3 mouse:underline buttons:0 path:https://orgmode.org/worg/code/org-info-js/org-info-src.js
 #+OPTIONS: ^:nil
 #+OPTIONS: _:nil
+#+EXCLUDE_TAGS: noexport
 
-* table of contents                                          :noexport:TOC_3:
-- [[#starting-headers][starting headers]]
-- [[#vanilla-emacs-settings][vanilla emacs settings]]
-  - [[#mostly-related-to-initialization-process][mostly related to initialization process]]
-    - [[#earlyinits][earlyinits]]
-    - [[#deferred-compilation][deferred compilation]]
-    - [[#other-init-settings-for-speed][other init settings for speed]]
-    - [[#suppress-some-ad-handle-definition-warnings][suppress some ad-handle-definition warnings]]
-    - [[#more-garbage-collection-related-settings][more garbage collection related settings]]
-  - [[#some-constants-and-settings-that-need-to-be-configured-initially][some constants and settings that need to be configured initially]]
-    - [[#constants][constants]]
-    - [[#custom-file-settings][custom-file settings]]
-    - [[#gnutls-and-security][gnutls and security]]
-    - [[#encryption-related-additional][encryption related additional]]
-    - [[#lexical-binding][lexical binding]]
-  - [[#windowframe-look-and-feel-setting][window(frame) look and feel setting]]
-    - [[#general-frame-and-window-settings][general frame and window settings]]
-    - [[#minor-modes-menu-based-on-minions][minor-modes-menu-based-on-minions]]
-    - [[#mode-line-modify][mode-line-modify]]
-    - [[#headerline][headerline]]
-  - [[#require-some-libraries][require some libraries]]
-  - [[#basic-emacs-editor-preferences][basic emacs editor preferences]]
-    - [[#set-load-path][set load path]]
-    - [[#set-utf-8-as-default-coding-system][set utf-8 as default coding system]]
-    - [[#autorevert][autorevert]]
-    - [[#backup-and-auto-save-list][backup and auto-save-list]]
-    - [[#clipboard][clipboard]]
-    - [[#yesno][yes,no]]
-    - [[#enable-some-disabled-commands][enable some disabled commands]]
-    - [[#input-method][input method]]
-    - [[#indentation-stuff][indentation stuff]]
-    - [[#sentences-end-with-a-single-space][Sentences end with a single space]]
-    - [[#line-spacing][line-spacing]]
-    - [[#line-number][line-number]]
-    - [[#show-parens][show-parens]]
-    - [[#scrolling][scrolling]]
-    - [[#marking][marking]]
-    - [[#isearch][isearch]]
-    - [[#explicitly-set-shell][explicitly set shell]]
-    - [[#better-support-for-long-lines][better support for long lines]]
-    - [[#rectangle-mode][rectangle mode]]
-  - [[#theming][theming]]
-  - [[#completion][completion]]
-  - [[#emacs-built-in-packages][emacs built in packages]]
-    - [[#imenu][imenu]]
-    - [[#ibuffer][ibuffer]]
-    - [[#comint-mode][comint-mode]]
-    - [[#shell-mode][shell-mode]]
-    - [[#eshell][eshell]]
-    - [[#term-mode][term-mode]]
-    - [[#eww--shr][eww & shr]]
-    - [[#flymake][flymake]]
-    - [[#ediff][ediff]]
-    - [[#tramp][tramp]]
-    - [[#dired][dired]]
-    - [[#org][org]]
-    - [[#whitespace-mode][whitespace-mode]]
-    - [[#outline][outline]]
-    - [[#tab-bar--tabline][tab-bar & tabline]]
-    - [[#recentf][recentf]]
-    - [[#hippie_expand][hippie_expand]]
-- [[#initialize-package-managers][initialize package managers]]
-  - [[#packageel][package.el]]
-- [[#psudo-native-i-prefer-to-install-these-using-the-systems-package-manager][psudo native (i prefer to install these using the system's package manager)]]
-  - [[#special-use-package-macro][special use-package macro]]
-  - [[#pdf-tools][pdf-tools]]
-  - [[#vterm][vterm]]
-- [[#external-libraries][external libraries]]
-- [[#external-packages-i-use][external packages I use]]
-  - [[#auto-tangle][auto-tangle]]
-  - [[#keychords][keychords]]
-  - [[#toc-org][toc-org]]
-  - [[#diminish-and-delight][diminish and delight]]
-  - [[#exec-path-form-shell][exec path form shell]]
-  - [[#hydra][hydra]]
-  - [[#undo-tree][undo-tree]]
-  - [[#git][git]]
-    - [[#git-gutter][git-gutter]]
-    - [[#git-timemachine][git-timemachine]]
-    - [[#magit--forge][magit & forge]]
-    - [[#monky][monky]]
-  - [[#yasnippet][yasnippet]]
-  - [[#which-key][which-key]]
-  - [[#avy][avy]]
-  - [[#ace-link][ace-link]]
-  - [[#ace-window][ace-window]]
-  - [[#expand-region][expand-region]]
-  - [[#ag][ag]]
-  - [[#rg][rg]]
-  - [[#ws-butler][ws-butler]]
-  - [[#multiple-cursors][multiple-cursors]]
-  - [[#phi-search][phi-search]]
-  - [[#rainbow-delimiters][rainbow-delimiters]]
-  - [[#modal-editing-modes][modal editing modes]]
-    - [[#god-mode][god-mode]]
-  - [[#restclient][restclient]]
-  - [[#novel][nov.el]]
-  - [[#pomidor][pomidor]]
-  - [[#keyfreq][keyfreq]]
-  - [[#corfu--cape--kind-icons][corfu & cape & kind-icons]]
-  - [[#highligt-number-literals][highligt number literals]]
-  - [[#highlight-indent-guides][highlight-indent-guides]]
-  - [[#minions][minions]]
-  - [[#projectile][projectile]]
-  - [[#smartparens][smartparens]]
-  - [[#elpher][elpher]]
-  - [[#typing][typing]]
-    - [[#speed-type][speed-type]]
-    - [[#typing-of-emacs][typing-of-emacs]]
-  - [[#devdocs-browser][devdocs browser]]
-  - [[#scratch][scratch]]
-  - [[#install-themes][install themes]]
-  - [[#alternate-mode-lines][alternate mode-lines]]
-  - [[#all-the-icons][all-the-icons]]
-  - [[#programming-and-typesetting][programming and typesetting]]
-    - [[#eglot][eglot]]
-    - [[#cc][C/C++]]
-    - [[#rust][rust]]
-    - [[#ruby][ruby]]
-    - [[#php][php]]
-    - [[#lua][lua]]
-    - [[#ocaml][ocaml]]
-    - [[#crystal][crystal]]
-    - [[#clojure][clojure]]
-    - [[#zig][zig]]
-    - [[#d][d]]
-    - [[#nim][nim]]
-    - [[#raku][raku]]
-    - [[#csv][csv]]
-    - [[#yamltoml-and-json][yaml,toml and json]]
-    - [[#rfc-mode][rfc-mode]]
-    - [[#go][go]]
-    - [[#web][web]]
-    - [[#tree-sitter-native][tree-sitter native]]
-  - [[#dired-related][dired related]]
-  - [[#org-related][org related]]
-    - [[#org-bullets][org-bullets]]
-    - [[#ox-pandoc][ox-pandoc]]
-    - [[#htmlize][htmlize]]
-    - [[#hyperbole][hyperbole]]
-- [[#load-theme][load-theme]]
-- [[#initial-scratch-buffer-settings][initial scratch-buffer settings]]
-- [[#load-custom-faces][load custom faces]]
-- [[#set-custom-variables][set custom variables]]
-- [[#provide-init-and-finish][provide init and finish]]
+
+* table of contents :noexport:
+#+BEGIN_TOC
+- [[table of contents]]
+- [[starting headers]]
+- [[vanilla emacs settings]]
+  - [[mostly related to initialization process]]
+    - [[earlyinits]]
+    - [[deferred compilation]]
+    - [[other init settings for speed]]
+    - [[suppress some ad-handle-definition warnings]]
+    - [[more garbage collection related settings]]
+  - [[some constants and settings that need to be configured initially]]
+    - [[constants]]
+    - [[custom-file settings]]
+    - [[gnutls and security]]
+    - [[encryption related additional]]
+    - [[lexical binding]]
+  - [[window(frame) look and feel setting]]
+    - [[general frame and window settings]]
+    - [[minor-modes-menu-based-on-minions]]
+    - [[mode-line-modify]]
+    - [[headerline]]
+  - [[require some libraries]]
+  - [[basic emacs editor preferences]]
+    - [[set load path]]
+    - [[set utf-8 as default coding system]]
+    - [[autorevert]]
+    - [[backup and auto-save-list]]
+    - [[clipboard]]
+    - [[yes,no]]
+    - [[enable some disabled commands]]
+    - [[input method]]
+    - [[indentation stuff]]
+    - [[Sentences end with a single space]]
+    - [[line-spacing]]
+    - [[line-number]]
+    - [[show-parens]]
+    - [[scrolling]]
+    - [[marking]]
+    - [[isearch]]
+    - [[explicitly set shell]]
+    - [[better support for long lines]]
+    - [[rectangle mode]]
+  - [[theming]]
+  - [[completion]]
+  - [[emacs built in packages]]
+    - [[imenu]]
+    - [[ibuffer]]
+    - [[comint-mode]]
+    - [[shell-mode]]
+    - [[eshell]]
+    - [[term-mode]]
+    - [[eww & shr]]
+    - [[flymake]]
+    - [[ediff]]
+    - [[tramp]]
+    - [[dired]]
+    - [[org]]
+    - [[whitespace-mode]]
+    - [[outline]]
+    - [[tab-bar & tabline]]
+    - [[recentf]]
+    - [[hippie_expand]]
+- [[initialize package managers]]
+  - [[package.el]]
+- [[psudo native (i prefer to install these using the system's package manager)]]
+  - [[special use-package macro]]
+  - [[pdf-tools]]
+  - [[vterm]]
+- [[external libraries]]
+- [[external packages I use]]
+  - [[auto-tangle]]
+  - [[keychords]]
+  - [[toc-org]]
+  - [[diminish and delight]]
+  - [[exec path form shell]]
+  - [[hydra]]
+  - [[undo-tree]]
+  - [[git]]
+    - [[git-gutter]]
+    - [[git-timemachine]]
+    - [[magit & forge]]
+    - [[monky]]
+  - [[yasnippet]]
+  - [[which-key]]
+  - [[avy]]
+  - [[ace-link]]
+  - [[ace-window]]
+  - [[expand-region]]
+  - [[ag]]
+  - [[rg]]
+  - [[ws-butler]]
+  - [[multiple-cursors]]
+  - [[phi-search]]
+  - [[rainbow-delimiters]]
+  - [[modal editing modes]]
+    - [[objed]]
+  - [[restclient]]
+  - [[nov.el]]
+  - [[pomidor]]
+  - [[keyfreq]]
+  - [[corfu & cape & kind-icons]]
+  - [[highligt number literals]]
+  - [[highlight-indent-guides]]
+  - [[minions]]
+  - [[projectile]]
+  - [[smartparens]]
+  - [[elpher]]
+  - [[typing]]
+    - [[speed-type]]
+    - [[typing-of-emacs]]
+  - [[devdocs browser]]
+  - [[scratch]]
+  - [[install themes]]
+  - [[alternate mode-lines]]
+  - [[all-the-icons]]
+  - [[programming and typesetting]]
+    - [[eglot]]
+    - [[C/C++]]
+    - [[rust]]
+    - [[ruby]]
+    - [[php]]
+    - [[lua]]
+    - [[ocaml]]
+    - [[crystal]]
+    - [[clojure]]
+    - [[zig]]
+    - [[d]]
+    - [[nim]]
+    - [[raku]]
+    - [[csv]]
+    - [[yaml,toml and json]]
+    - [[rfc-mode]]
+    - [[go]]
+    - [[web]]
+    - [[tree-sitter native]]
+  - [[dired related]]
+  - [[org related]]
+    - [[org-bullets]]
+    - [[ox-pandoc]]
+    - [[htmlize]]
+    - [[hyperbole]]
+- [[load-theme]]
+- [[initial scratch-buffer settings]]
+- [[load custom faces]]
+- [[set custom variables]]
+- [[provide init and finish]]
+#+END_TOC
 
 * starting headers
 #+begin_src emacs-lisp
@@ -660,11 +666,29 @@ increment."
 
 #+begin_src emacs-lisp
 
-(let ((default-directory  (expand-file-name "lisp" user-emacs-directory)))
-  (progn
-    (unless (file-directory-p default-directory)
-      (make-directory default-directory))
-    (normal-top-level-add-subdirs-to-load-path)))
+;; (let ((default-directory  (expand-file-name "lisp" user-emacs-directory)))
+;;   (progn
+;;     (unless (file-directory-p default-directory)
+;;       (make-directory default-directory))
+;;     (normal-top-level-add-subdirs-to-load-path)))
+
+(let ((lisp-dir (expand-file-name "lisp" user-emacs-directory)))
+  ;; Ensure lisp directory exists
+  (unless (file-directory-p lisp-dir)
+    (make-directory lisp-dir))
+  ;; Add lisp directory to load-path if not already present
+  (unless (member lisp-dir load-path)
+    (add-to-list 'load-path lisp-dir))
+  ;; Function to add all subdirectories to load-path if not already present
+  (defun add-subdirs-to-load-path (dir)
+    "Add all directories under DIR to `load-path' if not already present."
+    (dolist (subdir (directory-files dir t "^[^.]"))
+      (when (file-directory-p subdir)
+        (unless (member subdir load-path)
+          (add-to-list 'load-path subdir))
+        (add-subdirs-to-load-path subdir))))
+  ;; Add all subdirectories of lisp-dir to load-path
+  (add-subdirs-to-load-path lisp-dir))
 
 #+end_src
 
@@ -1261,7 +1285,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (setq org-src-fontify-natively t
         org-src-tab-acts-natively t
         org-confirm-babel-evaluate nil
-        org-edit-src-content-indentation 0))
+        org-edit-src-content-indentation 0)
+  (require 'ox-md))
 
 (with-eval-after-load "org"
   (progn
@@ -1279,6 +1304,58 @@ This is the same as using \\[set-mark-command] with the prefix argument."
                    (org-babel-do-load-languages
                     'org-babel-load-languages
                     '((shell . t))))))
+
+(with-eval-after-load "org"
+  (progn
+	(defun yae-org-generate-toc (toc-depth)
+	  "Generate a table of contents for the current Org buffer respecting the toc depth."
+	  (let ((toc ""))
+		(org-element-map (org-element-parse-buffer) 'headline
+		  (lambda (headline)
+			(let ((level (org-element-property :level headline))
+				  (title (org-element-property :raw-value headline)))
+			  (when (and (<= level toc-depth)
+						 (not (org-element-property :commentedp headline)))
+				(setq toc (concat toc (make-string (* 2 (- level 1)) ?\ )
+								  "- [[" title "]]\n"))))))
+		toc))
+
+	(defun yae-org-generate-or-replace-toc ()
+	  "Generate or replace a table of contents for the current Org buffer at the #+BEGIN_TOC block respecting the toc depth option."
+	  (interactive)
+	  (let ((toc-depth 3) ; Default TOC depth
+			(toc ""))
+
+		;; Determine the TOC depth from Org mode buffer options
+		(save-excursion
+		  (goto-char (point-min))
+		  (when (re-search-forward "^#\\+OPTIONS:.*toc:\\([0-9]+\\)" nil t)
+			(setq toc-depth (string-to-number (match-string 1)))))
+
+		;; Generate the TOC using the custom function
+		(setq toc (yae-org-generate-toc toc-depth))
+
+		;; Replace the custom block with the generated TOC
+		(save-excursion
+		  (goto-char (point-min))
+		  (while (re-search-forward "^#\\+BEGIN_TOC\\(?: +:depth +\\([0-9]+\\)\\)? *$" nil t)
+			(let* ((depth (or (and (match-string 1) (string-to-number (match-string 1))) toc-depth))
+				   (start (match-beginning 0))
+				   (end (progn
+						  (re-search-forward "^#\\+END_TOC$" nil t)
+						  (match-end 0))))
+			  (let ((toc (yae-org-generate-toc depth)))
+				(delete-region start end)
+				(goto-char start)
+				(insert "#+BEGIN_TOC\n" toc "#+END_TOC")))))))
+
+	(defun yae-org-mode-setup ()
+	  "Custom configurations for Org mode."
+	  (add-hook 'before-save-hook 'yae-org-generate-or-replace-toc nil 'local))
+
+	(add-hook 'org-mode-hook 'yae-org-mode-setup)
+
+	))
 
 #+end_src
 
@@ -2302,8 +2379,10 @@ Expand is a package that extends the functionality of abbrev to enable code temp
          ;; (vterm-mode . (lambda () (nlinum-mode -1)))
          (vterm-mode . (lambda () (setq show-trailing-whitespace nil)))
          (vterm-mode . (lambda () (setq line-spacing 0)))
-         ;; (vterm-mode . (lambda () (objed-local-mode -1)))
-         )
+         (vterm-mode . (lambda () (when (package-installed-p 'objed)
+                                    (when (and (boundp 'objed-local-mode) a-local-mode)
+                                      (objed-local-mode -1))))))
+
   :init (setq vterm-shell "/usr/bin/bash"))
 
 ;; (use-package vterm
@@ -2751,7 +2830,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+end_src
 
 ** modal editing modes
-*** COMMENT objed
+*** objed
 
 #+begin_src emacs-lisp
 
@@ -2759,9 +2838,9 @@ Expand is a package that extends the functionality of abbrev to enable code temp
   :ensure t
   ;; :defer t
   :defer 0.5
-  ;; :hook (after-init . objed-mode)
+  :hook after-init
   :bind
-  ("M-o" . objed-local-mode)
+  ;; ("M-o" . objed-local-mode)
   (:map objed-map
         ;; ("<SPC>" . 'objed-char-object)
         ("C-f" . 'objed-right-char)
@@ -2893,7 +2972,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-*** god-mode
+*** COMMENT god-mode
 
 #+begin_src emacs-lisp
 
