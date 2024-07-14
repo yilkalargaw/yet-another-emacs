@@ -73,6 +73,7 @@
     - [[tab-bar & tabline]]
     - [[recentf]]
     - [[hippie_expand]]
+- [[load dumb custom functions]]
 - [[initialize package managers]]
   - [[package.el]]
 - [[psudo native (i prefer to install these using the system's package manager)]]
@@ -1143,18 +1144,18 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (with-eval-after-load 'term
   (define-key term-raw-map (kbd "C-c C-y") 'term-paste)
   (add-hook 'term-mode-hook (lambda () (when EMACS26+ (display-line-numbers-mode -1))))
-  (add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1))))
+  (add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1)))
 
-(defun term-just-close-exec-hook ()
-  (let* ((buff (current-buffer))
-         (proc (get-buffer-process buff)))
-    (set-process-sentinel
-     proc
-     `(lambda (process event)
-        (if (string= event "finished\n")
-            (kill-buffer ,buff))))))
+  (defun term-just-close-exec-hook ()
+	(let* ((buff (current-buffer))
+           (proc (get-buffer-process buff)))
+      (set-process-sentinel
+       proc
+       `(lambda (process event)
+          (if (string= event "finished\n")
+              (kill-buffer ,buff))))))
 
-(add-hook 'term-exec-hook 'term-just-close-exec-hook)
+  (add-hook 'term-exec-hook 'term-just-close-exec-hook))
 
 #+end_src
 
@@ -2293,6 +2294,15 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 (if (file-exists-p abbrev-file-name)
     (quietly-read-abbrev-file))
 
+#+end_src
+
+
+* load dumb custom functions
+
+#+begin_src emacs-lisp
+
+(require 'custom_dumb_functions)
+  
 #+end_src
 
 
