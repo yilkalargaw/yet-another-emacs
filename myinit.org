@@ -144,7 +144,7 @@
     - [[rfc-mode]]
     - [[go]]
     - [[web]]
-    - [[tree-sitter]]
+    - [[tree-sitter native]]
   - [[dired related]]
   - [[org related]]
     - [[org-bullets]]
