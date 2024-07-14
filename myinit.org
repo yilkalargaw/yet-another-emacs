@@ -144,13 +144,13 @@
     - [[rfc-mode]]
     - [[go]]
     - [[web]]
-    - [[tree-sitter native]]
+    - [[tree-sitter]]
   - [[dired related]]
   - [[org related]]
     - [[org-bullets]]
     - [[ox-pandoc]]
     - [[htmlize]]
-    - [[hyperbole]]
+  - [[hyperbole]]
 - [[load-theme]]
 - [[initial scratch-buffer settings]]
 - [[load custom faces]]
@@ -4512,7 +4512,7 @@ With postitive prefix argument ARG move to the nth previous object."
 
 #+end_src
 
-*** hyperbole
+** hyperbole
 
 #+begin_src emacs-lisp
 
