@@ -1115,7 +1115,8 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (setq eshell-visual-commands '("vi" "screen" "top" "less" "more" "lynx"
                                  "ncftp" "pine" "tin" "trn" "elm" "vim" "kak" "nano" "tmux" "alpine" "mutt"
                                  "htop" "irb" "python" "python3" "python2" "csc" "sbcl" "guile" "guile2" "node"
-                                 "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger"))
+                                 "joe" "jstar" "jmacs" "jpico" "ne" "micro" "nnn" "lf" "ranger" "mc" "gtypist" "toipe"))
+  
   (add-hook 'eshell-mode-hook (lambda () (when EMACS26+ (display-line-numbers-mode -1))))
   (setq eshell-scroll-show-maximum-output nil)
 
