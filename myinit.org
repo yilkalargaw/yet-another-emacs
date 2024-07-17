@@ -106,7 +106,6 @@
   - [[phi-search]]
   - [[rainbow-delimiters]]
   - [[modal editing modes]]
-    - [[objed]]
   - [[restclient]]
   - [[nov.el]]
   - [[pomidor]]
@@ -2852,7 +2851,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+end_src
 
 ** modal editing modes
-*** objed
+*** COMMENT objed
 
 #+begin_src emacs-lisp
 
@@ -4585,6 +4584,7 @@ With postitive prefix argument ARG move to the nth previous object."
 (add-hook 'after-init-time-hook
           (if (require 'base16-theme nil 'noerror)
               (load-theme 'base16-brewer t)
+			  ;; (load-theme 'base16-black-metal-immortal t)
             (load-theme 'wombat t)
             ;; (load-theme 'manoj-dark t)
             ;; (load-theme 'modus-vivendi t)
