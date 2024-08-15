@@ -2314,7 +2314,9 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 (defvar my-tui-apps '("toipe" "nnn" "nmtui" "htop" "nvim")
   "List of tui apps to create functions for.")
 
-(dolist (binary my-tui-apps) (my-create-terminal-function binary))
+(add-hook 'after-init-hook
+		  (lambda () (dolist (binary my-tui-apps)
+					   (my-create-terminal-function binary))))
 
 #+end_src
 
