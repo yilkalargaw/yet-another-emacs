@@ -2303,12 +2303,13 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 (defun my-create-terminal-function (tuiapp)
   "Create a terminal function for the given BINARY."
   (let ((function-name (intern (format "%s-term-open" tuiapp))))
-    (if (executable-find tuiapp)
+    (when (executable-find tuiapp)
         (eval `(defun ,function-name ()
                  ,(format "Open %s using ansi-term." tuiapp)
                  (interactive)
                  (ansi-term ,tuiapp))
-              (message "Warning: '%s' tui app not found." tuiapp)))))
+              ;; to be added if if is used instead of when (message "Warning: '%s' tui app not found." tuiapp)
+			  ))))
 
 (defvar my-tui-apps '("toipe" "nnn" "nmtui" "htop" "nvim")
   "List of tui apps to create functions for.")
