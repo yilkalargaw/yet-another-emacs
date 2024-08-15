@@ -73,7 +73,7 @@
     - [[tab-bar & tabline]]
     - [[recentf]]
     - [[hippie_expand]]
-- [[load dumb custom functions]]
+- [[create launchers for some tui apps if they exist]]
 - [[initialize package managers]]
   - [[package.el]]
 - [[psudo native (i prefer to install these using the system's package manager)]]
@@ -2296,12 +2296,25 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+end_src
 
 
-* load dumb custom functions
+* create launchers for some tui apps if they exist
 
 #+begin_src emacs-lisp
 
-(require 'custom_dumb_functions)
-  
+(defun my-create-terminal-function (tuiapp)
+  "Create a terminal function for the given BINARY."
+  (let ((function-name (intern (format "%s-term-open" tuiapp))))
+    (if (executable-find tuiapp)
+        (eval `(defun ,function-name ()
+                 ,(format "Open %s using ansi-term." tuiapp)
+                 (interactive)
+                 (ansi-term ,tuiapp))
+              (message "Warning: '%s' tui app not found." tuiapp)))))
+
+(defvar my-tui-apps '("toipe" "nnn" "nmtui" "htop" "nvim")
+  "List of tui apps to create functions for.")
+
+(dolist (binary my-tui-apps) (my-create-terminal-function binary))
+
 #+end_src
 
 
