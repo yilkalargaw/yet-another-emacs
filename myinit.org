@@ -335,36 +335,6 @@
 *** general frame and window settings
 #+begin_src emacs-lisp
 
-(set-window-margins nil 2)
-(setq inhibit-startup-message t)
-;; (global-set-key (kbd "C-c m b") 'menu-bar-mode)
-(column-number-mode 1)
-(setq initial-scratch-message nil)
-;; (setq battery-mode-line-format " [%b%p%% } ")
-;; (display-battery-mode t)
-;; (display-time-mode t)
-(setq frame-resize-pixelwise t)
-(setq redisplay-skip-fontification-on-input t)
-(setq idle-update-delay 1.0)
-(setq compilation-scroll-output t)
-
-;; (set-default-font "JetBrains Mono-9") ;;; set default font
-;; (setq default-frame-alist '((font . "Jetbrains Mono 9"))) ;;; set default font for emacs --daemon / emacsclient
-(defvar my-default-font "JetBrainsMono Nerd Font 11")
-(set-face-attribute 'default nil :height 110)
-
-;; (setq default-frame-alist '((font . "JetBrainsMono Nerd Font 9"))) ;;; set default font for emacs --daemon / emacsclient
-(add-to-list 'default-frame-alist (cons 'font  my-default-font))
-(set-fontset-font t nil "Dejavu Sans Mono" nil 'append)
-(set-fontset-font t 'ethiopic "Noto Sans Ethiopic")
-;; (set-fontset-font t 'thai "Leelawadee UI" nil 'append)
-
-;; (setq w32-enable-synthesized-fonts t) ;;The w32-enable-synthesized-fonts variable is obsolete starting from Emacs 24.4, as Emacs no longer has this limitation.
-;; (set-face-font 'italic "-*-Courier New-normal-i-*-*-11-*-*-*-c-*-iso8859-1")
-;; (set-face-font 'bold-italic "-*-Courier New-bold-i-*-*-11-*-*-*-c-*-iso8859-1")
-
-
-
 ;; Most of what follows is stolen from emcs 29 because my functions to do global scaling
 ;; depend on how I define fonts. This is the more flexable way to do it
 ;; any modification to this code that deals with global-text-scaling will therefore
