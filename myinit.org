@@ -152,6 +152,7 @@
     - [[ox-pandoc]]
     - [[htmlize]]
   - [[hyperbole]]
+- [[simple dashboard]]
 - [[load-theme]]
 - [[initial scratch-buffer settings]]
 - [[load custom faces]]
@@ -4571,6 +4572,99 @@ With postitive prefix argument ARG move to the nth previous object."
 ;; (require 'server)
 ;; (unless (server-running-p)
 ;;   (server-start))
+
+#+end_src
+
+
+* simple dashboard
+
+#+begin_src emacs-lisp
+
+(defun create-buttons-from-list (button-list)
+  "Create buttons from BUTTON-LIST, where each element is a list containing a button label, description, and action."
+  (dolist (item button-list)
+    (let ((button-label (nth 0 item))          ; Get the button label
+          (button-description (nth 1 item))   ; Get the button description
+          (button-action (nth 2 item)))        ; Get the action to be executed
+      ;; Create the button for the label
+      (let ((button (make-button 
+                     (point) 
+                     (progn 
+                       (insert (format "[%s]" button-label)) ; Format the button label
+                       (point)) 
+                     'action 
+                     button-action))) ; Use the defined action
+        
+        ;; Insert the description below the button
+        (insert (format " %s\n" button-description)))))) ; Add description
+
+(defun my-dashboard ()
+  "Display a simple welcome dashboard with clickable links."
+  (interactive)
+  (switch-to-buffer "*Dashboard*")
+  (erase-buffer) ; Clear the buffer
+  (insert "Welcome to Emacs!\n\n") ; Welcome message
+
+  ;; Define the ASCII art button locally
+  (let ((ascii-art-button
+         "
+ _______  __   __  _______  _______  _______ 
+|       ||  |_|  ||   _   ||       ||       |
+|    ___||       ||  |_|  ||       ||  _____|
+|   |___ |       ||       ||       || |_____ 
+|    ___||       ||       ||      _||_____  |
+|   |___ | ||_|| ||   _   ||     |_  _____| |
+|_______||_|   |_||__| |__||_______||_______|
+
+   "))
+    
+    ;; Create the ASCII art button
+    (make-button 
+     (point) 
+     (progn 
+       (insert ascii-art-button) ; Insert the ASCII art for the button
+       (point))
+     'action 
+     (lambda (_) 
+       (eww-browse-url "https://www.gnu.org/software/emacs/"))
+	 'follow-link t         ; Make it behave like a link
+	 'mouse-face 'highlight  ; Change mouse hover effect
+	 'face 'default          ; Use default face for text
+	 ':underline nil)) ; Action to open Emacs website
+
+  ;; Optional: Add some spacing
+  (insert (format "%s" (emacs-version)))
+
+  ;; Optional: Add some spacing
+  (insert "\n\nQuick Links:\n")
+
+  ;; Define buttons with actions
+  (let ((buttons
+         '(("Scratch Buffer" "Open scratch buffer" 
+            (lambda (_) (call-interactively 'create-scratch-buffer)))
+		   ("Find File" "Open a File" 
+            (lambda (_) (call-interactively 'find-file)))
+		   ("Find Dir" "Open a Directory" 
+            (lambda (_) (call-interactively 'find-dired)))
+		   ("Recentf" "Open recent files" 
+            (lambda (_) (call-interactively 'recentf-open)))
+		   ("Org Agenda" "Description of org agenda button" 
+            (lambda (_) (call-interactively 'org-agenda)))
+           ("Emacs Website" "Visit Emacs Website" 
+            (lambda (_) (eww-browse-url "https://www.gnu.org/software/emacs/"))))))
+    
+    ;; Use the updated function to create buttons with actions
+    (create-buttons-from-list buttons))
+
+  ;; Disable line numbers
+  (setq display-line-numbers nil)
+
+  ;; Enable read-only mode
+  (read-only-mode 1)
+  (beginning-of-buffer))
+
+;; (global-set-key (kbd "C-c d") 'my-dashboard)
+(add-hook 'emacs-startup-hook 'my-dashboard)
 
 #+end_src
 
