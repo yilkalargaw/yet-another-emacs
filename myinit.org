@@ -75,14 +75,10 @@
     - [[recentf]]
     - [[hippie_expand]]
 - [[create launchers for some tui apps if they exist]]
-- [[initialize package managers]]
   - [[package.el]]
-- [[psudo native (i prefer to install these using the system's package manager)]]
   - [[special use-package macro]]
   - [[pdf-tools]]
   - [[vterm]]
-- [[external libraries]]
-- [[external packages I use]]
   - [[auto-tangle]]
   - [[keychords]]
   - [[diminish and delight]]
@@ -2320,7 +2316,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+end_src
 
 
-* initialize package managers
+* COMMENT initialize package managers
 
 ** COMMENT straight
 #+begin_src emacs-lisp
@@ -2380,7 +2376,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+end_src
 
 
-* psudo native (i prefer to install these using the system's package manager)
+* COMMENT psudo native (i prefer to install these using the system's package manager)
 
 ** special use-package macro
 
@@ -2446,7 +2442,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 
 
 
-* external libraries
+* COMMENT external libraries
 
 #+begin_src emacs-lisp
 
@@ -2462,7 +2458,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
 #+end_src
 
 
-* external packages I use
+* COMMENT external packages I use
 ** COMMENT additional garbage collection optimization with gmch
 
 #+begin_src emacs-lisp
@@ -4644,8 +4640,8 @@ With postitive prefix argument ARG move to the nth previous object."
             (lambda (_) (call-interactively 'create-scratch-buffer)))
 		   ("Find File" "Open a File" 
             (lambda (_) (call-interactively 'find-file)))
-		   ("Find Dir" "Open a Directory" 
-            (lambda (_) (call-interactively 'find-dired)))
+		   ("Dired" "Open a Directory" 
+            (lambda (_) (call-interactively 'dired)))
 		   ("Recentf" "Open recent files" 
             (lambda (_) (call-interactively 'recentf-open)))
 		   ("Org Agenda" "Description of org agenda button" 
