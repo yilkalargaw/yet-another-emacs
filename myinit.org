@@ -55,6 +55,7 @@
     - [[rectangle mode]]
   - [[theming]]
   - [[completion]]
+  - [[scratch_buffer_creator]]
   - [[emacs built in packages]]
     - [[imenu]]
     - [[ibuffer]]
@@ -1028,6 +1029,33 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (when EMACS26+ (icomplete-mode))
 (when EMACS27+ (fido-mode))
 (when EMACS28+ (fido-vertical-mode))
+
+#+end_src
+
+
+** scratch_buffer_creator
+
+#+begin_src emacs-lisp
+
+(defun create-scratch-buffer (mode)
+  "Create a new scratch buffer with a specified major MODE."
+  (interactive
+   (list (intern (completing-read "Choose major mode: "
+                                   (mapcar 'symbol-name
+                                           (apropos-internal "-mode$"))))))
+  (let* ((buffer-name (generate-new-buffer-name "*scratch*"))
+         (comment-start (if (fboundp mode)
+                            (with-temp-buffer
+                              (funcall mode)
+                              (if (boundp 'comment-start)
+                                  comment-start
+                                ";; ")) ;; Fallback if no comment-start is defined
+                          ";; ")))  ;; Fallback for invalid modes
+    (generate-new-buffer buffer-name)
+    (switch-to-buffer buffer-name)
+    (funcall mode)  ;; Set the specified major mode
+    (insert comment-start "This is a new scratch buffer in " 
+            (symbol-name mode) " mode.\n\n")))
 
 #+end_src
 
@@ -2281,7 +2309,7 @@ Expand is a package that extends the functionality of abbrev to enable code temp
               ;; to be added if if is used instead of when (message "Warning: '%s' tui app not found." tuiapp)
 			  ))))
 
-(defvar my-tui-apps '("toipe" "nnn" "nmtui" "htop" "nvim")
+(defvar my-tui-apps '("toipe" "nnn" "nmtui" "htop" "nvim" "lynx" "gtypist")
   "List of tui apps to create functions for.")
 
 (add-hook 'after-init-hook
