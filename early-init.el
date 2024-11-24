@@ -75,7 +75,7 @@
 
 
 ;; (setq default-frame-alist '((font . "JetBrainsMono Nerd Font 9"))) ;;; set default font for emacs --daemon / emacsclient
-(add-to-list 'default-frame-alist (cons 'font  my-default-font))
+;; (add-to-list 'default-frame-alist (cons 'font  my-default-font))
 (set-fontset-font t nil "Dejavu Sans Mono" nil 'append)
 (set-fontset-font t 'ethiopic "Noto Sans Ethiopic")
 ;; (set-fontset-font t 'thai "Leelawadee UI" nil 'append)

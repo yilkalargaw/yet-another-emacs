@@ -324,7 +324,8 @@ between 0 and 1)."
                              :foreground ,(face-foreground 'shadow) :overline nil :underline nil :italic t))))
 
 
-   `(org-checkbox ((t (:foreground "#000000", :background "#93a1a1" :box (:line-width -3 :color "#93a1a1" :style "released-button")))))
+   `(org-checkbox ((t (:foreground "#000000", :background "#93a1a1" ;; :box (:line-width -3 :color "#93a1a1" :style "released-button")
+								   ))))
 
    `(org-headline-done ((t (:strike-through t))))
    `(org-done ((t (:strike-through t :underline t :overline t))))
